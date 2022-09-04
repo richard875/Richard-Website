@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import type { HeadFC } from "gatsby";
+import { StaticImage } from "gatsby-plugin-image";
 import { COLOR } from "../styles/theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
@@ -19,8 +20,8 @@ const IndexPage = () => {
             SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;DESIGNER
           </Subtitle>
           <Subtitle className="font-bold mt-5">UNIVERSITY OF SYDNEY</Subtitle>
-          <Button>
-            <div className="pr-2 hover:pr-3 transition-all ease-in-out">
+          <Button className="select-none">
+            <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
               Let's catch up
             </div>
             <FontAwesomeIcon
@@ -29,6 +30,14 @@ const IndexPage = () => {
               className="mt-0.5"
             />
           </Button>
+          <Circle className="select-none">
+            <StaticImage
+              className="h-5/6 w-5/6"
+              src="../images/resume-circle.svg"
+              alt="Resume Circle"
+              placeholder="none"
+            />
+          </Circle>
         </Bottom>
       </Wrapper>
       <Footer>
@@ -141,4 +150,28 @@ const Button = styled.div`
   font-size: 23px;
   color: ${COLOR.WHITE};
   cursor: pointer;
+`;
+
+const Circle = styled.div`
+  width: 170px;
+  height: 170px;
+  position: absolute;
+  bottom: 150px;
+  right: 150px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #cdff50;
+  border: 2px solid ${COLOR.BLACK};
+  animation: rotation 12s infinite linear;
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
 `;
