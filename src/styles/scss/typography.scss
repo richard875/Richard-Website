@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "BwGradual";
+  font-weight: normal;
+  src: local("BwGradual"),
+    url("/src/fonts/BwGradual-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "BwGradual";
+  font-weight: bold;
+  src: local("BwGradual"),
+    url("/src/fonts/BwGradual-Medium.ttf") format("truetype");
+}
+
+.font-normal {
+  font-weight: normal;
+  font-family: "BwGradual", sans-serif;
+}
+
+.font-bold {
+  font-weight: bold;
+  font-family: "BwGradual", sans-serif;
+}
