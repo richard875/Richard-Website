@@ -32,12 +32,19 @@ const IndexPage = () => {
           </Button>
           <Circle className="select-none">
             <StaticImage
-              className="h-5/6 w-5/6"
-              src="../images/resume-circle.svg"
+              className="relative h-5/6 w-5/6"
+              src="../images/circle.svg"
               alt="Resume Circle"
               placeholder="none"
             />
           </Circle>
+          <StaticImage
+            width={60}
+            style={Arrow}
+            src="../images/arrow.svg"
+            alt="Resume Circle"
+            placeholder="none"
+          />
         </Bottom>
       </Wrapper>
       <Footer>
@@ -175,3 +182,9 @@ const Circle = styled.div`
     }
   }
 `;
+
+const Arrow = {
+  position: "absolute",
+  bottom: 222,
+  right: 205,
+} as React.CSSProperties;
