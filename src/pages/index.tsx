@@ -2,6 +2,8 @@ import * as React from "react";
 import styled from "styled-components";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const IndexPage = () => {
   return (
@@ -17,7 +19,16 @@ const IndexPage = () => {
             SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;DESIGNER
           </Subtitle>
           <Subtitle className="font-bold mt-5">UNIVERSITY OF SYDNEY</Subtitle>
-          <Button>Let's catch up</Button>
+          <Button>
+            <div className="pr-2 hover:pr-3 transition-all ease-in-out">
+              Let's catch up
+            </div>
+            <FontAwesomeIcon
+              icon={faAngleRight}
+              size={"xs"}
+              className="mt-0.5"
+            />
+          </Button>
         </Bottom>
       </Wrapper>
       <Footer>
@@ -124,15 +135,10 @@ const Subtitle = styled.div`
 `;
 
 const Button = styled.div`
-  width: 220px;
-  height: 60px;
-  margin-top: 50px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-top: 50px;
   font-size: 23px;
   color: ${COLOR.WHITE};
-  /* background-color: ${COLOR.BLACK}; */
-  border: 3px solid ${COLOR.WHITE};
   cursor: pointer;
 `;
