@@ -50,7 +50,7 @@ const IndexPage = () => {
               className="mt-0.5"
             />
           </Button>
-          <span
+          <CircleContainer
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
@@ -69,7 +69,7 @@ const IndexPage = () => {
               alt="Resume Circle"
               placeholder="none"
             />
-          </span>
+          </CircleContainer>
         </Bottom>
       </Wrapper>
       <Footer>
@@ -199,9 +199,6 @@ const Button = styled.div`
 const Circle = styled.div`
   width: 170px;
   height: 170px;
-  position: absolute;
-  bottom: 150px;
-  right: 150px;
   border-radius: 99px;
   display: flex;
   align-items: center;
@@ -211,17 +208,25 @@ const Circle = styled.div`
   animation: rotation 12s infinite linear;
 
   @keyframes rotation {
-    from {
-      transform: rotate(0deg);
+    100% {
+      transform: rotate(-360deg);
     }
-    to {
-      transform: rotate(359deg);
-    }
+  }
+`;
+
+const CircleContainer = styled.span`
+  position: absolute;
+  bottom: 150px;
+  right: 150px;
+  transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
+
+  &:hover {
+    transform: rotate(-360deg) scale(1.07);
   }
 `;
 
 const Arrow = {
   position: "absolute",
-  bottom: 222,
-  right: 205,
+  left: 55,
+  bottom: 72,
 } as React.CSSProperties;
