@@ -2,17 +2,33 @@ import * as React from "react";
 import styled from "styled-components";
 import type { HeadFC } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import { COLOR } from "../styles/theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { COLOR } from "../styles/theme";
+import Cursor from "../components/cursor/cursor";
 
 const IndexPage = () => {
+  const [hover, setHover] = React.useState(false);
+
   return (
     <Container>
+      <Cursor hover={hover} />
       <Wrapper>
         <Top>
-          <div className="font-normal">hello@richard-lee.com</div>
-          <div className="font-bold">PROJECTS</div>
+          <div
+            className="font-normal"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            hello@richard-lee.com
+          </div>
+          <div
+            className="font-bold"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            PROJECTS
+          </div>
         </Top>
         <Bottom>
           <Name>RICHARD LEE</Name>
@@ -21,7 +37,11 @@ const IndexPage = () => {
           </Subtitle>
           <Subtitle className="font-bold mt-5">UNIVERSITY OF SYDNEY</Subtitle>
           <Button className="select-none">
-            <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
+            <div
+              className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
               Let's catch up
             </div>
             <FontAwesomeIcon
@@ -30,28 +50,45 @@ const IndexPage = () => {
               className="mt-0.5"
             />
           </Button>
-          <Circle className="select-none">
+          <span
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            <Circle className="select-none">
+              <StaticImage
+                className="relative h-5/6 w-5/6"
+                src="../images/circle.svg"
+                alt="Resume Circle"
+                placeholder="none"
+              />
+            </Circle>
             <StaticImage
-              className="relative h-5/6 w-5/6"
-              src="../images/circle.svg"
+              width={60}
+              style={Arrow}
+              src="../images/arrow.svg"
               alt="Resume Circle"
               placeholder="none"
             />
-          </Circle>
-          <StaticImage
-            width={60}
-            style={Arrow}
-            src="../images/arrow.svg"
-            alt="Resume Circle"
-            placeholder="none"
-          />
+          </span>
         </Bottom>
       </Wrapper>
       <Footer>
         <FLeft>
-          <div className="mr-3">From Australia with Love</div>
+          <div
+            className="mr-3"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            From Australia with Love
+          </div>
           <VerticalSeparator></VerticalSeparator>
-          <div className="ml-3">Acknowledgement of Country</div>
+          <div
+            className="ml-3"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            Acknowledgement of Country
+          </div>
         </FLeft>
         <FRight>
           <Indicator></Indicator>
