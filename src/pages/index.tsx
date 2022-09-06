@@ -1,9 +1,11 @@
 import * as React from "react";
+import { Link } from "gatsby";
 import styled from "styled-components";
 import type { HeadFC } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 
@@ -12,7 +14,7 @@ const IndexPage = () => {
 
   return (
     <Container>
-      <Cursor hover={hover} />
+      <Cursor hover={hover} isBlack={true} />
       <Wrapper>
         <Top>
           <div
@@ -82,13 +84,15 @@ const IndexPage = () => {
             From Australia with Love
           </div>
           <VerticalSeparator></VerticalSeparator>
-          <div
-            className="ml-3"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            Acknowledgement of Country
-          </div>
+          <Link to={Route.Acknowledgement}>
+            <div
+              className="ml-3"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              Acknowledgement of Country
+            </div>
+          </Link>
         </FLeft>
         <FRight>
           <Indicator></Indicator>
