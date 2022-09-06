@@ -1,14 +1,23 @@
 import * as React from "react";
 import styled, { css } from "styled-components";
 import useMousePosition from "../../hooks/useMousePosition";
+import { COLOR } from "../../styles/theme";
 
-const Cursor = ({ hover }: { hover: boolean }) => {
+const Cursor = ({ hover, isBlack }: { hover: boolean; isBlack: boolean }) => {
   const { x, y } = useMousePosition();
 
   return (
     <>
-      <Ring hover={hover} style={{ left: `${x}px`, top: `${y}px` }}></Ring>
-      <Dot hover={hover} style={{ left: `${x}px`, top: `${y}px` }}></Dot>
+      <Ring
+        hover={hover}
+        black={isBlack}
+        style={{ left: `${x}px`, top: `${y}px` }}
+      ></Ring>
+      <Dot
+        hover={hover}
+        black={isBlack}
+        style={{ left: `${x}px`, top: `${y}px` }}
+      ></Dot>
     </>
   );
 };
@@ -19,9 +28,9 @@ const Ring = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 30px;
-  height: 30px;
-  border: 2px solid rgba(31, 30, 30, 0.808);
+  width: ${(props: any) => (props.black ? "30px" : "25px")};
+  height: ${(props: any) => (props.black ? "30px" : "25px")};
+  border: 2px solid ${(props: any) => (props.black ? COLOR.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
   -webkit-transition-duration: 100ms;
@@ -37,8 +46,7 @@ const Ring = styled.div`
     css`
       width: 50px;
       height: 50px;
-      border-width: 3px;
-      border-color: lightgray;
+      border: 3px solid lightgray;
     `};
 `;
 
@@ -48,7 +56,8 @@ const Dot = styled.div`
   left: 50%;
   width: 8px;
   height: 8px;
-  background-color: black;
+  background-color: ${(props: any) =>
+    props.black ? COLOR.BLACK : "transparent"};
   border-radius: 100%;
   transform: translate(-50%, -50%);
   z-index: 999;
