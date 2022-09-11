@@ -1,16 +1,34 @@
 import * as React from "react";
-import { Link } from "gatsby";
+import { GatsbyLinkProps, Link } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
+import mousePositionType from "../types/mousePositionType";
 
-const Acknowledgement = () => {
+const Acknowledgement = ({
+  location,
+}: {
+  location: GatsbyLinkProps<mousePositionType>;
+}) => {
   const [hover, setHover] = React.useState(false);
+  const [globalCoords, setGlobalCoords] = React.useState({
+    x: 0,
+    y: 0,
+  } as mousePositionType);
+
+  React.useEffect(() => {
+    const handleWindowMouseMove = (event: MouseEvent) =>
+      setGlobalCoords({ x: event.clientX, y: event.clientY });
+
+    window.addEventListener("mousemove", handleWindowMouseMove);
+
+    return () => window.removeEventListener("mousemove", handleWindowMouseMove);
+  }, []);
 
   return (
     <Container className="select-none">
-      <Cursor hover={hover} isBlack={false} />
+      <Cursor hover={hover} position={location.state!} isBlack={false} />
       <AcknowledgementText>
         We acknowledge the Traditional Owners of the land where we work and
         live. We pay our respects to Elders past, present and emerging. We
@@ -19,7 +37,7 @@ const Acknowledgement = () => {
         land.
       </AcknowledgementText>
 
-      <Link to={Route.Home}>
+      <Link to={Route.Home} state={globalCoords}>
         <BackButton
           className="font-bold"
           onMouseEnter={() => setHover(true)}

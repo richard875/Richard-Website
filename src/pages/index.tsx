@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "gatsby";
+import { GatsbyLinkProps, Link } from "gatsby";
 import styled from "styled-components";
 import type { HeadFC } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
@@ -8,24 +8,42 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
+import mousePositionType from "../types/mousePositionType";
 
-const IndexPage = () => {
+const IndexPage = ({
+  location,
+}: {
+  location: GatsbyLinkProps<mousePositionType>;
+}) => {
   const [hover, setHover] = React.useState(false);
+  const [globalCoords, setGlobalCoords] = React.useState({
+    x: 0,
+    y: 0,
+  } as mousePositionType);
+
+  React.useEffect(() => {
+    const handleWindowMouseMove = (event: MouseEvent) =>
+      setGlobalCoords({ x: event.clientX, y: event.clientY });
+
+    window.addEventListener("mousemove", handleWindowMouseMove);
+
+    return () => window.removeEventListener("mousemove", handleWindowMouseMove);
+  }, []);
 
   return (
     <Container>
-      <Cursor hover={hover} isBlack={true} />
+      <Cursor hover={hover} position={location.state!} isBlack={true} />
       <Wrapper>
         <Top>
           <div
-            className="font-normal"
+            className="font-primary-normal"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
             hello@richard-lee.com
           </div>
           <div
-            className="font-bold"
+            className="font-primary-bold"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
@@ -33,11 +51,13 @@ const IndexPage = () => {
           </div>
         </Top>
         <Bottom>
-          <Name>RICHARD LEE</Name>
-          <Subtitle className="font-bold mt-9">
+          <Name className="font-secondary-normal">RICHARD LEE</Name>
+          <Subtitle className="font-primary-bold mt-9">
             SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;DESIGNER
           </Subtitle>
-          <Subtitle className="font-bold mt-5">UNIVERSITY OF SYDNEY</Subtitle>
+          <Subtitle className="font-primary-bold mt-5">
+            UNIVERSITY OF SYDNEY
+          </Subtitle>
           <Button className="select-none">
             <div
               className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
@@ -84,7 +104,7 @@ const IndexPage = () => {
             From Australia with Love
           </div>
           <VerticalSeparator></VerticalSeparator>
-          <Link to={Route.Acknowledgement}>
+          <Link to={Route.Acknowledgement} state={globalCoords}>
             <div
               className="ml-3"
               onMouseEnter={() => setHover(true)}
@@ -179,10 +199,10 @@ const Bottom = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 100px;
+  font-size: 130px;
   line-height: 120px;
   color: ${COLOR.WHITE};
-  -webkit-text-stroke: 2px ${COLOR.BLACK};
+  -webkit-text-stroke: 0.12rem ${COLOR.BLACK};
 `;
 
 const Subtitle = styled.div`
