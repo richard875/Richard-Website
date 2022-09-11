@@ -13,6 +13,7 @@ const Cursor = ({
   position: mousePositionType;
   isBlack: boolean;
 }) => {
+  if (typeof window === "undefined") return;
   const { x, y } = useMousePosition(position);
 
   return (
