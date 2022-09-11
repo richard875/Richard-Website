@@ -1,10 +1,19 @@
 import * as React from "react";
 import styled, { css } from "styled-components";
-import useMousePosition from "../../hooks/useMousePosition";
 import { COLOR } from "../../styles/theme";
+import useMousePosition from "../../hooks/useMousePosition";
+import mousePositionType from "../../types/mousePositionType";
 
-const Cursor = ({ hover, isBlack }: { hover: boolean; isBlack: boolean }) => {
-  const { x, y } = useMousePosition();
+const Cursor = ({
+  hover,
+  position,
+  isBlack,
+}: {
+  hover: boolean;
+  position: mousePositionType;
+  isBlack: boolean;
+}) => {
+  const { x, y } = useMousePosition(position);
 
   return (
     <>

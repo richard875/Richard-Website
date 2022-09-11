@@ -1,15 +1,11 @@
 import * as React from "react";
 import mousePositionType from "../types/mousePositionType";
 
-const DEFAULT_MOUSE_POSITION: mousePositionType = {
-  x: null,
-  y: null,
-};
-
-export default function useMousePosition() {
-  const [mousePosition, setMousePosition] = React.useState<mousePositionType>(
-    DEFAULT_MOUSE_POSITION
-  );
+export default function useMousePosition(position: mousePositionType) {
+  const [mousePosition, setMousePosition] = React.useState<mousePositionType>({
+    x: position?.x ?? window.innerWidth / 2,
+    y: position?.y ?? window.innerHeight / 2,
+  } as mousePositionType);
 
   React.useEffect(() => {
     const mouseMoveHandler = (event: MouseEvent) =>
