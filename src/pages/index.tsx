@@ -32,103 +32,112 @@ const IndexPage = ({
   }, []);
 
   return (
-    <motion.main
-      key="homeText"
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
+    <Container
+      initial={{
+        opacity: 0,
+        transform: "scaleX(1.1) scaleY(1.35) translateY(-47px)",
+      }}
+      animate={{ opacity: 1, transform: "scaleX(1) scaleY(1) translateY(0px)" }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.7 }}
+      transition={{
+        opacity: {
+          duration: 0.5,
+        },
+        transform: {
+          duration: 1.5,
+          delay: 1,
+        },
+      }}
     >
-      <Container>
-        <Cursor hover={hover} position={location.state!} isBlack={true} />
-        <Wrapper>
-          <Top>
+      {/* <Cursor hover={hover} position={location.state!} isBlack={true} /> */}
+      <Wrapper>
+        <Top>
+          {/* <div
+            className="font-primary-normal"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            hello@richard-lee.com
+          </div>
+          <div
+            className="font-primary-bold"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            PROJECTS
+          </div> */}
+        </Top>
+
+        <Bottom>
+          {/* <Name>RICHARD LEE</Name>
+          <Subtitle className="font-primary-bold mt-9">
+            SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;DESIGNER
+          </Subtitle>
+          <Subtitle className="font-primary-bold mt-5">
+            UNIVERSITY OF SYDNEY
+          </Subtitle>
+          <Button className="select-none">
             <div
-              className="font-primary-normal"
+              className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
-              hello@richard-lee.com
+              Let's catch up
             </div>
-            <div
-              className="font-primary-bold"
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-            >
-              PROJECTS
-            </div>
-          </Top>
-          <Bottom>
-            <Name className="font-secondary-normal">RICHARD LEE</Name>
-            <Subtitle className="font-primary-bold mt-9">
-              SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;DESIGNER
-            </Subtitle>
-            <Subtitle className="font-primary-bold mt-5">
-              UNIVERSITY OF SYDNEY
-            </Subtitle>
-            <Button className="select-none">
-              <div
-                className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-              >
-                Let's catch up
-              </div>
-              <FontAwesomeIcon
-                icon={faAngleRight}
-                size={"xs"}
-                className="mt-0.5"
-              />
-            </Button>
-            <CircleContainer
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-            >
-              <Circle className="select-none">
-                <StaticImage
-                  className="relative h-5/6 w-5/6"
-                  src="../images/circle.svg"
-                  alt="Resume Circle"
-                  placeholder="none"
-                />
-              </Circle>
+            <FontAwesomeIcon
+              icon={faAngleRight}
+              size={"xs"}
+              className="mt-0.5"
+            />
+          </Button>
+          <CircleContainer
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            <Circle className="select-none">
               <StaticImage
-                width={60}
-                style={Arrow}
-                src="../images/arrow.svg"
+                className="relative h-5/6 w-5/6"
+                src="../images/circle.svg"
                 alt="Resume Circle"
                 placeholder="none"
               />
-            </CircleContainer>
-          </Bottom>
-        </Wrapper>
-        <Footer>
-          <FLeft>
+            </Circle>
+            <StaticImage
+              width={60}
+              style={Arrow}
+              src="../images/arrow.svg"
+              alt="Resume Circle"
+              placeholder="none"
+            />
+          </CircleContainer> */}
+        </Bottom>
+      </Wrapper>
+      <Footer>
+        {/* <FLeft>
+          <div
+            className="mr-3"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            From Australia with Love
+          </div>
+          <VerticalSeparator></VerticalSeparator>
+          <Link to={Route.Acknowledgement} state={globalCoords}>
             <div
-              className="mr-3"
+              className="ml-3"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
-              From Australia with Love
+              Acknowledgement of Country
             </div>
-            <VerticalSeparator></VerticalSeparator>
-            <Link to={Route.Acknowledgement} state={globalCoords}>
-              <div
-                className="ml-3"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-              >
-                Acknowledgement of Country
-              </div>
-            </Link>
-          </FLeft>
-          <FRight>
-            <Indicator></Indicator>
-            <div>Sydney 9:41 am</div>
-          </FRight>
-        </Footer>
-      </Container>
-    </motion.main>
+          </Link>
+        </FLeft>
+        <FRight>
+          <Indicator></Indicator>
+          <div>Sydney 9:41 am</div>
+        </FRight> */}
+      </Footer>
+    </Container>
   );
 };
 
@@ -138,7 +147,7 @@ export const Head: HeadFC = () => (
   <title>Richard Lee | Software Engineer | University of Sydney</title>
 );
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -146,7 +155,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   margin-top: 70px;
   display: flex;
   flex-direction: column;
@@ -155,7 +164,7 @@ const Wrapper = styled.div`
   border: 3px solid ${COLOR.BLACK};
 `;
 
-const Footer = styled.div`
+const Footer = styled(motion.div)`
   width: 100%;
   height: 70px;
   font-size: 20px;
@@ -207,14 +216,14 @@ const Bottom = styled.div`
   background: linear-gradient(90deg, #f55591 0%, #f9c41a 100%);
 `;
 
-const Name = styled.div`
+const Name = styled(motion.div)`
   font-size: 130px;
   line-height: 120px;
   color: ${COLOR.WHITE};
   -webkit-text-stroke: 0.12rem ${COLOR.BLACK};
 `;
 
-const Subtitle = styled.div`
+const Subtitle = styled(motion.div)`
   font-size: 30px;
   line-height: 36px;
   color: ${COLOR.WHITE};
@@ -247,7 +256,7 @@ const Circle = styled.div`
   }
 `;
 
-const CircleContainer = styled.span`
+const CircleContainer = styled(motion.span)`
   position: absolute;
   bottom: 150px;
   right: 150px;
