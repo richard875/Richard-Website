@@ -219,6 +219,7 @@ const Footer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
 `;
 
 const FLeft = styled.div`
