@@ -1,4 +1,5 @@
 import * as React from "react";
+import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 import { COLOR } from "../../styles/theme";
 import useMousePosition from "../../hooks/useMousePosition";
@@ -17,7 +18,11 @@ const Cursor = ({
   const { x, y } = useMousePosition(position);
 
   return (
-    <>
+    <Container
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, delay: 2.5 }}
+    >
       <Ring
         hover={hover}
         black={isBlack}
@@ -28,11 +33,13 @@ const Cursor = ({
         black={isBlack}
         style={{ left: `${x}px`, top: `${y}px` }}
       ></Dot>
-    </>
+    </Container>
   );
 };
 
 export default Cursor;
+
+const Container = styled(motion.span)``;
 
 const Ring = styled.div`
   position: fixed;
