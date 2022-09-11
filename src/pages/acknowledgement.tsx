@@ -29,10 +29,9 @@ const Acknowledgement = ({
 
   return (
     <motion.main
-      key="aboutText"
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -100 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{
         stiffness: 0,
         duration: 1,
@@ -40,23 +39,43 @@ const Acknowledgement = ({
     >
       <Container className="select-none">
         <Cursor hover={hover} position={location.state!} isBlack={false} />
-        <AcknowledgementText>
-          We acknowledge the Traditional Owners of the land where we work and
-          live. We pay our respects to Elders past, present and emerging. We
-          celebrate the stories, culture and traditions of Aboriginal and Torres
-          Strait Islander Elders of all communities who also work and live on
-          this land.
-        </AcknowledgementText>
+        <motion.main
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            stiffness: 0,
+            duration: 1,
+            delay: 1,
+          }}
+        >
+          <AcknowledgementText>
+            We acknowledge the Traditional Owners of the land where we work and
+            live. We pay our respects to Elders past, present and emerging. We
+            celebrate the stories, culture and traditions of Aboriginal and
+            Torres Strait Islander Elders of all communities who also work and
+            live on this land.
+          </AcknowledgementText>
+        </motion.main>
 
-        <Link to={Route.Home} state={globalCoords}>
-          <BackButton
-            className="font-bold"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            Back
-          </BackButton>
-        </Link>
+        <motion.main
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            stiffness: 0,
+            duration: 1,
+            delay: 2.5,
+          }}
+        >
+          <Link to={Route.Home} state={globalCoords}>
+            <BackButton
+              className="font-bold"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              Back
+            </BackButton>
+          </Link>
+        </motion.main>
       </Container>
     </motion.main>
   );
