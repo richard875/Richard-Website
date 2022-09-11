@@ -28,7 +28,8 @@ const Acknowledgement = ({
   }, []);
 
   return (
-    <motion.main
+    <Container
+      className="select-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -37,27 +38,25 @@ const Acknowledgement = ({
         duration: 1,
       }}
     >
-      <Container className="select-none">
-        <Cursor hover={hover} position={location.state!} isBlack={false} />
-        <motion.main
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 1,
-            delay: 1,
-          }}
-        >
-          <AcknowledgementText>
-            We acknowledge the Traditional Owners of the land where we work and
-            live. We pay our respects to Elders past, present and emerging. We
-            celebrate the stories, culture and traditions of Aboriginal and
-            Torres Strait Islander Elders of all communities who also work and
-            live on this land.
-          </AcknowledgementText>
-        </motion.main>
+      <Cursor hover={hover} position={location.state!} isBlack={false} />
+      <AcknowledgementText
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          stiffness: 0,
+          duration: 1,
+          delay: 1,
+        }}
+      >
+        We acknowledge the Traditional Owners of the land where we work and
+        live. We pay our respects to Elders past, present and emerging. We
+        celebrate the stories, culture and traditions of Aboriginal and Torres
+        Strait Islander Elders of all communities who also work and live on this
+        land.
+      </AcknowledgementText>
 
-        <motion.main
+      <Link to={Route.Home} state={globalCoords}>
+        <BackButton
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
@@ -65,25 +64,20 @@ const Acknowledgement = ({
             duration: 1,
             delay: 2.5,
           }}
+          className="font-bold"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
         >
-          <Link to={Route.Home} state={globalCoords}>
-            <BackButton
-              className="font-bold"
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-            >
-              Back
-            </BackButton>
-          </Link>
-        </motion.main>
-      </Container>
-    </motion.main>
+          Back
+        </BackButton>
+      </Link>
+    </Container>
   );
 };
 
 export default Acknowledgement;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   width: 100vw;
   height: 100vh;
   padding: 200px;
@@ -95,13 +89,13 @@ const Container = styled.div`
   background-color: ${COLOR.BLACK}; ;
 `;
 
-const AcknowledgementText = styled.div`
+const AcknowledgementText = styled(motion.div)`
   font-size: 30px;
   line-height: 60px;
   text-align: justify;
 `;
 
-const BackButton = styled.div`
+const BackButton = styled(motion.div)`
   font-size: 20px;
   margin-top: 70px;
   text-decoration-line: underline;
