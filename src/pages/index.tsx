@@ -1,4 +1,5 @@
 import * as React from "react";
+import { motion } from "framer-motion";
 import { GatsbyLinkProps, Link } from "gatsby";
 import styled from "styled-components";
 import type { HeadFC } from "gatsby";
@@ -31,95 +32,105 @@ const IndexPage = ({
   }, []);
 
   return (
-    <Container>
-      <Cursor hover={hover} position={location.state!} isBlack={true} />
-      <Wrapper>
-        <Top>
-          <div
-            className="font-primary-normal"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            hello@richard-lee.com
-          </div>
-          <div
-            className="font-primary-bold"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            PROJECTS
-          </div>
-        </Top>
-        <Bottom>
-          <Name className="font-secondary-normal">RICHARD LEE</Name>
-          <Subtitle className="font-primary-bold mt-9">
-            SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;DESIGNER
-          </Subtitle>
-          <Subtitle className="font-primary-bold mt-5">
-            UNIVERSITY OF SYDNEY
-          </Subtitle>
-          <Button className="select-none">
+    <motion.main
+      key="homeText"
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -1000 }}
+      transition={{
+        duration: 1,
+      }}
+    >
+      <Container>
+        <Cursor hover={hover} position={location.state!} isBlack={true} />
+        <Wrapper>
+          <Top>
             <div
-              className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
+              className="font-primary-normal"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
-              Let's catch up
+              hello@richard-lee.com
             </div>
-            <FontAwesomeIcon
-              icon={faAngleRight}
-              size={"xs"}
-              className="mt-0.5"
-            />
-          </Button>
-          <CircleContainer
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            <Circle className="select-none">
+            <div
+              className="font-primary-bold"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              PROJECTS
+            </div>
+          </Top>
+          <Bottom>
+            <Name className="font-secondary-normal">RICHARD LEE</Name>
+            <Subtitle className="font-primary-bold mt-9">
+              SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;DESIGNER
+            </Subtitle>
+            <Subtitle className="font-primary-bold mt-5">
+              UNIVERSITY OF SYDNEY
+            </Subtitle>
+            <Button className="select-none">
+              <div
+                className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                Let's catch up
+              </div>
+              <FontAwesomeIcon
+                icon={faAngleRight}
+                size={"xs"}
+                className="mt-0.5"
+              />
+            </Button>
+            <CircleContainer
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              <Circle className="select-none">
+                <StaticImage
+                  className="relative h-5/6 w-5/6"
+                  src="../images/circle.svg"
+                  alt="Resume Circle"
+                  placeholder="none"
+                />
+              </Circle>
               <StaticImage
-                className="relative h-5/6 w-5/6"
-                src="../images/circle.svg"
+                width={60}
+                style={Arrow}
+                src="../images/arrow.svg"
                 alt="Resume Circle"
                 placeholder="none"
               />
-            </Circle>
-            <StaticImage
-              width={60}
-              style={Arrow}
-              src="../images/arrow.svg"
-              alt="Resume Circle"
-              placeholder="none"
-            />
-          </CircleContainer>
-        </Bottom>
-      </Wrapper>
-      <Footer>
-        <FLeft>
-          <div
-            className="mr-3"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            From Australia with Love
-          </div>
-          <VerticalSeparator></VerticalSeparator>
-          <Link to={Route.Acknowledgement} state={globalCoords}>
+            </CircleContainer>
+          </Bottom>
+        </Wrapper>
+        <Footer>
+          <FLeft>
             <div
-              className="ml-3"
+              className="mr-3"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
-              Acknowledgement of Country
+              From Australia with Love
             </div>
-          </Link>
-        </FLeft>
-        <FRight>
-          <Indicator></Indicator>
-          <div>Sydney 9:41 am</div>
-        </FRight>
-      </Footer>
-    </Container>
+            <VerticalSeparator></VerticalSeparator>
+            <Link to={Route.Acknowledgement} state={globalCoords}>
+              <div
+                className="ml-3"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                Acknowledgement of Country
+              </div>
+            </Link>
+          </FLeft>
+          <FRight>
+            <Indicator></Indicator>
+            <div>Sydney 9:41 am</div>
+          </FRight>
+        </Footer>
+      </Container>
+    </motion.main>
   );
 };
 

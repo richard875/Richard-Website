@@ -1,4 +1,5 @@
 import * as React from "react";
+import { motion } from "framer-motion";
 import { GatsbyLinkProps, Link } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
@@ -27,26 +28,37 @@ const Acknowledgement = ({
   }, []);
 
   return (
-    <Container className="select-none">
-      <Cursor hover={hover} position={location.state!} isBlack={false} />
-      <AcknowledgementText>
-        We acknowledge the Traditional Owners of the land where we work and
-        live. We pay our respects to Elders past, present and emerging. We
-        celebrate the stories, culture and traditions of Aboriginal and Torres
-        Strait Islander Elders of all communities who also work and live on this
-        land.
-      </AcknowledgementText>
+    <motion.main
+      key="aboutText"
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -100 }}
+      transition={{
+        stiffness: 0,
+        duration: 1,
+      }}
+    >
+      <Container className="select-none">
+        <Cursor hover={hover} position={location.state!} isBlack={false} />
+        <AcknowledgementText>
+          We acknowledge the Traditional Owners of the land where we work and
+          live. We pay our respects to Elders past, present and emerging. We
+          celebrate the stories, culture and traditions of Aboriginal and Torres
+          Strait Islander Elders of all communities who also work and live on
+          this land.
+        </AcknowledgementText>
 
-      <Link to={Route.Home} state={globalCoords}>
-        <BackButton
-          className="font-bold"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          Back
-        </BackButton>
-      </Link>
-    </Container>
+        <Link to={Route.Home} state={globalCoords}>
+          <BackButton
+            className="font-bold"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            Back
+          </BackButton>
+        </Link>
+      </Container>
+    </motion.main>
   );
 };
 
