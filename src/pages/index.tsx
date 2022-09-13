@@ -1,5 +1,4 @@
 import * as React from "react";
-import gsap from "gsap";
 import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
@@ -7,19 +6,17 @@ import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import mousePositionType from "../types/mousePositionType";
-import gsapAnimationIndex from "../helper/gsapAnimationIndex";
 import MOUSE_POSITION from "../constants/defaultmousePosition";
 import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
+import FooterRight from "../components/index/footerRight";
 
 const IndexPage = ({
   location,
 }: {
   location: GatsbyLinkProps<mousePositionType>;
 }) => {
-  const timeRef = React.useRef(null);
-
   const [hover, setHover] = React.useState(false);
   const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
@@ -30,11 +27,6 @@ const IndexPage = ({
     window.addEventListener("mousemove", handleWindowMouseMove);
 
     return () => window.removeEventListener("mousemove", handleWindowMouseMove);
-  }, []);
-
-  React.useEffect(() => {
-    gsap.defaults({ ease: "power4.out", duration: 1.8 });
-    gsap.from(timeRef.current, gsapAnimationIndex(150, 3.4, 20));
   }, []);
 
   return (
@@ -66,10 +58,7 @@ const IndexPage = ({
       </Wrapper>
       <Footer>
         <FooterLeft setHover={setHover} globalCoords={globalCoords} />
-        <FRight ref={timeRef}>
-          <Indicator></Indicator>
-          <div>Sydney 9:41 am</div>
-        </FRight>
+        <FooterRight />
       </Footer>
     </Container>
   );
@@ -106,18 +95,4 @@ const Footer = styled.div`
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-`;
-
-const FRight = styled.div`
-  display: flex;
-  align-items: center;
-  padding-right: 98px;
-`;
-
-const Indicator = styled.div`
-  width: 8px;
-  height: 8px;
-  margin-right: 7px;
-  border-radius: 99px;
-  background: #35be27;
 `;
