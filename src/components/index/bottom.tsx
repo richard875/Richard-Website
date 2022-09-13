@@ -65,7 +65,7 @@ const Bottom = ({
           <Circle className="select-none">
             <StaticImage
               className="relative h-5/6 w-5/6"
-              src="../images/circle.svg"
+              src="../../images/circle.svg"
               alt="Resume Circle"
               placeholder="none"
             />
@@ -73,7 +73,7 @@ const Bottom = ({
           <StaticImage
             width={60}
             style={Arrow}
-            src="../images/arrow.svg"
+            src="../../images/arrow.svg"
             alt="Resume Circle"
             placeholder="none"
           />
