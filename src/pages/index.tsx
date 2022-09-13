@@ -11,18 +11,14 @@ import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import mousePositionType from "../types/mousePositionType";
-
-const gsapAnimation = (y: number, delay: number, skewY: number) => {
-  return { y, delay, skewY, stagger: { amount: 0.3 } };
-};
+import gsapAnimationIndex from "../helper/gsapAnimationIndex";
+import Top from "../components/index/top";
 
 const IndexPage = ({
   location,
 }: {
   location: GatsbyLinkProps<mousePositionType>;
 }) => {
-  const emailRef = React.useRef(null);
-  const projectRef = React.useRef(null);
   const acknowledgementRef = React.useRef(null);
   const timeRef = React.useRef(null);
   const nameRef = React.useRef(null);
@@ -47,14 +43,12 @@ const IndexPage = ({
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out", duration: 1.8 });
-    gsap.from(emailRef.current, gsapAnimation(150, 2, 20));
-    gsap.from(projectRef.current, gsapAnimation(150, 2, 20));
-    gsap.from(acknowledgementRef.current, gsapAnimation(150, 3.4, 20));
-    gsap.from(timeRef.current, gsapAnimation(150, 3.4, 20));
-    gsap.from(nameRef.current, gsapAnimation(450, 2.5, 0));
-    gsap.from(sub1Ref.current, gsapAnimation(350, 2.6, 0));
-    gsap.from(sub2Ref.current, gsapAnimation(350, 2.8, 0));
-    gsap.from(contactRef.current, gsapAnimation(350, 3.1, 0));
+    gsap.from(acknowledgementRef.current, gsapAnimationIndex(150, 3.4, 20));
+    gsap.from(timeRef.current, gsapAnimationIndex(150, 3.4, 20));
+    gsap.from(nameRef.current, gsapAnimationIndex(450, 2.5, 0));
+    gsap.from(sub1Ref.current, gsapAnimationIndex(350, 2.6, 0));
+    gsap.from(sub2Ref.current, gsapAnimationIndex(350, 2.8, 0));
+    gsap.from(contactRef.current, gsapAnimationIndex(350, 3.1, 0));
   }, []);
 
   return (
@@ -81,25 +75,7 @@ const IndexPage = ({
     >
       <Cursor hover={hover} position={location.state!} isBlack={true} />
       <Wrapper>
-        <Top className="">
-          <div
-            ref={emailRef}
-            className="font-primary-normal overflow-hidden"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            hello@richard-lee.com
-          </div>
-          <div
-            ref={projectRef}
-            className="font-primary-bold"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            PROJECTS
-          </div>
-        </Top>
-
+        <Top setHover={setHover} />
         <Bottom>
           <Name className="font-secondary-normal">
             <div ref={nameRef}>RICHARD LEE</div>
@@ -246,18 +222,6 @@ const Indicator = styled.div`
   margin-right: 7px;
   border-radius: 99px;
   background: #35be27;
-`;
-
-const Top = styled.div`
-  height: 80px;
-  padding-left: 28px;
-  padding-right: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 30px;
-  overflow: hidden;
-  border-bottom: 3px solid ${COLOR.BLACK};
 `;
 
 const Bottom = styled.div`
