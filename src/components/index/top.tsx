@@ -13,6 +13,7 @@ const Top = ({
   const projectRef = React.useRef(null);
 
   React.useEffect(() => {
+    gsap.defaults({ ease: "power4.out", duration: 1.8 });
     gsap.from(emailRef.current, gsapAnimationIndex(150, 2, 20));
     gsap.from(projectRef.current, gsapAnimationIndex(150, 2, 20));
   }, []);
