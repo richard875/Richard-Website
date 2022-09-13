@@ -1,10 +1,9 @@
 import * as React from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps, Link } from "gatsby";
+import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
 import type { HeadFC } from "gatsby";
-import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import mousePositionType from "../types/mousePositionType";
@@ -12,13 +11,13 @@ import gsapAnimationIndex from "../helper/gsapAnimationIndex";
 import MOUSE_POSITION from "../constants/defaultmousePosition";
 import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
+import FooterLeft from "../components/index/footerLeft";
 
 const IndexPage = ({
   location,
 }: {
   location: GatsbyLinkProps<mousePositionType>;
 }) => {
-  const acknowledgementRef = React.useRef(null);
   const timeRef = React.useRef(null);
 
   const [hover, setHover] = React.useState(false);
@@ -35,7 +34,6 @@ const IndexPage = ({
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out", duration: 1.8 });
-    gsap.from(acknowledgementRef.current, gsapAnimationIndex(150, 3.4, 20));
     gsap.from(timeRef.current, gsapAnimationIndex(150, 3.4, 20));
   }, []);
 
@@ -67,25 +65,7 @@ const IndexPage = ({
         <Bottom setHover={setHover} />
       </Wrapper>
       <Footer>
-        <FLeft ref={acknowledgementRef}>
-          <div
-            className="mr-3"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            From Australia with Love
-          </div>
-          <VerticalSeparator></VerticalSeparator>
-          <Link to={Route.Acknowledgement} state={globalCoords}>
-            <div
-              className="ml-3"
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-            >
-              Acknowledgement of Country
-            </div>
-          </Link>
-        </FLeft>
+        <FooterLeft setHover={setHover} globalCoords={globalCoords} />
         <FRight ref={timeRef}>
           <Indicator></Indicator>
           <div>Sydney 9:41 am</div>
@@ -128,22 +108,10 @@ const Footer = styled.div`
   overflow: hidden;
 `;
 
-const FLeft = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 98px;
-`;
-
 const FRight = styled.div`
   display: flex;
   align-items: center;
   padding-right: 98px;
-`;
-
-const VerticalSeparator = styled.div`
-  width: 0px;
-  height: 17px;
-  border: 1px solid ${COLOR.BLACK};
 `;
 
 const Indicator = styled.div`
