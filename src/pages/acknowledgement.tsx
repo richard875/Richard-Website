@@ -6,6 +6,7 @@ import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import mousePositionType from "../types/mousePositionType";
+import MOUSE_POSITION from "../constants/defaultmousePosition";
 
 const Acknowledgement = ({
   location,
@@ -13,10 +14,7 @@ const Acknowledgement = ({
   location: GatsbyLinkProps<mousePositionType>;
 }) => {
   const [hover, setHover] = React.useState(false);
-  const [globalCoords, setGlobalCoords] = React.useState({
-    x: 0,
-    y: 0,
-  } as mousePositionType);
+  const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
     const handleWindowMouseMove = (event: MouseEvent) =>

@@ -9,6 +9,7 @@ import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import mousePositionType from "../types/mousePositionType";
 import gsapAnimationIndex from "../helper/gsapAnimationIndex";
+import MOUSE_POSITION from "../constants/defaultmousePosition";
 import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
 
@@ -21,10 +22,7 @@ const IndexPage = ({
   const timeRef = React.useRef(null);
 
   const [hover, setHover] = React.useState(false);
-  const [globalCoords, setGlobalCoords] = React.useState({
-    x: 0,
-    y: 0,
-  } as mousePositionType);
+  const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
     const handleWindowMouseMove = (event: MouseEvent) =>
