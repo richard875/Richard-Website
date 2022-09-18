@@ -13,8 +13,7 @@ import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
 
 const InitialTransition = () => (
-  <motion.div
-    className="absolute z-50 w-screen bg-black"
+  <Transition
     initial={{
       bottom: 0,
       height: "0px",
@@ -23,9 +22,10 @@ const InitialTransition = () => (
       height: "100vh",
     }}
     transition={{
-      duration: 1,
+      duration: 1.7,
+      ease: [0.87, 0, 0.13, 1],
     }}
-  ></motion.div>
+  ></Transition>
 );
 
 const IndexPage = ({
@@ -90,6 +90,13 @@ export default IndexPage;
 export const Head: HeadFC = () => (
   <title>Richard Lee | Software Engineer | University of Sydney</title>
 );
+
+const Transition = styled(motion.div)`
+  width: 100vw;
+  position: absolute;
+  z-index: 50;
+  background-color: ${COLOR.BACKGROUND_BLACK};
+`;
 
 const Container = styled(motion.div)`
   width: 100vw;
