@@ -1,5 +1,6 @@
 export const COLOR = {
-  BACKGROUND: "#f5ede3 ",
+  BACKGROUND_WHITE: "#f5ede3",
+  BACKGROUND_BLACK: "#040300",
   BLACK: "#040300",
   WHITE: "#ffffff",
 };
