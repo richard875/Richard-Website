@@ -22,8 +22,6 @@ const IndexPage = ({
   const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
-
     const handleWindowMouseMove = (event: MouseEvent) =>
       setGlobalCoords({ x: event.clientX, y: event.clientY });
 

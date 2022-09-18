@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps, Link } from "gatsby";
+import { GatsbyLinkProps, navigate } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
@@ -18,8 +18,6 @@ const Acknowledgement = ({
   const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-
     const handleWindowMouseMove = (event: MouseEvent) =>
       setGlobalCoords({ x: event.clientX, y: event.clientY });
 
@@ -27,6 +25,12 @@ const Acknowledgement = ({
 
     return () => window.removeEventListener("mousemove", handleWindowMouseMove);
   }, []);
+
+  const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.preventDefault();
+    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
+    navigate(Route.Home, { state: globalCoords });
+  };
 
   return (
     <Container
@@ -61,22 +65,21 @@ const Acknowledgement = ({
         land.
       </AcknowledgementText>
 
-      <Link to={Route.Home} state={globalCoords}>
-        <BackButton
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 1,
-            delay: 1,
-          }}
-          className="font-bold"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          Back
-        </BackButton>
-      </Link>
+      <BackButton
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          stiffness: 0,
+          duration: 1,
+          delay: 1,
+        }}
+        className="font-bold"
+        onClick={(e) => home(e)}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        Back
+      </BackButton>
     </Container>
   );
 };
