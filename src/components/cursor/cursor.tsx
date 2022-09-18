@@ -7,10 +7,12 @@ import mousePositionType from "../../types/mousePositionType";
 
 const Cursor = ({
   hover,
+  delay,
   position,
   isBlack,
 }: {
   hover: boolean;
+  delay: number;
   position: mousePositionType;
   isBlack: boolean;
 }) => {
@@ -21,7 +23,7 @@ const Cursor = ({
     <Container
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1, delay: 2.5 }}
+      transition={{ duration: 1, delay: delay }}
     >
       <Ring
         hover={hover}

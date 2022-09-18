@@ -51,7 +51,12 @@ const IndexPage = ({
         },
       }}
     >
-      <Cursor hover={hover} position={location.state!} isBlack={true} />
+      <Cursor
+        hover={hover}
+        delay={2.5}
+        position={location.state!}
+        isBlack={true}
+      />
       <Wrapper>
         <Top setHover={setHover} />
         <Bottom setHover={setHover} />

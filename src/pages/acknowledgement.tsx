@@ -36,7 +36,12 @@ const Acknowledgement = ({
         duration: 1,
       }}
     >
-      <Cursor hover={hover} position={location.state!} isBlack={false} />
+      <Cursor
+        hover={hover}
+        delay={1.5}
+        position={location.state!}
+        isBlack={false}
+      />
       <AcknowledgementText
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
