@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps, Link } from "gatsby";
+import { GatsbyLinkProps, navigate } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
@@ -25,6 +25,12 @@ const Acknowledgement = ({
     return () => window.removeEventListener("mousemove", handleWindowMouseMove);
   }, []);
 
+  const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.preventDefault();
+    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
+    navigate(Route.Home, { state: globalCoords });
+  };
+
   return (
     <Container
       className="select-none"
@@ -34,6 +40,7 @@ const Acknowledgement = ({
       transition={{
         stiffness: 0,
         duration: 1,
+        delay: 0.5,
       }}
     >
       <Cursor
@@ -45,10 +52,10 @@ const Acknowledgement = ({
       <AcknowledgementText
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{
           stiffness: 0,
           duration: 1,
-          delay: 1,
         }}
       >
         We acknowledge the Traditional Owners of the land where we work and
@@ -58,22 +65,22 @@ const Acknowledgement = ({
         land.
       </AcknowledgementText>
 
-      <Link to={Route.Home} state={globalCoords}>
-        <BackButton
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 1,
-            delay: 2.5,
-          }}
-          className="font-bold"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          Back
-        </BackButton>
-      </Link>
+      <BackButton
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          stiffness: 0,
+          duration: 1,
+          delay: 1,
+        }}
+        className="font-bold"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        onClick={(e) => home(e)}
+      >
+        Back
+      </BackButton>
     </Container>
   );
 };

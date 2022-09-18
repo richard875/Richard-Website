@@ -12,6 +12,22 @@ import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
 
+const InitialTransition = () => (
+  <motion.div
+    className="absolute z-50 w-screen bg-black"
+    initial={{
+      bottom: 0,
+      height: "0px",
+    }}
+    exit={{
+      height: "100vh",
+    }}
+    transition={{
+      duration: 1,
+    }}
+  ></motion.div>
+);
+
 const IndexPage = ({
   location,
 }: {
@@ -39,7 +55,6 @@ const IndexPage = ({
         opacity: 1,
         transform: "scaleX(1) scaleY(1) translateY(0px)",
       }}
-      exit={{ opacity: 0 }}
       transition={{
         opacity: {
           duration: 1,
@@ -57,6 +72,7 @@ const IndexPage = ({
         position={location.state!}
         isBlack={true}
       />
+      <InitialTransition />
       <Wrapper>
         <Top setHover={setHover} />
         <Bottom setHover={setHover} />
@@ -81,6 +97,7 @@ const Container = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: ${COLOR.BACKGROUND_WHITE};
 `;
 
 const Wrapper = styled.div`
