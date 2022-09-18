@@ -14,7 +14,14 @@ const FooterRight = () => {
   return (
     <Container ref={timeRef}>
       <Indicator></Indicator>
-      <div>Sydney 9:41 am</div>
+      <div>
+        Sydney&nbsp;
+        {new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: "Australia/Canberra",
+        })}
+      </div>
     </Container>
   );
 };
