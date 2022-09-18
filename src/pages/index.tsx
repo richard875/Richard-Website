@@ -32,43 +32,45 @@ const IndexPage = ({
   }, []);
 
   return (
-    <Container
-      initial={{
-        opacity: 0,
-        transform: "scaleX(2) scaleY(2) translateY(-47px)",
-      }}
-      animate={{
-        opacity: 1,
-        transform: "scaleX(1) scaleY(1) translateY(0px)",
-      }}
-      transition={{
-        opacity: {
-          duration: 1,
-        },
-        transform: {
-          type: "spring",
-          stiffness: 65,
-          delay: 1.5,
-        },
-      }}
-    >
+    <>
+      <Container
+        initial={{
+          opacity: 0,
+          transform: "scaleX(2) scaleY(2) translateY(-47px)",
+        }}
+        animate={{
+          opacity: 1,
+          transform: "scaleX(1) scaleY(1) translateY(0px)",
+        }}
+        transition={{
+          opacity: {
+            duration: 1,
+          },
+          transform: {
+            type: "spring",
+            stiffness: 65,
+            delay: 1.5,
+          },
+        }}
+      >
+        <Cursor
+          hover={hover}
+          delay={2.5}
+          position={location.state!}
+          isBlack={true}
+        />
+        <InitialTransition color={COLOR.BACKGROUND_BLACK} />
+        <Wrapper>
+          <Top setHover={setHover} />
+          <Bottom setHover={setHover} />
+        </Wrapper>
+        <Footer>
+          <FooterLeft setHover={setHover} globalCoords={globalCoords} />
+          <FooterRight />
+        </Footer>
+      </Container>
       <Loading />
-      <Cursor
-        hover={hover}
-        delay={2.5}
-        position={location.state!}
-        isBlack={true}
-      />
-      <InitialTransition color={COLOR.BACKGROUND_BLACK} />
-      <Wrapper>
-        <Top setHover={setHover} />
-        <Bottom setHover={setHover} />
-      </Wrapper>
-      <Footer>
-        <FooterLeft setHover={setHover} globalCoords={globalCoords} />
-        <FooterRight />
-      </Footer>
-    </Container>
+    </>
   );
 };
 

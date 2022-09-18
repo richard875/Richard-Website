@@ -13,7 +13,7 @@ const Loading = () => {
         opacity: 0,
       }}
       transition={{
-        delay: 1.2,
+        delay: 2.7,
       }}
     ></Container>
   );
@@ -25,8 +25,16 @@ const Container = styled(motion.div)`
   width: 30px;
   height: 30px;
   clear: both;
-  top: 52%;
-  margin: 0 auto;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
 
   position: absolute;
   border: 2px ${COLOR.BLACK} solid;
@@ -34,40 +42,31 @@ const Container = styled(motion.div)`
   -webkit-animation: spHydro 1s infinite linear;
   animation: spHydro 1s infinite linear;
 
-  &:before,
   &:after {
     content: "";
     position: absolute;
     width: 8px;
     height: 8px;
+    top: -1px;
+    left: -1px;
     background-color: ${COLOR.BLACK};
     border-radius: 50%;
   }
 
-  &:before {
-    top: calc(50% - 4px);
-    left: calc(50% - 4px);
-  }
-
-  &:after {
-    top: -1px;
-    left: -1px;
-  }
-
   @-webkit-keyframes spHydro {
     from {
-      -webkit-transform: rotate(0deg) scale(0.45);
+      -webkit-transform: rotate(0deg);
     }
     to {
-      -webkit-transform: rotate(359deg) scale(0.45);
+      -webkit-transform: rotate(359deg);
     }
   }
   @keyframes spHydro {
     from {
-      transform: rotate(0deg) scale(0.45);
+      transform: rotate(0deg);
     }
     to {
-      transform: rotate(359deg) scale(0.45);
+      transform: rotate(359deg);
     }
   }
 `;
