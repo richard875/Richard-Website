@@ -5,28 +5,13 @@ import styled from "styled-components";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
+import InitialTransition from "../components/transition/InitialTransition";
 import mousePositionType from "../types/mousePositionType";
 import MOUSE_POSITION from "../constants/defaultmousePosition";
 import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
-
-const InitialTransition = () => (
-  <Transition
-    initial={{
-      bottom: 0,
-      height: "0px",
-    }}
-    exit={{
-      height: "100vh",
-    }}
-    transition={{
-      duration: 1.7,
-      ease: [0.87, 0, 0.13, 1],
-    }}
-  ></Transition>
-);
 
 const IndexPage = ({
   location,
@@ -37,6 +22,8 @@ const IndexPage = ({
   const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
+    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
+
     const handleWindowMouseMove = (event: MouseEvent) =>
       setGlobalCoords({ x: event.clientX, y: event.clientY });
 
@@ -72,7 +59,7 @@ const IndexPage = ({
         position={location.state!}
         isBlack={true}
       />
-      <InitialTransition />
+      <InitialTransition color={COLOR.BACKGROUND_BLACK} />
       <Wrapper>
         <Top setHover={setHover} />
         <Bottom setHover={setHover} />
@@ -90,13 +77,6 @@ export default IndexPage;
 export const Head: HeadFC = () => (
   <title>Richard Lee | Software Engineer | University of Sydney</title>
 );
-
-const Transition = styled(motion.div)`
-  width: 100vw;
-  position: absolute;
-  z-index: 50;
-  background-color: ${COLOR.BACKGROUND_BLACK};
-`;
 
 const Container = styled(motion.div)`
   width: 100vw;

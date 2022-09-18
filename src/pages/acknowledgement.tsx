@@ -1,10 +1,11 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps, navigate } from "gatsby";
+import { GatsbyLinkProps, Link } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
+import InitialTransition from "../components/transition/InitialTransition";
 import mousePositionType from "../types/mousePositionType";
 import MOUSE_POSITION from "../constants/defaultmousePosition";
 
@@ -17,6 +18,8 @@ const Acknowledgement = ({
   const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
+
     const handleWindowMouseMove = (event: MouseEvent) =>
       setGlobalCoords({ x: event.clientX, y: event.clientY });
 
@@ -25,26 +28,11 @@ const Acknowledgement = ({
     return () => window.removeEventListener("mousemove", handleWindowMouseMove);
   }, []);
 
-  React.useEffect(() => {
-    const handleWindowPopState = () =>
-      (document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE);
-    window.addEventListener("popstate", handleWindowPopState);
-
-    return () => window.removeEventListener("mousemove", handleWindowPopState);
-  }, []);
-
-  const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
-    navigate(Route.Home, { state: globalCoords });
-  };
-
   return (
     <Container
       className="select-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
       transition={{
         stiffness: 0,
         duration: 1,
@@ -57,10 +45,10 @@ const Acknowledgement = ({
         position={location.state!}
         isBlack={false}
       />
+      <InitialTransition color={COLOR.BACKGROUND_WHITE} />
       <AcknowledgementText
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
         transition={{
           stiffness: 0,
           duration: 1,
@@ -73,22 +61,22 @@ const Acknowledgement = ({
         land.
       </AcknowledgementText>
 
-      <BackButton
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{
-          stiffness: 0,
-          duration: 1,
-          delay: 1,
-        }}
-        className="font-bold"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        onClick={(e) => home(e)}
-      >
-        Back
-      </BackButton>
+      <Link to={Route.Home} state={globalCoords}>
+        <BackButton
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            stiffness: 0,
+            duration: 1,
+            delay: 1,
+          }}
+          className="font-bold"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          Back
+        </BackButton>
+      </Link>
     </Container>
   );
 };

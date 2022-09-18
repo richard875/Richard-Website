@@ -1,6 +1,6 @@
 import * as React from "react";
 import gsap from "gsap";
-import { navigate } from "gatsby";
+import { Link } from "gatsby";
 import styled from "styled-components";
 import Route from "../../routes/route";
 import { COLOR } from "../../styles/theme";
@@ -21,14 +21,6 @@ const FooterLeft = ({
     gsap.from(acknowledgementRef.current, gsapAnimationIndex(150, 3.4, 20));
   }, []);
 
-  const acknowledgement = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-    navigate(Route.Acknowledgement, { state: globalCoords });
-  };
-
   return (
     <Container ref={acknowledgementRef}>
       <div
@@ -39,14 +31,15 @@ const FooterLeft = ({
         From Australia with Love
       </div>
       <VerticalSeparator></VerticalSeparator>
-      <div
-        className="ml-3"
-        onClick={(e) => acknowledgement(e)}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        Acknowledgement of Country
-      </div>
+      <Link to={Route.Acknowledgement} state={globalCoords}>
+        <div
+          className="ml-3"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          Acknowledgement of Country
+        </div>
+      </Link>
     </Container>
   );
 };
