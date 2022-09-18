@@ -32,7 +32,9 @@ const Bottom = ({
         <div ref={nameRef}>RICHARD LEE</div>
       </Name>
       <Subtitle className="font-primary-bold mt-9">
-        <div ref={sub1Ref}>SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;DESIGNER</div>
+        <div ref={sub1Ref}>
+          SOFTWARE&nbsp;ENGINEER&nbsp;&amp;&nbsp;CREATIVE DESIGNER
+        </div>
       </Subtitle>
       <Subtitle className="font-primary-bold mt-5">
         <div ref={sub2Ref}>UNIVERSITY OF SYDNEY</div>
