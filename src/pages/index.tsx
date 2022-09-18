@@ -5,6 +5,7 @@ import styled from "styled-components";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
+import Loading from "../components/index/loading";
 import InitialTransition from "../components/transition/InitialTransition";
 import mousePositionType from "../types/mousePositionType";
 import MOUSE_POSITION from "../constants/defaultmousePosition";
@@ -34,7 +35,7 @@ const IndexPage = ({
     <Container
       initial={{
         opacity: 0,
-        transform: "scaleX(1.4) scaleY(1.75) translateY(-47px)",
+        transform: "scaleX(2) scaleY(2) translateY(-47px)",
       }}
       animate={{
         opacity: 1,
@@ -51,6 +52,7 @@ const IndexPage = ({
         },
       }}
     >
+      <Loading />
       <Cursor
         hover={hover}
         delay={2.5}
