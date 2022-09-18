@@ -25,6 +25,14 @@ const Acknowledgement = ({
     return () => window.removeEventListener("mousemove", handleWindowMouseMove);
   }, []);
 
+  React.useEffect(() => {
+    const handleWindowPopState = () =>
+      (document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE);
+    window.addEventListener("popstate", handleWindowPopState);
+
+    return () => window.removeEventListener("mousemove", handleWindowPopState);
+  }, []);
+
   const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
     document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
