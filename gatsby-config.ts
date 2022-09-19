@@ -1,5 +1,9 @@
 import type { GatsbyConfig } from "gatsby";
 
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `richard-website`,
@@ -19,12 +23,12 @@ const config: GatsbyConfig = {
     // },
     "gatsby-plugin-postcss",
     "gatsby-plugin-styled-components",
-    // {
-    //   resolve: "gatsby-plugin-google-analytics",
-    //   options: {
-    //     trackingId: "xx",
-    //   },
-    // },
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: process.env.GA_ID,
+      },
+    },
     "gatsby-plugin-sass",
     "gatsby-plugin-image",
     {
