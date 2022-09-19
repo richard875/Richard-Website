@@ -4,3 +4,7 @@ public
 src/gatsby-types.d.ts
 
 .DS_Store
+
+.env
+.env.development
+.env.production
