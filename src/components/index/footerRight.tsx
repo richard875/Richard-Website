@@ -32,7 +32,7 @@ export default FooterRight;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  padding-right: 98px;
+  margin-right: 15px;
 `;
 
 const Indicator = styled.div`
