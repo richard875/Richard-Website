@@ -32,15 +32,6 @@ const FooterLeft = ({
   return (
     <Container ref={acknowledgementRef}>
       <div
-        className="mr-3"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        From Australia with Love
-      </div>
-      <VerticalSeparator></VerticalSeparator>
-      <div
-        className="ml-3"
         onClick={(e) => acknowledgement(e)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -56,7 +47,7 @@ export default FooterLeft;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  padding-left: 98px;
+  margin-left: 15px;
 `;
 
 const VerticalSeparator = styled.div`
