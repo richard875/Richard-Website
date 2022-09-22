@@ -4,6 +4,7 @@ import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
 import { up } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
+import { isBrowser } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Layout from "../components/global/layout";
@@ -60,7 +61,7 @@ const IndexPage = ({
           },
         }}
       >
-        {useBreakpoint(up("md")) && (
+        {isBrowser && (
           <Cursor
             hover={hover}
             delay={2.5}
