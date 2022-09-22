@@ -1,6 +1,8 @@
 import * as React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
+import { up, down } from "styled-breakpoints";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
@@ -20,21 +22,33 @@ const Top = ({
 
   return (
     <Container>
-      <div
-        ref={emailRef}
-        className="font-primary-normal overflow-hidden"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        hello@richard-lee.com
-      </div>
+      {useBreakpoint(up("sm")) ? (
+        <div
+          ref={emailRef}
+          className="font-primary-normal overflow-hidden"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          hello@richard-lee.com
+        </div>
+      ) : (
+        <div
+          ref={emailRef}
+          className="font-primary-bold overflow-hidden"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          hello@richard-lee.com
+        </div>
+      )}
+
       <div
         ref={projectRef}
         className="font-primary-bold"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        PROJECTS
+        {useBreakpoint(up("sm")) && <>PROJECTS</>}
       </div>
     </Container>
   );
@@ -43,13 +57,29 @@ const Top = ({
 export default Top;
 
 const Container = styled.div`
-  height: 80px;
-  padding-left: 28px;
-  padding-right: 28px;
+  height: 40px;
+  font-size: 17px;
+  padding-left: 15px;
+  padding-right: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 30px;
   overflow: hidden;
   border-bottom: 3px solid ${COLOR.BLACK};
+
+  ${up("sm")} {
+    border-top: none;
+  }
+
+  ${up("lg")} {
+    height: 60px;
+    font-size: 25px;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  ${up("xxl")} {
+    height: 9vh;
+    font-size: 30px;
+  }
 `;
