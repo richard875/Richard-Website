@@ -2,8 +2,11 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
+import { up } from "styled-breakpoints";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
+import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -27,12 +30,16 @@ const IndexPage = ({
       setGlobalCoords({ x: event.clientX, y: event.clientY });
 
     window.addEventListener("mousemove", handleWindowMouseMove);
+    document.body.style.overflow = "hidden";
 
-    return () => window.removeEventListener("mousemove", handleWindowMouseMove);
+    return () => {
+      document.body.style.overflow = "auto";
+      window.removeEventListener("mousemove", handleWindowMouseMove);
+    };
   }, []);
 
   return (
-    <>
+    <Layout>
       <Container
         initial={{
           opacity: 0,
@@ -53,24 +60,31 @@ const IndexPage = ({
           },
         }}
       >
-        <Cursor
-          hover={hover}
-          delay={2.5}
-          position={location.state!}
-          isBlack={true}
-        />
+        {useBreakpoint(up("md")) && (
+          <Cursor
+            hover={hover}
+            delay={2.5}
+            position={location.state!}
+            isBlack={true}
+          />
+        )}
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
+        <Header></Header>
         <Wrapper>
-          <Top setHover={setHover} />
+          {useBreakpoint(up("sm")) && <Top setHover={setHover} />}
           <Bottom setHover={setHover} />
         </Wrapper>
         <Footer>
-          <FooterLeft setHover={setHover} globalCoords={globalCoords} />
-          <FooterRight />
+          {useBreakpoint(up("lg")) && (
+            <>
+              <FooterLeft setHover={setHover} globalCoords={globalCoords} />
+              <FooterRight />
+            </>
+          )}
         </Footer>
       </Container>
       <Loading />
-    </>
+    </Layout>
   );
 };
 
@@ -87,23 +101,63 @@ const Container = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   background-color: ${COLOR.BACKGROUND_WHITE};
+
+  ${up("sm")} {
+    width: calc(100vw - 70px);
+    height: 100vh;
+    margin-left: 35px;
+    margin-right: 35px;
+  }
+
+  ${up("lg")} {
+    width: calc(100vw - 140px);
+    margin-left: 70px;
+    margin-right: 70px;
+  }
+`;
+
+const Header = styled.div`
+  flex: 0;
+
+  ${up("sm")} {
+    flex: 0.05;
+  }
+
+  ${up("lg")} {
+    flex: 0.07;
+  }
 `;
 
 const Wrapper = styled.div`
-  margin-top: 70px;
+  width: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  width: calc(100vw - 140px);
-  height: calc(100vh - 140px);
-  border: 3px solid ${COLOR.BLACK};
+
+  ${up("sm")} {
+    flex: 0.9;
+    border: 3px solid ${COLOR.BLACK};
+  }
+
+  ${up("lg")} {
+    flex: 0.86;
+  }
 `;
 
 const Footer = styled.div`
   width: 100%;
-  height: 70px;
+  flex: 0;
   font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
+
+  ${up("sm")} {
+    flex: 0.05;
+  }
+
+  ${up("lg")} {
+    flex: 0.07;
+  }
 `;
