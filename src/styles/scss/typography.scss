@@ -1,43 +1,35 @@
 @font-face {
-  font-family: "BwGradual";
-  font-weight: normal;
-  src: url("/fonts/BwGradual-Regular.ttf");
-}
-
-@font-face {
-  font-family: "BwGradual";
-  font-weight: bold;
+  font-family: "BwGradual-Medium";
   src: url("/fonts/BwGradual-Medium.ttf");
 }
 
 @font-face {
-  font-family: "NeueHelveticaPaneuropean75";
-  font-weight: normal;
-  src: url("/fonts/Neue-Helvetica-Paneuropean-75-Bold.woff2");
+  font-family: "sf-pro-bold";
+  src: url("/fonts/sf-pro-bold.otf");
 }
 
 @font-face {
-  font-family: "OldschoolGroteskHeavy";
-  font-weight: bold;
-  src: url("/fonts/Oldschool-Grotesk-Heavy.woff2");
+  font-family: "sf-pro-regular";
+  src: url("/fonts/sf-pro-regular.otf");
+}
+
+@font-face {
+  font-family: "sf-pro-medium";
+  src: url("/fonts/sf-pro-medium.otf");
 }
 
 .font-primary-normal {
-  font-weight: normal;
-  font-family: "BwGradual", sans-serif;
+  font-family: "BwGradual-Medium", sans-serif;
 }
 
 .font-primary-bold {
-  font-weight: bold;
-  font-family: "BwGradual", sans-serif;
+  font-family: "sf-pro-bold", sans-serif;
 }
 
 .font-secondary-normal {
-  font-weight: normal;
-  font-family: "NeueHelveticaPaneuropean75", sans-serif;
+  font-family: "sf-pro-regular", sans-serif;
 }
 
 .font-secondary-bold {
-  font-weight: bold;
-  font-family: "OldschoolGroteskHeavy", sans-serif;
+  font-family: "sf-pro-medium", sans-serif;
 }
