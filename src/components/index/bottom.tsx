@@ -51,19 +51,19 @@ const Bottom = ({
       <SmalllText>
         <div ref={topGreetingRef}>
           {useBreakpoint(up("sm")) && (
-            <div className="font-primary-bold mt-4 mb-6">
+            <div className="font-primary-normal mt-4 mb-6">
               From Australia with Love
             </div>
           )}
         </div>
       </SmalllText>
-      <Name className="font-secondary-normal">
+      <Name className="font-primary-bold">
         <div ref={nameRef}>RICHARD LEE</div>
       </Name>
-      <Subtitle className="font-primary-bold mt-5 sm:mt-8">
+      <Subtitle className="font-primary-normal mt-5 sm:mt-8">
         <div ref={sub1Ref}>SOFTWARE ENGINEER &amp; CREATIVE DESIGNER</div>
       </Subtitle>
-      <Subtitle className="font-primary-bold mt-2 sm:mt-4">
+      <Subtitle className="font-primary-normal mt-2 sm:mt-4">
         <div ref={sub2Ref}>UNIVERSITY OF SYDNEY</div>
       </Subtitle>
       <Button>

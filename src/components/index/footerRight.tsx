@@ -15,7 +15,7 @@ const FooterRight = () => {
   return (
     <Container ref={timeRef}>
       <Indicator></Indicator>
-      <div>
+      <div className="font-secondary-normal">
         Sydney&nbsp;
         {new Date().toLocaleTimeString("en-US", {
           hour: "2-digit",

@@ -22,29 +22,18 @@ const Top = ({
 
   return (
     <Container>
-      {useBreakpoint(up("sm")) ? (
-        <div
-          ref={emailRef}
-          className="font-primary-normal overflow-hidden"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          hello@richard-lee.com
-        </div>
-      ) : (
-        <div
-          ref={emailRef}
-          className="font-primary-bold overflow-hidden"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          hello@richard-lee.com
-        </div>
-      )}
+      <div
+        ref={emailRef}
+        className="font-secondary-normal overflow-hidden"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        hello@richard-lee.com
+      </div>
 
       <div
         ref={projectRef}
-        className="font-primary-bold"
+        className="font-secondary-normal"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
