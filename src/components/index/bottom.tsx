@@ -55,7 +55,7 @@ const Bottom = ({
       <Button>
         <div ref={contactRef} className="flex items-center">
           <div
-            className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 font-primary-normal"
+            className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 font-secondary-normal"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
@@ -198,18 +198,18 @@ const Name = styled.div`
 `;
 
 const Button = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   margin-top: 50px;
   color: ${COLOR.WHITE};
   user-select: none;
   overflow: hidden;
 
   ${up("sm")} {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   ${up("xxl")} {
-    font-size: 23px;
+    font-size: 20px;
   }
 `;
 
