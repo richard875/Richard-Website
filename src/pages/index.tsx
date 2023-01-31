@@ -70,19 +70,21 @@ const IndexPage = ({
           />
         )}
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
-        <Header></Header>
-        <Wrapper>
-          {useBreakpoint(up("sm")) && <Top setHover={setHover} />}
-          <Bottom setHover={setHover} />
-        </Wrapper>
-        <Footer>
-          {useBreakpoint(up("lg")) && (
-            <>
-              <FooterLeft setHover={setHover} globalCoords={globalCoords} />
-              <FooterRight />
-            </>
-          )}
-        </Footer>
+        <Box>
+          <Header></Header>
+          <Wrapper>
+            {useBreakpoint(up("sm")) && <Top setHover={setHover} />}
+            <Bottom setHover={setHover} />
+          </Wrapper>
+          <Footer>
+            {useBreakpoint(up("lg")) && (
+              <>
+                <FooterLeft setHover={setHover} globalCoords={globalCoords} />
+                <FooterRight />
+              </>
+            )}
+          </Footer>
+        </Box>
       </Container>
       <Loading />
     </Layout>
@@ -97,15 +99,17 @@ export const Head: HeadFC = () => (
 
 const Container = styled(motion.div)`
   width: 100vw;
-  height: 100vh;
+  background-color: ${COLOR.BACKGROUND_WHITE};
+`;
+
+const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${COLOR.BACKGROUND_WHITE};
+  height: 100vh;
 
   ${up("sm")} {
     width: calc(100vw - 70px);
-    height: 100vh;
     margin-left: 35px;
     margin-right: 35px;
   }
