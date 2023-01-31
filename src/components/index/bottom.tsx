@@ -60,16 +60,15 @@ const Bottom = ({
       <Name className="font-primary-bold">
         <div ref={nameRef}>RICHARD LEE</div>
       </Name>
-      <Subtitle className="font-primary-normal mt-5 sm:mt-8">
-        <div ref={sub1Ref}>SOFTWARE ENGINEER &amp; CREATIVE DESIGNER</div>
-      </Subtitle>
-      <Subtitle className="font-primary-normal mt-2 sm:mt-4">
-        <div ref={sub2Ref}>UNIVERSITY OF SYDNEY</div>
-      </Subtitle>
+      <SmalllText className="font-primary-normal mt-5 sm:mt-8">
+        <div ref={sub1Ref}>Software Engineer &amp; Creative Designer</div>
+      </SmalllText>
+      <SmalllText className="font-primary-normal mt-2 sm:mt-1">
+        <div ref={sub2Ref}>University of Sydney</div>
+      </SmalllText>
       <Button>
         <div ref={contactRef} className="flex items-center">
           <div
-            className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
             className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 font-primary-normal"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -308,16 +307,16 @@ const CircleContainer = styled.span`
 
   ${up("sm")} {
     bottom: 10vh;
-    right: 35px;
+    right: 75px;
   }
 
   ${up("lg")} {
     bottom: 110px;
-    right: 50px;
+    right: 115px;
   }
 
   ${up("xxl")} {
     bottom: 15vh;
-    right: calc(150px - 3.5vw);
+    right: calc(150px - 0.7vw);
   }
 `;
