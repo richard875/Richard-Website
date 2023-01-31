@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
+import { NAME } from "../../static/data/meta";
 import { up } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { isBrowser } from "react-device-detect";
@@ -107,7 +108,7 @@ const IndexPage = ({
 export default IndexPage;
 
 export const Head: HeadFC = () => (
-  <title>Richard Lee | Software Engineer | University of Sydney</title>
+  <title>{NAME} | Software Engineer | University of Sydney</title>
 );
 
 const Container = styled(motion.div)`
