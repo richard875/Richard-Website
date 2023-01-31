@@ -73,7 +73,7 @@ const IndexPage = ({
         <Box>
           <Header></Header>
           <Wrapper>
-            {useBreakpoint(up("sm")) && <Top setHover={setHover} />}
+            <Top setHover={setHover} />
             <Bottom setHover={setHover} />
           </Wrapper>
           <Footer>
@@ -103,6 +103,9 @@ const Container = styled(motion.div)`
 `;
 
 const Box = styled.div`
+  width: calc(100vw - 30px);
+  margin-left: 15px;
+  margin-right: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,7 +125,7 @@ const Box = styled.div`
 `;
 
 const Header = styled.div`
-  flex: 0;
+  flex: 0.02;
 
   ${up("sm")} {
     flex: 0.05;
@@ -135,13 +138,13 @@ const Header = styled.div`
 
 const Wrapper = styled.div`
   width: 100%;
-  flex: 1;
+  flex: 0.845;
+  border: 3px solid ${COLOR.BLACK};
   display: flex;
   flex-direction: column;
 
   ${up("sm")} {
     flex: 0.9;
-    border: 3px solid ${COLOR.BLACK};
   }
 
   ${up("lg")} {
@@ -151,16 +154,12 @@ const Wrapper = styled.div`
 
 const Footer = styled.div`
   width: 100%;
-  flex: 0;
+  flex: 0.05;
   font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-
-  ${up("sm")} {
-    flex: 0.05;
-  }
 
   ${up("lg")} {
     flex: 0.07;

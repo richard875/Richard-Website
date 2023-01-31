@@ -2,7 +2,6 @@ import * as React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
 import { up, down } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
@@ -37,7 +36,7 @@ const Top = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        {useBreakpoint(up("sm")) && <>PROJECTS</>}
+        PROJECTS
       </div>
     </Container>
   );
@@ -47,7 +46,7 @@ export default Top;
 
 const Container = styled.div`
   height: 40px;
-  font-size: 17px;
+  font-size: 15px;
   padding-left: 15px;
   padding-right: 15px;
   display: flex;
@@ -57,7 +56,7 @@ const Container = styled.div`
   border-bottom: 3px solid ${COLOR.BLACK};
 
   ${up("sm")} {
-    border-top: none;
+    font-size: 17px;
   }
 
   ${up("lg")} {

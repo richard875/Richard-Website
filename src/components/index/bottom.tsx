@@ -38,34 +38,20 @@ const Bottom = ({
 
   return (
     <Container>
-      <SmalllText>
-        <div ref={topNameRef}>
-          {useBreakpoint(down("sm")) && (
-            <div className="flex items-center justify-between font-primary-bold mt-3 mb-8">
-              <div>hello@richard-lee.com</div>
-              <div>PROJECTS</div>
-            </div>
-          )}
+      <SmallText>
+        <div ref={topGreetingRef} className="font-primary-normal mt-4 mb-6">
+          From Australia with Love
         </div>
-      </SmalllText>
-      <SmalllText>
-        <div ref={topGreetingRef}>
-          {useBreakpoint(up("sm")) && (
-            <div className="font-primary-normal mt-4 mb-6">
-              From Australia with Love
-            </div>
-          )}
-        </div>
-      </SmalllText>
+      </SmallText>
       <Name className="font-primary-bold">
         <div ref={nameRef}>RICHARD LEE</div>
       </Name>
-      <SmalllText className="font-primary-normal mt-5 sm:mt-8">
+      <SmallText className="font-primary-normal mt-5 sm:mt-8">
         <div ref={sub1Ref}>Software Engineer &amp; Creative Designer</div>
-      </SmalllText>
-      <SmalllText className="font-primary-normal mt-2 sm:mt-1">
+      </SmallText>
+      <SmallText className="font-primary-normal mt-2 sm:mt-1">
         <div ref={sub2Ref}>University of Sydney</div>
-      </SmalllText>
+      </SmallText>
       <Button>
         <div ref={contactRef} className="flex items-center">
           <div
@@ -78,19 +64,13 @@ const Bottom = ({
           <FontAwesomeIcon icon={faAngleRight} size={"xs"} className="mt-0.5" />
         </div>
       </Button>
-      <Country>
-        <div ref={countryRef}>
-          {useBreakpoint(down("sm")) && <>From Australia with Love</>}
-          {useBreakpoint(between("sm", "lg")) && (
-            <>Acknowledgement of Country</>
-          )}
-        </div>
-      </Country>
-      <Acknowledgement>
-        <div ref={mobileCountryRef}>
-          {useBreakpoint(down("sm")) && <>Acknowledgement of Country</>}
-        </div>
-      </Acknowledgement>
+      {useBreakpoint(down("lg")) && (
+        <Country>
+          <div ref={countryRef} className="font-primary-normal">
+            Acknowledgement of Country
+          </div>
+        </Country>
+      )}
       <CircleContainer
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -165,19 +145,16 @@ const Container = styled.div`
   background: linear-gradient(90deg, #f55591 0%, #f9c41a 100%);
 
   ${up("sm")} {
-    padding: 30px 30px;
+    padding: 3vh 5vw;
   }
 
   ${up("lg")} {
-    padding: 10px 30px;
-  }
-
-  ${up("xxl")} {
     padding: 3vh 3vw;
   }
 `;
 
-const SmalllText = styled.div`
+const SmallText = styled.div`
+  font-size: 18px;
   color: ${COLOR.WHITE};
   overflow: hidden;
 
@@ -214,23 +191,8 @@ const Name = styled.div`
   }
 `;
 
-const Subtitle = styled.div`
-  line-height: 18px;
-  overflow: hidden;
-  color: ${COLOR.WHITE};
-
-  ${up("sm")} {
-    font-size: 23px;
-    line-height: 30px;
-  }
-
-  ${up("xxl")} {
-    font-size: 30px;
-    line-height: 36px;
-  }
-`;
-
 const Button = styled.div`
+  font-size: 18px;
   margin-top: 50px;
   color: ${COLOR.WHITE};
   user-select: none;
@@ -246,9 +208,9 @@ const Button = styled.div`
 `;
 
 const Country = styled.div`
-  font-size: 14px;
+  font-size: 16px;
   position: absolute;
-  bottom: 16vh;
+  bottom: 15vh;
   color: ${COLOR.WHITE};
   overflow: hidden;
 
@@ -256,14 +218,6 @@ const Country = styled.div`
     font-size: 17px;
     bottom: 8vh;
   }
-`;
-
-const Acknowledgement = styled.div`
-  font-size: 14px;
-  position: absolute;
-  bottom: 13vh;
-  color: ${COLOR.WHITE};
-  overflow: hidden;
 `;
 
 const Circle = styled.div`
@@ -296,8 +250,8 @@ const Circle = styled.div`
 
 const CircleContainer = styled.span`
   position: absolute;
-  bottom: 16vh;
-  right: 30px;
+  bottom: 21vh;
+  right: 45px;
   transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
   user-select: none;
 
@@ -311,7 +265,7 @@ const CircleContainer = styled.span`
   }
 
   ${up("lg")} {
-    bottom: 110px;
+    bottom: 12vh;
     right: 115px;
   }
 
