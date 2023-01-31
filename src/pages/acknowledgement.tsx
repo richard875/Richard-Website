@@ -3,6 +3,10 @@ import { motion } from "framer-motion";
 import { GatsbyLinkProps, navigate } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
+import { NAME } from "../../static/data/meta";
+import { up } from "styled-breakpoints";
+import { isBrowser } from "react-device-detect";
+import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -22,8 +26,12 @@ const Acknowledgement = ({
       setGlobalCoords({ x: event.clientX, y: event.clientY });
 
     window.addEventListener("mousemove", handleWindowMouseMove);
+    document.body.style.overflow = "hidden";
 
-    return () => window.removeEventListener("mousemove", handleWindowMouseMove);
+    return () => {
+      document.body.style.overflow = "auto";
+      window.removeEventListener("mousemove", handleWindowMouseMove);
+    };
   }, []);
 
   const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -43,12 +51,14 @@ const Acknowledgement = ({
         delay: 0.5,
       }}
     >
-      <Cursor
-        hover={hover}
-        delay={1.5}
-        position={location.state!}
-        isBlack={false}
-      />
+      {isBrowser && (
+        <Cursor
+          hover={hover}
+          delay={1.5}
+          position={location.state!}
+          isBlack={false}
+        />
+      )}
       <InitialTransition color={COLOR.BACKGROUND_WHITE} />
       <AcknowledgementText
         className="font-primary-normal"
@@ -87,10 +97,12 @@ const Acknowledgement = ({
 
 export default Acknowledgement;
 
+export const Head: HeadFC = () => <title>Acknowledgement | {NAME}</title>;
+
 const Container = styled(motion.div)`
   width: 100vw;
   height: 100vh;
-  padding: 200px;
+  padding: 10vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,9 +112,14 @@ const Container = styled(motion.div)`
 `;
 
 const AcknowledgementText = styled(motion.div)`
-  font-size: 30px;
-  line-height: 60px;
+  font-size: 20px;
+  line-height: 35px;
   text-align: justify;
+
+  ${up("md")} {
+    font-size: 30px;
+    line-height: 60px;
+  }
 `;
 
 const BackButton = styled(motion.div)`
