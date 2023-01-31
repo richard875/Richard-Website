@@ -2,7 +2,6 @@ import * as React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
 import { COLOR } from "../../styles/theme";
-import mousePositionType from "../../types/mousePositionType";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const FooterLeft = ({
