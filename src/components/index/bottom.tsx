@@ -49,7 +49,7 @@ const Bottom = ({
       <SmallText className="font-primary-normal mt-5 sm:mt-8">
         <div ref={sub1Ref}>Software Engineer &amp; Creative Designer</div>
       </SmallText>
-      <SmallText className="font-primary-normal mt-2 sm:mt-1">
+      <SmallText className="font-primary-normal mt-1/2 sm:mt-1">
         <div ref={sub2Ref}>University of Sydney</div>
       </SmallText>
       <Button>
