@@ -12,8 +12,10 @@ import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const Bottom = ({
   setHover,
+  acknowledgement,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
+  acknowledgement: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }) => {
   const topNameRef = React.useRef(null);
   const topGreetingRef = React.useRef(null);
@@ -22,7 +24,6 @@ const Bottom = ({
   const sub2Ref = React.useRef(null);
   const contactRef = React.useRef(null);
   const countryRef = React.useRef(null);
-  const mobileCountryRef = React.useRef(null);
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out", duration: 1.8 });
@@ -33,7 +34,6 @@ const Bottom = ({
     gsap.from(sub2Ref.current, gsapAnimationIndex(350, 2.8, 0));
     gsap.from(contactRef.current, gsapAnimationIndex(350, 3.1, 0));
     gsap.from(countryRef.current, gsapAnimationIndex(350, 3.3, 0));
-    gsap.from(mobileCountryRef.current, gsapAnimationIndex(350, 3.5, 0));
   }, []);
 
   return (
@@ -64,13 +64,19 @@ const Bottom = ({
           <FontAwesomeIcon icon={faAngleRight} size={"xs"} className="mt-0.5" />
         </div>
       </Button>
-      {useBreakpoint(down("lg")) && (
-        <Country>
-          <div ref={countryRef} className="font-primary-normal">
-            Acknowledgement of Country
-          </div>
-        </Country>
-      )}
+
+      <Country>
+        <div
+          ref={countryRef}
+          className="font-primary-normal"
+          onClick={(e) => acknowledgement(e)}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          {useBreakpoint(down("lg")) && "Acknowledgement of Country"}
+        </div>
+      </Country>
+
       <CircleContainer
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}

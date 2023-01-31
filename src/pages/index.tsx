@@ -1,7 +1,9 @@
 import * as React from "react";
+import { navigate } from "gatsby";
 import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
+import Route from "../routes/route";
 import { up } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { isBrowser } from "react-device-detect";
@@ -39,6 +41,14 @@ const IndexPage = ({
     };
   }, []);
 
+  const acknowledgement = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
+    navigate(Route.Acknowledgement, { state: globalCoords });
+  };
+
   return (
     <Layout>
       <Container
@@ -74,12 +84,15 @@ const IndexPage = ({
           <Header></Header>
           <Wrapper>
             <Top setHover={setHover} />
-            <Bottom setHover={setHover} />
+            <Bottom setHover={setHover} acknowledgement={acknowledgement} />
           </Wrapper>
           <Footer>
             {useBreakpoint(up("lg")) && (
               <>
-                <FooterLeft setHover={setHover} globalCoords={globalCoords} />
+                <FooterLeft
+                  setHover={setHover}
+                  acknowledgement={acknowledgement}
+                />
                 <FooterRight />
               </>
             )}
