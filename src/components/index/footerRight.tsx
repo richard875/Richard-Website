@@ -1,6 +1,7 @@
 import * as React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
+import { up } from "styled-breakpoints";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import { COLOR } from "../../styles/theme";
 
@@ -30,9 +31,14 @@ const FooterRight = () => {
 export default FooterRight;
 
 const Container = styled.div`
+  font-size: 17px;
   display: flex;
   align-items: center;
   margin-right: 15px;
+
+  ${up("xxl")} {
+    font-size: 20px;
+  }
 `;
 
 const Indicator = styled.div`

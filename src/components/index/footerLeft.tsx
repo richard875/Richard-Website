@@ -1,7 +1,7 @@
 import * as React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
-import { COLOR } from "../../styles/theme";
+import { up } from "styled-breakpoints";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const FooterLeft = ({
@@ -35,13 +35,12 @@ const FooterLeft = ({
 export default FooterLeft;
 
 const Container = styled.div`
+  font-size: 17px;
   display: flex;
   align-items: center;
   margin-left: 15px;
-`;
 
-const VerticalSeparator = styled.div`
-  width: 0px;
-  height: 17px;
-  border: 1px solid ${COLOR.BLACK};
+  ${up("xxl")} {
+    font-size: 20px;
+  }
 `;
