@@ -51,6 +51,7 @@ const Acknowledgement = ({
       />
       <InitialTransition color={COLOR.BACKGROUND_WHITE} />
       <AcknowledgementText
+        className="font-primary-normal"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{
@@ -73,7 +74,7 @@ const Acknowledgement = ({
           duration: 1,
           delay: 1,
         }}
-        className="font-bold"
+        className="font-primary-normal font-bold"
         onClick={(e) => home(e)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}

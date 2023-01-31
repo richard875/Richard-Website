@@ -70,6 +70,7 @@ const Bottom = ({
         <div ref={contactRef} className="flex items-center">
           <div
             className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
+            className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 font-primary-normal"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
