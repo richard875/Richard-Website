@@ -1,35 +1,35 @@
 @font-face {
-  font-family: "BwGradual-Medium";
+  font-family: "font-primary-normal";
   src: url("/fonts/SansSerifFLF-Demibold.woff");
 }
 
 @font-face {
-  font-family: "sf-pro-bold";
+  font-family: "font-primary-bold";
   src: url("/fonts/SansSerifBldFLF.woff");
 }
 
 @font-face {
-  font-family: "sf-pro-regular";
+  font-family: "font-secondary-normal";
   src: url("/fonts/BwGradual-Medium.ttf");
 }
 
 @font-face {
-  font-family: "sf-pro-medium";
+  font-family: "font-secondary-bold";
   src: url("/fonts/sf-pro-medium.otf");
 }
 
 .font-primary-normal {
-  font-family: "BwGradual-Medium", sans-serif;
+  font-family: "font-primary-normal", sans-serif;
 }
 
 .font-primary-bold {
-  font-family: "sf-pro-bold", sans-serif;
+  font-family: "font-primary-bold", sans-serif;
 }
 
 .font-secondary-normal {
-  font-family: "sf-pro-regular", sans-serif;
+  font-family: "font-secondary-normal", sans-serif;
 }
 
 .font-secondary-bold {
-  font-family: "sf-pro-medium", sans-serif;
+  font-family: "font-secondary-bold", sans-serif;
 }
