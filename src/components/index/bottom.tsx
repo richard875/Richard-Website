@@ -233,7 +233,7 @@ const Circle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #cdff50;
+  background: ${COLOR.BRIGHT_GREEN};
   border: 2px solid ${COLOR.BLACK};
   animation: rotation 12s infinite linear;
 
