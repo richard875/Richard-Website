@@ -18,10 +18,10 @@ const FooterRight = () => {
       <Indicator></Indicator>
       <div className="font-secondary-normal">
         Sydney&nbsp;
-        {new Date().toLocaleTimeString("en-US", {
+        {new Date().toLocaleTimeString("en-AU", {
           hour: "2-digit",
           minute: "2-digit",
-          timeZone: "Australia/Canberra",
+          timeZone: "Australia/Sydney",
         })}
       </div>
     </Container>
