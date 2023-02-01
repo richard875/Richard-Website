@@ -36,7 +36,7 @@ const Top = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        PROJECTS
+        EXPERIENCE
       </div>
     </Container>
   );
