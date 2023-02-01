@@ -59,7 +59,7 @@ const Bottom = ({
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
-            Let's catch up
+            My experience
           </div>
           <FontAwesomeIcon icon={faAngleRight} size={"xs"} className="mt-0.5" />
         </div>
