@@ -1,7 +1,6 @@
 import * as React from "react";
-import { navigate } from "gatsby";
+import { GatsbyLinkProps, navigate } from "gatsby";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
 import { NAME } from "../../static/data/meta";
@@ -30,6 +29,7 @@ const IndexPage = ({
   const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
+    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
     const handleWindowMouseMove = (event: MouseEvent) =>
       setGlobalCoords({ x: event.clientX, y: event.clientY });
 
@@ -46,7 +46,6 @@ const IndexPage = ({
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
     navigate(Route.Acknowledgement, { state: globalCoords });
   };
 

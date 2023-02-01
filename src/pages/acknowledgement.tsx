@@ -22,6 +22,7 @@ const Acknowledgement = ({
   const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
     const handleWindowMouseMove = (event: MouseEvent) =>
       setGlobalCoords({ x: event.clientX, y: event.clientY });
 
@@ -36,7 +37,6 @@ const Acknowledgement = ({
 
   const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
     navigate(Route.Home, { state: globalCoords });
   };
 
