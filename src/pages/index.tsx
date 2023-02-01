@@ -6,7 +6,7 @@ import Route from "../routes/route";
 import { NAME } from "../../static/data/meta";
 import { up } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
-import { isBrowser } from "react-device-detect";
+import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Layout from "../components/global/layout";
@@ -71,7 +71,7 @@ const IndexPage = ({
           },
         }}
       >
-        {isBrowser && (
+        {isDesktop && (
           <Cursor
             hover={hover}
             delay={2.5}

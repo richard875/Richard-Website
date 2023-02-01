@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Route from "../routes/route";
 import { NAME } from "../../static/data/meta";
 import { up } from "styled-breakpoints";
-import { isBrowser } from "react-device-detect";
+import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
@@ -51,7 +51,7 @@ const Acknowledgement = ({
         delay: 0.5,
       }}
     >
-      {isBrowser && (
+      {isDesktop && (
         <Cursor
           hover={hover}
           delay={1.5}
