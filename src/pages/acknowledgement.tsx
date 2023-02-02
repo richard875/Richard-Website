@@ -75,7 +75,6 @@ const Acknowledgement = ({
         Strait Islander Elders of all communities who also work and live on this
         land.
       </AcknowledgementText>
-
       <BackButton
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
