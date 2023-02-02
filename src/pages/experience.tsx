@@ -49,7 +49,7 @@ const Experience = ({
   const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.OFF_WHITE;
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
     const handleWindowMouseMove = (event: MouseEvent) => {
       setCursorColorIsBlack(event.clientX / window.innerWidth > 0.55);
       setGlobalCoords({ x: event.clientX, y: event.clientY });
@@ -78,6 +78,7 @@ const Experience = ({
           isBlack={cursorColorIsBlack}
         />
       )}
+      <InitialTransition color={COLOR.BACKGROUND_WHITE} />
       <Left>
         <LeftText className="font-secondary-normal">
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
@@ -135,7 +136,6 @@ const Experience = ({
         )}
       </Left>
       <Right></Right>
-      <InitialTransition color={COLOR.OFF_WHITE} />
     </Container>
   );
 };
@@ -145,8 +145,7 @@ export default Experience;
 export const Head: HeadFC = () => <title>G'day | {NAME}</title>;
 
 const Container = styled(motion.div)`
-  color: ${COLOR.BLACK};
-  background-color: ${COLOR.OFF_WHITE};
+  background-color: ${COLOR.BACKGROUND_BLACK};
 
   ${up("lg")} {
     display: flex;
