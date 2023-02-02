@@ -49,6 +49,11 @@ const IndexPage = ({
     navigate(Route.Acknowledgement, { state: globalCoords });
   };
 
+  const experience = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.preventDefault();
+    navigate(Route.Experience, { state: globalCoords });
+  };
+
   return (
     <Layout>
       <Container
@@ -84,7 +89,11 @@ const IndexPage = ({
           <Header></Header>
           <Wrapper>
             <Top setHover={setHover} />
-            <Bottom setHover={setHover} acknowledgement={acknowledgement} />
+            <Bottom
+              setHover={setHover}
+              acknowledgement={acknowledgement}
+              experience={experience}
+            />
           </Wrapper>
           <Footer>
             {useBreakpoint(up("lg")) && (

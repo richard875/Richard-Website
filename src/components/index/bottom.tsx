@@ -13,9 +13,11 @@ import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 const Bottom = ({
   setHover,
   acknowledgement,
+  experience,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
   acknowledgement: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  experience: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }) => {
   const topNameRef = React.useRef(null);
   const topGreetingRef = React.useRef(null);
@@ -56,6 +58,7 @@ const Bottom = ({
         <div ref={contactRef} className="flex items-center">
           <div
             className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 font-secondary-normal"
+            onClick={(e) => experience(e)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
