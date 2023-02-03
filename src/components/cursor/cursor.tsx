@@ -10,11 +10,13 @@ const Cursor = ({
   delay,
   position,
   isBlack,
+  is3D = false,
 }: {
   hover: boolean;
   delay: number;
   position: mousePositionType;
   isBlack: boolean;
+  is3D?: boolean;
 }) => {
   if (typeof window === "undefined") return <></>;
   const { x, y } = useMousePosition(position);
@@ -27,6 +29,7 @@ const Cursor = ({
     >
       <Ring
         hover={hover}
+        is3D={is3D}
         black={isBlack}
         style={{ left: `${x}px`, top: `${y}px` }}
       ></Ring>
@@ -52,8 +55,6 @@ const Ring = styled.div`
   border: 2px solid ${(props: any) => (props.black ? COLOR.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
-  -webkit-transition-duration: 100ms;
-  transition-duration: 100ms;
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
   will-change: width, height, transform, border;
@@ -61,11 +62,20 @@ const Ring = styled.div`
   pointer-events: none;
 
   ${(props: any) =>
+    !props.is3D &&
+    css`
+      -webkit-transition-duration: 100ms;
+      transition-duration: 100ms;
+    `}
+
+  ${(props: any) =>
     props.hover &&
     css`
       width: 50px;
       height: 50px;
       border: 3px solid lightgray;
+      -webkit-transition-duration: 100ms;
+      transition-duration: 100ms;
     `};
 `;
 
