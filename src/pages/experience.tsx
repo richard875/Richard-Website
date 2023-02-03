@@ -27,6 +27,13 @@ const CallToAction = ({
       className="font-secondary-normal"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        stiffness: 0,
+        duration: 1,
+        delay: 1.7,
+      }}
     >
       <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
         Work Experience & Projects
@@ -69,7 +76,16 @@ const Experience = ({
     >
       <InitialTransition color={COLOR.BACKGROUND_WHITE} />
       <Left>
-        <LeftText className="font-secondary-normal">
+        <LeftText
+          className="font-secondary-normal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            stiffness: 0,
+            duration: 1,
+            delay: 0.7,
+          }}
+        >
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
           <span
             className="cursor-pointer"
@@ -127,8 +143,29 @@ const Experience = ({
         )}
       </Left>
       <Right className="select-none">
-        <SydneyOperaHouse />
-        <SydneyOperaHouseInfoText className="cursor-pointer font-secondary-normal">
+        <motion.div
+          className="w-full h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            stiffness: 0,
+            duration: 1,
+            delay: 2.2,
+          }}
+        >
+          <SydneyOperaHouse />
+        </motion.div>
+
+        <SydneyOperaHouseInfoText
+          className="cursor-pointer font-secondary-normal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            stiffness: 0,
+            duration: 1,
+            delay: 2.7,
+          }}
+        >
           <span
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -177,7 +214,7 @@ const Left = styled.div`
   }
 `;
 
-const LeftText = styled.div`
+const LeftText = styled(motion.div)`
   color: ${COLOR.WHITE};
   font-size: 6vw;
   line-height: 1.65;
@@ -212,7 +249,7 @@ const Right = styled.div`
   }
 `;
 
-const SydneyOperaHouseInfoText = styled.div`
+const SydneyOperaHouseInfoText = styled(motion.div)`
   font-size: 14px;
   position: relative;
   bottom: 10%;
@@ -223,7 +260,7 @@ const SydneyOperaHouseInfoText = styled.div`
   text-align: center;
 `;
 
-const Cta = styled.div`
+const Cta = styled(motion.div)`
   display: flex;
   align-items: center;
   color: ${COLOR.BRIGHT_GREEN};

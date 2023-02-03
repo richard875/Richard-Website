@@ -1,4 +1,5 @@
 import * as React from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import { up, down } from "styled-breakpoints";
 import uoa from "../../../static/images/logos/uoa.png";
@@ -9,7 +10,16 @@ import { COLOR } from "../../styles/theme";
 
 const Logos = () => {
   return (
-    <Container className="select-none">
+    <Container
+      className="select-none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        stiffness: 0,
+        duration: 1,
+        delay: 1.2,
+      }}
+    >
       <UoaLogo>
         <img src={uoa} alt="University of Auckland" />
       </UoaLogo>
@@ -28,7 +38,7 @@ const Logos = () => {
 
 export default Logos;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   display: grid;
   align-items: center;
   justify-content: space-between;
