@@ -13,6 +13,7 @@ import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
+import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import mousePositionType from "../types/mousePositionType";
 import MOUSE_POSITION from "../constants/defaultmousePosition";
 
@@ -123,7 +124,17 @@ const Experience = ({
           <CallToAction hover={hover} setHover={setHover} />
         )}
       </Left>
-      <Right></Right>
+      <Right className="select-none">
+        <SydneyOperaHouse />
+        <SydneyOperaHouseInfoText className="font-secondary-normal">
+          <span
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            Sydney Opera House
+          </span>
+        </SydneyOperaHouseInfoText>
+      </Right>
       {isDesktop && (
         <Cursor
           hover={hover}
@@ -190,11 +201,28 @@ const LeftText = styled.div`
 `;
 
 const Right = styled.div`
+  height: 500px;
+
+  ${up("sm")} {
+    height: 60vh;
+  }
+
   ${up("lg")} {
     width: 45vw;
     height: 100vh;
     background-color: ${COLOR.OFF_WHITE};
   }
+`;
+
+const SydneyOperaHouseInfoText = styled.div`
+  font-size: 14px;
+  position: relative;
+  bottom: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
 `;
 
 const Cta = styled.div`
