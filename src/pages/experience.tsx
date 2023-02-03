@@ -30,11 +30,7 @@ const CallToAction = ({
       <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
         Work Experience & Projects
       </div>
-      <FontAwesomeIcon
-        icon={faCircleChevronRight}
-        size={"md"}
-        className="mt-0.5"
-      />
+      <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
     </Cta>
   );
 };
@@ -70,14 +66,6 @@ const Experience = ({
         delay: 0.5,
       }}
     >
-      {isDesktop && (
-        <Cursor
-          hover={hover}
-          delay={1.5}
-          position={location.state!}
-          isBlack={cursorColorIsBlack}
-        />
-      )}
       <InitialTransition color={COLOR.BACKGROUND_WHITE} />
       <Left>
         <LeftText className="font-secondary-normal">
@@ -136,6 +124,15 @@ const Experience = ({
         )}
       </Left>
       <Right></Right>
+      {isDesktop && (
+        <Cursor
+          hover={hover}
+          is3D={true}
+          delay={1.5}
+          position={location.state!}
+          isBlack={cursorColorIsBlack}
+        />
+      )}
     </Container>
   );
 };
