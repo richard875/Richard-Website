@@ -233,6 +233,7 @@ const LeftText = styled(motion.div)`
 const Right = styled.div`
   height: 500px;
   cursor: grab;
+  background-color: ${COLOR.OFF_WHITE};
 
   &:active {
     cursor: grabbing;
@@ -245,7 +246,6 @@ const Right = styled.div`
   ${up("lg")} {
     width: 45vw;
     height: 100vh;
-    background-color: ${COLOR.OFF_WHITE};
   }
 `;
 

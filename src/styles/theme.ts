@@ -8,7 +8,7 @@ export const COLOR = {
   BRIGHT_GREEN: "#cdff50",
   INDICATOR_GREEN: "#35be27",
   BORDER_WHITE: "#dee2e6",
-  OFF_WHITE: "#FAF9F6",
+  OFF_WHITE: "#DCCBC1",
 
   USYD_ORANGE: "#e14327",
   AUSTRALIA_GOLD: "#FFCD00",
