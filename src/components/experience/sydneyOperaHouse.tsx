@@ -52,13 +52,12 @@ const Model = () => {
 
   React.useEffect(() => {
     // Scene
-    // camera.position.set(0, 1.1, 4);
     scene.background = new THREE.Color().setHSL(0.6, 0, 1);
-    scene.fog = new THREE.Fog(scene.background, 1, 5000);
+    scene.fog = new THREE.Fog(scene.background, 1, 25);
 
     // Lights
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
-    hemiLight.color.setHSL(0.6, 1, 0.6);
+    hemiLight.color.setHSL(0.62, 1, 0.6);
     hemiLight.groundColor.setHSL(0.095, 1, 0.75);
     hemiLight.position.set(0, 20, 0);
     scene.add(hemiLight);
@@ -84,8 +83,8 @@ const Model = () => {
     dirLight.shadow.bias = -0.0001;
 
     // Ground
-    const groundGeo = new THREE.PlaneGeometry(50, 30);
-    const groundMat = new THREE.MeshLambertMaterial({ color: 0xffffff });
+    const groundGeo = new THREE.PlaneGeometry(50, 25);
+    const groundMat = new THREE.MeshLambertMaterial({ color: 0xfad6a5 });
     groundMat.color.setHSL(0.095, 1, 0.75);
 
     const ground = new THREE.Mesh(groundGeo, groundMat);
@@ -97,7 +96,7 @@ const Model = () => {
     // Sky
     const uniforms = {
       topColor: { value: new THREE.Color(0x0077ff) },
-      bottomColor: { value: new THREE.Color(0xffffff) },
+      bottomColor: { value: new THREE.Color(0xfad6a5) },
       offset: { value: 43 },
       exponent: { value: 0.6 },
     };
