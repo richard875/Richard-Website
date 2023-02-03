@@ -32,7 +32,7 @@ const CallToAction = ({
       transition={{
         stiffness: 0,
         duration: 1,
-        delay: 1.7,
+        delay: 1,
       }}
     >
       <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
@@ -83,7 +83,7 @@ const Experience = ({
           transition={{
             stiffness: 0,
             duration: 1,
-            delay: 0.7,
+            delay: 1,
           }}
         >
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
@@ -150,7 +150,7 @@ const Experience = ({
           transition={{
             stiffness: 0,
             duration: 1,
-            delay: 2.2,
+            delay: 1.5,
           }}
         >
           <SydneyOperaHouse />
@@ -163,7 +163,7 @@ const Experience = ({
           transition={{
             stiffness: 0,
             duration: 1,
-            delay: 2.7,
+            delay: 1.5,
           }}
         >
           <span
