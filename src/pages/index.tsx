@@ -76,14 +76,6 @@ const IndexPage = ({
           },
         }}
       >
-        {isDesktop && (
-          <Cursor
-            hover={hover}
-            delay={2.5}
-            position={location.state!}
-            isBlack={true}
-          />
-        )}
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
         <Box>
           <Header></Header>
@@ -107,6 +99,14 @@ const IndexPage = ({
             )}
           </Footer>
         </Box>
+        {isDesktop && (
+          <Cursor
+            hover={hover}
+            delay={2.5}
+            position={location.state!}
+            isBlack={true}
+          />
+        )}
       </Container>
       <Loading />
     </Layout>
@@ -122,6 +122,7 @@ export const Head: HeadFC = () => (
 const Container = styled(motion.div)`
   width: 100vw;
   background-color: ${COLOR.BACKGROUND_WHITE};
+  cursor: none;
 `;
 
 const Box = styled.div`

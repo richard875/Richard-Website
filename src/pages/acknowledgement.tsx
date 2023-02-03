@@ -42,7 +42,6 @@ const Acknowledgement = ({
 
   return (
     <Container
-      className="select-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{
@@ -51,14 +50,6 @@ const Acknowledgement = ({
         delay: 0.5,
       }}
     >
-      {isDesktop && (
-        <Cursor
-          hover={hover}
-          delay={1.5}
-          position={location.state!}
-          isBlack={false}
-        />
-      )}
       <InitialTransition color={COLOR.BACKGROUND_WHITE} />
       <AcknowledgementText
         className="font-primary-normal"
@@ -90,6 +81,14 @@ const Acknowledgement = ({
       >
         Back
       </BackButton>
+      {isDesktop && (
+        <Cursor
+          hover={hover}
+          delay={1.5}
+          position={location.state!}
+          isBlack={false}
+        />
+      )}
     </Container>
   );
 };
@@ -107,7 +106,9 @@ const Container = styled(motion.div)`
   align-items: center;
   justify-content: center;
   color: ${COLOR.WHITE};
-  background-color: ${COLOR.BLACK}; ;
+  background-color: ${COLOR.BLACK};
+  cursor: none;
+  user-select: none;
 `;
 
 const AcknowledgementText = styled(motion.div)`

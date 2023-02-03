@@ -72,6 +72,7 @@ const Experience = ({
         <LeftText className="font-secondary-normal">
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
           <span
+            className="cursor-pointer"
             style={{ color: COLOR.USYD_ORANGE }}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -80,6 +81,7 @@ const Experience = ({
           </span>
           ,{" "}
           <span
+            className="cursor-pointer"
             style={{ color: COLOR.AUSTRALIA_GOLD }}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -89,7 +91,7 @@ const Experience = ({
           . On this corner of the internet, you'll find information about me.
           You can connect with me on{" "}
           <span
-            className="underline underline-offset-4"
+            className="cursor-pointer underline underline-offset-4"
             style={{ color: COLOR.LINKEDIN_BLUE }}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -98,7 +100,7 @@ const Experience = ({
           </span>
           , check out my repositories on{" "}
           <span
-            className="underline underline-offset-4"
+            className="cursor-pointer underline underline-offset-4"
             style={{ color: COLOR.BACKGROUND_WHITE }}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -107,7 +109,7 @@ const Experience = ({
           </span>
           , or reach out to me via{" "}
           <span
-            className="underline underline-offset-4"
+            className="cursor-pointer underline underline-offset-4"
             style={{ color: COLOR.BLUE }}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -126,7 +128,7 @@ const Experience = ({
       </Left>
       <Right className="select-none">
         <SydneyOperaHouse />
-        <SydneyOperaHouseInfoText className="font-secondary-normal">
+        <SydneyOperaHouseInfoText className="cursor-pointer font-secondary-normal">
           <span
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -193,6 +195,11 @@ const LeftText = styled.div`
 
 const Right = styled.div`
   height: 500px;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 
   ${up("sm")} {
     height: 60vh;
@@ -221,6 +228,7 @@ const Cta = styled.div`
   align-items: center;
   color: ${COLOR.BRIGHT_GREEN};
   font-size: 4.5vw;
+  cursor: pointer;
 
   ${down("sm")} {
     margin-top: 8vw;
