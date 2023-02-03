@@ -135,15 +135,6 @@ const Experience = ({
           </span>
         </SydneyOperaHouseInfoText>
       </Right>
-      {isDesktop && (
-        <Cursor
-          hover={hover}
-          is3D={true}
-          delay={1.5}
-          position={location.state!}
-          isBlack={cursorColorIsBlack}
-        />
-      )}
     </Container>
   );
 };
