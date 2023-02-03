@@ -21,24 +21,18 @@ const Mesh = (props: any) => {
                 rotation={[0, -Math.PI / 2, 0]}
               >
                 <mesh
-                  castShadow
-                  receiveShadow
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_car_0 as THREE.Mesh).geometry
                   }
                   material={materials.material}
                 />
                 <mesh
-                  castShadow
-                  receiveShadow
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_Glass_0 as THREE.Mesh).geometry
                   }
                   material={materials.Glass}
                 />
                 <mesh
-                  castShadow
-                  receiveShadow
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_Pipe_1_0 as THREE.Mesh).geometry
                   }
@@ -54,32 +48,24 @@ const Mesh = (props: any) => {
                 />
               </group>
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Wheels_1_wheels_0 as THREE.Mesh).geometry}
                 material={materials.wheels}
                 position={[141.64, -5.82, 527.04]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.wheels_1_wheels_0 as THREE.Mesh).geometry}
                 material={materials.wheels}
                 position={[244.09, -5.61, 528.68]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Wheels_wheels_0 as THREE.Mesh).geometry}
                 material={materials.wheels}
                 position={[244.09, -5.82, 454.97]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.wheels_wheels_0 as THREE.Mesh).geometry}
                 material={materials.wheels}
                 position={[141.64, -5.61, 453.33]}
@@ -95,24 +81,18 @@ const Mesh = (props: any) => {
                 rotation={[0, -Math.PI / 2, 0]}
               >
                 <mesh
-                  castShadow
-                  receiveShadow
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_2_car_0 as THREE.Mesh).geometry
                   }
                   material={materials.car_0}
                 />
                 <mesh
-                  castShadow
-                  receiveShadow
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_2_Glass_0 as THREE.Mesh).geometry
                   }
                   material={materials.Glass}
                 />
                 <mesh
-                  castShadow
-                  receiveShadow
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_2_Pipe_1_0 as THREE.Mesh).geometry
                   }
@@ -128,32 +108,24 @@ const Mesh = (props: any) => {
                 />
               </group>
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Wheels_1_2_wheels_0 as THREE.Mesh).geometry}
                 material={materials.wheels}
                 position={[141.64, -5.82, 527.04]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.wheels_1_2_wheels_0 as THREE.Mesh).geometry}
                 material={materials.wheels}
                 position={[244.09, -5.61, 528.68]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Wheels_2_wheels_0 as THREE.Mesh).geometry}
                 material={materials.wheels}
                 position={[244.09, -5.82, 454.97]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.wheels_2_wheels_0 as THREE.Mesh).geometry}
                 material={materials.wheels}
                 position={[141.64, -5.61, 453.33]}
@@ -174,8 +146,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_15_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -192,8 +162,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_14_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -210,8 +178,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_13_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -228,8 +194,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_12_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -246,8 +210,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_11_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -264,8 +226,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_10_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -282,8 +242,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_9_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -300,8 +258,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_8_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -318,8 +274,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_7_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -336,8 +290,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_6_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -354,8 +306,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_4_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -372,8 +322,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_1_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -390,8 +338,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -426,8 +372,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_3_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -444,8 +388,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_2_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -462,8 +404,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_5_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -480,8 +420,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_16_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -498,8 +436,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_17_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -516,8 +452,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_18_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -534,8 +468,6 @@ const Mesh = (props: any) => {
                 material={materials.Trees}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Tree_3_19_Wood_0 as THREE.Mesh).geometry}
                 material={materials.Wood}
               />
@@ -629,8 +561,6 @@ const Mesh = (props: any) => {
                 material={materials.White_Border}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={
                   (nodes.Building_1_water_foam_0 as THREE.Mesh).geometry
                 }
@@ -656,8 +586,6 @@ const Mesh = (props: any) => {
                 material={materials.White_Border}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={
                   (nodes.Building_1_2_water_foam_0 as THREE.Mesh).geometry
                 }
@@ -677,8 +605,6 @@ const Mesh = (props: any) => {
                 material={materials.White_Border}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Building_water_foam_0 as THREE.Mesh).geometry}
                 material={materials.water_foam}
               />
@@ -702,8 +628,6 @@ const Mesh = (props: any) => {
                 material={materials.White_Border}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={
                   (nodes.Building_2_water_foam_0 as THREE.Mesh).geometry
                 }
@@ -729,8 +653,6 @@ const Mesh = (props: any) => {
                 material={materials.White_Border}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={
                   (nodes.Building_2_2_water_foam_0 as THREE.Mesh).geometry
                 }
@@ -759,8 +681,6 @@ const Mesh = (props: any) => {
                 material={materials.Ship}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Yacht_Glass_0 as THREE.Mesh).geometry}
                 material={materials.Glass}
               />
@@ -776,8 +696,6 @@ const Mesh = (props: any) => {
                 material={materials.White_Border}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Yacht_4_Glass_0 as THREE.Mesh).geometry}
                 material={materials.Glass}
               />
@@ -799,8 +717,6 @@ const Mesh = (props: any) => {
                 material={materials.Ship}
               />
               <mesh
-                castShadow
-                receiveShadow
                 geometry={(nodes.Yacht_1_Glass_0 as THREE.Mesh).geometry}
                 material={materials.Glass}
               />

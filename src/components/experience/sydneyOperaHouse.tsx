@@ -3,7 +3,6 @@ import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
 import {
   EffectComposer,
-  DepthOfField,
   Bloom,
   BrightnessContrast,
   ColorAverage,
@@ -69,8 +68,8 @@ const Model = () => {
 
     dirLight.castShadow = true;
 
-    dirLight.shadow.mapSize.width = 5000;
-    dirLight.shadow.mapSize.height = 5000;
+    dirLight.shadow.mapSize.width = 3500;
+    dirLight.shadow.mapSize.height = 3500;
 
     const d = 50;
 
@@ -140,11 +139,6 @@ const Model = () => {
         />
         <ColorAverage
           blendFunction={BlendFunction.OVERLAY} // blend mode
-        />
-        <DepthOfField
-          focusDistance={0} // where to focus
-          focalLength={0.02} // focal length
-          bokehScale={1} // bokeh size
         />
         <HueSaturation
           blendFunction={BlendFunction.ALPHA} // blend mode
