@@ -60,7 +60,7 @@ const Experience = ({
         delay: 0.5,
       }}
     >
-      <InitialTransition color={COLOR.BACKGROUND_WHITE} />
+      <InitialTransition color={COLOR.BACKGROUND_WHITE_SECONDARY} />
       <Left>
         <LeftText
           className="font-secondary-normal"
