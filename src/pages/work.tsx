@@ -210,6 +210,7 @@ export const Head: HeadFC = () => <title>Work Experience | {NAME}</title>;
 const Container = styled(motion.div)`
   cursor: none;
   overflow-x: hidden;
+  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
 `;
 
 const Top = styled.div`

@@ -17,6 +17,7 @@ import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 const CallToAction = () => {
   const work = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
+    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE_SECONDARY;
     navigate(Route.Work, { state: { x: event.clientX, y: event.clientY } });
   };
 
