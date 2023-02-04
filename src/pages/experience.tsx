@@ -6,16 +6,13 @@ import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { isDesktop } from "react-device-detect";
 import { NAME } from "../../static/data/meta";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
-import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import mousePositionType from "../types/mousePositionType";
-import MOUSE_POSITION from "../constants/defaultmousePosition";
 
 const CallToAction = ({
   setHover,
@@ -49,19 +46,9 @@ const Experience = ({
   location: GatsbyLinkProps<mousePositionType>;
 }) => {
   const [hover, setHover] = React.useState(false);
-  const [cursorColorIsBlack, setCursorColorIsBlack] = React.useState(true);
-  const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-    const handleWindowMouseMove = (event: MouseEvent) => {
-      setCursorColorIsBlack(event.clientX / window.innerWidth > 0.55);
-      setGlobalCoords({ x: event.clientX, y: event.clientY });
-    };
-
-    window.addEventListener("mousemove", handleWindowMouseMove);
-
-    return () => window.removeEventListener("mousemove", handleWindowMouseMove);
+    document.body.style.backgroundColor = COLOR.BLACK;
   }, []);
 
   return (

@@ -11,7 +11,6 @@ import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import mousePositionType from "../types/mousePositionType";
-import MOUSE_POSITION from "../constants/defaultmousePosition";
 
 const Acknowledgement = ({
   location,
@@ -19,25 +18,19 @@ const Acknowledgement = ({
   location: GatsbyLinkProps<mousePositionType>;
 }) => {
   const [hover, setHover] = React.useState(false);
-  const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-    const handleWindowMouseMove = (event: MouseEvent) =>
-      setGlobalCoords({ x: event.clientX, y: event.clientY });
-
-    window.addEventListener("mousemove", handleWindowMouseMove);
+    document.body.style.backgroundColor = COLOR.BLACK;
     document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = "auto";
-      window.removeEventListener("mousemove", handleWindowMouseMove);
     };
   }, []);
 
   const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
-    navigate(Route.Home, { state: globalCoords });
+    navigate(Route.Home, { state: { x: event.clientX, y: event.clientY } });
   };
 
   return (

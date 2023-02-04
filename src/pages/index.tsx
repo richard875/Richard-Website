@@ -14,7 +14,6 @@ import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
 import InitialTransition from "../components/transition/InitialTransition";
 import mousePositionType from "../types/mousePositionType";
-import MOUSE_POSITION from "../constants/defaultmousePosition";
 import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
@@ -26,19 +25,13 @@ const IndexPage = ({
   location: GatsbyLinkProps<mousePositionType>;
 }) => {
   const [hover, setHover] = React.useState(false);
-  const [globalCoords, setGlobalCoords] = React.useState(MOUSE_POSITION);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
-    const handleWindowMouseMove = (event: MouseEvent) =>
-      setGlobalCoords({ x: event.clientX, y: event.clientY });
-
-    window.addEventListener("mousemove", handleWindowMouseMove);
     document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = "auto";
-      window.removeEventListener("mousemove", handleWindowMouseMove);
     };
   }, []);
 
@@ -46,12 +39,16 @@ const IndexPage = ({
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.preventDefault();
-    navigate(Route.Acknowledgement, { state: globalCoords });
+    navigate(Route.Acknowledgement, {
+      state: { x: event.clientX, y: event.clientY },
+    });
   };
 
   const experience = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
-    navigate(Route.Experience, { state: globalCoords });
+    navigate(Route.Experience, {
+      state: { x: event.clientX, y: event.clientY },
+    });
   };
 
   return (
