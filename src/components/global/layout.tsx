@@ -11,6 +11,7 @@ const Layout = ({ children }: { children: any }) => {
     lg: "992px",
     xl: "1200px",
     xxl: "1450px",
+    xxxl: "1600px",
   });
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

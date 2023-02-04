@@ -11,6 +11,7 @@ module.exports = {
       lg: "992px",
       xl: "1200px",
       xxl: "1450px",
+      xxxl: "1600px",
     },
     extend: {},
   },
