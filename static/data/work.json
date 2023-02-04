@@ -1,0 +1,295 @@
+[
+  {
+    "company": "qantas",
+    "imageHeight": 45,
+    "jobTitle": "Software Engineer",
+    "companyTitle": "Qantas",
+    "start": {
+      "mobile": "Dec 2022",
+      "desktop": "December 2022"
+    },
+    "end": {
+      "mobile": "Current",
+      "desktop": "Current"
+    },
+    "city": "Sydney",
+    "country": "Australia",
+    "description": [
+      [
+        {
+          "content": "Develop and deliver software assets for Qantas Loyalty business unit, including Qantas Frequent Flyer and Qantas Business Rewards"
+        }
+      ],
+      [
+        {
+          "content": "Use skills in TypeScript/Node.JS/JavaScript, database (SQL/RDBMS), REST/GraphQL APIs, end-to-end website development and CI/CD for GitHub"
+        }
+      ],
+      [
+        {
+          "content": "Contribute to team efforts to deliver value to customers by being a fast learner, strong team player, having a positive attitude and supporting what you build with monitoring and operational responsibilities."
+        }
+      ]
+    ],
+    "techStack": [
+      "TypeScript",
+      "Node.JS",
+      "SQL/RDBMS",
+      "REST API",
+      "GraphQL",
+      "CI/CD",
+      "AWS"
+    ]
+  },
+  {
+    "company": "slik",
+    "imageHeight": 50,
+    "jobTitle": "Creative Software Engineer",
+    "companyTitle": "SLIK Creative Agency",
+    "start": {
+      "mobile": "Jun 2022",
+      "desktop": "June 2022"
+    },
+    "end": {
+      "mobile": "Dec 2022",
+      "desktop": "December 2022"
+    },
+    "city": "Sydney",
+    "country": "Australia",
+    "description": [
+      [
+        {
+          "content": "Created Australia's first Metaverse virtual playground with Three.js and Blender for hosting virtual meetings and corporate events"
+        }
+      ],
+      [
+        {
+          "content": "Developed statically generated web apps with Gatsby for Nine News, including"
+        },
+        {
+          "content": "Sydney Morning Herald's Annual Impact Report",
+          "isLink": true,
+          "url": "https://impact-report.smh.com.au/"
+        }
+      ],
+      [
+        {
+          "content": "Migrated a legacy email builder app from Angular to React for better maintainability and redesigned its UI for a refined user experience"
+        }
+      ]
+    ],
+    "techStack": [
+      "React/Gatsby",
+      "Contentful",
+      "Node.js/Nest.js",
+      "MongoDB",
+      "Three.js",
+      "GSAP",
+      "Blender",
+      "Netlify",
+      "Heroku",
+      "AWS"
+    ]
+  },
+  {
+    "company": "nzgovt",
+    "imageHeight": 60,
+    "jobTitle": "Software Engineer",
+    "companyTitle": "Government of New Zealand, WDHB",
+    "start": {
+      "mobile": "Aug 2021",
+      "desktop": "August 2021"
+    },
+    "end": {
+      "mobile": "Feb 2022",
+      "desktop": "February 2022"
+    },
+    "city": "Auckland",
+    "country": "New Zealand",
+    "description": [
+      [
+        {
+          "content": "Developed and designed a monitoring web application with Angular and .NET Core to monitor hospitals' legacy system status"
+        }
+      ],
+      [
+        {
+          "content": "Implemented and designed a bespoke management dashboard web application for the admin to manipulate data stored in Redis"
+        }
+      ],
+      [
+        {
+          "content": "Improved Google Chrome's lighthouse score for an application by over 60% by redesigning the frontend layout structure"
+        }
+      ]
+    ],
+    "techStack": [
+      "Angular",
+      ".NET",
+      "Redis",
+      "C#",
+      "TypeScript",
+      "Oracle SQL Database",
+      "Jira",
+      "Azure DevOps"
+    ]
+  },
+  {
+    "company": "canary",
+    "imageHeight": 45,
+    "jobTitle": "Software Engineer",
+    "companyTitle": "Canary Data Solutions Ltd.",
+    "start": {
+      "mobile": "Sep 2020",
+      "desktop": "September 2020"
+    },
+    "end": {
+      "mobile": "Aug 2021",
+      "desktop": "August 2021"
+    },
+    "city": "Auckland",
+    "country": "New Zealand",
+    "description": [
+      [
+        {
+          "content": "Engaged and worked with clients from all sectors to develop custom applications to suit their business needs"
+        }
+      ],
+      [
+        {
+          "content": "Complete redesign of the"
+        },
+        {
+          "content": "company website",
+          "isLink": true,
+          "url": "https://canary.co.nz/"
+        },
+        {
+          "content": "by incorporating modern design principles and technologies"
+        }
+      ],
+      [
+        {
+          "content": "Reduced an application's runtime error by over 65% by migrating the backend server to TypeScript and introducing unit tests"
+        }
+      ]
+    ],
+    "techStack": [
+      "Vue",
+      "TypeScript",
+      "ASP.NET",
+      "C#/VB",
+      "Microsoft SQL Server",
+      "Knockout.js",
+      "Jenkins",
+      "TeamCity",
+      "Octopus"
+    ]
+  },
+  {
+    "company": "chancery",
+    "imageHeight": 50,
+    "jobTitle": "Software Engineer",
+    "companyTitle": "Chancery Investment (Startup)",
+    "start": {
+      "mobile": "Sep 2020",
+      "desktop": "September 2020"
+    },
+    "end": {
+      "mobile": "Mar 2021",
+      "desktop": "March 2021"
+    },
+    "city": "Berkeley",
+    "country": "California",
+    "description": [
+      [
+        {
+          "content": "Improved front-end fetch logic by adding helper functions"
+        }
+      ],
+      [
+        {
+          "content": "Improved mobile browsing experience by redesigning the mobile layout"
+        }
+      ],
+      [
+        {
+          "content": "Created the front-end UI and logic for the feedback button"
+        }
+      ]
+    ],
+    "techStack": ["React", "Node.js", "jQuery", "Bootstrap"]
+  },
+  {
+    "company": "yourcar",
+    "imageHeight": 35,
+    "jobTitle": "Intern Software Developer",
+    "companyTitle": "Yourcar (Startup)",
+    "start": {
+      "mobile": "Jan 2020",
+      "desktop": "January 2020"
+    },
+    "end": {
+      "mobile": "Sep 2020",
+      "desktop": "September 2020"
+    },
+    "city": "Auckland",
+    "country": "New Zealand",
+    "description": [
+      [
+        {
+          "content": "Developed an internal tool that calculates the write-off percentage of New Zealand new vehicles in the first 18 months of purchase"
+        }
+      ],
+      [
+        {
+          "content": "Improved company web application's durability by implementing a complete functional test on the frontend site using Cypress"
+        }
+      ],
+      [
+        {
+          "content": "Gained valuable professional experience by working in a fast-paced startup environment"
+        }
+      ]
+    ],
+    "techStack": [
+      "React/Next.js",
+      "PostgreSQL",
+      "GraphQL",
+      "Postman API Testing",
+      "Jest Test",
+      "Cypress",
+      "HubSpot",
+      "Barista Skills! ☕"
+    ]
+  },
+  {
+    "company": "uoa",
+    "imageHeight": 55,
+    "jobTitle": "Frontend Software Developer",
+    "companyTitle": "The University of Auckland",
+    "start": {
+      "mobile": "Jan 2020",
+      "desktop": "January 2020"
+    },
+    "end": {
+      "mobile": "Nov 2020",
+      "desktop": "November 2020"
+    },
+    "city": "Auckland",
+    "country": "New Zealand",
+    "description": [
+      [
+        {
+          "content": "Working in a team of four, we revamped the website for the university's startup incubator, Velocity, using Javascript and WordPress"
+        }
+      ],
+      [
+        {
+          "content": "Maintenance of the Velocity Website"
+        }
+      ]
+    ],
+    "techStack": ["WordPress", "HTML", "CSS", "Javascript", "Git"]
+  }
+]
