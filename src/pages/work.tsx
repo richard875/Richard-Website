@@ -22,7 +22,8 @@ import WorkExperience, { JobDescription } from "../types/workExperience";
 
 gsap.registerPlugin(ScrollTrigger);
 const BLOCK_PADDING = 25;
-const BLOCK_WIDTH = window.innerWidth > 1600 ? 580 : 500;
+const BLOCK_WIDTH =
+  typeof window !== `undefined` && window.innerWidth <= 1600 ? 500 : 580;
 const IMAGE_DEFAULT_HEIGHT = 50;
 
 const CallToAction = ({
