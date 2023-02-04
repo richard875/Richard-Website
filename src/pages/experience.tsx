@@ -33,7 +33,9 @@ const CallToAction = ({
       }}
     >
       <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
+        <span className="cursor-pointer" onClick={(e) => work(e)}>
         Work Experience & Projects
+        </span>
       </div>
       <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
     </Cta>
@@ -144,7 +146,6 @@ const Experience = ({
         </motion.div>
 
         <SydneyOperaHouseInfoText
-          className="cursor-pointer font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
@@ -157,6 +158,7 @@ const Experience = ({
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
+          <span className="cursor-pointer font-secondary-normal">
             Sydney Opera House
           </span>
         </SydneyOperaHouseInfoText>
@@ -252,7 +254,6 @@ const Cta = styled(motion.div)`
   align-items: center;
   color: ${COLOR.BRIGHT_GREEN};
   font-size: 4.5vw;
-  cursor: pointer;
 
   ${down("sm")} {
     margin-top: 8vw;
