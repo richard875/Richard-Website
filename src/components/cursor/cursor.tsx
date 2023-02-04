@@ -59,17 +59,12 @@ const Ring = styled.div`
   border-radius: 100%;
   transform: translate(-50%, -50%);
   -webkit-transition-timing-function: ease-out;
+  transition-duration: 100ms;
+  -webkit-transition-duration: 100ms;
   transition-timing-function: ease-out;
   will-change: width, height, transform, border;
   z-index: 999;
   pointer-events: none;
-
-  ${(props: any) =>
-    !props.is3D &&
-    css`
-      -webkit-transition-duration: 100ms;
-      transition-duration: 100ms;
-    `}
 
   ${(props: any) =>
     props.hover &&
@@ -77,8 +72,6 @@ const Ring = styled.div`
       width: 50px;
       height: 50px;
       border: 3px solid lightgray;
-      -webkit-transition-duration: 100ms;
-      transition-duration: 100ms;
     `};
 `;
 
