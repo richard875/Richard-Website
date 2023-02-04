@@ -46,9 +46,7 @@ const IndexPage = ({
 
   const experience = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
-    navigate(Route.Experience, {
-      state: { x: event.clientX, y: event.clientY },
-    });
+    navigate(Route.Experience);
   };
 
   return (
