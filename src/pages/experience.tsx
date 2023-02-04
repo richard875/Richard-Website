@@ -33,7 +33,7 @@ const CallToAction = () => {
     >
       <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
         <span className="cursor-pointer" onClick={(e) => work(e)}>
-        Work Experience & Projects
+          Work Experience & Projects
         </span>
       </div>
       <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
@@ -41,11 +41,7 @@ const CallToAction = () => {
   );
 };
 
-const Experience = ({
-  location,
-}: {
-  location: GatsbyLinkProps<mousePositionType>;
-}) => {
+const Experience = () => {
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BLACK;
   }, []);
@@ -133,7 +129,7 @@ const Experience = ({
             duration: 1,
             delay: 2.5,
           }}
-          >
+        >
           <span className="cursor-pointer font-secondary-normal">
             Sydney Opera House
           </span>
