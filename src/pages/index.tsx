@@ -76,7 +76,7 @@ const IndexPage = ({
           },
         }}
       >
-        <InitialTransition color={COLOR.BACKGROUND_BLACK} />
+        <InitialTransition color={COLOR.BLACK} />
         <Box>
           <Header></Header>
           <Wrapper>

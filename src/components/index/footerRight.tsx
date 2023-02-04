@@ -46,7 +46,7 @@ const Indicator = styled.div`
   height: 8px;
   margin-right: 7px;
   border-radius: 99px;
-  background: ${COLOR.INDICATOR_GREEN};
+  background: ${COLOR.DIM_GREEN};
 
   animation: blink 3s ease-out infinite;
 

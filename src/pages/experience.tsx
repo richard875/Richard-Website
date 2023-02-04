@@ -183,7 +183,7 @@ export default Experience;
 export const Head: HeadFC = () => <title>G'day | {NAME}</title>;
 
 const Container = styled(motion.div)`
-  background-color: ${COLOR.BACKGROUND_BLACK};
+  background-color: ${COLOR.BLACK};
 
   ${up("lg")} {
     display: flex;
