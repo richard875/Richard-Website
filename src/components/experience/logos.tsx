@@ -17,7 +17,7 @@ const Logos = () => {
       transition={{
         stiffness: 0,
         duration: 1,
-        delay: 1,
+        delay: 1.5,
       }}
     >
       <UoaLogo>
