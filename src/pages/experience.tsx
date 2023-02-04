@@ -1,7 +1,8 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps } from "gatsby";
+import { navigate } from "gatsby";
 import styled from "styled-components";
+import Route from "../routes/route";
 import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,18 +13,16 @@ import { COLOR } from "../styles/theme";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
-import mousePositionType from "../types/mousePositionType";
 
-const CallToAction = ({
-  setHover,
-}: {
-  setHover: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const CallToAction = () => {
+  const work = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.preventDefault();
+    navigate(Route.Work, { state: { x: event.clientX, y: event.clientY } });
+  };
+
   return (
     <Cta
       className="font-secondary-normal"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{
@@ -47,8 +46,6 @@ const Experience = ({
 }: {
   location: GatsbyLinkProps<mousePositionType>;
 }) => {
-  const [hover, setHover] = React.useState(false);
-
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BLACK;
   }, []);
@@ -76,20 +73,13 @@ const Experience = ({
           }}
         >
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
-          <span
-            className="cursor-pointer"
-            style={{ color: COLOR.USYD_ORANGE }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
+          <span className="cursor-pointer" style={{ color: COLOR.USYD_ORANGE }}>
             University of Sydney
           </span>
           ,{" "}
           <span
             className="cursor-pointer"
             style={{ color: COLOR.AUSTRALIA_GOLD }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
           >
             Australia
           </span>
@@ -98,8 +88,6 @@ const Experience = ({
           <span
             className="cursor-pointer underline underline-offset-4"
             style={{ color: COLOR.LINKEDIN_BLUE }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
           >
             LinkedIn
           </span>
@@ -107,8 +95,6 @@ const Experience = ({
           <span
             className="cursor-pointer underline underline-offset-4"
             style={{ color: COLOR.BACKGROUND_WHITE }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
           >
             GitHub
           </span>
@@ -116,20 +102,14 @@ const Experience = ({
           <span
             className="cursor-pointer underline underline-offset-4"
             style={{ color: COLOR.BLUE }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
           >
             email
           </span>
           . I hope you find my page enjoyable and have a great day!
         </LeftText>
-        {useBreakpoint(down("sm")) && (
-          <CallToAction hover={hover} setHover={setHover} />
-        )}
+        {useBreakpoint(down("sm")) && <CallToAction />}
         <Logos />
-        {useBreakpoint(up("sm")) && (
-          <CallToAction hover={hover} setHover={setHover} />
-        )}
+        {useBreakpoint(up("sm")) && <CallToAction />}
       </Left>
       <Right className="select-none">
         <motion.div
@@ -153,10 +133,6 @@ const Experience = ({
             duration: 1,
             delay: 2.5,
           }}
-        >
-          <span
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
           >
           <span className="cursor-pointer font-secondary-normal">
             Sydney Opera House
