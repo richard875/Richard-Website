@@ -13,7 +13,7 @@ import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
 import InitialTransition from "../components/transition/InitialTransition";
-import mousePositionType from "../types/mousePositionType";
+import MousePosition from "../types/mousePosition";
 import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
@@ -22,7 +22,7 @@ import FooterRight from "../components/index/footerRight";
 const IndexPage = ({
   location,
 }: {
-  location: GatsbyLinkProps<mousePositionType>;
+  location: GatsbyLinkProps<MousePosition>;
 }) => {
   const [hover, setHover] = React.useState(false);
 

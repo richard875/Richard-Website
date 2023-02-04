@@ -1,6 +1,6 @@
-import mousePositionType from "../types/mousePositionType";
+import MousePosition from "../types/mousePosition";
 
-const MOUSE_POSITION: mousePositionType = {
+const MOUSE_POSITION: MousePosition = {
   x: 0,
   y: 0,
 };

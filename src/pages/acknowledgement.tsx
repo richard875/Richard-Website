@@ -10,12 +10,12 @@ import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
-import mousePositionType from "../types/mousePositionType";
+import MousePosition from "../types/mousePosition";
 
 const Acknowledgement = ({
   location,
 }: {
-  location: GatsbyLinkProps<mousePositionType>;
+  location: GatsbyLinkProps<MousePosition>;
 }) => {
   const [hover, setHover] = React.useState(false);
 

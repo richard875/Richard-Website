@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 import { COLOR } from "../../styles/theme";
 import useMousePosition from "../../hooks/useMousePosition";
-import mousePositionType from "../../types/mousePositionType";
+import MousePosition from "../../types/mousePosition";
 
 const Cursor = ({
   hover,
@@ -14,7 +14,7 @@ const Cursor = ({
 }: {
   hover: boolean;
   delay: number;
-  position: mousePositionType;
+  position: MousePosition;
   isBlack: boolean;
   is3D?: boolean;
 }) => {
