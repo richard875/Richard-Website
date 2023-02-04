@@ -102,6 +102,7 @@ const IndexPage = ({
             delay={2.5}
             position={location.state!}
             isBlack={true}
+            isIndexPage={true}
           />
         )}
       </Container>

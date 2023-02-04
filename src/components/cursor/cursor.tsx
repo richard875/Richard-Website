@@ -10,13 +10,13 @@ const Cursor = ({
   delay,
   position,
   isBlack,
-  is3D = false,
+  isIndexPage,
 }: {
   hover: boolean;
   delay: number;
   position: MousePosition;
   isBlack: boolean;
-  is3D?: boolean;
+  isIndexPage?: boolean;
 }) => {
   if (typeof window === "undefined") return <></>;
   const { x, y } = useMousePosition(position);
@@ -29,13 +29,14 @@ const Cursor = ({
     >
       <Ring
         hover={hover}
-        is3D={is3D}
         black={isBlack}
+        isIndexPage={isIndexPage}
         style={{ left: `${x}px`, top: `${y}px` }}
       ></Ring>
       <Dot
         hover={hover}
         black={isBlack}
+        isIndexPage={isIndexPage}
         style={{ left: `${x}px`, top: `${y}px` }}
       ></Dot>
     </Container>
@@ -50,8 +51,10 @@ const Ring = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: ${(props: any) => (props.black ? "30px" : "25px")};
-  height: ${(props: any) => (props.black ? "30px" : "25px")};
+  width: ${(props: any) =>
+    props.black && props.isIndexPage ? "30px" : "25px"};
+  height: ${(props: any) =>
+    props.black && props.isIndexPage ? "30px" : "25px"};
   border: 2px solid ${(props: any) => (props.black ? COLOR.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
@@ -86,7 +89,7 @@ const Dot = styled.div`
   width: 8px;
   height: 8px;
   background-color: ${(props: any) =>
-    props.black ? COLOR.BLACK : "transparent"};
+    props.black && props.isIndexPage ? COLOR.BLACK : "transparent"};
   border-radius: 100%;
   transform: translate(-50%, -50%);
   z-index: 999;
