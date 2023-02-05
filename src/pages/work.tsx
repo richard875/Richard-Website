@@ -8,7 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Route from "../routes/route";
 import { NAME } from "../constants/meta";
-import { up } from "styled-breakpoints";
+import { up, down } from "styled-breakpoints";
+import useWindowSize from "../hooks/useWindowSize";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
@@ -89,27 +90,30 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
   const [hover, setHover] = React.useState(false);
   const component = React.useRef<HTMLDivElement>(null);
   const slider = React.useRef<HTMLDivElement>(null);
+  let windowWidth = useWindowSize().width;
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE_SECONDARY;
   }, []);
 
   React.useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.to(slider.current, {
-        xPercent: -100,
-        left: "100%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: slider.current,
-          pin: true,
-          scrub: 1,
-          end: () => "+=" + slider.current!.offsetWidth,
-        },
-      });
-    }, component);
-    return () => ctx.revert();
-  }, []);
+    if (!!windowWidth && windowWidth > 768) {
+      let ctx = gsap.context(() => {
+        gsap.to(slider.current, {
+          xPercent: -100,
+          left: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: slider.current,
+            pin: true,
+            scrub: 1,
+            end: () => "+=" + slider.current!.offsetWidth,
+          },
+        });
+      }, component);
+      return () => ctx.revert();
+    }
+  }, [windowWidth]);
 
   return (
     <Layout>
@@ -210,8 +214,11 @@ export const Head: HeadFC = () => <title>Work Experience | {NAME}</title>;
 
 const Container = styled(motion.div)`
   cursor: none;
-  overflow-x: hidden;
   background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
+
+  ${up("md")} {
+    overflow-x: hidden;
+  }
 `;
 
 const Top = styled.div`
@@ -224,6 +231,11 @@ const Top = styled.div`
   padding-top: 5px;
   padding-bottom: 3px;
   border-bottom: 0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY};
+  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
+
+  ${down("md")} {
+    justify-content: space-between;
+  }
 
   ${up("md")} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
@@ -240,13 +252,17 @@ const Title = styled.p`
 `;
 
 const Horizontal = styled.div`
-  width: ${({ entryLength }: { entryLength: number }) =>
-    `${entryLength * BLOCK_WIDTH}px`};
-  height: 100vh;
-  display: flex;
   flex-wrap: wrap;
-  padding-top: 66px;
-  padding-bottom: 20px;
+  padding-top: 40px;
+
+  ${up("md")} {
+    padding-top: 66px;
+    padding-bottom: 20px;
+    width: ${({ entryLength }: { entryLength: number }) =>
+      `${entryLength * BLOCK_WIDTH}px`};
+    height: 100vh;
+    display: flex;
+  }
 
   ${up("xxxl")} {
     width: ${({ entryLength }: { entryLength: number }) =>
@@ -255,15 +271,20 @@ const Horizontal = styled.div`
 `;
 
 const Block = styled.div`
-  width: ${BLOCK_WIDTH + "px"};
+  margin-top: 30px;
+  padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
   padding-right: ${BLOCK_PADDING + "px"};
-  border-right: ${({ isLast }: { isLast: boolean }) =>
-    !isLast && `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
+  border-right: none;
 
   ${up("md")} {
+    margin-top: 0;
+    padding-bottom: 0;
+    width: ${BLOCK_WIDTH + "px"};
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
+    border-right: ${({ isLast }: { isLast: boolean }) =>
+      !isLast && `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
   }
 
   ${up("xxxl")} {
@@ -275,9 +296,16 @@ const Logo = styled.img`
   height: ${({ height }: { height: number }) => height + "px"};
   width: auto;
   margin-top: ${({ height }: { height: number }) =>
-    10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   margin-bottom: ${({ height }: { height: number }) =>
-    30 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+
+  ${up("md")} {
+    margin-top: ${({ height }: { height: number }) =>
+      10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-bottom: ${({ height }: { height: number }) =>
+      30 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  }
 `;
 
 const JobTitle = styled.p`
@@ -308,12 +336,11 @@ const Secondary = styled.p`
 const JobDescriptionText = styled.p`
   margin-top: ${({ isFirst }: { isFirst: boolean }) =>
     isFirst ? "25px" : "20px"};
-  width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   font-size: 18px;
   line-height: 25px;
 
   ${up("md")} {
-    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING + "px"};
+    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
   ${up("xxxl")} {
