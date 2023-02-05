@@ -57,16 +57,10 @@ const Experience = ({
   location: GatsbyLinkProps<MousePosition>;
 }) => {
   const [hover, setHover] = React.useState(false);
-  const [cursorColorIsBlack, setCursorColorIsBlack] = React.useState(true);
+  const [cursorColorIsBlack, setCursorColorIsBlack] = React.useState(false);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BLACK;
-    const handleWindowMouseMove = (event: MouseEvent) => {
-      setCursorColorIsBlack(event.clientX / window.innerWidth > 0.57);
-    };
-
-    window.addEventListener("mousemove", handleWindowMouseMove);
-    return () => window.removeEventListener("mousemove", handleWindowMouseMove);
   }, []);
 
   return (
@@ -141,7 +135,11 @@ const Experience = ({
         <Logos />
         {useBreakpoint(up("sm")) && <CallToAction setHover={setHover} />}
       </Left>
-      <Right className="select-none">
+      <Right
+        onMouseEnter={() => setCursorColorIsBlack(true)}
+        onMouseLeave={() => setCursorColorIsBlack(false)}
+        className="select-none"
+      >
         <motion.div
           className="w-full h-full"
           initial={{ opacity: 0 }}
