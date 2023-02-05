@@ -9,8 +9,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
-import arrow from "../../../static/images/indexCircle/arrow.svg";
-import circle from "../../../static/images/indexCircle/circle.png";
+
+const ARROW = "../../../static/images/indexCircle/arrow.svg";
+const CIRCLE = "../../../static/images/indexCircle/circle.png";
 
 const Bottom = ({
   setHover,
@@ -98,7 +99,7 @@ const Bottom = ({
           <Circle>
             <StaticImage
               className="relative h-5/6 w-5/6"
-              src={circle}
+              src={CIRCLE}
               alt="Resume Circle"
               placeholder="none"
             />
@@ -111,7 +112,7 @@ const Bottom = ({
                 left: 42.5,
                 bottom: 56,
               }}
-              src={arrow}
+              src={ARROW}
               alt="Resume Circle"
               placeholder="none"
             />
@@ -124,7 +125,7 @@ const Bottom = ({
                 left: 50,
                 bottom: 65,
               }}
-              src={arrow}
+              src={ARROW}
               alt="Resume Circle"
               placeholder="none"
             />
@@ -137,7 +138,7 @@ const Bottom = ({
                 left: 55,
                 bottom: 72,
               }}
-              src={arrow}
+              src={ARROW}
               alt="Resume Circle"
               placeholder="none"
             />
