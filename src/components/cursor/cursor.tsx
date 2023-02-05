@@ -1,4 +1,5 @@
 import * as React from "react";
+import gsap from "gsap";
 import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 import { COLOR } from "../../styles/theme";
@@ -21,6 +22,18 @@ const Cursor = ({
   if (typeof window === "undefined") return <></>;
   const { x, y } = useMousePosition(position);
 
+  const ringRef = React.useRef<HTMLDivElement>();
+  const dotRef = React.useRef<HTMLDivElement>();
+
+  React.useEffect(() => {
+    gsap.defaults({ ease: "power4.out", duration: 0.7 });
+  }, []);
+
+  React.useEffect(() => {
+    gsap.to(ringRef.current!, { css: { left: x!, top: y! } });
+    gsap.to(dotRef.current!, { css: { left: x!, top: y! } });
+  }, [x, y]);
+
   return (
     <Container
       initial={{ opacity: 0 }}
@@ -28,16 +41,16 @@ const Cursor = ({
       transition={{ duration: 1, delay: delay }}
     >
       <Ring
+        ref={ringRef}
         hover={hover}
         black={isBlack}
         isIndexPage={isIndexPage}
-        style={{ left: `${x}px`, top: `${y}px` }}
       ></Ring>
       <Dot
+        ref={dotRef}
         hover={hover}
         black={isBlack}
         isIndexPage={isIndexPage}
-        style={{ left: `${x}px`, top: `${y}px` }}
       ></Dot>
     </Container>
   );
