@@ -26,6 +26,7 @@
     "@react-three/postprocessing": "2.0.3",
     "@types/three": "^0.149.0",
     "babel-plugin-styled-components": "^2.0.7",
+    "browser-monads": "^1.0.0",
     "framer-motion": "^7.3.2",
     "gatsby": "^4.22.0",
     "gatsby-plugin-google-gtag": "^4.23.0",
