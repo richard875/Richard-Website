@@ -21,7 +21,8 @@ import workData from "../../static/data/work.json";
 import WorkExperience, { JobDescription } from "../types/workExperience";
 
 gsap.registerPlugin(ScrollTrigger);
-const BLOCK_PADDING = 25;
+const BLOCK_PADDING = 10;
+const BLOCK_PADDING_DESKTOP = 25;
 const BLOCK_WIDTH = 500;
 const BLOCK_WIDTH_DESKTOP = 580;
 const IMAGE_DEFAULT_HEIGHT = 50;
@@ -217,16 +218,25 @@ const Top = styled.div`
   position: fixed;
   top: 0;
   margin-left: ${BLOCK_PADDING + "px"};
-  width: calc(100% - 50px);
+  width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
   display: flex;
   align-items: center;
   padding-top: 5px;
   padding-bottom: 3px;
   border-bottom: 0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY};
+
+  ${up("md")} {
+    margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
+    width: calc(100% - ${BLOCK_PADDING_DESKTOP * 2 + "px"});
+  }
 `;
 
 const Title = styled.p`
-  font-size: 25px;
+  font-size: 20px;
+
+  ${up("md")} {
+    font-size: 25px;
+  }
 `;
 
 const Horizontal = styled.div`
@@ -250,6 +260,11 @@ const Block = styled.div`
   padding-right: ${BLOCK_PADDING + "px"};
   border-right: ${({ isLast }: { isLast: boolean }) =>
     !isLast && `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
+
+  ${up("md")} {
+    padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
+    padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
+  }
 
   ${up("xxxl")} {
     width: ${BLOCK_WIDTH_DESKTOP + "px"};
@@ -293,14 +308,18 @@ const Secondary = styled.p`
 const JobDescriptionText = styled.p`
   margin-top: ${({ isFirst }: { isFirst: boolean }) =>
     isFirst ? "25px" : "20px"};
-  width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING + "px"};
+  width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   font-size: 18px;
   line-height: 25px;
+
+  ${up("md")} {
+    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING + "px"};
+  }
 
   ${up("xxxl")} {
     margin-top: ${({ isFirst }: { isFirst: boolean }) =>
       isFirst ? "40px" : "20px"};
-    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING + "px"};
+    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
     font-size: 20px;
     line-height: 30px;
   }
