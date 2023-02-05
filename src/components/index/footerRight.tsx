@@ -9,8 +9,8 @@ const FooterRight = () => {
   const timeRef = React.useRef(null);
 
   React.useEffect(() => {
-    gsap.defaults({ ease: "power4.out", duration: 1.8 });
-    gsap.from(timeRef.current, gsapAnimationIndex(150, 3.4, 20));
+    gsap.defaults({ ease: "power4.out" });
+    gsap.from(timeRef.current, 1.8, gsapAnimationIndex(150, 3.4, 20));
   }, []);
 
   return (
