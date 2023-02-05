@@ -22,8 +22,8 @@ import WorkExperience, { JobDescription } from "../types/workExperience";
 
 gsap.registerPlugin(ScrollTrigger);
 const BLOCK_PADDING = 25;
-const BLOCK_WIDTH =
-  typeof window !== `undefined` && window.innerWidth <= 1600 ? 500 : 580;
+const BLOCK_WIDTH = 500;
+const BLOCK_WIDTH_DESKTOP = 580;
 const IMAGE_DEFAULT_HEIGHT = 50;
 
 const CallToAction = ({
@@ -237,6 +237,11 @@ const Horizontal = styled.div`
   flex-wrap: wrap;
   padding-top: 66px;
   padding-bottom: 20px;
+
+  ${up("xxxl")} {
+    width: ${({ entryLength }: { entryLength: number }) =>
+      `${entryLength * BLOCK_WIDTH_DESKTOP}px`};
+  }
 `;
 
 const Block = styled.div`
@@ -245,6 +250,10 @@ const Block = styled.div`
   padding-right: ${BLOCK_PADDING + "px"};
   border-right: ${({ isLast }: { isLast: boolean }) =>
     !isLast && `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
+
+  ${up("xxxl")} {
+    width: ${BLOCK_WIDTH_DESKTOP + "px"};
+  }
 `;
 
 const Logo = styled.img`
@@ -291,6 +300,7 @@ const JobDescriptionText = styled.p`
   ${up("xxxl")} {
     margin-top: ${({ isFirst }: { isFirst: boolean }) =>
       isFirst ? "40px" : "20px"};
+    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING + "px"};
     font-size: 20px;
     line-height: 30px;
   }
