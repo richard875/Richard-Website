@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Route from "../routes/route";
-import { NAME } from "../../static/data/meta";
+import { NAME } from "../constants/meta";
 import { up } from "styled-breakpoints";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";

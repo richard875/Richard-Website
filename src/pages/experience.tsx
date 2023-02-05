@@ -7,7 +7,7 @@ import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { NAME } from "../../static/data/meta";
+import { NAME } from "../constants/meta";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import InitialTransition from "../components/transition/InitialTransition";

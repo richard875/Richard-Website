@@ -3,7 +3,7 @@ import { GatsbyLinkProps, navigate } from "gatsby";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import Route from "../routes/route";
-import { NAME } from "../../static/data/meta";
+import { NAME } from "../constants/meta";
 import { up } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { isDesktop } from "react-device-detect";

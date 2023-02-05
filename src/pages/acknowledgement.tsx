@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { GatsbyLinkProps, navigate } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
-import { NAME } from "../../static/data/meta";
+import { NAME } from "../constants/meta";
 import { up } from "styled-breakpoints";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
