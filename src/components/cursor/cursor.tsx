@@ -71,20 +71,24 @@ const Ring = styled.div`
   border: 2px solid ${(props: any) => (props.black ? COLOR.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
-  -webkit-transition-timing-function: ease-out;
-  transition-duration: 100ms;
-  -webkit-transition-duration: 100ms;
-  transition-timing-function: ease-out;
-  will-change: width, height, transform, border;
+  transition: all 0.1s ease-in-out,
+    transform 0.6s cubic-bezier(0.75, -1.27, 0.3, 2.33),
+    opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
+    border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.25s;
+  -webkit-transition: all 0.1s ease-out,
+    transform 0.6s cubic-bezier(0.75, -1.27, 0.3, 2.33),
+    opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
+    border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.25s;
+  user-select: none;
   z-index: 999;
   pointer-events: none;
 
   ${(props: any) =>
     props.hover &&
     css`
-      width: 50px;
-      height: 50px;
-      border: 3px solid lightgray;
+      opacity: 0.7;
+      transform: translate(-50%, -50%) scale(2.5);
+      border: 1px solid lightgray;
     `};
 `;
 
@@ -97,13 +101,18 @@ const Dot = styled.div`
   background-color: ${(props: any) =>
     props.black && props.isIndexPage ? COLOR.BLACK : "transparent"};
   border-radius: 100%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
+  transition: 0.3s cubic-bezier(0.75, -1.27, 0.3, 2.33) transform 0.4s,
+    0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33) opacity;
+  user-select: none;
   z-index: 999;
   pointer-events: none;
 
   ${(props: any) =>
     props.hover &&
     css`
-      display: none;
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(0);
+      transition: 0.3s cubic-bezier(0.75, -1.27, 0.3, 2.33) transform 0s;
     `};
 `;
