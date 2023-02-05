@@ -1,8 +1,9 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { navigate } from "gatsby";
+import { GatsbyLinkProps, navigate } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
+import { isDesktop } from "react-device-detect";
 import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,11 +11,17 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { NAME } from "../constants/meta";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
+import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
+import MousePosition from "../types/mousePosition";
 
-const CallToAction = () => {
+const CallToAction = ({
+  setHover,
+}: {
+  setHover: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const work = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
     document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE_SECONDARY;
@@ -32,19 +39,34 @@ const CallToAction = () => {
         delay: 2,
       }}
     >
-      <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
-        <span className="cursor-pointer" onClick={(e) => work(e)}>
-          Work Experience & Projects
-        </span>
+      <div
+        className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        <span onClick={(e) => work(e)}>Work Experience & Projects</span>
       </div>
       <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
     </Cta>
   );
 };
 
-const Experience = () => {
+const Experience = ({
+  location,
+}: {
+  location: GatsbyLinkProps<MousePosition>;
+}) => {
+  const [hover, setHover] = React.useState(false);
+  const [cursorColorIsBlack, setCursorColorIsBlack] = React.useState(true);
+
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BLACK;
+    const handleWindowMouseMove = (event: MouseEvent) => {
+      setCursorColorIsBlack(event.clientX / window.innerWidth > 0.57);
+    };
+
+    window.addEventListener("mousemove", handleWindowMouseMove);
+    return () => window.removeEventListener("mousemove", handleWindowMouseMove);
   }, []);
 
   return (
@@ -70,43 +92,54 @@ const Experience = () => {
           }}
         >
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
-          <span className="cursor-pointer" style={{ color: COLOR.USYD_ORANGE }}>
+          <span
+            style={{ color: COLOR.USYD_ORANGE }}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
             University of Sydney
           </span>
           ,{" "}
           <span
-            className="cursor-pointer"
             style={{ color: COLOR.AUSTRALIA_GOLD }}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           >
             Australia
           </span>
           . On this corner of the internet, you'll find information about me.
           You can connect with me on{" "}
           <span
-            className="cursor-pointer underline underline-offset-4"
+            className="underline underline-offset-4"
             style={{ color: COLOR.LINKEDIN_BLUE }}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           >
             LinkedIn
           </span>
           , check out my repositories on{" "}
           <span
-            className="cursor-pointer underline underline-offset-4"
+            className="underline underline-offset-4"
             style={{ color: COLOR.BACKGROUND_WHITE }}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           >
             GitHub
           </span>
           , or reach out to me via{" "}
           <span
-            className="cursor-pointer underline underline-offset-4"
+            className="underline underline-offset-4"
             style={{ color: COLOR.BLUE }}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           >
             email
           </span>
           . I hope you find my page enjoyable and have a great day!
         </LeftText>
-        {useBreakpoint(down("sm")) && <CallToAction />}
+        {useBreakpoint(down("sm")) && <CallToAction setHover={setHover} />}
         <Logos />
-        {useBreakpoint(up("sm")) && <CallToAction />}
+        {useBreakpoint(up("sm")) && <CallToAction setHover={setHover} />}
       </Left>
       <Right className="select-none">
         <motion.div
@@ -131,11 +164,19 @@ const Experience = () => {
             delay: 2.5,
           }}
         >
-          <span className="cursor-pointer font-secondary-normal">
+          <span className="font-secondary-normal cursor-pointer">
             Sydney Opera House
           </span>
         </SydneyOperaHouseInfoText>
       </Right>
+      {isDesktop && !cursorColorIsBlack && (
+        <Cursor
+          hover={hover}
+          delay={0.5}
+          position={location.state!}
+          isBlack={false}
+        />
+      )}
     </Container>
   );
 };
@@ -146,6 +187,7 @@ export const Head: HeadFC = () => <title>G'day | {NAME}</title>;
 
 const Container = styled(motion.div)`
   background-color: ${COLOR.BLACK};
+  cursor: none;
 
   ${up("lg")} {
     display: flex;
