@@ -10,6 +10,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import arrow from "../../../static/images/indexCircle/arrow.svg";
+import circle from "../../../static/images/indexCircle/circle.png";
 
 const Bottom = ({
   setHover,
@@ -97,7 +98,7 @@ const Bottom = ({
           <Circle>
             <StaticImage
               className="relative h-5/6 w-5/6"
-              src="../../images/circle.png"
+              src={circle}
               alt="Resume Circle"
               placeholder="none"
             />
