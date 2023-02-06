@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import { up } from "styled-breakpoints";
+import { CSSTransition } from "react-transition-group";
 import { COLOR } from "../../styles/theme";
 import {
   MEDIA_TOP_OFFSET,
@@ -22,6 +23,7 @@ const TextWithLink = ({
   url?: string;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const mediaRef = React.useRef<HTMLDivElement>(null);
   const clickableRef = React.useRef<HTMLAnchorElement>(null);
   const [displayMedia, setDisplayMedia] = React.useState(false);
 
@@ -29,15 +31,24 @@ const TextWithLink = ({
     <>
       {isFirst ? "• " : " "}
       {isLink ? (
+        <>
+          <CSSTransition
+            nodeRef={mediaRef}
+            in={displayMedia}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit
+          >
             <Media ref={mediaRef} position={clickableRef}></Media>
+          </CSSTransition>
 
-        <a
+          <a
             ref={clickableRef}
-          className="underline cursor-none"
-          style={{ color: COLOR.RED }}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
+            className="underline cursor-none"
+            style={{ color: COLOR.RED }}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
             onMouseEnter={() => {
               setHover(true);
               setDisplayMedia(true);
@@ -46,9 +57,9 @@ const TextWithLink = ({
               setHover(false);
               setDisplayMedia(false);
             }}
-        >
-          {content}
-        </a>
+          >
+            {content}
+          </a>
         </>
       ) : (
         content
