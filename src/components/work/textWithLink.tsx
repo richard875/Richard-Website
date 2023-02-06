@@ -3,9 +3,9 @@ import { COLOR } from "../../styles/theme";
 
 const TextWithLink = ({
   isFirst,
-  content,
-  isLink,
-  url,
+  content, // In type JobDescription
+  isLink, // In type JobDescription
+  url, // In type JobDescription
   setHover,
 }: {
   isFirst: boolean;
