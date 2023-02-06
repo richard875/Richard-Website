@@ -60,7 +60,7 @@ const Block = ({
                     key={index}
                     isFirst={index == 0}
                     setHover={setHover}
-                    {...sentence}
+                    {...sentence} // content, isLink and url
                   />
                 ))}
               </JobDescriptionText>
