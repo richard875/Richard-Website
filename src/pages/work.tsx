@@ -14,7 +14,7 @@ import { COLOR } from "../styles/theme";
 import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
-import CallToAction from "../components/work/CallToAction";
+import CallToAction from "../components/work/callToAction";
 import Block from "../components/work/block";
 import MousePosition from "../types/mousePosition";
 import workData from "../../static/data/work.json";
