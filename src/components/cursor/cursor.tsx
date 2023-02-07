@@ -26,7 +26,7 @@ const Cursor = ({
   const dotRef = React.useRef<HTMLDivElement>();
 
   React.useEffect(() => {
-    gsap.defaults({ ease: "power4.out", duration: 0.7 });
+    gsap.defaults({ ease: "power4.out", duration: 0.2 });
   }, []);
 
   React.useEffect(() => {
@@ -72,11 +72,11 @@ const Ring = styled.div`
   border-radius: 100%;
   transform: translate(-50%, -50%);
   transition: all 0.1s ease-in-out,
-    transform 0.6s cubic-bezier(0.75, -1.27, 0.3, 2.33),
+    transform 0.5s cubic-bezier(0.75, -1.27, 0.3, 2.33),
     opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
     border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.25s;
   -webkit-transition: all 0.1s ease-out,
-    transform 0.6s cubic-bezier(0.75, -1.27, 0.3, 2.33),
+    transform 0.5s cubic-bezier(0.75, -1.27, 0.3, 2.33),
     opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
     border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.25s;
   user-select: none;
