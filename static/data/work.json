@@ -89,7 +89,9 @@
       "Netlify",
       "Heroku",
       "AWS"
-    ]
+    ],
+    "isMedia": true,
+    "media": "smh"
   },
   {
     "company": "nzgovt",
@@ -281,7 +283,14 @@
     "description": [
       [
         {
-          "content": "Working in a team of four, we revamped the website for the university's startup incubator, Velocity, using Javascript and WordPress"
+          "content": "Working in a team of four, we revamped the website for the university's startup incubator"
+        },
+        {
+          "content": "Velocity",
+          "isLink": true
+        },
+        {
+          "content": "using Javascript and WordPress"
         }
       ],
       [
@@ -290,6 +299,8 @@
         }
       ]
     ],
-    "techStack": ["WordPress", "HTML", "CSS", "Javascript", "Git"]
+    "techStack": ["WordPress", "HTML", "CSS", "Javascript", "Git"],
+    "isMedia": true,
+    "media": "cie"
   }
 ]
