@@ -86,60 +86,18 @@ const Experience = ({
           }}
         >
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
-          <span
-            style={{ color: COLOR.USYD_ORANGE }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            University of Sydney
-          </span>
-          ,{" "}
-          <span
-            style={{ color: COLOR.AUSTRALIA_GOLD }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            Australia
-          </span>
-          . On this corner of the internet, you'll find information about me.
-          You can connect with me on{" "}
-          <span
-            className="underline underline-offset-4"
-            style={{ color: COLOR.LINKEDIN_BLUE }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            LinkedIn
-          </span>
-          , check out my repositories on{" "}
-          <span
-            className="underline underline-offset-4"
-            style={{ color: COLOR.BACKGROUND_WHITE }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            GitHub
-          </span>
-          , or reach out to me via{" "}
-          <span
-            className="underline underline-offset-4"
-            style={{ color: COLOR.BLUE }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            email
-          </span>
-          . I hope you find my page enjoyable and have a great day!
+          <Usyd>University of Sydney</Usyd>, <Australia>Australia</Australia>.
+          On this corner of the internet, you'll find information about me. You
+          can connect with me on <LinkedIn>LinkedIn</LinkedIn>, check out my
+          repositories on <Github>GitHub</Github>, or reach out to me via{" "}
+          <Email>email</Email>. I hope you find my page enjoyable and have a
+          great day!
         </LeftText>
-        {useBreakpoint(down("sm")) && <CallToAction setHover={setHover} />}
+        {useBreakpoint(down("sm")) && <CallToAction />}
         <Logos />
-        {useBreakpoint(up("sm")) && <CallToAction setHover={setHover} />}
+        {useBreakpoint(up("sm")) && <CallToAction />}
       </Left>
-      <Right
-        onMouseEnter={() => setCursorColorIsBlack(true)}
-        onMouseLeave={() => setCursorColorIsBlack(false)}
-        className="select-none"
-      >
+      <Right className="select-none">
         <motion.div
           className="w-full h-full"
           initial={{ opacity: 0 }}
@@ -229,6 +187,58 @@ const LeftText = styled(motion.div)`
   ${up("lg")} {
     font-size: 1.85vw;
     line-height: 1.8;
+  }
+`;
+
+const HoverableText = styled.span`
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+`;
+
+const HoverableTextUnderline = styled(HoverableText)`
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+`;
+
+const Usyd = styled(HoverableText)`
+  color: ${COLOR.USYD_ORANGE};
+
+  &:hover {
+    background-color: ${COLOR.USYD_ORANGE_HOVER};
+  }
+`;
+
+const Australia = styled(HoverableText)`
+  color: ${COLOR.AUSTRALIA_GOLD};
+
+  &:hover {
+    background-color: ${COLOR.AUSTRALIA_GOLD_HOVER};
+  }
+`;
+
+const LinkedIn = styled(HoverableTextUnderline)`
+  color: ${COLOR.LINKEDIN_BLUE};
+
+  &:hover {
+    background-color: ${COLOR.LINKEDIN_BLUE_HOVER};
+  }
+`;
+
+const Github = styled(HoverableTextUnderline)`
+  color: ${COLOR.BACKGROUND_WHITE};
+
+  &:hover {
+    background-color: ${COLOR.GITHUB_SILVER_HOVER};
+  }
+`;
+
+const Email = styled(HoverableTextUnderline)`
+  color: ${COLOR.BLUE};
+
+  &:hover {
+    background-color: ${COLOR.EMAIL_BLUE_HOVER};
   }
 `;
 
