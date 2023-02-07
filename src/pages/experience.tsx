@@ -178,6 +178,7 @@ const HoverableText = styled.span`
 `;
 
 const HoverableTextUnderline = styled(HoverableText)`
+  padding-bottom: 8px;
   text-decoration-line: underline;
   text-underline-offset: 4px;
 `;
