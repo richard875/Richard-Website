@@ -71,11 +71,11 @@ const Ring = styled.div`
   border: 2px solid ${(props: any) => (props.black ? COLOR.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
-  transition: all 0.1s ease-in-out,
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     transform 0.5s cubic-bezier(0.75, -1.27, 0.3, 2.33),
     opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
     border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.25s;
-  -webkit-transition: all 0.1s ease-out,
+  -webkit-transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     transform 0.5s cubic-bezier(0.75, -1.27, 0.3, 2.33),
     opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
     border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.25s;
