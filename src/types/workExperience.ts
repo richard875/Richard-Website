@@ -20,6 +20,8 @@ type WorkExperience = {
   country: string;
   description: JobDescription[][];
   techStack: string[];
+  isMedia?: boolean;
+  media?: string;
 };
 
 export default WorkExperience;
