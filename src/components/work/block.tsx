@@ -2,17 +2,22 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { up } from "styled-breakpoints";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
+import { CSSTransition } from "react-transition-group";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import TextWithLink from "../../components/work/textWithLink";
 import WorkExperience, { JobDescription } from "../../types/workExperience";
 import workData from "../../../static/data/work.json";
+import mediaPicker from "../../helper/mediaPicker";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
   IMAGE_DEFAULT_HEIGHT,
+  MEDIA_TOP_OFFSET,
+  MEDIA_TOP_OFFSET_DESKTOP,
 } from "../../constants/workPage";
 
 const Block = ({
@@ -24,6 +29,10 @@ const Block = ({
   index: number;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const mediaRef = React.useRef<HTMLDivElement>(null);
+  const clickableRef = React.useRef<HTMLAnchorElement>(null);
+  const [displayMedia, setDisplayMedia] = React.useState(false);
+
   return (
     <Container
       className="font-primary-normal"
@@ -59,7 +68,9 @@ const Block = ({
                   <TextWithLink
                     key={index}
                     isFirst={index == 0}
+                    clickableRef={clickableRef}
                     setHover={setHover}
+                    setDisplayMedia={setDisplayMedia}
                     {...sentence} // content, isLink and url
                   />
                 ))}
@@ -74,6 +85,21 @@ const Block = ({
               `${index == 0 ? " " : " • "}${tech}`
           )}
         </JobDescriptionText>
+        {useBreakpoint(up("md")) && experience.isMedia && (
+          <CSSTransition
+            nodeRef={mediaRef}
+            in={displayMedia}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit
+          >
+            <Media ref={mediaRef} position={clickableRef}>
+              <Video autoPlay loop muted>
+                <source src={mediaPicker(experience.media!)} type="video/mp4" />
+              </Video>
+            </Media>
+          </CSSTransition>
+        )}
       </motion.div>
     </Container>
   );
@@ -161,4 +187,51 @@ const JobDescriptionText = styled.p`
     font-size: 20px;
     line-height: 30px;
   }
+`;
+
+const Media = styled.span`
+  position: absolute;
+  width: calc(100vw - 2 * 10px);
+  height: calc((100vw - 2 * 10px) * 0.583333333);
+  margin-top: -63vw;
+  z-index: 99999 !important;
+
+  ${up("md")} {
+    width: 360px;
+    height: 210px;
+    margin-top: 0;
+    margin-left: 90px;
+    top: ${({ position }: { position: React.RefObject<HTMLAnchorElement> }) =>
+      position?.current?.getBoundingClientRect().top! -
+      MEDIA_TOP_OFFSET +
+      "px"};
+  }
+
+  ${up("xxxl")} {
+    width: 385px;
+    height: 225px;
+    margin-left: 100px;
+    top: ${({ position }: { position: React.RefObject<HTMLAnchorElement> }) =>
+      position?.current?.getBoundingClientRect().top! -
+      MEDIA_TOP_OFFSET_DESKTOP +
+      "px"};
+  }
+`;
+
+const Video = styled.video`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  z-index: 99999 !important;
+  transform: translate(-50%, -50%);
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+    0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 `;
