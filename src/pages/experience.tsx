@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { GatsbyLinkProps, navigate } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
-import { isDesktop } from "react-device-detect";
 import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,18 +10,13 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { NAME } from "../constants/meta";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
-import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import MousePosition from "../types/mousePosition";
 
-const CallToAction = ({
-  setHover,
-}: {
-  setHover: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const work = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+const CallToAction = () => {
+  const work = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     event.preventDefault();
     document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE_SECONDARY;
     navigate(Route.Work, { state: { x: event.clientX, y: event.clientY } });
@@ -39,11 +33,7 @@ const CallToAction = ({
         delay: 2,
       }}
     >
-      <div
-        className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
+      <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
         <span onClick={(e) => work(e)}>Work Experience & Projects</span>
       </div>
       <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
@@ -57,7 +47,6 @@ const Experience = ({
   location: GatsbyLinkProps<MousePosition>;
 }) => {
   const [hover, setHover] = React.useState(false);
-  const [cursorColorIsBlack, setCursorColorIsBlack] = React.useState(false);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BLACK;
@@ -125,14 +114,6 @@ const Experience = ({
           </span>
         </SydneyOperaHouseInfoText>
       </Right>
-      {isDesktop && !cursorColorIsBlack && (
-        <Cursor
-          hover={hover}
-          delay={0.5}
-          position={location.state!}
-          isBlack={false}
-        />
-      )}
     </Container>
   );
 };
@@ -143,7 +124,6 @@ export const Head: HeadFC = () => <title>G'day | {NAME}</title>;
 
 const Container = styled(motion.div)`
   background-color: ${COLOR.BLACK};
-  cursor: none;
 
   ${up("lg")} {
     display: flex;
