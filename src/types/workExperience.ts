@@ -1,8 +1,4 @@
-export type JobDescription = {
-  content: string;
-  isLink?: boolean;
-  url?: string;
-};
+import SentenceDescription from "./sentenceDescription";
 
 type JobPeriod = {
   mobile: string;
@@ -18,7 +14,7 @@ type WorkExperience = {
   end: JobPeriod;
   city: string;
   country: string;
-  description: JobDescription[][];
+  description: SentenceDescription[][];
   techStack: string[];
   isMedia?: boolean;
   media?: string;
