@@ -250,17 +250,9 @@ const Cta = styled(motion.div)`
   display: flex;
   align-items: center;
   color: ${COLOR.BRIGHT_GREEN};
-  font-size: 4.5vw;
+  font-size: 19px;
 
   ${down("sm")} {
     margin-top: 8vw;
-  }
-
-  ${up("sm")} {
-    font-size: 2vw;
-  }
-
-  ${up("lg")} {
-    font-size: 1vw;
   }
 `;
