@@ -13,7 +13,6 @@ import { COLOR } from "../styles/theme";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
-import MousePosition from "../types/mousePosition";
 
 const CallToAction = () => {
   const work = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -41,13 +40,7 @@ const CallToAction = () => {
   );
 };
 
-const Experience = ({
-  location,
-}: {
-  location: GatsbyLinkProps<MousePosition>;
-}) => {
-  const [hover, setHover] = React.useState(false);
-
+const Experience = () => {
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BLACK;
   }, []);
