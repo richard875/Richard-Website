@@ -1,0 +1,139 @@
+[
+  {
+    "name": "Leetcode Algorithm Practice Web Application",
+    "image": "neetcode",
+    "imageAlt": "Leetcode Algorithm Practice",
+    "imageHeight": 40,
+    "hasLink": true,
+    "linkUrl": "https://neetcode.richard-lee.com/",
+    "description": [
+      [
+        {
+          "content": "Designed and developed a coding practice web application to try out the new Vue Nuxt 3 framework"
+        }
+      ],
+      [
+        {
+          "content": "Incorporated persistent data storage to store and retrieve user comments and track study progress"
+        }
+      ],
+      [
+        {
+          "content": "Implemented IBM's Carbon Design System for user interface design to achieve a clean and streamlined user experience"
+        }
+      ]
+    ],
+    "techStack": [
+      "Vue 3",
+      "Nuxt 3",
+      "TypeScript",
+      "Tailwind CSS",
+      "IBM Carbon Design",
+      "Caching",
+      "Persistent Data Storage"
+    ]
+  },
+  {
+    "name": "Chrome extension to enable YouTube comment section",
+    "image": "youtube",
+    "imageAlt": "YouComment - YouTube Comment Extension",
+    "imageHeight": 40,
+    "hasLink": false,
+    "description": [
+      [
+        {
+          "content": "Developed a Chrome browser extension that lets user comment on “comment disabled” YouTube videos"
+        }
+      ],
+      [
+        {
+          "content": "Created an algorithm that sorts comments with timestamp and number of likes as attributes"
+        }
+      ],
+      [
+        {
+          "content": "Host on AWS with AWS DynamoDB and AWS Lambda"
+        }
+      ],
+      [
+        {
+          "content": "Integrated OAuth and OpenCV for one-click log in"
+        }
+      ]
+    ],
+    "techStack": [
+      "jQuery",
+      "AJAX",
+      "AWS DynamoDB",
+      "AWS Lambda",
+      "Serverless",
+      "Chrome extension SDK",
+      "Node.js"
+    ]
+  },
+  {
+    "name": "Nasdaq ETF portfolio copier and autotrader",
+    "image": "nasdaq",
+    "imageAlt": "Nasdaq ETF Autotrader",
+    "imageHeight": 40,
+    "hasLink": false,
+    "description": [
+      [
+        {
+          "content": "Developed an automation software that fetches ETF portfolios from web API and calculates changes made since the last fetch"
+        }
+      ],
+      [
+        {
+          "content": "Software will send out daily reports to notify the user of portfolio changes"
+        }
+      ],
+      [
+        {
+          "content": "When connected to trading brokers, the software can use API calls to execute orders"
+        }
+      ]
+    ],
+    "techStack": [
+      "Node.js",
+      "AJAX",
+      "TypeScript",
+      "Moment.js",
+      "Nodemailer",
+      "Shell commands",
+      "Beautifulsoup"
+    ]
+  },
+  {
+    "name": "University of Auckland Morotsport Club Mobile Application",
+    "image": "piston",
+    "imageAlt": "Morotsport Club Application",
+    "imageHeight": 40,
+    "hasLink": false,
+    "description": [
+      [
+        {
+          "content": "Developed a cross-platform mobile App for my University Club to share news and upcoming events using React Native and Expo"
+        }
+      ],
+      [
+        {
+          "content": "Created a backend API for the App with AWS DynamoDB and AWS Lambda using the Serverless framework"
+        }
+      ],
+      [
+        {
+          "content": "Maintenance of the App including posting new articles, fixing bugs and issuing updates"
+        }
+      ]
+    ],
+    "techStack": [
+      "React Native",
+      "Expo",
+      "React Router",
+      "AWS DynamoDB",
+      "AWS Lambda",
+      "The Serverless Framework"
+    ]
+  }
+]
