@@ -7,7 +7,8 @@ import { CSSTransition } from "react-transition-group";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import TextWithLink from "../../components/work/textWithLink";
-import WorkExperience, { JobDescription } from "../../types/workExperience";
+import WorkExperience from "../../types/workExperience";
+import SentenceDescription from "../../types/sentenceDescription";
 import workData from "../../../static/data/work.json";
 import mediaPicker from "../../helper/mediaPicker";
 import {
@@ -61,19 +62,21 @@ const Block = ({
           {experience.city}, {experience.country}
         </Secondary>
         {experience.description.map(
-          (description: JobDescription[], index: number) => {
+          (description: SentenceDescription[], index: number) => {
             return (
               <JobDescriptionText key={index} isFirst={index == 0}>
-                {description.map((sentence: JobDescription, index: number) => (
-                  <TextWithLink
-                    key={index}
-                    isFirst={index == 0}
-                    clickableRef={clickableRef}
-                    setHover={setHover}
-                    setDisplayMedia={setDisplayMedia}
-                    {...sentence} // content, isLink and url
-                  />
-                ))}
+                {description.map(
+                  (sentence: SentenceDescription, index: number) => (
+                    <TextWithLink
+                      key={index}
+                      isFirst={index == 0}
+                      clickableRef={clickableRef}
+                      setHover={setHover}
+                      setDisplayMedia={setDisplayMedia}
+                      {...sentence} // content, isLink and url
+                    />
+                  )
+                )}
               </JobDescriptionText>
             );
           }
