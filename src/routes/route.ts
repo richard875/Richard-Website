@@ -3,6 +3,7 @@ enum Route {
   Acknowledgement = "/acknowledgement",
   Experience = "/experience",
   Work = "/work",
+  Projects = "/projects",
 }
 
 export default Route;
