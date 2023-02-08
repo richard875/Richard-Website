@@ -28,6 +28,8 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
+const TITLE = "Work Experience";
+
 const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
   const [hover, setHover] = React.useState(false);
   const component = React.useRef<HTMLDivElement>(null);
@@ -84,7 +86,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
         </Horizontal>
         <Top>
           <Title className="font-secondary-normal">
-            Work Experience&nbsp;&nbsp;&nbsp;&nbsp;
+            {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
           <CallToAction setHover={setHover} />
         </Top>
@@ -104,7 +106,11 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
 
 export default Work;
 
-export const Head: HeadFC = () => <title>Work Experience | {NAME}</title>;
+export const Head: HeadFC = () => (
+  <title>
+    {TITLE} | {NAME}
+  </title>
+);
 
 const Container = styled(motion.div)`
   cursor: none;
