@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Route from "../routes/route";
 import { NAME } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
 import useWindowSize from "../hooks/useWindowSize";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
@@ -100,7 +101,7 @@ const Projects = ({
               Education
             </div>
             <span className="font-primary-normal pt-0.5">
-              &nbsp;&nbsp;|&nbsp;&nbsp;
+              &nbsp;&nbsp;{useBreakpoint(down("md")) && "|"}&nbsp;&nbsp;
             </span>
             <div
               onMouseEnter={() => setHover(true)}
