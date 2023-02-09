@@ -65,8 +65,7 @@ const Block = ({
                     <TextWithLink
                       key={index}
                       isFirst={index == 0}
-                      setHover={setHover}
-                      {...sentence} // content, isLink and url
+                      {...sentence} // Only content
                     />
                   )
                 )}
