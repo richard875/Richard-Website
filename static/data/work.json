@@ -68,7 +68,7 @@
         },
         {
           "content": "Sydney Morning Herald's Annual Impact Report",
-          "isLink": true,
+          "textUnderline": true,
           "url": "https://impact-report.smh.com.au/"
         }
       ],
@@ -163,7 +163,7 @@
         },
         {
           "content": "company website",
-          "isLink": true,
+          "textUnderline": true,
           "url": "https://canary.co.nz/"
         },
         {
@@ -287,7 +287,7 @@
         },
         {
           "content": "Velocity",
-          "isLink": true
+          "textUnderline": true
         },
         {
           "content": "using Javascript and WordPress"

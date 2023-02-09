@@ -1,6 +1,6 @@
 type SentenceDescription = {
   content: string;
-  isLink?: boolean;
+  textUnderline?: boolean;
   url?: string;
 };
 

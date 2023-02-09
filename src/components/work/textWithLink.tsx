@@ -6,7 +6,7 @@ import { COLOR } from "../../styles/theme";
 const TextWithLink = ({
   isFirst,
   content, // In type JobDescription
-  isLink, // In type JobDescription
+  textUnderline, // In type JobDescription
   url, // In type JobDescription
   clickableRef,
   setHover,
@@ -14,7 +14,7 @@ const TextWithLink = ({
 }: {
   isFirst: boolean;
   content: string;
-  isLink?: boolean;
+  textUnderline?: boolean;
   url?: string;
   clickableRef: React.RefObject<HTMLAnchorElement>;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +23,7 @@ const TextWithLink = ({
   return (
     <>
       {isFirst ? "• " : " "}
-      {isLink ? (
+      {textUnderline ? (
         <Link
           ref={clickableRef}
           href={url}

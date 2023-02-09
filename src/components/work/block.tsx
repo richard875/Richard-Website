@@ -73,7 +73,7 @@ const Block = ({
                       clickableRef={clickableRef}
                       setHover={setHover}
                       setDisplayMedia={setDisplayMedia}
-                      {...sentence} // content, isLink and url
+                      {...sentence} // content, textUnderline and url
                     />
                   )
                 )}
