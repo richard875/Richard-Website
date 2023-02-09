@@ -3,9 +3,12 @@
     "name": "Leetcode Algorithm Practice Web Application",
     "image": "neetcode",
     "imageAlt": "Leetcode Algorithm Practice",
-    "imageHeight": 40,
+    "imageHeight": 45,
     "hasLink": true,
     "linkUrl": "https://neetcode.richard-lee.com/",
+    "hasMedia": true,
+    "portraitOperation": false,
+    "media": "neetcode",
     "description": [
       [
         {
@@ -37,8 +40,9 @@
     "name": "Chrome extension to enable YouTube comment section",
     "image": "youtube",
     "imageAlt": "YouComment - YouTube Comment Extension",
-    "imageHeight": 40,
+    "imageHeight": 35,
     "hasLink": false,
+    "hasMedia": false,
     "description": [
       [
         {
@@ -77,6 +81,7 @@
     "imageAlt": "Nasdaq ETF Autotrader",
     "imageHeight": 40,
     "hasLink": false,
+    "hasMedia": false,
     "description": [
       [
         {
@@ -108,8 +113,11 @@
     "name": "University of Auckland Morotsport Club Mobile Application",
     "image": "piston",
     "imageAlt": "Morotsport Club Application",
-    "imageHeight": 40,
+    "imageHeight": 45,
     "hasLink": false,
+    "hasMedia": true,
+    "portraitOperation": true,
+    "media": "piston",
     "description": [
       [
         {
