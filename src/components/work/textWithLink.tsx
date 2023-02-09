@@ -1,4 +1,6 @@
 import * as React from "react";
+import styled from "styled-components";
+import { up } from "styled-breakpoints";
 import { COLOR } from "../../styles/theme";
 
 const TextWithLink = ({
@@ -22,11 +24,10 @@ const TextWithLink = ({
     <>
       {isFirst ? "• " : " "}
       {isLink ? (
-        <a
+        <Link
           ref={clickableRef}
-          className="underline cursor-none"
-          style={{ color: COLOR.RED }}
           href={url}
+          hasLink={!!url}
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => {
@@ -39,7 +40,7 @@ const TextWithLink = ({
           }}
         >
           {content}
-        </a>
+        </Link>
       ) : (
         content
       )}
@@ -48,3 +49,16 @@ const TextWithLink = ({
 };
 
 export default TextWithLink;
+
+const Link = styled.a`
+  cursor: none;
+  text-decoration-line: ${(props: { hasLink: boolean }) =>
+    props.hasLink ? "underline" : undefined};
+  color: ${(props: { hasLink: boolean }) =>
+    props.hasLink ? COLOR.RED : undefined};
+
+  ${up("md")} {
+    color: ${COLOR.RED};
+    text-decoration-line: underline;
+  }
+`;
