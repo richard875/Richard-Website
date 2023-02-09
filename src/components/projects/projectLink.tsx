@@ -34,8 +34,13 @@ const Cta = styled.div`
   display: flex;
   align-items: center;
   margin-top: 20px;
+  margin-left: 5px;
   color: ${COLOR.DIM_GREEN};
   font-size: 16px;
+
+  ${up("md")} {
+    margin-left: 0;
+  }
 
   ${up("xxxl")} {
     font-size: 18px;
