@@ -195,7 +195,7 @@ const JobDescriptionText = styled.p`
 const Media = styled.span`
   position: absolute;
   width: calc(100vw - 2 * 10px);
-  height: calc((100vw - 2 * 10px) * 0.583333333);
+  height: auto;
   margin-top: -63vw;
   z-index: 99999 !important;
 
