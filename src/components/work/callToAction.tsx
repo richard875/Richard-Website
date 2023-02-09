@@ -44,6 +44,4 @@ const Cta = styled.div`
   display: flex;
   align-items: center;
   color: ${COLOR.DIM_GREEN};
-  font-size: 20px;
-  margin-bottom: 1px;
 `;
