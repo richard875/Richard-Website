@@ -95,15 +95,17 @@ const Projects = ({
 
           <CallToAction className="font-secondary-normal">
             <div
+              className="underline underline-offset-2"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
               Education
             </div>
-            <span className="font-primary-normal pt-0.5">
+            <span className="font-primary-normal pt-0.5 md:pt-0">
               &nbsp;&nbsp;{useBreakpoint(down("md")) && "|"}&nbsp;&nbsp;
             </span>
             <div
+              className="underline underline-offset-2"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
@@ -194,5 +196,4 @@ const Horizontal = styled.div`
 const CallToAction = styled.div`
   display: flex;
   color: ${COLOR.DIM_GREEN};
-  font-size: 19px;
 `;
