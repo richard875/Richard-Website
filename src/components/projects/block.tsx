@@ -10,6 +10,7 @@ import ProjectLink from "./projectLink";
 import MyProjects from "../../types/myProjects";
 import SentenceDescription from "../../types/sentenceDescription";
 import workData from "../../../static/data/work.json";
+import mediaPicker from "../../helper/mediaPicker";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -55,26 +56,15 @@ const Block = ({
         >
           {project.name}
         </ProjectName>
-
         {project.description.map(
           (description: SentenceDescription[], index: number) => {
-            const isFirst = index == 0;
             return (
-              <JobDescriptionText
-                key={index}
-                isFirst={isFirst}
-                onMouseEnter={() =>
-                  isFirst ? setDisplayMedia(true) : undefined
-                }
-                onMouseLeave={() =>
-                  isFirst ? setDisplayMedia(false) : undefined
-                }
-              >
+              <JobDescriptionText key={index} isFirst={index == 0}>
                 {description.map(
                   (sentence: SentenceDescription, index: number) => (
                     <TextWithLink
                       key={index}
-                      isFirst={isFirst}
+                      isFirst={index == 0}
                       setHover={setHover}
                       {...sentence} // content, isLink and url
                     />
@@ -92,17 +82,7 @@ const Block = ({
           )}
         </JobDescriptionText>
         {project.hasLink && <ProjectLink setHover={setHover} />}
-        <CSSTransition
-          nodeRef={mediaRef}
-          in={displayMedia}
-          timeout={300}
-          classNames="fade"
-          unmountOnExit
-        >
-          <Media ref={mediaRef}></Media>
-        </CSSTransition>
-
-        {/* {useBreakpoint(up("md")) && project.isMedia && (
+        {project.hasMedia && (
           <CSSTransition
             nodeRef={mediaRef}
             in={displayMedia}
@@ -110,13 +90,21 @@ const Block = ({
             classNames="fade"
             unmountOnExit
           >
-            <Media ref={mediaRef} position={clickableRef}>
-              <Video autoPlay loop muted>
+            <Media
+              portraitOperation={project.portraitOperation!}
+              ref={mediaRef}
+            >
+              <Video
+                autoPlay
+                loop
+                muted
+                portraitOperation={project.portraitOperation!}
+              >
                 <source src={mediaPicker(project.media!)} type="video/mp4" />
               </Video>
             </Media>
           </CSSTransition>
-        )} */}
+        )}
       </motion.div>
     </Container>
   );
@@ -162,33 +150,52 @@ const Logo = styled.img`
 
 const Media = styled.div`
   position: absolute;
-  height: 15vw;
-  margin: 0 auto;
-  background-color: red;
   bottom: 20px;
 
   ${up("md")} {
-    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
+    width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
+      portraitOperation
+        ? (BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP) * 0.6 + "px"
+        : BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
   ${up("xxxl")} {
-    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
+    width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
+      portraitOperation
+        ? (BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP) * 0.6 + "px"
+        : BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 `;
 
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  border-radius: ${({ portraitOperation }: { portraitOperation: boolean }) =>
+    portraitOperation ? "25px" : "15px"};
+  z-index: 99999 !important;
+  background-color: ${COLOR.BACKGROUND_BLACK_SECONDARY};
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+    0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+`;
+
 const ProjectName = styled.p`
+  padding-bottom: 25px;
   font-size: 22px;
   line-height: 30px;
   color: ${COLOR.RED};
 
   ${up("xxxl")} {
+    padding-bottom: 35px;
     font-size: 24px;
   }
 `;
 
 const JobDescriptionText = styled.p`
-  margin-top: ${({ isFirst }: { isFirst: boolean }) =>
-    isFirst ? "25px" : "20px"};
+  margin-top: ${({ isFirst }: { isFirst: boolean }) => (isFirst ? 0 : "20px")};
   font-size: 18px;
   line-height: 25px;
 
@@ -198,38 +205,9 @@ const JobDescriptionText = styled.p`
 
   ${up("xxxl")} {
     margin-top: ${({ isFirst }: { isFirst: boolean }) =>
-      isFirst ? "35px" : "20px"};
+      isFirst ? 0 : "20px"};
     width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
     font-size: 20px;
     line-height: 30px;
   }
 `;
-
-// const Media = styled.span`
-//   position: absolute;
-//   width: calc(100vw - 2 * 10px);
-//   height: calc((100vw - 2 * 10px) * 0.583333333);
-//   margin-top: -63vw;
-//   z-index: 99999 !important;
-
-//   ${up("md")} {
-//     width: 360px;
-//     height: 210px;
-//     margin-top: 0;
-//     margin-left: 90px;
-//     top: ${({ position }: { position: React.RefObject<HTMLAnchorElement> }) =>
-//       position?.current?.getBoundingClientRect().top! -
-//       MEDIA_TOP_OFFSET +
-//       "px"};
-//   }
-
-//   ${up("xxxl")} {
-//     width: 385px;
-//     height: 225px;
-//     margin-left: 100px;
-//     top: ${({ position }: { position: React.RefObject<HTMLAnchorElement> }) =>
-//       position?.current?.getBoundingClientRect().top! -
-//       MEDIA_TOP_OFFSET_DESKTOP +
-//       "px"};
-//   }
-// `;
