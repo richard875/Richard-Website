@@ -30,14 +30,38 @@ gsap.registerPlugin(ScrollTrigger);
 const TITLE = "Work Experience";
 
 const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
-  const [hover, setHover] = React.useState(false);
-  const component = React.useRef<HTMLDivElement>(null);
-  const slider = React.useRef<HTMLDivElement>(null);
   let windowWidth = useWindowSize().width;
+  const slider = React.useRef<HTMLDivElement>(null);
+  const component = React.useRef<HTMLDivElement>(null);
+
+  const [hover, setHover] = React.useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [bg, setBg] = React.useState(COLOR.BACKGROUND_WHITE_SECONDARY);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE_SECONDARY;
+    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateIsDarkMode = () =>
+      setIsDarkMode(() => {
+        const isDarkMode = mediaQueryList.matches;
+        document.body.style.backgroundColor = isDarkMode
+          ? COLOR.BACKGROUND_BLACK_SECONDARY
+          : COLOR.BACKGROUND_WHITE_SECONDARY;
+        return isDarkMode;
+      });
+
+    mediaQueryList.addEventListener("change", updateIsDarkMode);
+    updateIsDarkMode();
+
+    return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
+
+  React.useEffect(() => {
+    setBg(
+      isDarkMode
+        ? COLOR.BACKGROUND_BLACK_SECONDARY
+        : COLOR.BACKGROUND_WHITE_SECONDARY
+    );
+  }, [isDarkMode]);
 
   React.useLayoutEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -62,6 +86,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
     <Layout>
       <Container
         ref={component}
+        isDarkMode={isDarkMode}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{
@@ -70,7 +95,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
           delay: 0.5,
         }}
       >
-        <InitialTransition color={COLOR.BACKGROUND_WHITE_SECONDARY} />
+        <InitialTransition color={bg} />
         <Horizontal ref={slider} entryLength={workData.length}>
           {workData.map((experience: WorkExperience, index: number) => {
             return (
@@ -79,15 +104,16 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
                 experience={experience}
                 index={index}
                 setHover={setHover}
+                isDarkMode={isDarkMode}
               />
             );
           })}
         </Horizontal>
-        <Top>
+        <Top isDarkMode={isDarkMode} backgroundColor={bg}>
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
-          <CallToAction setHover={setHover} />
+          <CallToAction setHover={setHover} isDarkMode={isDarkMode} />
         </Top>
 
         {isDesktop && (
@@ -95,7 +121,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
             hover={hover}
             delay={1.5}
             position={location.state!}
-            isBlack={true}
+            isBlack={!isDarkMode}
           />
         )}
       </Container>
@@ -113,7 +139,12 @@ export const Head: HeadFC = () => (
 
 const Container = styled(motion.div)`
   cursor: none;
-  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
+  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode
+      ? COLOR.BACKGROUND_BLACK_SECONDARY
+      : COLOR.BACKGROUND_WHITE_SECONDARY};
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.WHITE : COLOR.BLACK};
 
   ${up("md")} {
     overflow-x: hidden;
@@ -129,9 +160,18 @@ const Top = styled.div`
   align-items: center;
   padding-top: 5px;
   padding-bottom: 3px;
-  border-bottom: 0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY};
-  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
-
+  border-bottom: ${({
+    isDarkMode,
+    backgroundColor,
+  }: {
+    isDarkMode: boolean;
+    backgroundColor: string;
+  }) =>
+    isDarkMode
+      ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
+      : `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
+  background-color: ${({ backgroundColor }: { backgroundColor: string }) =>
+    backgroundColor};
   ${down("md")} {
     justify-content: space-between;
   }
