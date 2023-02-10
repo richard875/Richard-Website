@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps, navigate } from "gatsby";
+import { navigate } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
 import { up, down } from "styled-breakpoints";
