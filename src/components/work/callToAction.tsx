@@ -8,8 +8,10 @@ import { COLOR } from "../../styles/theme";
 
 const CallToAction = ({
   setHover,
+  isDarkMode,
 }: {
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
+  isDarkMode: boolean;
 }) => {
   const projects = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     event.preventDefault();
@@ -19,6 +21,7 @@ const CallToAction = ({
 
   return (
     <Cta
+      isDarkMode={isDarkMode}
       className="font-secondary-normal"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -43,5 +46,6 @@ export default CallToAction;
 const Cta = styled.div`
   display: flex;
   align-items: center;
-  color: ${COLOR.DIM_GREEN};
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
 `;
