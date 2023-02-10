@@ -2,6 +2,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { up } from "styled-breakpoints";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { CSSTransition } from "react-transition-group";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
@@ -29,6 +30,7 @@ const Block = ({
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const mediaRef = React.useRef<HTMLDivElement>(null);
+  const projectRef = React.useRef<HTMLDivElement>(null);
   const [displayMedia, setDisplayMedia] = React.useState(false);
 
   return (
@@ -51,6 +53,10 @@ const Block = ({
           alt={project.imageAlt}
         />
         <ProjectName
+          ref={projectRef}
+          className={
+            project.hasMedia ? "md:underline md:decoration-dotted" : ""
+          }
           onMouseEnter={() => setDisplayMedia(true)}
           onMouseLeave={() => setDisplayMedia(false)}
         >
@@ -81,7 +87,7 @@ const Block = ({
           )}
         </JobDescriptionText>
         {project.hasLink && <ProjectLink setHover={setHover} />}
-        {project.hasMedia && (
+        {useBreakpoint(up("md")) && project.hasMedia && (
           <CSSTransition
             nodeRef={mediaRef}
             in={displayMedia}
@@ -89,19 +95,23 @@ const Block = ({
             classNames="fade"
             unmountOnExit
           >
-            <Media
-              portraitOperation={project.portraitOperation!}
-              ref={mediaRef}
+            <MediaWrapper
+              top={projectRef.current?.getBoundingClientRect().bottom!}
             >
-              <Video
-                autoPlay
-                loop
-                muted
+              <Media
                 portraitOperation={project.portraitOperation!}
+                ref={mediaRef}
               >
-                <source src={mediaPicker(project.media!)} type="video/mp4" />
-              </Video>
-            </Media>
+                <Video
+                  autoPlay
+                  loop
+                  muted
+                  portraitOperation={project.portraitOperation!}
+                >
+                  <source src={mediaPicker(project.media!)} type="video/mp4" />
+                </Video>
+              </Media>
+            </MediaWrapper>
           </CSSTransition>
         )}
       </motion.div>
@@ -147,28 +157,26 @@ const Logo = styled.img`
   }
 `;
 
-const Media = styled.div`
+const MediaWrapper = styled.div`
   position: absolute;
-  bottom: 20px;
+  top: ${({ top }: { top: number }) => top + 15 + "px"};
 
   ${up("md")} {
-    width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
-      portraitOperation
-        ? (BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP) * 0.6 + "px"
-        : BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
+    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
   ${up("xxxl")} {
-    width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
-      portraitOperation
-        ? (BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP) * 0.6 + "px"
-        : BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
+    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 `;
 
+const Media = styled.div`
+  margin: 0 auto;
+  width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
+    portraitOperation ? "60%" : "100%"};
+`;
+
 const Video = styled.video`
-  width: 100%;
-  height: 100%;
   border-radius: ${({ portraitOperation }: { portraitOperation: boolean }) =>
     portraitOperation ? "25px" : "15px"};
   z-index: 99999 !important;
@@ -182,19 +190,18 @@ const Video = styled.video`
 `;
 
 const ProjectName = styled.p`
-  padding-bottom: 25px;
   font-size: 22px;
   line-height: 30px;
   color: ${COLOR.RED};
 
   ${up("xxxl")} {
-    padding-bottom: 35px;
     font-size: 24px;
   }
 `;
 
 const JobDescriptionText = styled.p`
-  margin-top: ${({ isFirst }: { isFirst: boolean }) => (isFirst ? 0 : "20px")};
+  margin-top: ${({ isFirst }: { isFirst: boolean }) =>
+    isFirst ? "25px" : "20px"};
   font-size: 18px;
   line-height: 25px;
 
@@ -204,7 +211,7 @@ const JobDescriptionText = styled.p`
 
   ${up("xxxl")} {
     margin-top: ${({ isFirst }: { isFirst: boolean }) =>
-      isFirst ? 0 : "20px"};
+      isFirst ? "35px" : "20px"};
     width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
     font-size: 20px;
     line-height: 30px;
