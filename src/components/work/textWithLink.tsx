@@ -11,6 +11,7 @@ const TextWithLink = ({
   clickableRef,
   setHover,
   setDisplayMedia,
+  isDarkMode,
 }: {
   isFirst: boolean;
   content: string;
@@ -19,6 +20,7 @@ const TextWithLink = ({
   clickableRef: React.RefObject<HTMLAnchorElement>;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplayMedia: React.Dispatch<React.SetStateAction<boolean>>;
+  isDarkMode: boolean;
 }) => {
   return (
     <>
@@ -28,6 +30,7 @@ const TextWithLink = ({
           ref={clickableRef}
           href={url}
           hasLink={!!url}
+          isDarkMode={isDarkMode}
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => {
@@ -54,11 +57,17 @@ const Link = styled.a`
   cursor: none;
   text-decoration-line: ${(props: { hasLink: boolean }) =>
     props.hasLink ? "underline" : undefined};
-  color: ${(props: { hasLink: boolean }) =>
-    props.hasLink ? COLOR.RED : undefined};
+  color: ${({
+    hasLink,
+    isDarkMode,
+  }: {
+    hasLink: boolean;
+    isDarkMode: boolean;
+  }) => (hasLink ? (isDarkMode ? COLOR.BLUE : COLOR.RED) : undefined)};
 
   ${up("md")} {
-    color: ${COLOR.RED};
+    color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+      isDarkMode ? COLOR.BLUE : COLOR.RED};
     text-decoration-line: underline;
   }
 `;
