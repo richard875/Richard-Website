@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { up } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
+import useWindowSize from "../../hooks/useWindowSize";
 import { CSSTransition } from "react-transition-group";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
@@ -96,7 +97,10 @@ const Block = ({
             classNames="fade"
             unmountOnExit
           >
-            <Media ref={mediaRef} position={clickableRef}>
+            <Media
+              ref={mediaRef}
+              top={clickableRef.current?.getBoundingClientRect().top!}
+            >
               <Video autoPlay loop muted>
                 <source src={mediaPicker(experience.media!)} type="video/mp4" />
               </Video>
@@ -192,45 +196,24 @@ const JobDescriptionText = styled.p`
   }
 `;
 
-const Media = styled.span`
+const Media = styled.div`
   position: absolute;
-  width: calc(100vw - 2 * 10px);
-  height: auto;
-  margin-top: -63vw;
   z-index: 99999 !important;
+  bottom: ${({ top }: { top: number }) =>
+    useWindowSize().height! - top + 20 + "px"};
 
   ${up("md")} {
-    width: 360px;
-    height: 210px;
-    margin-top: 0;
-    margin-left: 90px;
-    top: ${({ position }: { position: React.RefObject<HTMLAnchorElement> }) =>
-      position?.current?.getBoundingClientRect().top! -
-      MEDIA_TOP_OFFSET +
-      "px"};
+    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
   ${up("xxxl")} {
-    width: 385px;
-    height: 225px;
-    margin-left: 100px;
-    top: ${({ position }: { position: React.RefObject<HTMLAnchorElement> }) =>
-      position?.current?.getBoundingClientRect().top! -
-      MEDIA_TOP_OFFSET_DESKTOP +
-      "px"};
+    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 `;
 
 const Video = styled.video`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
+  border-radius: 15px;
   z-index: 99999 !important;
-  transform: translate(-50%, -50%);
   background-color: ${COLOR.BACKGROUND_BLACK_SECONDARY};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
