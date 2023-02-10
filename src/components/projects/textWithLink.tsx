@@ -1,5 +1,4 @@
 import * as React from "react";
-import { COLOR } from "../../styles/theme";
 
 const TextWithLink = ({
   isFirst,
