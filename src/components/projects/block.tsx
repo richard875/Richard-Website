@@ -159,6 +159,7 @@ const Logo = styled.img`
 
 const MediaWrapper = styled.div`
   position: absolute;
+  z-index: 99999 !important;
   top: ${({ top }: { top: number }) => top + 15 + "px"};
 
   ${up("md")} {
@@ -178,7 +179,7 @@ const Media = styled.div`
 
 const Video = styled.video`
   border-radius: ${({ portraitOperation }: { portraitOperation: boolean }) =>
-    portraitOperation ? "25px" : "15px"};
+    portraitOperation ? "15px" : "10px"};
   z-index: 99999 !important;
   background-color: ${COLOR.BACKGROUND_BLACK_SECONDARY};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
