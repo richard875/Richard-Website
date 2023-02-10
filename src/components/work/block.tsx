@@ -212,7 +212,7 @@ const Media = styled.div`
 `;
 
 const Video = styled.video`
-  border-radius: 15px;
+  border-radius: 10px;
   z-index: 99999 !important;
   background-color: ${COLOR.BACKGROUND_BLACK_SECONDARY};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
