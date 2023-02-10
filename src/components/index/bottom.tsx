@@ -205,13 +205,14 @@ const Name = styled.div`
 
 const Button = styled.div`
   font-size: 16px;
-  margin-top: 50px;
+  margin-top: 20px;
   color: ${COLOR.WHITE};
   user-select: none;
   overflow: hidden;
 
   ${up("sm")} {
     font-size: 18px;
+    margin-top: 50px;
   }
 
   ${up("xxl")} {
