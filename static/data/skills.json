@@ -3,37 +3,37 @@
     {
       "name": "typescript",
       "displayName": "JavaScript / TypeScript",
-      "skill": 75
+      "skill": 100
     },
     {
       "name": "react",
       "displayName": "React / Gatsby",
-      "skill": 75
+      "skill": 100
     },
     {
       "name": "aws",
       "displayName": "Amazon Web Services",
-      "skill": 60
+      "skill": 75
     },
     {
       "name": "csharp",
       "displayName": "C# / Visual Basic",
-      "skill": 60
+      "skill": 75
     },
     {
       "name": "dotnet",
       "displayName": ".NET",
-      "skill": 60
+      "skill": 75
     },
     {
       "name": "mongodb",
       "displayName": "MongoDB",
-      "skill": 60
+      "skill": 75
     },
     {
       "name": "postgresql",
       "displayName": "SQL",
-      "skill": 60
+      "skill": 75
     }
   ],
   "secondary": [
@@ -50,13 +50,14 @@
       "displayName": "Vue"
     },
     {
-      "name": "go",
-      "displayName": "Go"
-    },
-    {
       "name": "graphql",
       "displayName": "GraphQL"
     },
+    {
+      "name": "go",
+      "displayName": "Go"
+    },
+
     {
       "name": "python",
       "displayName": "Python"
