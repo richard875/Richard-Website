@@ -7,11 +7,13 @@ import { COLOR } from "../../styles/theme";
 
 const ProjectLink = ({
   setHover,
+  isDarkMode,
 }: {
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
+  isDarkMode: boolean;
 }) => {
   return (
-    <Cta className="font-secondary-normal">
+    <Cta className="font-secondary-normal" isDarkMode={isDarkMode}>
       <span
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -35,7 +37,8 @@ const Cta = styled.div`
   align-items: center;
   margin-top: 20px;
   margin-left: 5px;
-  color: ${COLOR.DIM_GREEN};
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
   font-size: 16px;
 
   ${up("md")} {

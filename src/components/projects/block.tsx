@@ -24,10 +24,12 @@ const Block = ({
   project,
   index,
   setHover,
+  isDarkMode,
 }: {
   project: MyProjects;
   index: number;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
+  isDarkMode: boolean;
 }) => {
   const mediaRef = React.useRef<HTMLDivElement>(null);
   const projectRef = React.useRef<HTMLDivElement>(null);
@@ -37,6 +39,7 @@ const Block = ({
     <Container
       className="font-primary-normal"
       isLast={index == workData.length - 1}
+      isDarkMode={isDarkMode}
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -49,10 +52,11 @@ const Block = ({
       >
         <Logo
           height={project.imageHeight}
-          src={iconPicker(project.image, false)}
+          src={iconPicker(project.image, isDarkMode)}
           alt={project.imageAlt}
         />
         <ProjectName
+          isDarkMode={isDarkMode}
           ref={projectRef}
           className={
             project.hasMedia ? "md:underline md:decoration-dotted" : ""
@@ -80,13 +84,19 @@ const Block = ({
           }
         )}
         <JobDescriptionText isFirst={false}>
-          - <span style={{ color: COLOR.RED }}>Utilised</span>:
+          -{" "}
+          <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
+            Utilised
+          </span>
+          :
           {project.techStack.map(
             (tech: string, index: number) =>
               `${index == 0 ? " " : " • "}${tech}`
           )}
         </JobDescriptionText>
-        {project.hasLink && <ProjectLink setHover={setHover} />}
+        {project.hasLink && (
+          <ProjectLink setHover={setHover} isDarkMode={isDarkMode} />
+        )}
         {useBreakpoint(up("md")) && project.hasMedia && (
           <CSSTransition
             nodeRef={mediaRef}
@@ -134,8 +144,17 @@ const Container = styled.div`
     width: ${BLOCK_WIDTH + "px"};
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
-    border-right: ${({ isLast }: { isLast: boolean }) =>
-      !isLast && `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
+    border-right: ${({
+      isLast,
+      isDarkMode,
+    }: {
+      isLast: boolean;
+      isDarkMode: boolean;
+    }) =>
+      !isLast &&
+      (isDarkMode
+        ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
+        : `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`)};
   }
 
   ${up("xxxl")} {
@@ -193,7 +212,8 @@ const Video = styled.video`
 const ProjectName = styled.p`
   font-size: 22px;
   line-height: 30px;
-  color: ${COLOR.RED};
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BLUE : COLOR.RED};
 
   ${up("xxxl")} {
     font-size: 24px;

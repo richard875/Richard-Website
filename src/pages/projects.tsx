@@ -36,14 +36,38 @@ const Projects = ({
 }: {
   location: GatsbyLinkProps<MousePosition>;
 }) => {
-  const [hover, setHover] = React.useState(false);
-  const component = React.useRef<HTMLDivElement>(null);
+  const windowWidth = useWindowSize().width;
   const slider = React.useRef<HTMLDivElement>(null);
-  let windowWidth = useWindowSize().width;
+  const component = React.useRef<HTMLDivElement>(null);
+
+  const [hover, setHover] = React.useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [bg, setBg] = React.useState(COLOR.BACKGROUND_WHITE_SECONDARY);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE_SECONDARY;
+    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateIsDarkMode = () =>
+      setIsDarkMode(() => {
+        const isDarkMode = mediaQueryList.matches;
+        document.body.style.backgroundColor = isDarkMode
+          ? COLOR.BACKGROUND_BLACK_SECONDARY
+          : COLOR.BACKGROUND_WHITE_SECONDARY;
+        return isDarkMode;
+      });
+
+    mediaQueryList.addEventListener("change", updateIsDarkMode);
+    updateIsDarkMode();
+
+    return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
+
+  React.useEffect(() => {
+    setBg(
+      isDarkMode
+        ? COLOR.BACKGROUND_BLACK_SECONDARY
+        : COLOR.BACKGROUND_WHITE_SECONDARY
+    );
+  }, [isDarkMode]);
 
   React.useLayoutEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -68,6 +92,7 @@ const Projects = ({
     <Layout>
       <Container
         ref={component}
+        isDarkMode={isDarkMode}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{
@@ -76,9 +101,9 @@ const Projects = ({
           delay: 0.5,
         }}
       >
-        <InitialTransition color={COLOR.BACKGROUND_WHITE_SECONDARY} />
+        <InitialTransition color={bg} />
         <Horizontal ref={slider} entryLength={projectsData.length + 1}>
-          <SkillsBlock />
+          <SkillsBlock isDarkMode={isDarkMode} />
           {projectsData.map((project: MyProjects, index: number) => {
             return (
               <Block
@@ -86,16 +111,19 @@ const Projects = ({
                 project={project}
                 index={index}
                 setHover={setHover}
+                isDarkMode={isDarkMode}
               />
             );
           })}
         </Horizontal>
-        <Top>
+        <Top isDarkMode={isDarkMode} backgroundColor={bg}>
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
-
-          <CallToAction className="font-secondary-normal">
+          <CallToAction
+            className="font-secondary-normal"
+            isDarkMode={isDarkMode}
+          >
             <div
               className="underline underline-offset-2"
               onMouseEnter={() => setHover(true)}
@@ -123,7 +151,7 @@ const Projects = ({
             hover={hover}
             delay={1.5}
             position={location.state!}
-            isBlack={true}
+            isBlack={!isDarkMode}
           />
         )}
       </Container>
@@ -141,7 +169,12 @@ export const Head: HeadFC = () => (
 
 const Container = styled(motion.div)`
   cursor: none;
-  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
+  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode
+      ? COLOR.BACKGROUND_BLACK_SECONDARY
+      : COLOR.BACKGROUND_WHITE_SECONDARY};
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.WHITE : COLOR.BLACK};
 
   ${up("md")} {
     overflow-x: hidden;
@@ -157,8 +190,18 @@ const Top = styled.div`
   align-items: center;
   padding-top: 5px;
   padding-bottom: 3px;
-  border-bottom: 0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY};
-  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
+  border-bottom: ${({
+    isDarkMode,
+    backgroundColor,
+  }: {
+    isDarkMode: boolean;
+    backgroundColor: string;
+  }) =>
+    isDarkMode
+      ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
+      : `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
+  background-color: ${({ backgroundColor }: { backgroundColor: string }) =>
+    backgroundColor};
 
   ${down("md")} {
     justify-content: space-between;
@@ -199,5 +242,6 @@ const Horizontal = styled.div`
 
 const CallToAction = styled.div`
   display: flex;
-  color: ${COLOR.DIM_GREEN};
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
 `;

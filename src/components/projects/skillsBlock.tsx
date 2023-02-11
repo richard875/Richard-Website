@@ -15,21 +15,27 @@ import {
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/workPage";
 
-const SecondarySkills = ({ skill }: { skill: SkillType }) => {
+const SecondarySkills = ({
+  skill,
+  isDarkMode,
+}: {
+  skill: SkillType;
+  isDarkMode: boolean;
+}) => {
   return (
-    <SecondarySkillsItem>
+    <SecondarySkillsItem isDarkMode={isDarkMode}>
       <SecondarySkillsText>{skill.displayName}</SecondarySkillsText>
       <SkillsImage
         className="!ml-1"
-        src={iconPicker(skill.name, false)}
+        src={iconPicker(skill.name, isDarkMode)}
       ></SkillsImage>
     </SecondarySkillsItem>
   );
 };
 
-const SkillsBlock = () => {
+const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
-    <Container className="font-primary-normal">
+    <Container className="font-primary-normal" isDarkMode={isDarkMode}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -42,7 +48,7 @@ const SkillsBlock = () => {
         {useBreakpoint(up("xxxl")) && (
           <Logo
             height={50}
-            src={iconPicker("react", false)}
+            src={iconPicker("react", isDarkMode)}
             alt={"My Skills"}
           />
         )}
@@ -54,7 +60,7 @@ const SkillsBlock = () => {
               height={30}
               className="ml-2"
               style={{ paddingBottom: "5px" }}
-              src={iconPicker("react", false)}
+              src={iconPicker("react", isDarkMode)}
               alt={"My Skills"}
             />
           )}
@@ -65,9 +71,12 @@ const SkillsBlock = () => {
             <Skill key={index}>
               <SkillsTextWrapper>
                 <SkillsText className="pt-1">{skill.displayName}</SkillsText>
-                <SkillsImage src={iconPicker(skill.name, false)}></SkillsImage>
+                <SkillsImage
+                  src={iconPicker(skill.name, isDarkMode)}
+                ></SkillsImage>
               </SkillsTextWrapper>
               <SkillsBar
+                isDarkMode={isDarkMode}
                 initial={{ width: 0 }}
                 animate={{ width: skill.skill! + "%" }}
                 transition={{
@@ -88,7 +97,11 @@ const SkillsBlock = () => {
           {(skillsData as Skills).secondary
             .slice(0, useBreakpoint(up("sm")) ? 8 : 9)
             .map((skill: SkillType, index: number) => (
-              <SecondarySkills key={index} skill={skill} />
+              <SecondarySkills
+                key={index}
+                skill={skill}
+                isDarkMode={isDarkMode}
+              />
             ))}
         </SecondarySkillsWrapper>
       </motion.div>
@@ -113,7 +126,10 @@ const Container = styled.div`
     margin-right: 0;
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
-    border-right: 0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY};
+    border-right: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+      isDarkMode
+        ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
+        : `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
   }
 
   ${up("xxxl")} {
@@ -185,7 +201,8 @@ const SkillsImage = styled.img`
 
 const SkillsBar = styled(motion.div)`
   height: 4px;
-  background-color: ${COLOR.RED};
+  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BLUE : COLOR.RED};
 `;
 
 const SecondarySkillsWrapper = styled.div`
@@ -204,11 +221,17 @@ const SecondarySkillsItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 0.5px solid ${COLOR.BORDER_BLACK};
+  border-left: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode
+      ? `0.5px solid ${COLOR.BORDER_WHITE}`
+      : `0.5px solid ${COLOR.BORDER_BLACK}`};
 
   ${down("sm")} {
     &:nth-child(n + 4) {
-      border-top: 0.5px solid ${COLOR.BORDER_BLACK};
+      border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+        isDarkMode
+          ? `0.5px solid ${COLOR.BORDER_WHITE}`
+          : `0.5px solid ${COLOR.BORDER_BLACK}`};
     }
 
     &:nth-child(3n + 1) {
@@ -218,7 +241,10 @@ const SecondarySkillsItem = styled.div`
 
   ${up("sm")} {
     &:nth-child(n + 5) {
-      border-top: 0.5px solid ${COLOR.BORDER_BLACK};
+      border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+        isDarkMode
+          ? `0.5px solid ${COLOR.BORDER_WHITE}`
+          : `0.5px solid ${COLOR.BORDER_BLACK}`};
     }
 
     &:nth-child(4n + 1) {
