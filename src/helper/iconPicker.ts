@@ -19,6 +19,22 @@ import usydBlack from "../../static/images/logos/usyd-black.svg";
 import yourcar from "../../static/images/logos/yourcar.svg";
 import youtube from "../../static/images/logos/youtube.svg";
 
+import angular from "../../static/images/skills/angular.svg";
+import aws from "../../static/images/skills/aws.svg";
+import csharp from "../../static/images/skills/csharp.svg";
+import docker from "../../static/images/skills/docker.svg";
+import dotnet from "../../static/images/skills/dotnet.svg";
+import go from "../../static/images/skills/go.svg";
+import graphql from "../../static/images/skills/graphql.svg";
+import jenkins from "../../static/images/skills/jenkins.svg";
+import mongodb from "../../static/images/skills/mongodb.svg";
+import postgresql from "../../static/images/skills/postgresql.svg";
+import python from "../../static/images/skills/python.svg";
+import react from "../../static/images/skills/react.svg";
+import svelte from "../../static/images/skills/svelte.svg";
+import typescript from "../../static/images/skills/typescript.svg";
+import vue from "../../static/images/skills/vue.svg";
+
 const iconPicker = (logo: string, isDark: boolean) => {
   switch (logo) {
     case "canary":
@@ -47,6 +63,36 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return yourcar;
     case "youtube":
       return youtube;
+    case "angular":
+      return angular;
+    case "aws":
+      return aws;
+    case "csharp":
+      return csharp;
+    case "docker":
+      return docker;
+    case "dotnet":
+      return dotnet;
+    case "go":
+      return go;
+    case "graphql":
+      return graphql;
+    case "jenkins":
+      return jenkins;
+    case "mongodb":
+      return mongodb;
+    case "postgresql":
+      return postgresql;
+    case "python":
+      return python;
+    case "react":
+      return react;
+    case "svelte":
+      return svelte;
+    case "typescript":
+      return typescript;
+    case "vue":
+      return vue;
     default:
       return "";
   }
