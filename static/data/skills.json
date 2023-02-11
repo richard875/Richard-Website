@@ -69,6 +69,10 @@
     {
       "name": "docker",
       "displayName": "Docker"
+    },
+    {
+      "name": "threejs",
+      "displayName": "Three.js"
     }
   ]
 }
