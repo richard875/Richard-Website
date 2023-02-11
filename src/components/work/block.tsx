@@ -133,7 +133,6 @@ const Container = styled.div`
     width: ${BLOCK_WIDTH + "px"};
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
-
     border-right: ${({
       isLast,
       isDarkMode,

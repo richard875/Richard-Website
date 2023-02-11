@@ -30,7 +30,7 @@ gsap.registerPlugin(ScrollTrigger);
 const TITLE = "Work Experience";
 
 const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
-  let windowWidth = useWindowSize().width;
+  const windowWidth = useWindowSize().width;
   const slider = React.useRef<HTMLDivElement>(null);
   const component = React.useRef<HTMLDivElement>(null);
 
@@ -176,6 +176,7 @@ const Top = styled.div`
       : `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
   background-color: ${({ backgroundColor }: { backgroundColor: string }) =>
     backgroundColor};
+
   ${down("md")} {
     justify-content: space-between;
   }
