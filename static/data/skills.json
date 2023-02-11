@@ -1,0 +1,69 @@
+{
+  "primary": [
+    {
+      "name": "typescript",
+      "displayName": "JavaScript / TypeScript",
+      "skill": 75
+    },
+    {
+      "name": "react",
+      "displayName": "React / Gatsby",
+      "skill": 75
+    },
+    {
+      "name": "aws",
+      "displayName": "Amazon Web Services",
+      "skill": 60
+    },
+    {
+      "name": "csharp",
+      "displayName": "C# / Visual Basic",
+      "skill": 60
+    },
+    {
+      "name": "dotnet",
+      "displayName": ".NET",
+      "skill": 60
+    },
+    {
+      "name": "mongodb",
+      "displayName": "MongoDB",
+      "skill": 60
+    },
+    {
+      "name": "postgresql",
+      "displayName": "SQL",
+      "skill": 60
+    }
+  ],
+  "secondary": [
+    {
+      "name": "angular",
+      "displayName": "Angular"
+    },
+    {
+      "name": "vue",
+      "displayName": "Vue"
+    },
+    {
+      "name": "go",
+      "displayName": "Go"
+    },
+    {
+      "name": "graphql",
+      "displayName": "GraphQL"
+    },
+    {
+      "name": "python",
+      "displayName": "Python"
+    },
+    {
+      "name": "jenkins",
+      "displayName": "Jenkins"
+    },
+    {
+      "name": "docker",
+      "displayName": "Docker"
+    }
+  ]
+}
