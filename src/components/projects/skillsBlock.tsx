@@ -15,6 +15,18 @@ import {
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/workPage";
 
+const SecondarySkills = ({ skill }: { skill: SkillType }) => {
+  return (
+    <SecondarySkillsItem>
+      <SecondarySkillsText>{skill.displayName}</SecondarySkillsText>
+      <SkillsImage
+        className="!ml-1"
+        src={iconPicker(skill.name, false)}
+      ></SkillsImage>
+    </SecondarySkillsItem>
+  );
+};
+
 const SkillsBlock = () => {
   return (
     <Container className="font-primary-normal">
@@ -52,7 +64,7 @@ const SkillsBlock = () => {
           (skill: SkillType, index: number) => (
             <Skill key={index}>
               <SkillsTextWrapper>
-                <SkillsText>{skill.displayName}</SkillsText>
+                <SkillsText className="pt-1">{skill.displayName}</SkillsText>
                 <SkillsImage src={iconPicker(skill.name, false)}></SkillsImage>
               </SkillsTextWrapper>
               <SkillsBar
@@ -72,42 +84,13 @@ const SkillsBlock = () => {
         <Skill>
           <SkillsText className="pt-1">Other:</SkillsText>
         </Skill>
-        <div className="flex items-center mt-2.5">
+        <SecondarySkillsWrapper>
           {(skillsData as Skills).secondary
-            .slice(0, 4)
+            .slice(0, useBreakpoint(up("sm")) ? 8 : 9)
             .map((skill: SkillType, index: number) => (
-              <>
-                <SkillsTextWrapper className="!mb-0" key={index}>
-                  <SkillsText className="text-base pt-0.5">
-                    {index != 0 && <>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</>}
-                    {skill.displayName}
-                  </SkillsText>
-                  <SkillsImage
-                    className="ml-2"
-                    src={iconPicker(skill.name, false)}
-                  ></SkillsImage>
-                </SkillsTextWrapper>
-              </>
+              <SecondarySkills key={index} skill={skill} />
             ))}
-        </div>
-        <div className="flex items-center mt-2">
-          {(skillsData as Skills).secondary
-            .slice(4)
-            .map((skill: SkillType, index: number) => (
-              <>
-                <SkillsTextWrapper className="!mb-0" key={index}>
-                  <SkillsText className="text-base pt-0.5">
-                    {index != 0 && <>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</>}
-                    {skill.displayName}
-                  </SkillsText>
-                  <SkillsImage
-                    className="ml-2"
-                    src={iconPicker(skill.name, false)}
-                  ></SkillsImage>
-                </SkillsTextWrapper>
-              </>
-            ))}
-        </div>
+        </SecondarySkillsWrapper>
       </motion.div>
     </Container>
   );
@@ -201,4 +184,49 @@ const SkillsImage = styled.img`
 const SkillsBar = styled(motion.div)`
   height: 4px;
   background-color: ${COLOR.RED};
+`;
+
+const SecondarySkillsWrapper = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 10px;
+
+  ${up("sm")} {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+`;
+
+const SecondarySkillsItem = styled.div`
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid ${COLOR.BORDER_BLACK};
+
+  ${down("sm")} {
+    &:nth-child(n + 4) {
+      border-top: 1px solid ${COLOR.BORDER_BLACK};
+    }
+
+    &:nth-child(3n + 1) {
+      border-left: none;
+    }
+  }
+
+  ${up("sm")} {
+    &:nth-child(n + 5) {
+      border-top: 0.5px solid ${COLOR.BORDER_BLACK};
+    }
+
+    &:nth-child(4n + 1) {
+      border-left: none;
+    }
+  }
+`;
+
+const SecondarySkillsText = styled.div`
+  font-size: 16px;
+  padding-top: 4px;
+  margin-right: 4px;
 `;
