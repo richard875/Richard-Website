@@ -99,16 +99,18 @@ const SkillsBlock = () => {
 export default SkillsBlock;
 
 const Container = styled.div`
-  margin-top: 30px;
+  margin-top: 10px;
   padding-bottom: 10px;
-  padding-left: ${BLOCK_PADDING + "px"};
-  padding-right: ${BLOCK_PADDING + "px"};
+  margin-left: ${BLOCK_PADDING + "px"};
+  margin-right: ${BLOCK_PADDING + "px"};
   border-right: none;
 
   ${up("md")} {
     margin-top: 0;
     padding-bottom: 0;
     width: ${BLOCK_WIDTH + "px"};
+    margin-left: 0;
+    margin-right: 0;
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: 0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY};
@@ -202,11 +204,11 @@ const SecondarySkillsItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 1px solid ${COLOR.BORDER_BLACK};
+  border-left: 0.5px solid ${COLOR.BORDER_BLACK};
 
   ${down("sm")} {
     &:nth-child(n + 4) {
-      border-top: 1px solid ${COLOR.BORDER_BLACK};
+      border-top: 0.5px solid ${COLOR.BORDER_BLACK};
     }
 
     &:nth-child(3n + 1) {
