@@ -16,6 +16,7 @@ import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import Block from "../components/projects/block";
+import SkillsBlock from "../components/projects/skillsBlock";
 import MousePosition from "../types/mousePosition";
 import projectsData from "../../static/data/projects.json";
 import MyProjects from "../types/myProjects";
@@ -28,7 +29,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TITLE = "My Projects";
+const TITLE = "Skills and Projects";
 
 const Projects = ({
   location,
@@ -76,7 +77,8 @@ const Projects = ({
         }}
       >
         <InitialTransition color={COLOR.BACKGROUND_WHITE_SECONDARY} />
-        <Horizontal ref={slider} entryLength={projectsData.length}>
+        <Horizontal ref={slider} entryLength={projectsData.length + 1}>
+          <SkillsBlock />
           {projectsData.map((project: MyProjects, index: number) => {
             return (
               <Block
@@ -102,7 +104,9 @@ const Projects = ({
               Education
             </div>
             <span className="font-primary-normal pt-0.5 md:pt-0">
-              &nbsp;&nbsp;{useBreakpoint(down("md")) && "|"}&nbsp;&nbsp;
+              &nbsp;{useBreakpoint(up("md")) && " "}
+              {useBreakpoint(down("md")) && "|"}
+              {useBreakpoint(up("md")) && " "}&nbsp;
             </span>
             <div
               className="underline underline-offset-2"
