@@ -36,6 +36,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
 
   const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [bg, setBg] = React.useState(COLOR.BACKGROUND_WHITE_SECONDARY);
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -53,6 +54,14 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
 
     return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
+
+  React.useEffect(() => {
+    setBg(
+      isDarkMode
+        ? COLOR.BACKGROUND_BLACK_SECONDARY
+        : COLOR.BACKGROUND_WHITE_SECONDARY
+    );
+  }, [isDarkMode]);
 
   React.useLayoutEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -86,13 +95,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
           delay: 0.5,
         }}
       >
-        <InitialTransition
-          color={
-            isDarkMode
-              ? COLOR.BACKGROUND_BLACK_SECONDARY
-              : COLOR.BACKGROUND_WHITE_SECONDARY
-          }
-        />
+        <InitialTransition color={bg} />
         <Horizontal ref={slider} entryLength={workData.length}>
           {workData.map((experience: WorkExperience, index: number) => {
             return (
@@ -106,14 +109,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
             );
           })}
         </Horizontal>
-        <Top
-          isDarkMode={isDarkMode}
-          backgroundColor={
-            isDarkMode
-              ? COLOR.BACKGROUND_BLACK_SECONDARY
-              : COLOR.BACKGROUND_WHITE_SECONDARY
-          }
-        >
+        <Top isDarkMode={isDarkMode} backgroundColor={bg}>
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
