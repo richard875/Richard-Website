@@ -3,37 +3,37 @@
     {
       "name": "typescript",
       "displayName": "JavaScript / TypeScript",
-      "skill": 100
+      "skill": 80
     },
     {
       "name": "react",
       "displayName": "React / Gatsby",
-      "skill": 100
+      "skill": 80
     },
     {
       "name": "aws",
       "displayName": "Amazon Web Services",
-      "skill": 75
+      "skill": 65
     },
     {
       "name": "csharp",
       "displayName": "C# / Visual Basic",
-      "skill": 75
+      "skill": 65
     },
     {
       "name": "dotnet",
       "displayName": ".NET",
-      "skill": 75
+      "skill": 65
     },
     {
       "name": "mongodb",
       "displayName": "MongoDB",
-      "skill": 75
+      "skill": 65
     },
     {
       "name": "postgresql",
       "displayName": "SQL",
-      "skill": 75
+      "skill": 65
     }
   ],
   "secondary": [
