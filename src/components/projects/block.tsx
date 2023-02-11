@@ -44,7 +44,7 @@ const Block = ({
         transition={{
           stiffness: 0,
           duration: 1,
-          delay: 0.4 + 0.3 * (index + 2),
+          delay: 0.4 + 0.3 * (index + 3),
         }}
       >
         <Logo
