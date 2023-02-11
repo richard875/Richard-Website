@@ -38,6 +38,10 @@
   ],
   "secondary": [
     {
+      "name": "svelte",
+      "displayName": "Svelte"
+    },
+    {
       "name": "angular",
       "displayName": "Angular"
     },
