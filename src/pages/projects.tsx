@@ -88,6 +88,16 @@ const Projects = ({
     }
   }, [windowWidth]);
 
+  const education = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    event.preventDefault();
+    document.body.style.backgroundColor = isDarkMode
+      ? COLOR.BACKGROUND_BLACK_SECONDARY
+      : COLOR.BACKGROUND_WHITE_SECONDARY;
+    navigate(Route.Education, {
+      state: { x: event.clientX, y: event.clientY },
+    });
+  };
+
   return (
     <Layout>
       <Container
@@ -128,6 +138,7 @@ const Projects = ({
               className="underline underline-offset-2"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
+              onClick={(e) => education(e)}
             >
               Education
             </div>
