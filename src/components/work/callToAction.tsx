@@ -15,7 +15,9 @@ const CallToAction = ({
 }) => {
   const projects = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE_SECONDARY;
+    document.body.style.backgroundColor = isDarkMode
+      ? COLOR.BACKGROUND_BLACK_SECONDARY
+      : COLOR.BACKGROUND_WHITE_SECONDARY;
     navigate(Route.Projects, { state: { x: event.clientX, y: event.clientY } });
   };
 
