@@ -116,6 +116,7 @@ const Block = ({
                   autoPlay
                   loop
                   muted
+                  isDarkMode={isDarkMode}
                   portraitOperation={project.portraitOperation!}
                 >
                   <source src={mediaPicker(project.media!)} type="video/mp4" />
@@ -200,7 +201,16 @@ const Video = styled.video`
   border-radius: ${({ portraitOperation }: { portraitOperation: boolean }) =>
     portraitOperation ? "20px" : "10px"};
   z-index: 99999 !important;
-  background-color: ${COLOR.BACKGROUND_BLACK_SECONDARY};
+  background-color: ${({
+    isDarkMode,
+    portraitOperation,
+  }: {
+    isDarkMode: boolean;
+    portraitOperation: boolean;
+  }) =>
+    isDarkMode
+      ? COLOR.BACKGROUND_WHITE_SECONDARY
+      : COLOR.BACKGROUND_BLACK_SECONDARY};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
