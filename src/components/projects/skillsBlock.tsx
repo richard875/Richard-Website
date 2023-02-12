@@ -112,18 +112,16 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
 export default SkillsBlock;
 
 const Container = styled.div`
-  margin-top: 10px;
+  padding-top: 10px;
   padding-bottom: 10px;
-  margin-left: ${BLOCK_PADDING + "px"};
-  margin-right: ${BLOCK_PADDING + "px"};
+  padding-left: ${BLOCK_PADDING + "px"};
+  padding-right: ${BLOCK_PADDING + "px"};
   border-right: none;
 
   ${up("md")} {
-    margin-top: 0;
+    padding-top: 0;
     padding-bottom: 0;
     width: ${BLOCK_WIDTH + "px"};
-    margin-left: 0;
-    margin-right: 0;
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ isDarkMode }: { isDarkMode: boolean }) =>
@@ -140,11 +138,6 @@ const Container = styled.div`
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 5px;
-
-  ${up("xxxl")} {
-    margin-top: 0;
-  }
 `;
 
 const Logo = styled.img`
