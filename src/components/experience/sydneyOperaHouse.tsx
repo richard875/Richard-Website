@@ -31,7 +31,7 @@ void main() {
   gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
 }`;
 
-const SydneyOperaHouse = () => {
+const SydneyOperaHouse = React.memo(() => {
   return (
     <Canvas
       shadows
@@ -43,9 +43,9 @@ const SydneyOperaHouse = () => {
       <Model />
     </Canvas>
   );
-};
+});
 
-const Model = () => {
+const Model = React.memo(() => {
   const sydneyOperaHouseRef = React.useRef();
   const { scene } = useThree();
 
@@ -121,6 +121,7 @@ const Model = () => {
       <Inspector>
         <Mesh ref={sydneyOperaHouseRef} />
       </Inspector>
+
       <EffectComposer>
         <Bloom
           intensity={10.0} // The bloom intensity.
@@ -148,6 +149,6 @@ const Model = () => {
       </EffectComposer>
     </>
   );
-};
+});
 
 export default SydneyOperaHouse;
