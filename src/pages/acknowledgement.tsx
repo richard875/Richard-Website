@@ -107,7 +107,6 @@ const Container = styled(motion.div)`
 const AcknowledgementText = styled(motion.div)`
   font-size: 20px;
   line-height: 35px;
-  text-align: justify;
 
   ${up("md")} {
     font-size: 30px;
