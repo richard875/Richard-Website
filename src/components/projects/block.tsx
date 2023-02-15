@@ -10,7 +10,7 @@ import TextWithLink from "../../components/projects/textWithLink";
 import ProjectLink from "./projectLink";
 import MyProjects from "../../types/myProjects";
 import SentenceDescription from "../../types/sentenceDescription";
-import workData from "../../../static/data/work.json";
+import projectData from "../../../static/data/projects.json";
 import mediaPicker from "../../helper/mediaPicker";
 import {
   BLOCK_PADDING,
@@ -38,7 +38,7 @@ const Block = ({
   return (
     <Container
       className="font-primary-normal"
-      isLast={index == workData.length - 1}
+      isLast={index == projectData.length - 1}
       isDarkMode={isDarkMode}
     >
       <motion.div
