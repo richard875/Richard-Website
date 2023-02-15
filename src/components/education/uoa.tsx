@@ -10,7 +10,7 @@ import {
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/workPage";
 
-const Uoa = ({ index, isDarkMode }: { index: number; isDarkMode: boolean }) => {
+const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
     <Container className="font-primary-normal">
       <motion.div
@@ -19,7 +19,7 @@ const Uoa = ({ index, isDarkMode }: { index: number; isDarkMode: boolean }) => {
         transition={{
           stiffness: 0,
           duration: 1,
-          delay: 0.4 + 0.3 * (index + 2),
+          delay: 0.4 + 0.3 * 3,
         }}
       >
         <Logo height={55} src={iconPicker("uoa", isDarkMode)} alt={"uoa"} />

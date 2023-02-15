@@ -10,13 +10,7 @@ import {
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/workPage";
 
-const Usyd = ({
-  index,
-  isDarkMode,
-}: {
-  index: number;
-  isDarkMode: boolean;
-}) => {
+const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
     <Container className="font-primary-normal" isDarkMode={isDarkMode}>
       <motion.div
@@ -25,7 +19,7 @@ const Usyd = ({
         transition={{
           stiffness: 0,
           duration: 1,
-          delay: 0.4 + 0.3 * (index + 2),
+          delay: 0.4 + 0.3 * 2,
         }}
       >
         <Logo height={50} src={iconPicker("usyd", isDarkMode)} alt={"usyd"} />
