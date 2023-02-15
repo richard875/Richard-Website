@@ -183,10 +183,7 @@ const LeftText = styled(motion.div)`
 `;
 
 const HoverableText = styled.span`
-  padding: 5px;
   cursor: pointer;
-  border-radius: 10px;
-  transition: all 0.2s ease-in-out;
 `;
 
 const HoverableTextUnderline = styled(HoverableText)`
@@ -197,42 +194,22 @@ const HoverableTextUnderline = styled(HoverableText)`
 
 const Usyd = styled(HoverableText)`
   color: ${COLOR.USYD_ORANGE};
-
-  &:hover {
-    background-color: ${COLOR.USYD_ORANGE_HOVER};
-  }
 `;
 
 const Australia = styled(HoverableText)`
   color: ${COLOR.AUSTRALIA_GOLD};
-
-  &:hover {
-    background-color: ${COLOR.AUSTRALIA_GOLD_HOVER};
-  }
 `;
 
 const LinkedIn = styled(HoverableTextUnderline)`
   color: ${COLOR.LINKEDIN_BLUE};
-
-  &:hover {
-    background-color: ${COLOR.LINKEDIN_BLUE_HOVER};
-  }
 `;
 
 const Github = styled(HoverableTextUnderline)`
   color: ${COLOR.BACKGROUND_WHITE};
-
-  &:hover {
-    background-color: ${COLOR.GITHUB_SILVER_HOVER};
-  }
 `;
 
 const Email = styled(HoverableTextUnderline)`
   color: ${COLOR.BLUE};
-
-  &:hover {
-    background-color: ${COLOR.EMAIL_BLUE_HOVER};
-  }
 `;
 
 const Right = styled.div`
