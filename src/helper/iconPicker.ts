@@ -1,6 +1,7 @@
 import canary from "../../static/images/logos/canary.svg";
 import canaryBlack from "../../static/images/logos/canary-black.svg";
 import chancery from "../../static/images/logos/chancery.png";
+import cie from "../../static/images/logos/cie.png";
 import nasdaq from "../../static/images/logos/nasdaq.svg";
 import nasdaqBlack from "../../static/images/logos/nasdaq-black.svg";
 import neetcode from "../../static/images/logos/neetcode.svg";
@@ -12,7 +13,7 @@ import nzGovtBlack from "../../static/images/logos/nzgovt-black.png";
 import piston from "../../static/images/logos/piston.png";
 import qantas from "../../static/images/logos/qantas.svg";
 import qantasBlack from "../../static/images/logos/qantas-black.svg";
-import redbull from "../../static/images/logos/redbull.png";
+import redbull from "../../static/images/logos/redbull.svg";
 import uoa from "../../static/images/logos/uoa.png";
 import usyd from "../../static/images/logos/usyd.svg";
 import usydBlack from "../../static/images/logos/usyd-black.svg";
@@ -43,6 +44,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return isDark ? canary : canaryBlack;
     case "chancery":
       return chancery;
+    case "cie":
+      return cie;
     case "nasdaq":
       return isDark ? nasdaq : nasdaqBlack;
     case "neetcode":
