@@ -13,10 +13,9 @@ import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/education/callToAction";
-import Block from "../components/education/block";
+import Usyd from "../components/education/usyd";
+import Uoa from "../components/education/uoa";
 import MousePosition from "../types/mousePosition";
-import workData from "../../static/data/work.json";
-import WorkExperience from "../types/workExperience";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -80,18 +79,8 @@ const Education = ({
         </Top>
 
         <Horizontal top={topRef.current?.getBoundingClientRect().height!}>
-          {workData
-            .slice(0, 2)
-            .map((experience: WorkExperience, index: number) => {
-              return (
-                <Block
-                  key={index}
-                  index={index}
-                  setHover={setHover}
-                  isDarkMode={isDarkMode}
-                />
-              );
-            })}
+          <Usyd isDarkMode={isDarkMode} />
+          <Uoa isDarkMode={isDarkMode} />
         </Horizontal>
 
         {isDesktop && (
