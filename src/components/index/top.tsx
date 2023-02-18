@@ -6,6 +6,8 @@ import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import contact from "../../routes/contact";
 
+const EMAIL = "hello@richard-lee.com";
+
 const Top = ({
   setHover,
 }: {
@@ -28,7 +30,14 @@ const Top = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        hello@richard-lee.com
+        <a
+          className="cursor-none"
+          href={`mailto:${EMAIL}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {EMAIL}
+        </a>
       </div>
 
       <div
