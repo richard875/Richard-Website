@@ -30,6 +30,7 @@ const Acknowledgement = ({
 
   const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
+    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
     navigate(Route.Home, { state: { x: event.clientX, y: event.clientY } });
   };
 
