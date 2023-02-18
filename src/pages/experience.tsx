@@ -12,11 +12,11 @@ import { COLOR } from "../styles/theme";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
+import { EMAIL } from "../constants/meta";
 
 const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
 const LINKEDIN = "https://www.linkedin.com/in/richard875/";
 const GITHUB = "https://github.com/richard875";
-const EMAIL = "mailto:hello@richard-lee.com";
 const SYDNEY_OPERA_HOUSE = "https://www.sydneyoperahouse.com/";
 
 const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
@@ -104,7 +104,11 @@ const Experience = () => {
           </Github>
           , or reach out to me via&nbsp;
           <Email>
-            <a href={EMAIL} target="_blank" rel="noopener noreferrer">
+            <a
+              href={`mailto:${EMAIL}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               email
             </a>
           </Email>

@@ -5,8 +5,7 @@ import { up, down } from "styled-breakpoints";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import contact from "../../routes/contact";
-
-const EMAIL = "hello@richard-lee.com";
+import { EMAIL } from "../../constants/meta";
 
 const Top = ({
   setHover,
