@@ -1,10 +1,9 @@
 import * as React from "react";
-import { navigate } from "gatsby";
 import styled from "styled-components";
-import Route from "../../routes/route";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { COLOR } from "../../styles/theme";
+import contact from "../../routes/contact";
 
 const CallToAction = ({
   setHover,
@@ -19,6 +18,7 @@ const CallToAction = ({
       className="font-secondary-normal"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={(e) => contact(e)}
     >
       <div className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2">
         Contact

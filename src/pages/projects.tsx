@@ -20,6 +20,7 @@ import SkillsBlock from "../components/projects/skillsBlock";
 import MousePosition from "../types/mousePosition";
 import projectsData from "../../static/data/projects.json";
 import MyProjects from "../types/myProjects";
+import contact from "../routes/contact";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -148,6 +149,7 @@ const Projects = ({
               className="underline underline-offset-2"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
+              onClick={(e) => contact(e)}
             >
               Contact
             </div>

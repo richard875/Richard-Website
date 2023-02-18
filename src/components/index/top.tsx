@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { up, down } from "styled-breakpoints";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
+import contact from "../../routes/contact";
 
 const Top = ({
   setHover,
@@ -35,6 +36,7 @@ const Top = ({
         className="font-secondary-normal"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
+        onClick={(e) => contact(e)}
       >
         CONTACT
       </div>
