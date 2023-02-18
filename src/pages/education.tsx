@@ -12,10 +12,11 @@ import { COLOR } from "../styles/theme";
 import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
-import CallToAction from "../components/education/callToAction";
+import CallToAction from "../components/global/callToAction";
 import Usyd from "../components/education/usyd";
 import Uoa from "../components/education/uoa";
 import MousePosition from "../types/mousePosition";
+import contact from "../routes/contact";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -64,7 +65,12 @@ const Education = ({
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
-          <CallToAction setHover={setHover} isDarkMode={isDarkMode} />
+          <CallToAction
+            name="Contact"
+            setHover={setHover}
+            isDarkMode={isDarkMode}
+            navigator={contact}
+          />
         </Top>
         <Horizontal>
           <Usyd isDarkMode={isDarkMode} />

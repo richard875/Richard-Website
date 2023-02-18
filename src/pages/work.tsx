@@ -2,8 +2,9 @@ import * as React from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps } from "gatsby";
+import { GatsbyLinkProps, navigate } from "gatsby";
 import styled from "styled-components";
+import Route from "../routes/route";
 import { NAME } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import useWindowSize from "../hooks/useWindowSize";
@@ -13,7 +14,7 @@ import { COLOR } from "../styles/theme";
 import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
-import CallToAction from "../components/work/callToAction";
+import CallToAction from "../components/global/callToAction";
 import Block from "../components/work/block";
 import MousePosition from "../types/mousePosition";
 import workData from "../../static/data/work.json";
@@ -36,6 +37,14 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
 
   const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  const projects = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    event.preventDefault();
+    document.body.style.backgroundColor = isDarkMode
+      ? COLOR.BACKGROUND_BLACK
+      : COLOR.BACKGROUND_WHITE_SECONDARY;
+    navigate(Route.Projects, { state: { x: event.clientX, y: event.clientY } });
+  };
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -110,7 +119,12 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
-          <CallToAction setHover={setHover} isDarkMode={isDarkMode} />
+          <CallToAction
+            name="Projects"
+            setHover={setHover}
+            isDarkMode={isDarkMode}
+            navigator={projects}
+          />
         </Top>
 
         {isDesktop && (
