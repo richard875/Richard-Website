@@ -27,8 +27,6 @@ const Education = ({
 }: {
   location: GatsbyLinkProps<MousePosition>;
 }) => {
-  const topRef = React.useRef<HTMLDivElement>(null);
-
   const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 
@@ -62,14 +60,13 @@ const Education = ({
         }}
       >
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
-        <Top ref={topRef} isDarkMode={isDarkMode}>
+        <Top isDarkMode={isDarkMode}>
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
           <CallToAction setHover={setHover} isDarkMode={isDarkMode} />
         </Top>
-
-        <Horizontal top={topRef.current?.getBoundingClientRect().height!}>
+        <Horizontal>
           <Usyd isDarkMode={isDarkMode} />
           <Uoa isDarkMode={isDarkMode} />
         </Horizontal>
@@ -137,8 +134,7 @@ const Title = styled.p`
 const Horizontal = styled.div`
   ${up("md")} {
     display: flex;
-    height: 100%;
-    height: ${({ top }: { top: number }) => `calc(100vh - ${top + "px"})`};
+    height: calc(100vh - 46.5px);
     padding-top: 19.5px;
     padding-bottom: 20px;
   }
