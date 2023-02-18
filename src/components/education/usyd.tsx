@@ -34,17 +34,22 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
           courses, including Algorithms and Data Structures, OOP, DBMS
           Architecture and discrete mathematics
         </SummaryText>
-        <SubtitleText isDarkMode={isDarkMode}>Academic Experience</SubtitleText>
-        <DescriptionText>
+        <p
+          style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}
+          className="mt-8 text-lg xxxl:text-xl"
+        >
+          Academic Experience
+        </p>
+        <p className="mt-2 text-base xxxl:text-lg">
           - Achieved excellent grades in Computer Science and Mathematics
           courses, including Algorithms and Data Structures, OOP, DBMS
           Architecture and discrete mathematics
-        </DescriptionText>
-        <DescriptionText>
+        </p>
+        <p className="mt-2 text-base xxxl:text-lg">
           - Achieved excellent grades in Computer Science and Mathematics
           courses, including Algorithms and Data Structures, OOP, DBMS
           Architecture and discrete mathematics
-        </DescriptionText>
+        </p>
       </motion.div>
     </Container>
   );
@@ -98,11 +103,6 @@ const UniversityText = styled.p`
   }
 `;
 
-const SubtitleText = styled(UniversityText)`
-  margin-top: 35px;
-  font-size: 22px;
-`;
-
 const SummaryText = styled.p`
   margin-top: 15px;
   font-size: 18px;
@@ -116,8 +116,4 @@ const SummaryText = styled.p`
     font-size: 20px;
     line-height: 30px;
   }
-`;
-
-const DescriptionText = styled(SummaryText)`
-  margin-top: 20px;
 `;

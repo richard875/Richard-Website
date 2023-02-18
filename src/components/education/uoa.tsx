@@ -37,30 +37,25 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
         <SummaryText>
           • Class representative for the Computer Science department
         </SummaryText>
-        <SubtitleText isDarkMode={isDarkMode}>Extracurricular</SubtitleText>
-        <div className="mt-4 flex items-center">
-          <p className="pt-1 text-lg xxxl:text-xl">
-            President of the University of Auckland Motorsport Club
-          </p>
-          <img
-            className="h-4 xxxl:h-5 w-auto ml-2.5"
-            src={iconPicker("redbull", isDarkMode)}
-          />
-        </div>
-        <p className="mt-2 text-base xxxl:text-lg">
+        <img
+          className="mt-8 mb-2 h-4 w-auto"
+          src={iconPicker("redbull", isDarkMode)}
+        />
+        <SecondaryTitle isDarkMode={isDarkMode}>
+          President of the University of Auckland Motorsport Club
+        </SecondaryTitle>
+        <p className="text-base xxxl:text-lg">
           - Sponsored by Red Bull, we thrive to create entertainment for busy
           University life as well as promote Safe Driving
         </p>
-        <div className="mt-6 flex items-center">
-          <p className="text-lg xxxl:text-xl">
-            University of Auckland Centre for Innovation and Entrepreneurship
-          </p>
-          <img
-            className="h-5 xxxl:h-6 w-auto ml-2.5"
-            src={iconPicker("cie", isDarkMode)}
-          />
-        </div>
-        <p className="mt-2 text-base xxxl:text-lg">
+        <img
+          className="mt-5 mb-2 h-5 w-auto"
+          src={iconPicker("cie", isDarkMode)}
+        />
+        <SecondaryTitle isDarkMode={isDarkMode}>
+          University of Auckland Centre for Innovation and Entrepreneurship
+        </SecondaryTitle>
+        <p className="text-base xxxl:text-lg">
           - Hosted and facilitated fortnightly innovation seminars as the Master
           of Ceremonies, guiding discussions and encouraging participation among
           attendees
@@ -113,9 +108,16 @@ const UniversityText = styled.p`
   }
 `;
 
-const SubtitleText = styled(UniversityText)`
-  margin-top: 35px;
-  font-size: 22px;
+const SecondaryTitle = styled.p`
+  font-size: 18px;
+  line-height: 28px;
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BLUE : COLOR.RED};
+
+  ${up("xxxl")} {
+    font-size: 20px;
+    line-height: 28px;
+  }
 `;
 
 const SummaryText = styled.p`
