@@ -4,6 +4,10 @@ import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
 import { NAME } from "../constants/meta";
 import home from "../routes/home";
+import experience from "../routes/experience";
+import work from "../routes/work";
+import projects from "../routes/projects";
+import education from "../routes/education";
 import styled from "styled-components";
 import { up, down, between } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
@@ -15,6 +19,7 @@ import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
+import { EMAIL } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 
 const TITLE = "Contact Me";
@@ -35,6 +40,24 @@ const Contact = ({
   location: GatsbyLinkProps<MousePosition>;
 }) => {
   const [hover, setHover] = React.useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  React.useEffect(() => {
+    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateIsDarkMode = () =>
+      setIsDarkMode(() => {
+        const isDarkMode = mediaQueryList.matches;
+        document.body.style.backgroundColor = isDarkMode
+          ? COLOR.BACKGROUND_BLACK
+          : COLOR.BACKGROUND_WHITE_SECONDARY;
+        return isDarkMode;
+      });
+
+    mediaQueryList.addEventListener("change", updateIsDarkMode);
+    updateIsDarkMode();
+
+    return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
+  }, []);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
@@ -52,7 +75,13 @@ const Contact = ({
           delay: 0.5,
         }}
       >
-        <InitialTransition color={COLOR.BACKGROUND_WHITE} />
+        <InitialTransition
+          color={
+            isDarkMode
+              ? COLOR.BACKGROUND_BLACK
+              : COLOR.BACKGROUND_WHITE_SECONDARY
+          }
+        />
         <Top>
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -83,7 +112,13 @@ const Contact = ({
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
                 >
-                  hello@richard-lee.com
+                  <a
+                    href={`mailto:${EMAIL}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {EMAIL}
+                  </a>
                 </span>
               </ContactEmail>
             </div>
@@ -179,6 +214,7 @@ const Contact = ({
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
+                onClick={(e) => home(e)}
               >
                 Home
               </p>
@@ -186,6 +222,7 @@ const Contact = ({
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
+                onClick={(e) => experience(e)}
               >
                 Intro
               </p>
@@ -193,6 +230,7 @@ const Contact = ({
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
+                onClick={(e) => work(e, isDarkMode)}
               >
                 Experience
               </p>
@@ -200,6 +238,7 @@ const Contact = ({
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
+                onClick={(e) => projects(e, isDarkMode)}
               >
                 Projects
               </p>
@@ -207,8 +246,9 @@ const Contact = ({
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
+                onClick={(e) => education(e, isDarkMode)}
               >
-                Projects
+                Education
               </p>
             </motion.div>
           </Right>
