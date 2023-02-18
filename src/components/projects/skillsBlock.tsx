@@ -127,7 +127,7 @@ const Container = styled.div`
     border-right: ${({ isDarkMode }: { isDarkMode: boolean }) =>
       isDarkMode
         ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
+        : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
   }
 
   ${up("xxxl")} {

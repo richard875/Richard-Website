@@ -44,7 +44,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
       setIsDarkMode(() => {
         const isDarkMode = mediaQueryList.matches;
         document.body.style.backgroundColor = isDarkMode
-          ? COLOR.BACKGROUND_BLACK_SECONDARY
+          ? COLOR.BACKGROUND_BLACK
           : COLOR.BACKGROUND_WHITE_SECONDARY;
         return isDarkMode;
       });
@@ -57,9 +57,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
 
   React.useEffect(() => {
     setBg(
-      isDarkMode
-        ? COLOR.BACKGROUND_BLACK_SECONDARY
-        : COLOR.BACKGROUND_WHITE_SECONDARY
+      isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
     );
   }, [isDarkMode]);
 
@@ -140,9 +138,7 @@ export const Head: HeadFC = () => (
 const Container = styled(motion.div)`
   cursor: none;
   background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode
-      ? COLOR.BACKGROUND_BLACK_SECONDARY
-      : COLOR.BACKGROUND_WHITE_SECONDARY};
+    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.WHITE : COLOR.BLACK};
 
@@ -169,7 +165,7 @@ const Top = styled.div`
   }) =>
     isDarkMode
       ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-      : `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`};
+      : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
   background-color: ${({ backgroundColor }: { backgroundColor: string }) =>
     backgroundColor};
 

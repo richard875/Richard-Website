@@ -58,9 +58,7 @@ const Experience = () => {
 
   React.useEffect(() => {
     setBg(
-      isDarkMode
-        ? COLOR.BACKGROUND_BLACK_SECONDARY
-        : COLOR.BACKGROUND_WHITE_SECONDARY
+      isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
     );
   }, [isDarkMode]);
 
@@ -146,7 +144,7 @@ const Container = styled(motion.div)`
 
 const Left = styled.div`
   padding: 30px;
-  background-color: ${COLOR.BACKGROUND_BLACK_SECONDARY};
+  background-color: ${COLOR.BACKGROUND_BLACK};
 
   ${down("sm")} {
     padding-bottom: 10px;

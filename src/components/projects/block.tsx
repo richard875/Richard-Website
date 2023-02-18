@@ -155,7 +155,7 @@ const Container = styled.div`
       !isLast &&
       (isDarkMode
         ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${COLOR.BACKGROUND_BLACK_SECONDARY}`)};
+        : `0.5px solid ${COLOR.BACKGROUND_BLACK}`)};
   }
 
   ${up("xxxl")} {
@@ -208,9 +208,7 @@ const Video = styled.video`
     isDarkMode: boolean;
     portraitOperation: boolean;
   }) =>
-    isDarkMode
-      ? COLOR.BACKGROUND_WHITE_SECONDARY
-      : COLOR.BACKGROUND_BLACK_SECONDARY};
+    isDarkMode ? COLOR.BACKGROUND_WHITE_SECONDARY : COLOR.BACKGROUND_BLACK};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
