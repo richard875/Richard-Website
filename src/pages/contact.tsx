@@ -189,8 +189,12 @@ const Top = styled.div`
   margin-left: ${BLOCK_PADDING + "px"};
   margin-right: ${BLOCK_PADDING + "px"};
   border-bottom: 0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY};
+  background-color: ${COLOR.BACKGROUND_BLACK};
 
   ${down("md")} {
+    width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
+    position: fixed;
+    z-index: 9999;
     justify-content: space-between;
   }
 
@@ -209,7 +213,7 @@ const Title = styled.p`
 `;
 
 const Box = styled.div`
-  padding-top: 20px;
+  padding-top: 59px;
   padding-left: 20px;
   padding-right: 20px;
 
