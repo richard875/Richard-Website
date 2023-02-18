@@ -42,7 +42,6 @@ const Projects = ({
 
   const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [bg, setBg] = React.useState(COLOR.BACKGROUND_WHITE_SECONDARY);
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -60,12 +59,6 @@ const Projects = ({
 
     return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
-
-  React.useEffect(() => {
-    setBg(
-      isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
-    );
-  }, [isDarkMode]);
 
   React.useLayoutEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -109,7 +102,13 @@ const Projects = ({
           delay: 0.5,
         }}
       >
-        <InitialTransition color={bg} />
+        <InitialTransition
+          color={
+            isDarkMode
+              ? COLOR.BACKGROUND_BLACK
+              : COLOR.BACKGROUND_WHITE_SECONDARY
+          }
+        />
         <Horizontal ref={slider} entryLength={projectsData.length + 1}>
           <SkillsBlock isDarkMode={isDarkMode} />
           {projectsData.map((project: MyProjects, index: number) => {
@@ -124,7 +123,7 @@ const Projects = ({
             );
           })}
         </Horizontal>
-        <Top isDarkMode={isDarkMode} backgroundColor={bg}>
+        <Top isDarkMode={isDarkMode}>
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
@@ -197,18 +196,12 @@ const Top = styled.div`
   align-items: center;
   padding-top: 5px;
   padding-bottom: 3px;
-  border-bottom: ${({
-    isDarkMode,
-    backgroundColor,
-  }: {
-    isDarkMode: boolean;
-    backgroundColor: string;
-  }) =>
+  border-bottom: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode
       ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
       : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
-  background-color: ${({ backgroundColor }: { backgroundColor: string }) =>
-    backgroundColor};
+  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
   ${down("md")} {
     justify-content: space-between;

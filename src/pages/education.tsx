@@ -31,7 +31,6 @@ const Education = ({
 
   const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [bg, setBg] = React.useState(COLOR.BACKGROUND_WHITE_SECONDARY);
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -50,12 +49,6 @@ const Education = ({
     return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
 
-  React.useEffect(() => {
-    setBg(
-      isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
-    );
-  }, [isDarkMode]);
-
   return (
     <Layout>
       <Container
@@ -68,8 +61,8 @@ const Education = ({
           delay: 0.5,
         }}
       >
-        <InitialTransition color={bg} />
-        <Top ref={topRef} isDarkMode={isDarkMode} backgroundColor={bg}>
+        <InitialTransition color={COLOR.BACKGROUND_BLACK} />
+        <Top ref={topRef} isDarkMode={isDarkMode}>
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
           </Title>
@@ -118,13 +111,7 @@ const Top = styled.div`
   padding-bottom: 3px;
   margin-left: ${BLOCK_PADDING + "px"};
   margin-right: ${BLOCK_PADDING + "px"};
-  border-bottom: ${({
-    isDarkMode,
-    backgroundColor,
-  }: {
-    isDarkMode: boolean;
-    backgroundColor: string;
-  }) =>
+  border-bottom: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode
       ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
       : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};

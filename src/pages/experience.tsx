@@ -14,10 +14,12 @@ import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 
-const CallToAction = ({ backgroundColor }: { backgroundColor: string }) => {
+const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const work = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     event.preventDefault();
-    document.body.style.backgroundColor = backgroundColor;
+    document.body.style.backgroundColor = isDarkMode
+      ? COLOR.BACKGROUND_BLACK
+      : COLOR.BACKGROUND_WHITE_SECONDARY;
     navigate(Route.Work, { state: { x: event.clientX, y: event.clientY } });
   };
 
@@ -42,7 +44,6 @@ const CallToAction = ({ backgroundColor }: { backgroundColor: string }) => {
 
 const Experience = () => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [bg, setBg] = React.useState(COLOR.BACKGROUND_WHITE_SECONDARY);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BLACK;
@@ -56,12 +57,6 @@ const Experience = () => {
     return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
 
-  React.useEffect(() => {
-    setBg(
-      isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
-    );
-  }, [isDarkMode]);
-
   return (
     <Container
       initial={{ opacity: 0 }}
@@ -72,7 +67,11 @@ const Experience = () => {
         delay: 0.5,
       }}
     >
-      <InitialTransition color={bg} />
+      <InitialTransition
+        color={
+          isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
+        }
+      />
       <Left>
         <LeftText
           className="font-secondary-normal"
@@ -92,9 +91,9 @@ const Experience = () => {
           <Email>email</Email>. I hope you find my page enjoyable and have a
           great day!
         </LeftText>
-        {useBreakpoint(down("sm")) && <CallToAction backgroundColor={bg} />}
+        {useBreakpoint(down("sm")) && <CallToAction isDarkMode={isDarkMode} />}
         <Logos />
-        {useBreakpoint(up("sm")) && <CallToAction backgroundColor={bg} />}
+        {useBreakpoint(up("sm")) && <CallToAction isDarkMode={isDarkMode} />}
       </Left>
       <Right className="select-none">
         <motion.div
