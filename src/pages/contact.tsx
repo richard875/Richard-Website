@@ -48,7 +48,16 @@ const Contact = ({
 
   return (
     <Layout>
-      <Container className="font-secondary-normal">
+      <Container
+        className="font-secondary-normal"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          stiffness: 0,
+          duration: 1,
+          delay: 0.5,
+        }}
+      >
         <InitialTransition color={COLOR.BACKGROUND_WHITE} />
         <Top>
           <Title className="font-secondary-normal">
@@ -62,7 +71,15 @@ const Contact = ({
           />
         </Top>
         <Box>
-          <Left>
+          <Left
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              stiffness: 0,
+              duration: 1,
+              delay: 1,
+            }}
+          >
             <div>
               <ContactText>Get in touch with me!</ContactText>
               <ContactEmail className="pt-3 md:pt-12">
@@ -85,8 +102,8 @@ const Contact = ({
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
-                  duration: 0.8,
-                  // delay: 4,
+                  duration: 1.2,
+                  delay: 1.5,
                   ease: [0, 0.71, 0.2, 1.01],
                 }}
               >
@@ -141,8 +158,28 @@ const Contact = ({
             </CircleContainer>
           </Left>
           <Right>
-            {useBreakpoint(down("md")) && <Production />}
-            <div>
+            {useBreakpoint(down("md")) && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  stiffness: 0,
+                  duration: 1,
+                  delay: 1.5,
+                }}
+              >
+                <Production />
+              </motion.div>
+            )}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                stiffness: 0,
+                duration: 1,
+                delay: 1.5,
+              }}
+            >
               <p className="mb-2 text-lg">richard-lee.com</p>
               <p
                 className="mt-0.5 hover:text-gray-400 transition-all"
@@ -179,7 +216,7 @@ const Contact = ({
               >
                 Projects
               </p>
-            </div>
+            </motion.div>
           </Right>
         </Box>
 
@@ -266,7 +303,7 @@ const Box = styled.div`
   }
 `;
 
-const Left = styled.div`
+const Left = styled(motion.div)`
   flex: 0.65;
   display: flex;
   flex-direction: column;
