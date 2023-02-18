@@ -39,7 +39,7 @@ const IndexPage = ({
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BLACK;
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
     navigate(Route.Acknowledgement, {
       state: { x: event.clientX, y: event.clientY },
     });
@@ -47,7 +47,7 @@ const IndexPage = ({
 
   const experience = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BLACK;
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
     navigate(Route.Experience, {
       state: { x: event.clientX, y: event.clientY },
     });
@@ -75,7 +75,7 @@ const IndexPage = ({
           },
         }}
       >
-        <InitialTransition color={COLOR.BLACK} />
+        <InitialTransition color={COLOR.BACKGROUND_BLACK} />
         <Box>
           <Header></Header>
           <Wrapper>

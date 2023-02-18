@@ -46,7 +46,7 @@ const Experience = () => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BLACK;
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
 
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
     const updateIsDarkMode = () => setIsDarkMode(mediaQueryList.matches);
@@ -132,8 +132,6 @@ export default Experience;
 export const Head: HeadFC = () => <title>G'day | {NAME}</title>;
 
 const Container = styled(motion.div)`
-  background-color: ${COLOR.BLACK};
-
   ${up("lg")} {
     display: flex;
     align-items: center;
@@ -212,7 +210,7 @@ const Email = styled(HoverableTextUnderline)`
 const Right = styled.div`
   height: 500px;
   cursor: grab;
-  background-color: ${COLOR.OFF_WHITE};
+  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
 
   &:active {
     cursor: grabbing;

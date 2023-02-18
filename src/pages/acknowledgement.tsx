@@ -20,7 +20,7 @@ const Acknowledgement = ({
   const [hover, setHover] = React.useState(false);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BLACK;
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -99,7 +99,7 @@ const Container = styled(motion.div)`
   align-items: center;
   justify-content: center;
   color: ${COLOR.WHITE};
-  background-color: ${COLOR.BLACK};
+  background-color: ${COLOR.BACKGROUND_BLACK};
   cursor: none;
   user-select: none;
 `;
