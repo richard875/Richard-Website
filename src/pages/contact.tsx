@@ -67,7 +67,11 @@ const Contact = ({
               <ContactText>Get in touch with me!</ContactText>
               <ContactEmail className="pt-3 md:pt-12">
                 Email me at:&nbsp;
-                <span className="underline decoration-dotted">
+                <span
+                  className="underline decoration-dotted hover:text-gray-400 transition-all"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                >
                   hello@richard-lee.com
                 </span>
               </ContactEmail>
@@ -140,11 +144,41 @@ const Contact = ({
             {useBreakpoint(down("md")) && <Production />}
             <div>
               <p className="mb-2 text-lg">richard-lee.com</p>
-              <p className="mt-0.5">Home</p>
-              <p className="mt-0.5">Intro</p>
-              <p className="mt-0.5">Experience</p>
-              <p className="mt-0.5">Projects</p>
-              <p className="mt-0.5">Projects</p>
+              <p
+                className="mt-0.5 hover:text-gray-400 transition-all"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                Home
+              </p>
+              <p
+                className="mt-0.5 hover:text-gray-400 transition-all"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                Intro
+              </p>
+              <p
+                className="mt-0.5 hover:text-gray-400 transition-all"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                Experience
+              </p>
+              <p
+                className="mt-0.5 hover:text-gray-400 transition-all"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                Projects
+              </p>
+              <p
+                className="mt-0.5 hover:text-gray-400 transition-all"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                Projects
+              </p>
             </div>
           </Right>
         </Box>
