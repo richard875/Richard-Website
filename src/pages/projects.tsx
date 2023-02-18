@@ -42,6 +42,7 @@ const Projects = ({
   const component = React.useRef<HTMLDivElement>(null);
 
   const [hover, setHover] = React.useState(false);
+  const [toContact, setToContact] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 
   React.useEffect(() => {
@@ -105,7 +106,7 @@ const Projects = ({
       >
         <InitialTransition
           color={
-            isDarkMode
+            isDarkMode || toContact
               ? COLOR.BACKGROUND_BLACK
               : COLOR.BACKGROUND_WHITE_SECONDARY
           }
@@ -136,7 +137,10 @@ const Projects = ({
               className="underline underline-offset-2"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
-              onClick={(e) => education(e)}
+              onClick={(e) => {
+                setToContact(false);
+                education(e);
+              }}
             >
               Education
             </div>
@@ -149,7 +153,10 @@ const Projects = ({
               className="underline underline-offset-2"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
-              onClick={(e) => contact(e)}
+              onClick={(e) => {
+                setToContact(true);
+                contact(e);
+              }}
             >
               Contact
             </div>
