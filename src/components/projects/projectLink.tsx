@@ -6,9 +6,11 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { COLOR } from "../../styles/theme";
 
 const ProjectLink = ({
+  url,
   setHover,
   isDarkMode,
 }: {
+  url: string;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
 }) => {
@@ -19,7 +21,9 @@ const ProjectLink = ({
         onMouseLeave={() => setHover(false)}
         className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
       >
-        View Project
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          View Project
+        </a>
       </span>
       <FontAwesomeIcon
         icon={faCircleChevronRight}

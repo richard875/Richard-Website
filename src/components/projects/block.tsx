@@ -95,7 +95,11 @@ const Block = ({
           )}
         </JobDescriptionText>
         {project.hasLink && (
-          <ProjectLink setHover={setHover} isDarkMode={isDarkMode} />
+          <ProjectLink
+            url={project.linkUrl!}
+            setHover={setHover}
+            isDarkMode={isDarkMode}
+          />
         )}
         {useBreakpoint(up("md")) && project.hasMedia && (
           <CSSTransition
