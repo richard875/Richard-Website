@@ -14,6 +14,12 @@ import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 
+const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
+const LINKEDIN = "https://www.linkedin.com/in/richard875/";
+const GITHUB = "https://github.com/richard875";
+const EMAIL = "mailto:hello@richard-lee.com";
+const SYDNEY_OPERA_HOUSE = "https://www.sydneyoperahouse.com/";
+
 const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const work = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     event.preventDefault();
@@ -84,12 +90,32 @@ const Experience = () => {
           }}
         >
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
-          <Usyd>University of Sydney</Usyd>, <Australia>Australia</Australia>.
-          On this corner of the internet, you'll find information about me. You
-          can connect with me on <LinkedIn>LinkedIn</LinkedIn>, check out my
-          repositories on <Github>GitHub</Github>, or reach out to me via{" "}
-          <Email>email</Email>. I hope you find my page enjoyable and have a
-          great day!
+          <Usyd>University of Sydney</Usyd>,&nbsp;
+          <Australia>
+            <a href={AUSTRALIA} target="_blank" rel="noopener noreferrer">
+              Australia
+            </a>
+          </Australia>
+          . On this corner of the internet, you'll find information about me.
+          You can connect with me on&nbsp;
+          <LinkedIn>
+            <a href={LINKEDIN} target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </LinkedIn>
+          , check out my repositories on&nbsp;
+          <Github>
+            <a href={GITHUB} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+          </Github>
+          , or reach out to me via&nbsp;
+          <Email>
+            <a href={EMAIL} target="_blank" rel="noopener noreferrer">
+              email
+            </a>
+          </Email>
+          . I hope you find my page enjoyable and have a great day!
         </LeftText>
         {useBreakpoint(down("sm")) && <CallToAction isDarkMode={isDarkMode} />}
         <Logos />
@@ -119,7 +145,13 @@ const Experience = () => {
           }}
         >
           <span className="font-secondary-normal cursor-pointer">
-            Sydney Opera House
+            <a
+              href={SYDNEY_OPERA_HOUSE}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Sydney Opera House
+            </a>
           </span>
         </SydneyOperaHouseInfoText>
       </Right>
@@ -187,7 +219,7 @@ const HoverableTextUnderline = styled(HoverableText)`
   text-underline-offset: 4px;
 `;
 
-const Usyd = styled(HoverableText)`
+const Usyd = styled.span`
   color: ${COLOR.USYD_ORANGE};
 `;
 
