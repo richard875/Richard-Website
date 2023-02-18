@@ -118,8 +118,13 @@ const Top = styled.div`
     isDarkMode
       ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
       : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
+  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
   ${down("md")} {
+    width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
+    position: fixed;
+    z-index: 9999;
     justify-content: space-between;
   }
 
@@ -138,6 +143,8 @@ const Title = styled.p`
 `;
 
 const Horizontal = styled.div`
+  padding-top: 39px;
+
   ${up("md")} {
     display: flex;
     height: calc(100vh - 46.5px);
