@@ -1,9 +1,9 @@
 import * as React from "react";
 import type { HeadFC } from "gatsby";
-import { GatsbyLinkProps, navigate } from "gatsby";
+import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
 import { NAME } from "../constants/meta";
-import Route from "../routes/route";
+import home from "../routes/home";
 import styled from "styled-components";
 import { up, down, between } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
@@ -35,12 +35,6 @@ const Contact = ({
   location: GatsbyLinkProps<MousePosition>;
 }) => {
   const [hover, setHover] = React.useState(false);
-
-  const home = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
-    navigate(Route.Home, { state: { x: event.clientX, y: event.clientY } });
-  };
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;

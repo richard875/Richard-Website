@@ -2,9 +2,9 @@ import * as React from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps, navigate } from "gatsby";
+import { GatsbyLinkProps } from "gatsby";
+import projects from "../routes/projects";
 import styled from "styled-components";
-import Route from "../routes/route";
 import { NAME } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import useWindowSize from "../hooks/useWindowSize";
@@ -37,14 +37,6 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
 
   const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-
-  const projects = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = isDarkMode
-      ? COLOR.BACKGROUND_BLACK
-      : COLOR.BACKGROUND_WHITE_SECONDARY;
-    navigate(Route.Projects, { state: { x: event.clientX, y: event.clientY } });
-  };
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");

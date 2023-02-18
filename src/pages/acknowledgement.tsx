@@ -1,8 +1,8 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps, navigate } from "gatsby";
+import { GatsbyLinkProps } from "gatsby";
+import home from "../routes/home";
 import styled from "styled-components";
-import Route from "../routes/route";
 import { NAME } from "../constants/meta";
 import { up } from "styled-breakpoints";
 import { isDesktop } from "react-device-detect";
@@ -27,12 +27,6 @@ const Acknowledgement = ({
       document.body.style.overflow = "auto";
     };
   }, []);
-
-  const home = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
-    navigate(Route.Home, { state: { x: event.clientX, y: event.clientY } });
-  };
 
   return (
     <Container

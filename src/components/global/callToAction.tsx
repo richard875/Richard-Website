@@ -13,7 +13,10 @@ const CallToAction = ({
   name: string;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
-  navigator: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
+  navigator: (
+    event: React.MouseEvent<any, MouseEvent>,
+    isDarkMode?: boolean
+  ) => void;
 }) => {
   return (
     <Cta
@@ -23,7 +26,7 @@ const CallToAction = ({
       onMouseLeave={() => setHover(false)}
     >
       <div
-        onClick={(e) => navigator(e)}
+        onClick={(e) => navigator(e, isDarkMode)}
         className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
       >
         {name}

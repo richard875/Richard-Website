@@ -1,8 +1,9 @@
 import * as React from "react";
-import { GatsbyLinkProps, navigate } from "gatsby";
+import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
+import experience from "../routes/experience";
+import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
-import Route from "../routes/route";
 import { NAME } from "../constants/meta";
 import { up } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
@@ -34,24 +35,6 @@ const IndexPage = ({
       document.body.style.overflow = "auto";
     };
   }, []);
-
-  const acknowledgement = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-    navigate(Route.Acknowledgement, {
-      state: { x: event.clientX, y: event.clientY },
-    });
-  };
-
-  const experience = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-    navigate(Route.Experience, {
-      state: { x: event.clientX, y: event.clientY },
-    });
-  };
 
   return (
     <Layout>

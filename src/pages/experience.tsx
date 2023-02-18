@@ -1,8 +1,7 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import { navigate } from "gatsby";
+import work from "../routes/work";
 import styled from "styled-components";
-import Route from "../routes/route";
 import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,14 +20,6 @@ const EMAIL = "mailto:hello@richard-lee.com";
 const SYDNEY_OPERA_HOUSE = "https://www.sydneyoperahouse.com/";
 
 const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
-  const work = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = isDarkMode
-      ? COLOR.BACKGROUND_BLACK
-      : COLOR.BACKGROUND_WHITE_SECONDARY;
-    navigate(Route.Work, { state: { x: event.clientX, y: event.clientY } });
-  };
-
   return (
     <Cta
       className="font-secondary-normal"
@@ -41,7 +32,9 @@ const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
       }}
     >
       <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
-        <span onClick={(e) => work(e)}>Work Experience & Projects</span>
+        <span onClick={(e) => work(e, isDarkMode)}>
+          Work Experience & Projects
+        </span>
       </div>
       <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
     </Cta>

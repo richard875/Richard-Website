@@ -2,9 +2,9 @@ import * as React from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { GatsbyLinkProps, navigate } from "gatsby";
+import { GatsbyLinkProps } from "gatsby";
+import education from "../routes/education";
 import styled from "styled-components";
-import Route from "../routes/route";
 import { NAME } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
@@ -81,16 +81,6 @@ const Projects = ({
     }
   }, [windowWidth]);
 
-  const education = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    event.preventDefault();
-    document.body.style.backgroundColor = isDarkMode
-      ? COLOR.BACKGROUND_BLACK
-      : COLOR.BACKGROUND_WHITE_SECONDARY;
-    navigate(Route.Education, {
-      state: { x: event.clientX, y: event.clientY },
-    });
-  };
-
   return (
     <Layout>
       <Container
@@ -139,7 +129,7 @@ const Projects = ({
               onMouseLeave={() => setHover(false)}
               onClick={(e) => {
                 setToContact(false);
-                education(e);
+                education(e, isDarkMode);
               }}
             >
               Education
