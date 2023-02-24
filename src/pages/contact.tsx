@@ -115,6 +115,7 @@ const Contact = ({
                   <a
                     href={`mailto:${EMAIL}`}
                     target="_blank"
+                    className="cursor-none"
                     rel="noopener noreferrer"
                   >
                     {EMAIL}
@@ -210,45 +211,55 @@ const Contact = ({
               }}
             >
               <p className="mb-2 text-lg">richard-lee.com</p>
-              <p
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => home(e)}
-              >
-                Home
+              <p>
+                <span
+                  className="mt-0.5 hover:text-gray-400 transition-all"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                  onClick={(e) => home(e)}
+                >
+                  Home
+                </span>
               </p>
-              <p
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => experience(e)}
-              >
-                Intro
+              <p>
+                <span
+                  className="mt-0.5 hover:text-gray-400 transition-all"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                  onClick={(e) => experience(e)}
+                >
+                  Intro
+                </span>
               </p>
-              <p
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => work(e, isDarkMode)}
-              >
-                Experience
+              <p>
+                <span
+                  className="mt-0.5 hover:text-gray-400 transition-all"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                  onClick={(e) => work(e, isDarkMode)}
+                >
+                  Experience
+                </span>
               </p>
-              <p
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => projects(e, isDarkMode)}
-              >
-                Projects
+              <p>
+                <span
+                  className="mt-0.5 hover:text-gray-400 transition-all"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                  onClick={(e) => projects(e, isDarkMode)}
+                >
+                  Projects
+                </span>
               </p>
-              <p
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => education(e, isDarkMode)}
-              >
-                Education
+              <p>
+                <span
+                  className="mt-0.5 hover:text-gray-400 transition-all"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                  onClick={(e) => education(e, isDarkMode)}
+                >
+                  Education
+                </span>
               </p>
             </motion.div>
           </Right>
