@@ -5,7 +5,7 @@ import experience from "../routes/experience";
 import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
 import { NAME } from "../constants/meta";
-import { up } from "styled-breakpoints";
+import { up, down } from "styled-breakpoints";
 import useWindowSize from "../hooks/useWindowSize";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { isDesktop } from "react-device-detect";
@@ -21,12 +21,29 @@ import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
 
+const MODE = "mode";
+const STANDALONE = "standalone";
+
 const IndexPage = ({
   location,
 }: {
   location: GatsbyLinkProps<MousePosition>;
 }) => {
+  // Hooks
   const [hover, setHover] = React.useState(false);
+  const [isIphoneX, setIsIphoneX] = React.useState(false);
+
+  // Detect if the page is opened as a PWA
+  const params = new URLSearchParams((location as any).search);
+  const isPwa = params.get(MODE) === STANDALONE;
+
+  // Detect if the page is opened on an iPhone X or newer
+  React.useEffect(() => {
+    let iPhone =
+      /iPhone/.test(navigator.userAgent) && !(window as any).MSStream;
+    let aspect = window.screen.width / window.screen.height;
+    setIsIphoneX(iPhone && aspect.toFixed(3) === "0.462");
+  }, []);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
@@ -60,7 +77,7 @@ const IndexPage = ({
         }}
       >
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
-        <Box>
+        <Box isIphoneXPwa={isIphoneX && isPwa}>
           <Wrapper>
             <Top setHover={setHover} />
             <Bottom
@@ -104,15 +121,24 @@ const Container = styled(motion.div)`
   width: 100vw;
   height: ${() => useWindowSize().height! + "px"};
   display: flex;
-  align-items: center;
   justify-content: center;
   background-color: ${COLOR.BACKGROUND_WHITE};
   cursor: none;
+
+  ${up("sm")} {
+    align-items: center;
+  }
 `;
 
 const Box = styled.div`
   width: calc(100vw - 30px);
-  height: ${() => useWindowSize().height! - 30 + "px"};
+  height: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
+    useWindowSize().height! - (isIphoneXPwa ? 50 : 30) + "px"};
+
+  ${down("sm")} {
+    margin-top: 15px;
+    position: relative;
+  }
 
   ${up("sm")} {
     width: calc(100vw - 70px);

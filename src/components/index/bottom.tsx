@@ -223,7 +223,7 @@ const Button = styled.div`
 const Country = styled.div`
   font-size: 16px;
   position: absolute;
-  bottom: 3.5vh;
+  bottom: 1.5vh;
   color: ${COLOR.WHITE};
   overflow: hidden;
 

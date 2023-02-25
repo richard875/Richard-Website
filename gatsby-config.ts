@@ -43,7 +43,7 @@ const config: GatsbyConfig = {
       options: {
         name: `Richard Lee | Software Engineer | University of Sydney`,
         short_name: `Richard Lee`,
-        start_url: `/`,
+        start_url: `/?mode=standalone`,
         background_color: `#f5ede3`,
         theme_color: `#f5ede3`,
         display: `standalone`,
