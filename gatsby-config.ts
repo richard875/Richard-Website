@@ -14,17 +14,12 @@ const config: GatsbyConfig = {
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   plugins: [
-    // {
-    //   resolve: "gatsby-source-contentful",
-    //   options: {
-    //     accessToken: "xx",
-    //     spaceId: "xx",
-    //   },
-    // },
     "gatsby-plugin-postcss",
+    "gatsby-plugin-netlify",
+    "gatsby-plugin-no-sourcemaps",
     "gatsby-plugin-styled-components",
     {
-      resolve: "gatsby-plugin-google-gtag",
+      resolve: `gatsby-plugin-google-gtag`,
       options: {
         trackingIds: [process.env.STREAM_ID, process.env.GA_ID],
         pluginConfig: {
@@ -36,20 +31,34 @@ const config: GatsbyConfig = {
     "gatsby-plugin-sass",
     "gatsby-plugin-image",
     {
-      resolve: "gatsby-plugin-manifest",
+      resolve: `gatsby-plugin-manifest`,
       options: {
-        icon: "static/images/favicon.png",
+        icon: `static/images/favicon.png`,
       },
     },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {
-      resolve: "gatsby-source-filesystem",
+      resolve: `gatsby-plugin-manifest`,
       options: {
-        name: "images",
-        path: "./static/images/",
+        name: `Richard Lee | Software Engineer | University of Sydney`,
+        short_name: `Richard Lee`,
+        start_url: `/`,
+        background_color: `#f5ede3`,
+        theme_color: `#f5ede3`,
+        display: `standalone`,
+        icon: `static/images/pwas/pwa-1024.png`,
+        include_favicon: false,
       },
-      __key: "images",
+    },
+    "gatsby-plugin-offline",
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `./static/images/`,
+      },
+      __key: `images`,
     },
   ],
 };
