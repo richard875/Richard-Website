@@ -21,7 +21,12 @@ const ProjectLink = ({
         onMouseLeave={() => setHover(false)}
         className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
       >
-        <a href={url} target="_blank" rel="noopener noreferrer">
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cursor-none"
+        >
           View Project
         </a>
       </span>
