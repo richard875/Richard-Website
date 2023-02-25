@@ -2,7 +2,7 @@ import { navigate } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Route from "./route";
 
-const experience = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+const experience = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
   event.preventDefault();
   document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
   navigate(Route.Experience, {
