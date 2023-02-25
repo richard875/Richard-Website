@@ -1,21 +1,10 @@
 @import "./scss/typography.scss";
 
-// declear variable
-$background: #f5ede3;
-
+html,
 body {
   margin: 0;
-  width: 100%;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-  background-color: $background;
-
   font-weight: normal;
   font-family: "BwGradual", sans-serif;
-}
-
-html {
-  height: -webkit-fill-available;
 }
 
 // Animation

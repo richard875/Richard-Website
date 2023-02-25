@@ -43,15 +43,9 @@ const Contact = ({
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 
   React.useEffect(() => {
+    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
-    const updateIsDarkMode = () =>
-      setIsDarkMode(() => {
-        const isDarkMode = mediaQueryList.matches;
-        document.body.style.backgroundColor = isDarkMode
-          ? COLOR.BACKGROUND_BLACK
-          : COLOR.BACKGROUND_WHITE_SECONDARY;
-        return isDarkMode;
-      });
+    const updateIsDarkMode = () => setIsDarkMode(mediaQueryList.matches);
 
     mediaQueryList.addEventListener("change", updateIsDarkMode);
     updateIsDarkMode();
