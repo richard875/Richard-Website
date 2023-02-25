@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import experience from "../routes/experience";
 import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
-import { NAME } from "../constants/meta";
+import { NAME, MODE, STANDALONE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import useWindowSize from "../hooks/useWindowSize";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
@@ -20,9 +20,6 @@ import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
-
-const MODE = "mode";
-const STANDALONE = "standalone";
 
 const IndexPage = ({
   location,
