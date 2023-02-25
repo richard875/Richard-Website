@@ -3,9 +3,7 @@ import { COLOR } from "../styles/theme";
 import Route from "./route";
 import { MODE, STANDALONE, STANDALONE_URL } from "../constants/meta";
 
-const acknowledgement = (
-  event: React.MouseEvent<HTMLDivElement, MouseEvent>
-) => {
+const acknowledgement = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
   event.preventDefault();
   // Detect if the page is opened as a PWA
   const params = new URLSearchParams((location as any).search);

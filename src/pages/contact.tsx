@@ -127,10 +127,10 @@ const Contact = ({
               onMouseLeave={() => setHover(false)}
             >
               <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{
-                  duration: 1.2,
+                  duration: 3,
                   delay: 1.5,
                   ease: [0, 0.71, 0.2, 1.01],
                 }}
@@ -193,7 +193,7 @@ const Contact = ({
                 transition={{
                   stiffness: 0,
                   duration: 1,
-                  delay: 1.5,
+                  delay: 2.1,
                 }}
               >
                 <Production />
@@ -205,7 +205,7 @@ const Contact = ({
               transition={{
                 stiffness: 0,
                 duration: 1,
-                delay: 1.5,
+                delay: 1.8,
               }}
             >
               <p className="mb-2 text-lg">richard-lee.com</p>

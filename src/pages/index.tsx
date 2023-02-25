@@ -1,4 +1,5 @@
 import * as React from "react";
+import gsap from "gsap";
 import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
 import experience from "../routes/experience";
@@ -6,6 +7,7 @@ import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
 import { NAME, MODE, STANDALONE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
+import gsapAnimationIndex from "../helper/gsapAnimationIndex";
 import useWindowSize from "../hooks/useWindowSize";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { isDesktop } from "react-device-detect";
@@ -26,6 +28,9 @@ const IndexPage = ({
 }: {
   location: GatsbyLinkProps<MousePosition>;
 }) => {
+  // Refs
+  const acknowledgementRef = React.useRef(null);
+
   // Hooks
   const [hover, setHover] = React.useState(false);
   const [isIphoneX, setIsIphoneX] = React.useState(false);
@@ -49,6 +54,16 @@ const IndexPage = ({
     return () => {
       document.body.style.overflow = "auto";
     };
+  }, []);
+
+  // GSAP Animation
+  React.useEffect(() => {
+    gsap.defaults({ ease: "power4.out" });
+    gsap.from(
+      acknowledgementRef.current,
+      2.3,
+      gsapAnimationIndex(150, 3.4, 20)
+    );
   }, []);
 
   return (
@@ -81,8 +96,19 @@ const IndexPage = ({
               setHover={setHover}
               acknowledgement={acknowledgement}
               experience={experience}
+              isIphoneXPwa={isIphoneX && isPwa}
             />
           </Wrapper>
+          <div ref={acknowledgementRef}>
+            {useBreakpoint(down("sm")) && isIphoneX && isPwa && (
+              <div
+                className="font-secondary-normal mt-2 ml-1"
+                onClick={(e) => acknowledgement(e)}
+              >
+                Acknowledgement of Country
+              </div>
+            )}
+          </div>
           {useBreakpoint(up("lg")) && (
             <Footer>
               <FooterLeft
@@ -130,7 +156,7 @@ const Container = styled(motion.div)`
 const Box = styled.div`
   width: calc(100vw - 30px);
   height: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
-    useWindowSize().height! - (isIphoneXPwa ? 50 : 30) + "px"};
+    useWindowSize().height! - (isIphoneXPwa ? 85 : 30) + "px"};
 
   ${down("sm")} {
     margin-top: 15px;

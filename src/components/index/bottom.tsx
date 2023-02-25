@@ -17,10 +17,12 @@ const Bottom = ({
   setHover,
   acknowledgement,
   experience,
+  isIphoneXPwa,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
   acknowledgement: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   experience: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  isIphoneXPwa: boolean;
 }) => {
   const topNameRef = React.useRef(null);
   const topGreetingRef = React.useRef(null);
@@ -79,11 +81,14 @@ const Bottom = ({
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
-          {useBreakpoint(down("lg")) && "Acknowledgement of Country"}
+          {useBreakpoint(down("lg")) &&
+            !isIphoneXPwa &&
+            "Acknowledgement of Country"}
         </div>
       </Country>
 
       <CircleContainer
+        isIphoneXPwa={isIphoneXPwa}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -263,8 +268,10 @@ const Circle = styled.div`
 
 const CircleContainer = styled.span`
   position: absolute;
-  bottom: 10vh;
-  right: 45px;
+  bottom: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
+    isIphoneXPwa ? "5vh" : "10vh"};
+  right: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
+    isIphoneXPwa ? "35px" : "45px"};
   transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
   user-select: none;
 
