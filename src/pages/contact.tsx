@@ -56,6 +56,17 @@ const Contact = ({
     return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
 
+  React.useEffect(() => {
+    const overflow = window.matchMedia("(min-height: 100vh)").matches
+      ? "hidden"
+      : "auto";
+    document.body.style.overflow = overflow;
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     <Layout>
       <Container
@@ -307,7 +318,9 @@ const Container = styled(motion.div)`
   cursor: none;
 
   ${down("md")} {
-    padding-bottom: 20px;
+    @media screen and (max-height: 100vh) {
+      padding-bottom: 20px;
+    }
   }
 `;
 
