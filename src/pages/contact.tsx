@@ -53,10 +53,6 @@ const Contact = ({
     return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
 
-  React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-  }, []);
-
   return (
     <Layout>
       <Container
