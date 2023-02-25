@@ -41,6 +41,9 @@ const Contact = ({
 }) => {
   const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [transitionColor, setTransitionColor] = React.useState(
+    COLOR.BACKGROUND_WHITE
+  );
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
@@ -65,13 +68,7 @@ const Contact = ({
           delay: 0.5,
         }}
       >
-        <InitialTransition
-          color={
-            isDarkMode
-              ? COLOR.BACKGROUND_BLACK
-              : COLOR.BACKGROUND_WHITE_SECONDARY
-          }
-        />
+        <InitialTransition color={transitionColor} />
         <Top>
           <Title className="font-secondary-normal">
             {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -206,7 +203,10 @@ const Contact = ({
                   className="mt-0.5 hover:text-gray-400 transition-all"
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
-                  onClick={(e) => home(e)}
+                  onClick={(e) => {
+                    setTransitionColor(COLOR.BACKGROUND_WHITE);
+                    home(e);
+                  }}
                 >
                   Home
                 </span>
@@ -216,7 +216,10 @@ const Contact = ({
                   className="mt-0.5 hover:text-gray-400 transition-all"
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
-                  onClick={(e) => experience(e)}
+                  onClick={(e) => {
+                    setTransitionColor(COLOR.BACKGROUND_BLACK);
+                    experience(e);
+                  }}
                 >
                   Intro
                 </span>
@@ -226,7 +229,14 @@ const Contact = ({
                   className="mt-0.5 hover:text-gray-400 transition-all"
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
-                  onClick={(e) => work(e, isDarkMode)}
+                  onClick={(e) => {
+                    setTransitionColor(
+                      isDarkMode
+                        ? COLOR.BACKGROUND_BLACK
+                        : COLOR.BACKGROUND_WHITE_SECONDARY
+                    );
+                    work(e, isDarkMode);
+                  }}
                 >
                   Experience
                 </span>
@@ -236,7 +246,14 @@ const Contact = ({
                   className="mt-0.5 hover:text-gray-400 transition-all"
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
-                  onClick={(e) => projects(e, isDarkMode)}
+                  onClick={(e) => {
+                    setTransitionColor(
+                      isDarkMode
+                        ? COLOR.BACKGROUND_BLACK
+                        : COLOR.BACKGROUND_WHITE_SECONDARY
+                    );
+                    projects(e, isDarkMode);
+                  }}
                 >
                   Projects
                 </span>
@@ -246,7 +263,14 @@ const Contact = ({
                   className="mt-0.5 hover:text-gray-400 transition-all"
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
-                  onClick={(e) => education(e, isDarkMode)}
+                  onClick={(e) => {
+                    setTransitionColor(
+                      isDarkMode
+                        ? COLOR.BACKGROUND_BLACK
+                        : COLOR.BACKGROUND_WHITE_SECONDARY
+                    );
+                    education(e, isDarkMode);
+                  }}
                 >
                   Education
                 </span>
