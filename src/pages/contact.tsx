@@ -347,6 +347,12 @@ const Box = styled.div`
   padding-left: 20px;
   padding-right: 20px;
 
+  ${down("md")} {
+    @media screen and (min-height: 100vh) {
+      height: 100vh;
+    }
+  }
+
   ${up("md")} {
     display: flex;
     height: calc(100vh - 46.5px);
