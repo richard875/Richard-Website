@@ -87,7 +87,7 @@ const Model = React.memo(() => {
     groundMat.color.setHSL(0.095, 1, 0.75);
 
     const ground = new THREE.Mesh(groundGeo, groundMat);
-    ground.position.y = -1;
+    ground.position.y = -0.5;
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
     scene.add(ground);
