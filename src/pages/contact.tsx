@@ -131,7 +131,7 @@ const Contact = ({
                 animate={{ opacity: 1 }}
                 transition={{
                   duration: 3,
-                  delay: 1.5,
+                  delay: 1.3,
                   ease: [0, 0.71, 0.2, 1.01],
                 }}
               >
@@ -193,7 +193,7 @@ const Contact = ({
                 transition={{
                   stiffness: 0,
                   duration: 1,
-                  delay: 2.1,
+                  delay: 1.9,
                 }}
               >
                 <Production />
@@ -205,7 +205,7 @@ const Contact = ({
               transition={{
                 stiffness: 0,
                 duration: 1,
-                delay: 1.8,
+                delay: 1.6,
               }}
             >
               <p className="mb-2 text-lg">richard-lee.com</p>
