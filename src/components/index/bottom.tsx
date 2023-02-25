@@ -223,7 +223,7 @@ const Button = styled.div`
 const Country = styled.div`
   font-size: 16px;
   position: absolute;
-  bottom: 15vh;
+  bottom: 3.5vh;
   color: ${COLOR.WHITE};
   overflow: hidden;
 
@@ -263,7 +263,7 @@ const Circle = styled.div`
 
 const CircleContainer = styled.span`
   position: absolute;
-  bottom: 21vh;
+  bottom: 10vh;
   right: 45px;
   transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
   user-select: none;

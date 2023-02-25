@@ -6,6 +6,7 @@ import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
 import { NAME } from "../constants/meta";
 import { up } from "styled-breakpoints";
+import useWindowSize from "../hooks/useWindowSize";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
@@ -60,7 +61,6 @@ const IndexPage = ({
       >
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
         <Box>
-          <Header></Header>
           <Wrapper>
             <Top setHover={setHover} />
             <Bottom
@@ -69,17 +69,15 @@ const IndexPage = ({
               experience={experience}
             />
           </Wrapper>
-          <Footer>
-            {useBreakpoint(up("lg")) && (
-              <>
-                <FooterLeft
-                  setHover={setHover}
-                  acknowledgement={acknowledgement}
-                />
-                <FooterRight />
-              </>
-            )}
-          </Footer>
+          {useBreakpoint(up("lg")) && (
+            <Footer>
+              <FooterLeft
+                setHover={setHover}
+                acknowledgement={acknowledgement}
+              />
+              <FooterRight />
+            </Footer>
+          )}
         </Box>
         {isDesktop && (
           <Cursor
@@ -104,70 +102,43 @@ export const Head: HeadFC = () => (
 
 const Container = styled(motion.div)`
   width: 100vw;
+  height: ${() => useWindowSize().height! + "px"};
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${COLOR.BACKGROUND_WHITE};
   cursor: none;
 `;
 
 const Box = styled.div`
   width: calc(100vw - 30px);
-  margin-left: 15px;
-  margin-right: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+  height: ${() => useWindowSize().height! - 30 + "px"};
 
   ${up("sm")} {
     width: calc(100vw - 70px);
-    margin-left: 35px;
-    margin-right: 35px;
+    height: ${() => useWindowSize().height! - 70 + "px"};
   }
 
   ${up("lg")} {
-    width: calc(100vw - 140px);
-    margin-left: 70px;
-    margin-right: 70px;
-  }
-`;
-
-const Header = styled.div`
-  flex: 0.02;
-
-  ${up("sm")} {
-    flex: 0.05;
-  }
-
-  ${up("lg")} {
-    flex: 0.07;
+    width: calc(100vw - 135px);
+    height: ${() => useWindowSize().height! - 135 + "px"};
   }
 `;
 
 const Wrapper = styled.div`
   width: 100%;
-  flex: 0.845;
+  height: 100%;
   border: 3px solid ${COLOR.BLACK};
   display: flex;
   flex-direction: column;
-
-  ${up("sm")} {
-    flex: 0.9;
-  }
-
-  ${up("lg")} {
-    flex: 0.86;
-  }
 `;
 
 const Footer = styled.div`
   width: 100%;
-  flex: 0.05;
+  height: 67.5px;
   font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-
-  ${up("lg")} {
-    flex: 0.07;
-  }
 `;
