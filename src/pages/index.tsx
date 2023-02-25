@@ -13,6 +13,7 @@ import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
+import Splash from "../components/seo/splash";
 import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
@@ -137,10 +138,10 @@ const IndexPage = ({
 export default IndexPage;
 
 export const Head: HeadFC = () => (
-  <>
+  <Splash>
     <title>{NAME} | Software Engineer | University of Sydney</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_WHITE} />
-  </>
+  </Splash>
 );
 
 const Container = styled(motion.div)`
