@@ -83,11 +83,14 @@ const Experience = () => {
           }}
         >
           G'day, I'm Richard. I'm a postgraduate student at the{" "}
-          <Usyd>University of Sydney</Usyd>,&nbsp;
-          <Australia>
-            <a href={AUSTRALIA} target="_blank" rel="noopener noreferrer">
-              Australia
-            </a>
+          <Usyd>University of Sydney</Usyd>,{" "}
+          <Australia
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(AUSTRALIA, "_blank");
+            }}
+          >
+            Australia
           </Australia>
           . On this corner of the internet, you'll find information about me.
           You can connect with me on&nbsp;
@@ -222,6 +225,7 @@ const Usyd = styled.span`
 
 const Australia = styled(HoverableText)`
   color: ${COLOR.AUSTRALIA_GOLD};
+  cursor: pointer;
 `;
 
 const LinkedIn = styled(HoverableTextUnderline)`
