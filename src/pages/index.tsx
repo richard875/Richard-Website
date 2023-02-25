@@ -121,7 +121,7 @@ const Box = styled.div`
 
   ${up("lg")} {
     width: calc(100vw - 135px);
-    height: ${() => useWindowSize().height! - 135 + "px"};
+    height: ${() => useWindowSize().height! - 120 + "px"};
   }
 `;
 
@@ -135,7 +135,7 @@ const Wrapper = styled.div`
 
 const Footer = styled.div`
   width: 100%;
-  height: 67.5px;
+  height: 60px;
   font-size: 20px;
   display: flex;
   align-items: center;

@@ -45,6 +45,6 @@ const Container = styled.div`
   margin-left: 15px;
 
   ${up("xxl")} {
-    font-size: 20px;
+    font-size: 18px;
   }
 `;

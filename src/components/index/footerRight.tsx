@@ -37,7 +37,7 @@ const Container = styled.div`
   margin-right: 15px;
 
   ${up("xxl")} {
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 
