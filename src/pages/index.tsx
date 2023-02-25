@@ -137,7 +137,10 @@ const IndexPage = ({
 export default IndexPage;
 
 export const Head: HeadFC = () => (
-  <title>{NAME} | Software Engineer | University of Sydney</title>
+  <>
+    <title>{NAME} | Software Engineer | University of Sydney</title>
+    <meta name="theme-color" content={COLOR.BACKGROUND_WHITE} />
+  </>
 );
 
 const Container = styled(motion.div)`

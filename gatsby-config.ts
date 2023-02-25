@@ -49,6 +49,7 @@ const config: GatsbyConfig = {
         display: `standalone`,
         icon: `static/images/pwas/pwa-1024.png`,
         include_favicon: false,
+        theme_color_in_head: false,
       },
     },
     "gatsby-plugin-offline",

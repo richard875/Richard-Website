@@ -94,7 +94,12 @@ const Acknowledgement = ({
 
 export default Acknowledgement;
 
-export const Head: HeadFC = () => <title>Acknowledgement | {NAME}</title>;
+export const Head: HeadFC = () => (
+  <>
+    <title>Acknowledgement | {NAME}</title>
+    <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+  </>
+);
 
 const Container = styled(motion.div)`
   width: 100vw;

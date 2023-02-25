@@ -306,9 +306,12 @@ const Contact = ({
 export default Contact;
 
 export const Head: HeadFC = () => (
-  <title>
-    {TITLE} | {NAME}
-  </title>
+  <>
+    <title>
+      {TITLE} | {NAME}
+    </title>
+    <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+  </>
 );
 
 const Container = styled(motion.div)`

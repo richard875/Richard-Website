@@ -161,7 +161,12 @@ const Experience = () => {
 
 export default Experience;
 
-export const Head: HeadFC = () => <title>G'day | {NAME}</title>;
+export const Head: HeadFC = () => (
+  <>
+    <title>G'day | {NAME}</title>
+    <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+  </>
+);
 
 const Container = styled(motion.div)`
   ${up("lg")} {

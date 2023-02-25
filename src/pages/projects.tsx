@@ -169,9 +169,21 @@ const Projects = ({
 export default Projects;
 
 export const Head: HeadFC = () => (
-  <title>
-    {TITLE} | {NAME}
-  </title>
+  <>
+    <title>
+      {TITLE} | {NAME}
+    </title>
+    <meta
+      name="theme-color"
+      content={COLOR.BACKGROUND_BLACK}
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content={COLOR.BACKGROUND_WHITE_SECONDARY}
+      media="(prefers-color-scheme: light)"
+    />
+  </>
 );
 
 const Container = styled(motion.div)`
