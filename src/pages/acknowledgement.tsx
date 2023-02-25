@@ -140,8 +140,5 @@ const Cta = styled(motion.div)`
   color: ${COLOR.BRIGHT_GREEN};
   font-size: 19px;
   margin-top: 15px;
-
-  ${up("sm")} {
-    margin-bottom: 100px;
-  }
+  margin-bottom: 100px;
 `;
