@@ -18,11 +18,15 @@ import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
 import InitialTransition from "../components/transition/InitialTransition";
-import MousePosition from "../types/mousePosition";
 import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
+import MousePosition from "../types/mousePosition";
+import fontPrimaryNormal from "../../static/fonts/SansSerifFLF-Demibold.woff";
+import fontPrimaryBold from "../../static/fonts/SansSerifBldFLF.woff";
+import fontSecondaryNormal from "../../static/fonts/BwGradual-Medium.ttf";
+import fontSecondaryBold from "../../static/fonts/sf-pro-medium.otf";
 
 const IndexPage = ({
   location,
@@ -141,6 +145,35 @@ export const Head: HeadFC = () => (
   <Splash>
     <title>{NAME} | Software Engineer | University of Sydney</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_WHITE} />
+    {/* Preload Fonts */}
+    <link
+      rel="preload"
+      href={fontPrimaryNormal}
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={fontPrimaryBold}
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={fontSecondaryNormal}
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={fontSecondaryBold}
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
   </Splash>
 );
 
