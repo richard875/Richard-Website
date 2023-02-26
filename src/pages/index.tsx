@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import experience from "../routes/experience";
 import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
-import { NAME, MODE, STANDALONE } from "../constants/meta";
+import { SITE_TITLE, MODE, STANDALONE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import gsapAnimationIndex from "../helper/gsapAnimationIndex";
 import useWindowSize from "../hooks/useWindowSize";
@@ -143,7 +143,7 @@ export default IndexPage;
 
 export const Head: HeadFC = () => (
   <Splash>
-    <title>{NAME} | Software Engineer | University of Sydney</title>
+    <title>{SITE_TITLE}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_WHITE} />
     {/* Preload Fonts */}
     <link
@@ -151,28 +151,28 @@ export const Head: HeadFC = () => (
       href={fontPrimaryNormal}
       as="font"
       type="font/woff"
-      crossorigin
+      crossorigin="anonymous"
     />
     <link
       rel="preload"
       href={fontPrimaryBold}
       as="font"
       type="font/woff"
-      crossorigin
+      crossorigin="anonymous"
     />
     <link
       rel="preload"
       href={fontSecondaryNormal}
       as="font"
       type="font/ttf"
-      crossorigin
+      crossorigin="anonymous"
     />
     <link
       rel="preload"
       href={fontSecondaryBold}
       as="font"
       type="font/otf"
-      crossorigin
+      crossorigin="anonymous"
     />
   </Splash>
 );
