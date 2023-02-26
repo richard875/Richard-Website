@@ -1,4 +1,5 @@
 import type { GatsbyConfig } from "gatsby";
+import { URL } from "./src/constants/meta";
 
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -7,17 +8,18 @@ require("dotenv").config({
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Richard Lee | Software Engineer | University of Sydney`,
-    siteUrl: `https://richard-lee.com`,
+    siteUrl: `https://${URL}`,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   plugins: [
-    "gatsby-plugin-postcss",
-    "gatsby-plugin-netlify",
-    "gatsby-plugin-no-sourcemaps",
-    "gatsby-plugin-styled-components",
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-netlify`,
+    `gatsby-plugin-no-sourcemaps`,
+    `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
@@ -28,16 +30,16 @@ const config: GatsbyConfig = {
         },
       },
     },
-    "gatsby-plugin-sass",
-    "gatsby-plugin-image",
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
         icon: `static/images/favicon.png`,
       },
     },
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -60,7 +62,7 @@ const config: GatsbyConfig = {
       },
       __key: `images`,
     },
-    "gatsby-plugin-offline",
+    `gatsby-plugin-offline`,
   ],
 };
 
