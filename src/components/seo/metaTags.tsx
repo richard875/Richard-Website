@@ -49,9 +49,9 @@ const MetaTags = ({ path }: { path: string }) => {
             {
                 "@context": "https://schema.org/",
                 "@type": "Person",
-                "name": ${NAME},
+                "name": "${NAME}",
                 "url": "https://${URL}${path}",
-                "image": ${MetaImage},
+                "image": "${MetaImage}",
                 "sameAs": [
                     "https://${URL}${path}",
                     "https://github.com/richard875",
@@ -60,7 +60,7 @@ const MetaTags = ({ path }: { path: string }) => {
                 "jobTitle": "Software Engineer",
                 "worksFor": {
                     "@type": "Organization",
-                    "name": ${ORGANIZATION}
+                    "name": "${ORGANIZATION}"
                 }
             }
         `}
