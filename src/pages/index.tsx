@@ -29,7 +29,7 @@ import fontPrimaryNormal from "../../static/fonts/SansSerifFLF-Demibold.woff";
 import fontPrimaryBold from "../../static/fonts/SansSerifBldFLF.woff";
 import fontSecondaryNormal from "../../static/fonts/BwGradual-Medium.ttf";
 import fontSecondaryBold from "../../static/fonts/sf-pro-medium.otf";
-import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
+import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const IndexPage = ({
   location,

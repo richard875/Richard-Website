@@ -31,7 +31,7 @@ import {
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
 } from "../constants/workPage";
-import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
+import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 

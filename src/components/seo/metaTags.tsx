@@ -44,6 +44,7 @@ const MetaTags = ({
       <meta property="og:description" content={SITE_DESCRIPTION} />
       <meta property="og:keywords" content={SITE_KEYWORDS} />
       <meta property="og:image" content={MetaImage} />
+      <meta property="og:image:alt" content={NAME} />
 
       {/* Twitter */}
       <meta name="twitter:widgets:theme" content="light" />

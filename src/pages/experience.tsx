@@ -15,7 +15,7 @@ import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import { EMAIL } from "../constants/meta";
-import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
+import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const CURRENT_PAGE_TITLE = `G'day${PAGE_TITLE}`;
 const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";

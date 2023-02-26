@@ -20,7 +20,7 @@ import Uoa from "../components/education/uoa";
 import MousePosition from "../types/mousePosition";
 import contact from "../routes/contact";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
-import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
+import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 

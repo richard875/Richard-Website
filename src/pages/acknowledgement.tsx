@@ -16,7 +16,7 @@ import MetaTags from "../components/seo/metaTags";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
-import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
+import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const CURRENT_PAGE_TITLE = `Acknowledgement${PAGE_TITLE}`;
 

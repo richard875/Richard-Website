@@ -23,7 +23,7 @@ import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
 import { EMAIL } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
-import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
+import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const TITLE = "Contact Me";
 const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
