@@ -7,7 +7,7 @@ import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { NAME } from "../constants/meta";
+import { PAGE_TITLE } from "../constants/meta";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
@@ -17,6 +17,7 @@ import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import { EMAIL } from "../constants/meta";
 import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 
+const CURRENT_PAGE_TITLE = `G'day${PAGE_TITLE}`;
 const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
 const LINKEDIN = "https://www.linkedin.com/in/richard875/";
 const GITHUB = "https://github.com/richard875";
@@ -166,9 +167,13 @@ export default Experience;
 
 export const Head: HeadFC = () => (
   <>
-    <title>G'day | {NAME}</title>
+    <title>{CURRENT_PAGE_TITLE}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
-    <MetaTags path={Route.Experience} MetaImage={MetaImage} />
+    <MetaTags
+      path={Route.Experience}
+      MetaImage={MetaImage}
+      name={CURRENT_PAGE_TITLE}
+    />
   </>
 );
 

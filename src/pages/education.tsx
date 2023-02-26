@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
-import { NAME } from "../constants/meta";
+import { PAGE_TITLE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
@@ -25,6 +25,7 @@ import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 gsap.registerPlugin(ScrollTrigger);
 
 const TITLE = "Education";
+const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
 
 const Education = ({
   location,
@@ -97,9 +98,7 @@ export default Education;
 
 export const Head: HeadFC = () => (
   <>
-    <title>
-      {TITLE} | {NAME}
-    </title>
+    <title>{CURRENT_PAGE_TITLE}</title>
     <meta
       name="theme-color"
       content={COLOR.BACKGROUND_BLACK}
@@ -110,7 +109,11 @@ export const Head: HeadFC = () => (
       content={COLOR.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
-    <MetaTags path={Route.Education} MetaImage={MetaImage} />
+    <MetaTags
+      path={Route.Education}
+      MetaImage={MetaImage}
+      name={CURRENT_PAGE_TITLE}
+    />
   </>
 );
 

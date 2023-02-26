@@ -6,7 +6,7 @@ import { GatsbyLinkProps } from "gatsby";
 import Route from "../routes/route";
 import education from "../routes/education";
 import styled from "styled-components";
-import { NAME } from "../constants/meta";
+import { PAGE_TITLE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import useWindowSize from "../hooks/useWindowSize";
@@ -36,6 +36,7 @@ import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 gsap.registerPlugin(ScrollTrigger);
 
 const TITLE = "Skills and Projects";
+const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
 
 const Projects = ({
   location,
@@ -175,9 +176,7 @@ export default Projects;
 
 export const Head: HeadFC = () => (
   <>
-    <title>
-      {TITLE} | {NAME}
-    </title>
+    <title>{CURRENT_PAGE_TITLE}</title>
     <meta
       name="theme-color"
       content={COLOR.BACKGROUND_BLACK}
@@ -190,7 +189,11 @@ export const Head: HeadFC = () => (
     />
     <link rel="preload" href={neetcode} as="video" type="video/mp4" />
     <link rel="preload" href={piston} as="video" type="video/mp4" />
-    <MetaTags path={Route.Projects} MetaImage={MetaImage} />
+    <MetaTags
+      path={Route.Projects}
+      MetaImage={MetaImage}
+      name={CURRENT_PAGE_TITLE}
+    />
   </>
 );
 

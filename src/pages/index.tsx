@@ -177,7 +177,7 @@ export const Head: HeadFC = () => (
       type="font/otf"
       crossorigin="anonymous"
     />
-    <MetaTags path={Route.Home} MetaImage={MetaImage} />
+    <MetaTags path={Route.Home} MetaImage={MetaImage} name={SITE_TITLE} />
   </Splash>
 );
 

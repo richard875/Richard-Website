@@ -6,7 +6,7 @@ import home from "../routes/home";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { NAME } from "../constants/meta";
+import { PAGE_TITLE } from "../constants/meta";
 import { up } from "styled-breakpoints";
 import useWindowSize from "../hooks/useWindowSize";
 import { isDesktop } from "react-device-detect";
@@ -17,6 +17,8 @@ import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
+
+const CURRENT_PAGE_TITLE = `Acknowledgement${PAGE_TITLE}`;
 
 const Acknowledgement = ({
   location,
@@ -99,9 +101,13 @@ export default Acknowledgement;
 
 export const Head: HeadFC = () => (
   <>
-    <title>Acknowledgement | {NAME}</title>
+    <title>{CURRENT_PAGE_TITLE}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
-    <MetaTags path={Route.Acknowledgement} MetaImage={MetaImage} />
+    <MetaTags
+      path={Route.Acknowledgement}
+      MetaImage={MetaImage}
+      name={CURRENT_PAGE_TITLE}
+    />
   </>
 );
 

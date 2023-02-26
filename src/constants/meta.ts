@@ -7,6 +7,7 @@ export const STANDALONE_URL = `?${MODE}=${STANDALONE}`;
 export const ORGANIZATION = process.env.GATSBY_ORGANIZATION;
 
 export const SITE_TITLE = `${NAME} | Software Engineer | University of Sydney`;
+export const PAGE_TITLE = ` | ${NAME} | Software Engineer`;
 export const SITE_DESCRIPTION =
   "G'day, I'm Richard. I'm a postgraduate student at the University of Sydney, Australia. On this corner of the internet, you'll find information about me.";
 export const SITE_KEYWORDS =

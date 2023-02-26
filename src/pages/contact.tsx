@@ -2,7 +2,7 @@ import * as React from "react";
 import type { HeadFC } from "gatsby";
 import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
-import { NAME, URL } from "../constants/meta";
+import { URL, PAGE_TITLE } from "../constants/meta";
 import Route from "../routes/route";
 import home from "../routes/home";
 import experience from "../routes/experience";
@@ -26,6 +26,7 @@ import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 
 const TITLE = "Contact Me";
+const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
 const ARROW = "../../static/images/indexCircle/arrow.svg";
 const CIRCLE = "../../static/images/indexCircle/circle.png";
 
@@ -310,11 +311,13 @@ export default Contact;
 
 export const Head: HeadFC = () => (
   <>
-    <title>
-      {TITLE} | {NAME}
-    </title>
+    <title>{CURRENT_PAGE_TITLE}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
-    <MetaTags path={Route.Contact} MetaImage={MetaImage} />
+    <MetaTags
+      path={Route.Contact}
+      MetaImage={MetaImage}
+      name={CURRENT_PAGE_TITLE}
+    />
   </>
 );
 

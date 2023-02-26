@@ -6,7 +6,7 @@ import { GatsbyLinkProps } from "gatsby";
 import Route from "../routes/route";
 import projects from "../routes/projects";
 import styled from "styled-components";
-import { NAME } from "../constants/meta";
+import { PAGE_TITLE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import useWindowSize from "../hooks/useWindowSize";
 import { isDesktop } from "react-device-detect";
@@ -34,6 +34,7 @@ import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 gsap.registerPlugin(ScrollTrigger);
 
 const TITLE = "Work Experience";
+const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
 
 const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
   const windowWidth = useWindowSize().width;
@@ -141,9 +142,7 @@ export default Work;
 
 export const Head: HeadFC = () => (
   <>
-    <title>
-      {TITLE} | {NAME}
-    </title>
+    <title>{CURRENT_PAGE_TITLE}</title>
     <meta
       name="theme-color"
       content={COLOR.BACKGROUND_BLACK}
@@ -156,7 +155,11 @@ export const Head: HeadFC = () => (
     />
     <link rel="preload" href={smh} as="video" type="video/mp4" />
     <link rel="preload" href={cie} as="video" type="video/mp4" />
-    <MetaTags path={Route.Work} MetaImage={MetaImage} />
+    <MetaTags
+      path={Route.Work}
+      MetaImage={MetaImage}
+      name={CURRENT_PAGE_TITLE}
+    />
   </>
 );
 
