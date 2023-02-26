@@ -10,6 +10,8 @@ import slik from "../../static/images/logos/slik.svg";
 import slikBlack from "../../static/images/logos/slik-black.svg";
 import nzGovt from "../../static/images/logos/nzgovt.png";
 import nzGovtBlack from "../../static/images/logos/nzgovt-black.png";
+import panopto from "../../static/images/logos/panopto.svg";
+import panoptoBlack from "../../static/images/logos/panopto-black.svg";
 import piston from "../../static/images/logos/piston.png";
 import qantas from "../../static/images/logos/qantas.svg";
 import qantasBlack from "../../static/images/logos/qantas-black.svg";
@@ -54,6 +56,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return isDark ? slik : slikBlack;
     case "nzgovt":
       return isDark ? nzGovt : nzGovtBlack;
+    case "panopto":
+      return isDark ? panopto : panoptoBlack;
     case "piston":
       return piston;
     case "qantas":
