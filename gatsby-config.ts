@@ -1,5 +1,13 @@
 import type { GatsbyConfig } from "gatsby";
-import { URL } from "./src/constants/meta";
+import { COLOR } from "./src/styles/theme";
+import {
+  NAME,
+  URL,
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  MODE,
+  STANDALONE,
+} from "./src/constants/meta";
 
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -7,7 +15,9 @@ require("dotenv").config({
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `Richard Lee | Software Engineer | University of Sydney`,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    image: `static/images/splash/apple-splash-2224-1668.jpg`,
     siteUrl: `https://${URL}`,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
@@ -43,12 +53,12 @@ const config: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Richard Lee | Software Engineer | University of Sydney`,
-        short_name: `Richard Lee`,
-        start_url: `/?mode=standalone`,
+        name: SITE_TITLE,
+        short_name: NAME,
+        start_url: `/?${MODE}=${STANDALONE}`,
         background_color: `#BAE6C3`,
-        theme_color: `#F5EDE3`,
-        display: `standalone`,
+        theme_color: COLOR.BACKGROUND_WHITE,
+        display: STANDALONE,
         icon: `static/images/pwas/pwa-1024.png`,
         include_favicon: false,
         theme_color_in_head: false,
