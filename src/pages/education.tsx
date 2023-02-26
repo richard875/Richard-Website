@@ -4,11 +4,13 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
+import Route from "../routes/route";
 import { NAME } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
+import MetaTags from "../components/seo/metaTags";
 import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -107,6 +109,7 @@ export const Head: HeadFC = () => (
       content={COLOR.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
+    <MetaTags path={Route.Education} />
   </>
 );
 

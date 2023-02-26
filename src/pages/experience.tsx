@@ -1,5 +1,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
+import Route from "../routes/route";
 import work from "../routes/work";
 import styled from "styled-components";
 import { up, down } from "styled-breakpoints";
@@ -9,6 +10,7 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { NAME } from "../constants/meta";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
+import MetaTags from "../components/seo/metaTags";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
@@ -165,6 +167,7 @@ export const Head: HeadFC = () => (
   <>
     <title>G'day | {NAME}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <MetaTags path={Route.Experience} />
   </>
 );
 

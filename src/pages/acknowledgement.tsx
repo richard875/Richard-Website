@@ -1,6 +1,7 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
+import Route from "../routes/route";
 import home from "../routes/home";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +12,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
+import MetaTags from "../components/seo/metaTags";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
@@ -98,6 +100,7 @@ export const Head: HeadFC = () => (
   <>
     <title>Acknowledgement | {NAME}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <MetaTags path={Route.Acknowledgement} />
   </>
 );
 

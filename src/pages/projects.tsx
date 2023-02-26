@@ -3,6 +3,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
+import Route from "../routes/route";
 import education from "../routes/education";
 import styled from "styled-components";
 import { NAME } from "../constants/meta";
@@ -12,6 +13,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
+import MetaTags from "../components/seo/metaTags";
 import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -187,6 +189,7 @@ export const Head: HeadFC = () => (
     />
     <link rel="preload" href={neetcode} as="video" type="video/mp4" />
     <link rel="preload" href={piston} as="video" type="video/mp4" />
+    <MetaTags path={Route.Projects} />
   </>
 );
 

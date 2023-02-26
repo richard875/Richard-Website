@@ -3,6 +3,7 @@ import type { HeadFC } from "gatsby";
 import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
 import { NAME, URL } from "../constants/meta";
+import Route from "../routes/route";
 import home from "../routes/home";
 import experience from "../routes/experience";
 import work from "../routes/work";
@@ -14,6 +15,7 @@ import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { StaticImage } from "gatsby-plugin-image";
 import { isDesktop } from "react-device-detect";
 import { COLOR } from "../styles/theme";
+import MetaTags from "../components/seo/metaTags";
 import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -311,6 +313,7 @@ export const Head: HeadFC = () => (
       {TITLE} | {NAME}
     </title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <MetaTags path={Route.Contact} />
   </>
 );
 

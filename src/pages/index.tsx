@@ -2,6 +2,7 @@ import * as React from "react";
 import gsap from "gsap";
 import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
+import Route from "../routes/route";
 import experience from "../routes/experience";
 import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
@@ -14,6 +15,7 @@ import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
+import MetaTags from "../components/seo/metaTags";
 import Layout from "../components/global/layout";
 import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
@@ -174,6 +176,7 @@ export const Head: HeadFC = () => (
       type="font/otf"
       crossorigin="anonymous"
     />
+    <MetaTags path={Route.Home} />
   </Splash>
 );
 
