@@ -16,6 +16,10 @@ const MetaTags = ({
   path: string;
   MetaImage: any;
 }) => {
+  const today = new Date();
+  const fiveDaysAgo = new Date(today.setDate(today.getDate() - 5));
+  const dateString = fiveDaysAgo.toISOString().slice(0, 10);
+
   return (
     <>
       <meta charSet="utf-8" />
@@ -25,6 +29,7 @@ const MetaTags = ({
       <meta name="keywords" content={SITE_KEYWORDS} />
       <meta name="author" content={NAME} />
       <meta property="image" content={MetaImage} />
+      <meta property="article:published_time" content={dateString} />
 
       {/* Google / Search Engine Tags */}
       <meta itemProp="name" content={name} />
