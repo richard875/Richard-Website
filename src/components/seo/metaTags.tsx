@@ -28,14 +28,14 @@ const MetaTags = ({
       <meta name="description" content={SITE_DESCRIPTION} />
       <meta name="keywords" content={SITE_KEYWORDS} />
       <meta name="author" content={NAME} />
-      <meta property="image" content={MetaImage} />
+      <meta property="image" content={`${URL}${MetaImage}`} />
       <meta property="article:published_time" content={dateString} />
 
       {/* Google / Search Engine Tags */}
       <meta itemProp="name" content={name} />
       <meta itemProp="description" content={SITE_DESCRIPTION} />
       <meta itemProp="keywords" content={SITE_KEYWORDS} />
-      <meta itemProp="image" content={MetaImage} />
+      <meta itemProp="image" content={`${URL}${MetaImage}`} />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
@@ -43,7 +43,7 @@ const MetaTags = ({
       <meta property="og:title" content={name} />
       <meta property="og:description" content={SITE_DESCRIPTION} />
       <meta property="og:keywords" content={SITE_KEYWORDS} />
-      <meta property="og:image" content={MetaImage} />
+      <meta property="og:image" content={`${URL}${MetaImage}`} />
       <meta property="og:image:alt" content={NAME} />
 
       {/* Twitter */}
@@ -53,7 +53,7 @@ const MetaTags = ({
       <meta property="twitter:title" content={name} />
       <meta property="twitter:description" content={SITE_DESCRIPTION} />
       <meta property="twitter:keywords" content={SITE_KEYWORDS} />
-      <meta property="twitter:image" content={MetaImage} />
+      <meta property="twitter:image" content={`${URL}${MetaImage}`} />
 
       {/* Google Rich Results */}
       <script type="application/ld+json">
@@ -63,7 +63,7 @@ const MetaTags = ({
                 "@type": "Person",
                 "name": "${NAME}",
                 "url": "https://${URL}${path}",
-                "image": "${MetaImage}",
+                "image": "${URL}${MetaImage}",
                 "sameAs": [
                     "https://${URL}${path}",
                     "https://github.com/richard875",
