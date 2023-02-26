@@ -10,7 +10,7 @@ export const wrapPageElement = ({ element }) => (
 
 export const onServiceWorkerUpdateReady = () => {
   // Detect if the page is opened as a PWA
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(window.location.search);
   const isPwa = params.get(MODE) === STANDALONE;
 
   if (isPwa) {
