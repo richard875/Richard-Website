@@ -21,6 +21,7 @@ import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
+import convertToRoman from "../helper/convertToRoman";
 import { EMAIL } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -33,7 +34,8 @@ const CIRCLE = "../../static/images/indexCircle/circle.png";
 const Production = () => {
   return (
     <p className="mt-5 md:mt-0">
-      {new Date().getFullYear()} A Richard Lee's production
+      {new Date().getFullYear()} A Richard Lee's production |{" "}
+      {convertToRoman(new Date().getFullYear())}
     </p>
   );
 };
