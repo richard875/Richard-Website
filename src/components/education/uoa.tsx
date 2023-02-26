@@ -22,7 +22,11 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
           delay: 0.4 + 0.3 * 3,
         }}
       >
-        <Logo height={55} src={iconPicker("uoa", isDarkMode)} alt={"uoa"} />
+        <Logo
+          height={55}
+          src={iconPicker("uoa", isDarkMode)}
+          alt="University of Auckland"
+        />
         <UniversityText isDarkMode={isDarkMode}>
           The University of Auckland
         </UniversityText>
@@ -40,6 +44,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
         <img
           className="mt-8 mb-2 h-4 w-auto"
           src={iconPicker("redbull", isDarkMode)}
+          alt="Red Bull"
         />
         <SecondaryTitle isDarkMode={isDarkMode}>
           President of the University of Auckland Motorsport Club
@@ -51,6 +56,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
         <img
           className="mt-5 mb-2 h-5 w-auto"
           src={iconPicker("cie", isDarkMode)}
+          alt="CIE"
         />
         <SecondaryTitle isDarkMode={isDarkMode}>
           University of Auckland Centre for Innovation and Entrepreneurship

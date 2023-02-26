@@ -22,7 +22,11 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
           delay: 0.4 + 0.3 * 2,
         }}
       >
-        <Logo height={50} src={iconPicker("usyd", isDarkMode)} alt={"usyd"} />
+        <Logo
+          height={50}
+          src={iconPicker("usyd", isDarkMode)}
+          alt="University of Sydney"
+        />
         <UniversityText isDarkMode={isDarkMode}>
           The University of Sydney
         </UniversityText>

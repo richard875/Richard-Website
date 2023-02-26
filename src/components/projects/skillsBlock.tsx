@@ -28,6 +28,7 @@ const SecondarySkills = ({
       <SkillsImage
         className="!ml-1"
         src={iconPicker(skill.name, isDarkMode)}
+        alt={skill.displayName}
       ></SkillsImage>
     </SecondarySkillsItem>
   );
@@ -73,6 +74,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
                 <SkillsText className="pt-1">{skill.displayName}</SkillsText>
                 <SkillsImage
                   src={iconPicker(skill.name, isDarkMode)}
+                  alt={skill.displayName}
                 ></SkillsImage>
               </SkillsTextWrapper>
               <SkillsBar
