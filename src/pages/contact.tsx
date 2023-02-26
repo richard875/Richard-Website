@@ -2,7 +2,7 @@ import * as React from "react";
 import type { HeadFC } from "gatsby";
 import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
-import { NAME } from "../constants/meta";
+import { NAME, URL } from "../constants/meta";
 import home from "../routes/home";
 import experience from "../routes/experience";
 import work from "../routes/work";
@@ -208,7 +208,7 @@ const Contact = ({
                 delay: 1.6,
               }}
             >
-              <p className="mb-2 text-lg">richard-lee.com</p>
+              <p className="mb-2 text-lg">{URL}</p>
               <p>
                 <span
                   className="mt-0.5 hover:text-gray-400 transition-all"
