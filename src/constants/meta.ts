@@ -1,10 +1,10 @@
 export const NAME = "Richard Lee";
-export const URL = process.env.SITE_URL;
+export const URL = process.env.GATSBY_SITE_URL;
 export const EMAIL = `hello@${URL}`;
 export const MODE = "mode";
 export const STANDALONE = "standalone";
 export const STANDALONE_URL = `?${MODE}=${STANDALONE}`;
-export const ORGANIZATION = process.env.ORGANIZATION;
+export const ORGANIZATION = process.env.GATSBY_ORGANIZATION;
 
 export const SITE_TITLE = `${NAME} | Software Engineer | University of Sydney`;
 export const SITE_DESCRIPTION =
