@@ -19,6 +19,8 @@ import Block from "../components/projects/block";
 import SkillsBlock from "../components/projects/skillsBlock";
 import MousePosition from "../types/mousePosition";
 import projectsData from "../../static/data/projects.json";
+import neetcode from "../../static/videos/neetcode.mp4";
+import piston from "../../static/videos/piston.mp4";
 import MyProjects from "../types/myProjects";
 import contact from "../routes/contact";
 import {
@@ -183,6 +185,8 @@ export const Head: HeadFC = () => (
       content={COLOR.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
+    <link rel="preload" href={neetcode} as="video" type="video/mp4" />
+    <link rel="preload" href={piston} as="video" type="video/mp4" />
   </>
 );
 
