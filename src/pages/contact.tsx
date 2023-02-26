@@ -23,6 +23,7 @@ import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
 import { EMAIL } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
+import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 
 const TITLE = "Contact Me";
 const ARROW = "../../static/images/indexCircle/arrow.svg";
@@ -313,7 +314,7 @@ export const Head: HeadFC = () => (
       {TITLE} | {NAME}
     </title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
-    <MetaTags path={Route.Contact} />
+    <MetaTags path={Route.Contact} MetaImage={MetaImage} />
   </>
 );
 

@@ -20,6 +20,7 @@ import Uoa from "../components/education/uoa";
 import MousePosition from "../types/mousePosition";
 import contact from "../routes/contact";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
+import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -109,7 +110,7 @@ export const Head: HeadFC = () => (
       content={COLOR.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
-    <MetaTags path={Route.Education} />
+    <MetaTags path={Route.Education} MetaImage={MetaImage} />
   </>
 );
 

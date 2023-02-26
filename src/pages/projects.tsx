@@ -31,6 +31,7 @@ import {
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
 } from "../constants/workPage";
+import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -189,7 +190,7 @@ export const Head: HeadFC = () => (
     />
     <link rel="preload" href={neetcode} as="video" type="video/mp4" />
     <link rel="preload" href={piston} as="video" type="video/mp4" />
-    <MetaTags path={Route.Projects} />
+    <MetaTags path={Route.Projects} MetaImage={MetaImage} />
   </>
 );
 

@@ -7,9 +7,8 @@ import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
 } from "../../constants/meta";
-import MetaImage from "../../../static/images/splash/apple-splash-2224-1668.jpg";
 
-const MetaTags = ({ path }: { path: string }) => {
+const MetaTags = ({ path, MetaImage }: { path: string; MetaImage: any }) => {
   return (
     <>
       <meta charSet="utf-8" />

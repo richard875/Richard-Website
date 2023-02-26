@@ -15,6 +15,7 @@ import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import { EMAIL } from "../constants/meta";
+import MetaImage from "../../static/images/splash/apple-splash-2224-1668.jpg";
 
 const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
 const LINKEDIN = "https://www.linkedin.com/in/richard875/";
@@ -167,7 +168,7 @@ export const Head: HeadFC = () => (
   <>
     <title>G'day | {NAME}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
-    <MetaTags path={Route.Experience} />
+    <MetaTags path={Route.Experience} MetaImage={MetaImage} />
   </>
 );
 
