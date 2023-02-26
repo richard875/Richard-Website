@@ -1,7 +1,3 @@
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
-
 export const NAME = "Richard Lee";
 export const URL = process.env.SITE_URL;
 export const EMAIL = `hello@${URL}`;
