@@ -45,6 +45,7 @@ const MetaTags = ({
       <meta property="og:keywords" content={SITE_KEYWORDS} />
       <meta property="og:image" content={`https://${URL}${MetaImage}`} />
       <meta property="og:image:alt" content={NAME} />
+      <meta property="og:published_time" content={dateString} />
 
       {/* Twitter */}
       <meta name="twitter:widgets:theme" content="light" />
