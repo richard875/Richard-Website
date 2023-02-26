@@ -120,6 +120,7 @@ const Block = ({
                   autoPlay
                   loop
                   muted
+                  preload="auto"
                   isDarkMode={isDarkMode}
                   portraitOperation={project.portraitOperation!}
                 >

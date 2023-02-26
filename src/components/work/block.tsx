@@ -107,7 +107,7 @@ const Block = ({
               ref={mediaRef}
               top={clickableRef.current?.getBoundingClientRect().top!}
             >
-              <Video isDarkMode={isDarkMode} autoPlay loop muted>
+              <Video preload="auto" isDarkMode={isDarkMode} autoPlay loop muted>
                 <source src={mediaPicker(experience.media!)} type="video/mp4" />
               </Video>
             </Media>
