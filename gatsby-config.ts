@@ -52,7 +52,6 @@ const config: GatsbyConfig = {
         theme_color_in_head: false,
       },
     },
-    "gatsby-plugin-offline",
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -61,6 +60,7 @@ const config: GatsbyConfig = {
       },
       __key: `images`,
     },
+    "gatsby-plugin-offline",
   ],
 };
 
