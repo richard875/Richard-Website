@@ -13,11 +13,10 @@ import styled from "styled-components";
 import { up, down, between } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { StaticImage } from "gatsby-plugin-image";
-import { isDesktop } from "react-device-detect";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import Layout from "../components/global/layout";
-import Cursor from "../components/cursor/cursor";
+import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
@@ -295,15 +294,13 @@ const Contact = ({
             </motion.div>
           </Right>
         </Box>
-
-        {isDesktop && (
-          <Cursor
-            hover={hover}
-            delay={1.5}
-            position={location.state!}
-            isBlack={false}
-          />
-        )}
+        <LoadableCursorSsr
+          hover={hover}
+          delay={1.5}
+          position={location.state!}
+          isBlack={false}
+          fallback={<></>}
+        />
       </Container>
     </Layout>
   );

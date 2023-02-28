@@ -11,13 +11,12 @@ import { up, down } from "styled-breakpoints";
 import gsapAnimationIndex from "../helper/gsapAnimationIndex";
 import useWindowSize from "../hooks/useWindowSize";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
-import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
 import Layout from "../components/global/layout";
-import Cursor from "../components/cursor/cursor";
+import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import Loading from "../components/index/loading";
 import InitialTransition from "../components/transition/InitialTransition";
 import Top from "../components/index/top";
@@ -127,15 +126,14 @@ const IndexPage = ({
             </Footer>
           )}
         </Box>
-        {isDesktop && (
-          <Cursor
-            hover={hover}
-            delay={2.5}
-            position={location.state!}
-            isBlack={true}
-            isIndexPage={true}
-          />
-        )}
+        <LoadableCursorSsr
+          hover={hover}
+          delay={2.5}
+          position={location.state!}
+          isBlack={true}
+          isIndexPage={true}
+          fallback={<></>}
+        />
       </Container>
       <Loading />
     </Layout>
@@ -154,28 +152,28 @@ export const Head: HeadFC = () => (
       href={fontPrimaryNormal}
       as="font"
       type="font/woff"
-      crossorigin="anonymous"
+      crossOrigin="anonymous"
     />
     <link
       rel="preload"
       href={fontPrimaryBold}
       as="font"
       type="font/woff"
-      crossorigin="anonymous"
+      crossOrigin="anonymous"
     />
     <link
       rel="preload"
       href={fontSecondaryNormal}
       as="font"
       type="font/ttf"
-      crossorigin="anonymous"
+      crossOrigin="anonymous"
     />
     <link
       rel="preload"
       href={fontSecondaryBold}
       as="font"
       type="font/otf"
-      crossorigin="anonymous"
+      crossOrigin="anonymous"
     />
     <MetaTags path={Route.Home} MetaImage={MetaImage} name={SITE_TITLE} />
   </Splash>

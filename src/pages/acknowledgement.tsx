@@ -9,11 +9,10 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { PAGE_TITLE } from "../constants/meta";
 import { up } from "styled-breakpoints";
 import useWindowSize from "../hooks/useWindowSize";
-import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
-import Cursor from "../components/cursor/cursor";
+import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -85,14 +84,13 @@ const Acknowledgement = ({
           <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
         </Cta>
       </Wrapper>
-      {isDesktop && (
-        <Cursor
-          hover={hover}
-          delay={1.5}
-          position={location.state!}
-          isBlack={false}
-        />
-      )}
+      <LoadableCursorSsr
+        hover={hover}
+        delay={1.5}
+        position={location.state!}
+        isBlack={false}
+        fallback={<></>}
+      />
     </Container>
   );
 };

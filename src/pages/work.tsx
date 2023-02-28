@@ -9,12 +9,11 @@ import styled from "styled-components";
 import { PAGE_TITLE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import useWindowSize from "../hooks/useWindowSize";
-import { isDesktop } from "react-device-detect";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import Layout from "../components/global/layout";
-import Cursor from "../components/cursor/cursor";
+import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import Block from "../components/work/block";
@@ -124,15 +123,13 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
             navigator={projects}
           />
         </Top>
-
-        {isDesktop && (
-          <Cursor
-            hover={hover}
-            delay={1.5}
-            position={location.state!}
-            isBlack={!isDarkMode}
-          />
-        )}
+        <LoadableCursorSsr
+          hover={hover}
+          delay={1.5}
+          position={location.state!}
+          isBlack={!isDarkMode}
+          fallback={<></>}
+        />
       </Container>
     </Layout>
   );
