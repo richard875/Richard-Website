@@ -12,6 +12,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
+import Preload from "../components/seo/preload";
 import Layout from "../components/global/layout";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -19,8 +20,6 @@ import CallToAction from "../components/global/callToAction";
 import Block from "../components/work/block";
 import MousePosition from "../types/mousePosition";
 import workData from "../../static/data/work.json";
-import smh from "../../static/videos/smh.mp4";
-import cie from "../../static/videos/cie.mp4";
 import WorkExperience from "../types/workExperience";
 import {
   BLOCK_PADDING,
@@ -150,8 +149,7 @@ export const Head: HeadFC = () => (
       content={COLOR.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
-    <link rel="preload" href={smh} as="video" type="video/mp4" />
-    <link rel="preload" href={cie} as="video" type="video/mp4" />
+    <Preload />
     <MetaTags
       path={Route.Work}
       MetaImage={MetaImage}

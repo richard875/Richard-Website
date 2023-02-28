@@ -15,6 +15,7 @@ import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
+import Preload from "../components/seo/preload";
 import Layout from "../components/global/layout";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import Loading from "../components/index/loading";
@@ -24,10 +25,6 @@ import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
 import MousePosition from "../types/mousePosition";
-import fontPrimaryNormal from "../../static/fonts/SansSerifFLF-Demibold.woff";
-import fontPrimaryBold from "../../static/fonts/SansSerifBldFLF.woff";
-import fontSecondaryNormal from "../../static/fonts/BwGradual-Medium.ttf";
-import fontSecondaryBold from "../../static/fonts/sf-pro-medium.otf";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const IndexPage = ({
@@ -146,35 +143,7 @@ export const Head: HeadFC = () => (
   <Splash>
     <title>{SITE_TITLE}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_WHITE} />
-    {/* Preload Fonts */}
-    <link
-      rel="preload"
-      href={fontPrimaryNormal}
-      as="font"
-      type="font/woff"
-      crossOrigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href={fontPrimaryBold}
-      as="font"
-      type="font/woff"
-      crossOrigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href={fontSecondaryNormal}
-      as="font"
-      type="font/ttf"
-      crossOrigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href={fontSecondaryBold}
-      as="font"
-      type="font/otf"
-      crossOrigin="anonymous"
-    />
+    <Preload />
     <MetaTags path={Route.Home} MetaImage={MetaImage} name={SITE_TITLE} />
   </Splash>
 );
