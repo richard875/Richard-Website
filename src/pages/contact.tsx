@@ -355,6 +355,8 @@ const Box = styled.div`
   padding-right: 20px;
 
   ${down("md")} {
+    display: flex;
+    flex-direction: column;
     @media screen and (min-height: 100vh) {
       height: 100vh;
     }
@@ -389,6 +391,12 @@ const Right = styled.div`
 
   ${up("md")} {
     align-items: center;
+  }
+
+  ${down("md")} {
+    flex: 1;
+    align-items: flex-start;
+    padding-bottom: 20px;
   }
 `;
 
