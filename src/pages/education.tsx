@@ -61,9 +61,7 @@ const Education = ({
       >
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
         <Top isDarkMode={isDarkMode}>
-          <Title className="font-secondary-normal">
-            {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
-          </Title>
+          <Title className="font-secondary-normal">{TITLE}</Title>
           <CallToAction
             name="Contact"
             setHover={setHover}

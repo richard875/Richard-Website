@@ -110,9 +110,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
           })}
         </Horizontal>
         <Top isDarkMode={isDarkMode}>
-          <Title className="font-secondary-normal">
-            {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
-          </Title>
+          <Title className="font-secondary-normal">{TITLE}</Title>
           <CallToAction
             name="Projects"
             setHover={setHover}

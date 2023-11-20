@@ -116,9 +116,7 @@ const Projects = ({
           })}
         </Horizontal>
         <Top isDarkMode={isDarkMode}>
-          <Title className="font-secondary-normal">
-            {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
-          </Title>
+          <Title className="font-secondary-normal">{TITLE}</Title>
           <CallToAction
             className="font-secondary-normal"
             isDarkMode={isDarkMode}
