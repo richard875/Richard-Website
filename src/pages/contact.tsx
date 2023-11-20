@@ -438,7 +438,7 @@ const CircleContainer = styled.span`
   user-select: none;
 
   ${down("md")} {
-    margin-top: 25px;
+    margin-top: 30px;
   }
 
   ${up("md")} {
