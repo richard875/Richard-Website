@@ -1,8 +1,8 @@
 enum Route {
   Home = "/",
   Acknowledgement = "/acknowledgement",
+  Intro = "/intro",
   Experience = "/experience",
-  Work = "/work",
   Projects = "/projects",
   Education = "/education",
   Contact = "/contact",

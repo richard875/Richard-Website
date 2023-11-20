@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
 import Route from "../routes/route";
-import experience from "../routes/experience";
+import intro from "../routes/intro";
 import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
 import { SITE_TITLE, MODE, STANDALONE } from "../constants/meta";
@@ -63,11 +63,7 @@ const IndexPage = ({
   // GSAP Animation
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out" });
-    gsap.from(
-      acknowledgementRef.current,
-      2.3,
-      gsapAnimationIndex(150, 3.4, 20)
-    );
+    gsap.from(acknowledgementRef.current, 1, gsapAnimationIndex(150, 1, 20));
   }, []);
 
   return (
@@ -93,7 +89,7 @@ const IndexPage = ({
             <Bottom
               setHover={setHover}
               acknowledgement={acknowledgement}
-              experience={experience}
+              intro={intro}
               isIphoneXPwa={isIphoneX && isPwa}
             />
           </Wrapper>

@@ -1,58 +1,58 @@
 import * as React from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
+import { GatsbyLinkProps } from "gatsby";
 import Route from "../routes/route";
-import work from "../routes/work";
+import projects from "../routes/projects";
 import styled from "styled-components";
-import { up, down } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { PAGE_TITLE } from "../constants/meta";
+import { up } from "styled-breakpoints";
+import useWindowSize from "../hooks/useWindowSize";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
+import Preload from "../components/seo/preload";
+import Layout from "../components/global/layout";
+import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
-import Logos from "../components/experience/logos";
-import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
-import { EMAIL } from "../constants/meta";
+import CallToAction from "../components/global/callToAction";
+import Block from "../components/work/block";
+import SkillsBlock from "../components/experience/skillsBlock";
+import MousePosition from "../types/mousePosition";
+import workData from "../../static/data/work.json";
+import WorkExperience from "../types/workExperience";
+import {
+  BLOCK_PADDING,
+  BLOCK_PADDING_DESKTOP,
+  BLOCK_WIDTH,
+  BLOCK_WIDTH_DESKTOP,
+} from "../constants/workPage";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
-const CURRENT_PAGE_TITLE = `G'day${PAGE_TITLE}`;
-const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
-const LINKEDIN = "https://www.linkedin.com/in/richard875/";
-const GITHUB = "https://github.com/richard875";
-const SYDNEY_OPERA_HOUSE = "https://www.sydneyoperahouse.com/";
+gsap.registerPlugin(ScrollTrigger);
 
-const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
-  return (
-    <Cta
-      className="font-secondary-normal"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{
-        stiffness: 0,
-        duration: 1,
-        delay: 2,
-      }}
-    >
-      <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
-        <span onClick={(e) => work(e, isDarkMode)}>
-          Work Experience & Projects
-        </span>
-      </div>
-      <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
-    </Cta>
-  );
-};
+const TITLE = "Work Experience";
+const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
 
-const Experience = () => {
+const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
+  const windowWidth = useWindowSize().width;
+  const slider = React.useRef<HTMLDivElement>(null);
+  const component = React.useRef<HTMLDivElement>(null);
+
+  const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
-    const updateIsDarkMode = () => setIsDarkMode(mediaQueryList.matches);
+    const updateIsDarkMode = () =>
+      setIsDarkMode(() => {
+        const isDarkMode = mediaQueryList.matches;
+        document.body.style.backgroundColor = isDarkMode
+          ? COLOR.BACKGROUND_BLACK
+          : COLOR.BACKGROUND_WHITE_SECONDARY;
+        return isDarkMode;
+      });
 
     mediaQueryList.addEventListener("change", updateIsDarkMode);
     updateIsDarkMode();
@@ -60,115 +60,94 @@ const Experience = () => {
     return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
 
-  return (
-    <Container
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{
-        stiffness: 0,
-        duration: 1,
-        delay: 0.5,
-      }}
-    >
-      <InitialTransition
-        color={
-          isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
-        }
-      />
-      <Left>
-        <LeftText
-          className="font-secondary-normal"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 1,
-            delay: 1,
-          }}
-        >
-          G'day, I'm Richard. I'm a postgraduate student at the{" "}
-          <Usyd>University of Sydney</Usyd>,{" "}
-          <Australia
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(AUSTRALIA, "_blank");
-            }}
-          >
-            Australia
-          </Australia>
-          . On this corner of the internet, you'll find information about me.
-          You can connect with me on&nbsp;
-          <LinkedIn>
-            <a href={LINKEDIN} target="_blank" rel="noopener noreferrer">
-              LinkedIn
-            </a>
-          </LinkedIn>
-          , check out my repositories on&nbsp;
-          <Github>
-            <a href={GITHUB} target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-          </Github>
-          , or reach out to me via&nbsp;
-          <Email>
-            <a
-              href={`mailto:${EMAIL}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              email
-            </a>
-          </Email>
-          . I hope you find my page enjoyable and have a great day!
-        </LeftText>
-        {useBreakpoint(down("sm")) && <CallToAction isDarkMode={isDarkMode} />}
-        <Logos />
-        {useBreakpoint(up("sm")) && <CallToAction isDarkMode={isDarkMode} />}
-      </Left>
-      <Right className="select-none">
-        <motion.div
-          className="w-full h-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 1,
-            delay: 2.5,
-          }}
-        >
-          <SydneyOperaHouse />
-        </motion.div>
+  React.useLayoutEffect(() => {
+    if (!!windowWidth && windowWidth > 768) {
+      let ctx = gsap.context(() => {
+        gsap.to(slider.current, {
+          xPercent: -100,
+          left: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: slider.current,
+            pin: true,
+            scrub: 1,
+            end: () => "+=" + slider.current!.offsetWidth,
+          },
+        });
+      }, component);
+      return () => ctx.revert();
+    }
+  }, [windowWidth]);
 
-        <SydneyOperaHouseInfoText
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 1,
-            delay: 2.5,
-          }}
-        >
-          <span className="font-secondary-normal cursor-pointer">
-            <a
-              href={SYDNEY_OPERA_HOUSE}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Sydney Opera House
-            </a>
-          </span>
-        </SydneyOperaHouseInfoText>
-      </Right>
-    </Container>
+  return (
+    <Layout>
+      <Container
+        ref={component}
+        isDarkMode={isDarkMode}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ stiffness: 0, duration: 0.4 }}
+      >
+        <InitialTransition
+          color={
+            isDarkMode
+              ? COLOR.BACKGROUND_BLACK
+              : COLOR.BACKGROUND_WHITE_SECONDARY
+          }
+        />
+        <Horizontal ref={slider} entryLength={workData.length + 1}>
+          <SkillsBlock isDarkMode={isDarkMode} />
+          {workData.map((experience: WorkExperience, index: number) => {
+            return (
+              <Block
+                key={index}
+                experience={experience}
+                index={index}
+                setHover={setHover}
+                isDarkMode={isDarkMode}
+              />
+            );
+          })}
+        </Horizontal>
+        <Top isDarkMode={isDarkMode}>
+          <Title className="font-secondary-normal">
+            {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
+          </Title>
+          <CallToAction
+            name="Projects"
+            setHover={setHover}
+            isDarkMode={isDarkMode}
+            navigator={projects}
+          />
+        </Top>
+        <LoadableCursorSsr
+          hover={hover}
+          delay={0.5}
+          position={location.state!}
+          isBlack={!isDarkMode}
+          fallback={<></>}
+        />
+      </Container>
+    </Layout>
   );
 };
 
-export default Experience;
+export default Work;
 
 export const Head: HeadFC = () => (
   <>
     <title>{CURRENT_PAGE_TITLE}</title>
-    <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <meta
+      name="theme-color"
+      content={COLOR.BACKGROUND_BLACK}
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content={COLOR.BACKGROUND_WHITE_SECONDARY}
+      media="(prefers-color-scheme: light)"
+    />
+    <Preload />
     <MetaTags
       path={Route.Experience}
       MetaImage={MetaImage}
@@ -178,119 +157,63 @@ export const Head: HeadFC = () => (
 );
 
 const Container = styled(motion.div)`
-  ${up("lg")} {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  cursor: none;
+  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.WHITE : COLOR.BLACK};
+
+  ${up("md")} {
+    overflow-x: hidden;
   }
 `;
 
-const Left = styled.div`
-  padding: 30px;
-  background-color: ${COLOR.BACKGROUND_BLACK};
-
-  ${down("sm")} {
-    padding-bottom: 10px;
-  }
-
-  ${up("sm")} {
-    padding: 50px;
-  }
-
-  ${up("lg")} {
-    width: 55vw;
-    height: 100vh;
-    padding: 6vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-`;
-
-const LeftText = styled(motion.div)`
-  color: ${COLOR.WHITE};
-  font-size: 6vw;
-  line-height: 1.65;
-
-  ${up("sm")} {
-    font-size: 3vw;
-    line-height: 1.8;
-  }
-
-  ${up("lg")} {
-    font-size: 1.85vw;
-    line-height: 1.8;
-  }
-`;
-
-const HoverableText = styled.span`
-  cursor: pointer;
-`;
-
-const HoverableTextUnderline = styled(HoverableText)`
-  padding-bottom: 8px;
-  text-decoration-line: underline;
-  text-underline-offset: 4px;
-`;
-
-const Usyd = styled.span`
-  color: ${COLOR.USYD_ORANGE};
-`;
-
-const Australia = styled(HoverableText)`
-  color: ${COLOR.AUSTRALIA_GOLD};
-  cursor: pointer;
-`;
-
-const LinkedIn = styled(HoverableTextUnderline)`
-  color: ${COLOR.LINKEDIN_BLUE};
-`;
-
-const Github = styled(HoverableTextUnderline)`
-  color: ${COLOR.BACKGROUND_WHITE};
-`;
-
-const Email = styled(HoverableTextUnderline)`
-  color: ${COLOR.BLUE};
-`;
-
-const Right = styled.div`
-  height: 500px;
-  cursor: grab;
-  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
-
-  &:active {
-    cursor: grabbing;
-  }
-
-  ${up("sm")} {
-    height: 60vh;
-  }
-
-  ${up("lg")} {
-    width: 45vw;
-    height: 100vh;
-  }
-`;
-
-const SydneyOperaHouseInfoText = styled(motion.div)`
-  font-size: 14px;
-  position: relative;
-  bottom: 10%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  text-align: center;
-`;
-
-const Cta = styled(motion.div)`
+const Top = styled.div`
+  position: fixed;
+  top: 0;
+  margin-left: ${BLOCK_PADDING + "px"};
+  width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
   display: flex;
   align-items: center;
-  color: ${COLOR.BRIGHT_GREEN};
-  font-size: 19px;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 3px;
+  border-bottom: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode
+      ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
+      : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
+  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
-  ${down("sm")} {
-    margin-top: 8vw;
+  ${up("md")} {
+    margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
+    width: calc(100% - ${BLOCK_PADDING_DESKTOP * 2 + "px"});
+  }
+`;
+
+const Title = styled.p`
+  font-size: 20px;
+
+  ${up("md")} {
+    font-size: 25px;
+  }
+`;
+
+const Horizontal = styled.div`
+  flex-wrap: wrap;
+  padding-top: 40px;
+
+  ${up("md")} {
+    padding-top: 66px;
+    padding-bottom: 20px;
+    width: ${({ entryLength }: { entryLength: number }) =>
+      `${entryLength * BLOCK_WIDTH}px`};
+    height: 100vh;
+    display: flex;
+  }
+
+  ${up("xxxl")} {
+    width: ${({ entryLength }: { entryLength: number }) =>
+      `${entryLength * BLOCK_WIDTH_DESKTOP}px`};
   }
 `;

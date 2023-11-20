@@ -3,20 +3,15 @@ import { COLOR } from "../styles/theme";
 import Route from "./route";
 import { MODE, STANDALONE, STANDALONE_URL } from "../constants/meta";
 
-const work = (
-  event: React.MouseEvent<HTMLSpanElement, MouseEvent>,
-  isDarkMode: boolean
-) => {
+const intro = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
   event.preventDefault();
   // Detect if the page is opened as a PWA
   const params = new URLSearchParams((location as any).search);
   const isPwa = params.get(MODE) === STANDALONE;
-  const route = isPwa ? `${Route.Work}${STANDALONE_URL}` : Route.Work;
+  const route = isPwa ? `${Route.Intro}${STANDALONE_URL}` : Route.Intro;
 
-  document.body.style.backgroundColor = isDarkMode
-    ? COLOR.BACKGROUND_BLACK
-    : COLOR.BACKGROUND_WHITE_SECONDARY;
+  document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
   navigate(route, { state: { x: event.clientX, y: event.clientY } });
 };
 
-export default work;
+export default intro;
