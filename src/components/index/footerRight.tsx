@@ -5,25 +5,31 @@ import { up } from "styled-breakpoints";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import { COLOR } from "../../styles/theme";
 
+const getTimeInSydney = () =>
+  new Date().toLocaleTimeString("en-AU", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Australia/Sydney",
+  });
+
 const FooterRight = () => {
   const timeRef = React.useRef(null);
+  const [time, setTime] = React.useState(getTimeInSydney());
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out" });
     gsap.from(timeRef.current, 1, gsapAnimationIndex(150, 1, 20));
   }, []);
 
+  React.useEffect(() => {
+    const interval = setInterval(() => setTime(getTimeInSydney()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Container ref={timeRef}>
       <Indicator></Indicator>
-      <div className="font-secondary-normal">
-        Sydney&nbsp;
-        {new Date().toLocaleTimeString("en-AU", {
-          hour: "2-digit",
-          minute: "2-digit",
-          timeZone: "Australia/Sydney",
-        })}
-      </div>
+      <div className="font-secondary-normal">Sydney&nbsp;{time}</div>
     </Container>
   );
 };
