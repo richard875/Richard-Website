@@ -20,18 +20,18 @@ const Logos = () => {
         delay: 0.2,
       }}
     >
-      <UoaLogo>
-        <img src={uoa} alt="University of Auckland" />
-      </UoaLogo>
-      <UsydLogo>
-        <img src={usyd} alt="University of Sydney" />
-      </UsydLogo>
       <QantasLogo>
         <img src={qantas} alt="Qantas" />
       </QantasLogo>
       <NzGovtLogo>
         <img src={nzgovt} alt="New Zealand Government" />
       </NzGovtLogo>
+      <UsydLogo>
+        <img src={usyd} alt="University of Sydney" />
+      </UsydLogo>
+      <UoaLogo>
+        <img src={uoa} alt="University of Auckland" />
+      </UoaLogo>
     </Container>
   );
 };
@@ -55,7 +55,7 @@ const Container = styled(motion.div)`
 
   ${up("lg")} {
     margin-top: 2vw;
-    margin-bottom: 2vw;
+    margin-bottom: 0;
   }
 `;
 
@@ -77,62 +77,10 @@ const Logo = styled.div`
   }
 `;
 
-const UoaLogo = styled(Logo)`
-  grid-column: 1;
-  grid-row: 4;
-
-  ${up("sm")} {
-    grid-column: 1;
-    grid-row: 1;
-    border-right: 0.5px solid ${COLOR.BORDER_WHITE};
-  }
-
-  img {
-    height: 13vw;
-
-    ${up("sm")} {
-      height: 5vw;
-    }
-
-    ${up("lg")} {
-      height: 2.6vw;
-    }
-  }
-`;
-
-const UsydLogo = styled(Logo)`
-  grid-column: 1;
-  grid-row: 3;
-  border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
-
-  ${up("sm")} {
-    grid-column: 2;
-    grid-row: 1;
-    border-bottom: 0;
-    border-right: 0.5px solid ${COLOR.BORDER_WHITE};
-  }
-
-  img {
-    height: 11vw;
-
-    ${up("sm")} {
-      height: 4.5vw;
-    }
-
-    ${up("lg")} {
-      height: 2.5vw;
-    }
-  }
-`;
-
 const QantasLogo = styled(Logo)`
-  grid-column: 1;
-  grid-row: 1;
   border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
 
   ${up("sm")} {
-    grid-column: 3;
-    grid-row: 1;
     border-bottom: 0;
     border-right: 0.5px solid ${COLOR.BORDER_WHITE};
   }
@@ -151,14 +99,11 @@ const QantasLogo = styled(Logo)`
 `;
 
 const NzGovtLogo = styled(Logo)`
-  grid-column: 1;
-  grid-row: 2;
   border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
 
   ${up("sm")} {
-    grid-column: 4;
-    grid-row: 1;
     border-bottom: 0;
+    border-right: 0.5px solid ${COLOR.BORDER_WHITE};
   }
 
   img {
@@ -170,6 +115,41 @@ const NzGovtLogo = styled(Logo)`
 
     ${up("lg")} {
       height: 2.5vw;
+    }
+  }
+`;
+
+const UsydLogo = styled(Logo)`
+  border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
+
+  ${up("sm")} {
+    border-bottom: 0;
+    border-right: 0.5px solid ${COLOR.BORDER_WHITE};
+  }
+
+  img {
+    height: 11vw;
+
+    ${up("sm")} {
+      height: 4.5vw;
+    }
+
+    ${up("lg")} {
+      height: 2.5vw;
+    }
+  }
+`;
+
+const UoaLogo = styled(Logo)`
+  img {
+    height: 13vw;
+
+    ${up("sm")} {
+      height: 5vw;
+    }
+
+    ${up("lg")} {
+      height: 2.6vw;
     }
   }
 `;
