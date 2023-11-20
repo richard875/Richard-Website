@@ -122,6 +122,7 @@ const Container = styled(motion.div)`
 const Top = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding-top: 5px;
   padding-bottom: 3px;
   margin-left: ${BLOCK_PADDING + "px"};
@@ -137,7 +138,6 @@ const Top = styled.div`
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
     position: fixed;
     z-index: 9999;
-    justify-content: space-between;
   }
 
   ${up("md")} {

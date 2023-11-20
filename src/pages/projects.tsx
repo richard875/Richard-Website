@@ -207,6 +207,7 @@ const Top = styled.div`
   width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding-top: 5px;
   padding-bottom: 3px;
   border-bottom: ${({ isDarkMode }: { isDarkMode: boolean }) =>
@@ -215,10 +216,6 @@ const Top = styled.div`
       : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
   background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
-
-  ${down("md")} {
-    justify-content: space-between;
-  }
 
   ${up("md")} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
