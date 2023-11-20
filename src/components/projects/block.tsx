@@ -62,6 +62,15 @@ const Block = ({
         >
           {project.name}
         </ProjectName>
+        <JobDescriptionText isFirst={false}>
+          <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
+            Utilised:
+          </span>
+          {project.techStack.map(
+            (tech: string, index: number) =>
+              `${index == 0 ? " " : " • "}${tech}`
+          )}
+        </JobDescriptionText>
         {project.description.map(
           (description: SentenceDescription[], index: number) => {
             return (
@@ -79,17 +88,6 @@ const Block = ({
             );
           }
         )}
-        <JobDescriptionText isFirst={false}>
-          -{" "}
-          <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
-            Utilised
-          </span>
-          :
-          {project.techStack.map(
-            (tech: string, index: number) =>
-              `${index == 0 ? " " : " • "}${tech}`
-          )}
-        </JobDescriptionText>
         {project.hasLink && (
           <ProjectLink
             url={project.linkUrl!}

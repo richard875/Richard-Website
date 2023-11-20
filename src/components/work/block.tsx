@@ -63,6 +63,15 @@ const Block = ({
         <Secondary>
           {experience.city}, {experience.country}
         </Secondary>
+        <JobDescriptionText isFirst={false}>
+          <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
+            Tech stack:
+          </span>
+          {experience.techStack.map(
+            (tech: string, index: number) =>
+              `${index == 0 ? " " : " • "}${tech}`
+          )}
+        </JobDescriptionText>
         {experience.description.map(
           (description: SentenceDescription[], index: number) => {
             return (
@@ -84,17 +93,7 @@ const Block = ({
             );
           }
         )}
-        <JobDescriptionText isFirst={false}>
-          -{" "}
-          <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
-            Tech stack
-          </span>
-          :
-          {experience.techStack.map(
-            (tech: string, index: number) =>
-              `${index == 0 ? " " : " • "}${tech}`
-          )}
-        </JobDescriptionText>
+
         {useBreakpoint(up("md")) && experience.isMedia && (
           <CSSTransition
             nodeRef={mediaRef}
