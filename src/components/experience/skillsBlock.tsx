@@ -55,7 +55,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
         )}
 
         <TitleWrapper>
-          <Title>My Skills</Title>
+          <Title>Proficient Skills</Title>
           {useBreakpoint(down("xxxl")) && (
             <Logo
               height={30}
@@ -66,9 +66,6 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
             />
           )}
         </TitleWrapper>
-        <Skill>
-          <SkillsText isTitle={true}>Proficient:</SkillsText>
-        </Skill>
         {(skillsData as Skills).primary.map(
           (skill: SkillType, index: number) => (
             <Skill key={index}>
@@ -101,7 +98,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
         )}
         <Skill>
           <SkillsText isTitle={true} className="pt-1">
-            Familiar:
+            Familiar Skills
           </SkillsText>
         </Skill>
         <SecondarySkillsWrapper>
@@ -149,6 +146,7 @@ const Container = styled.div`
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: -10px;
 `;
 
 const Logo = styled.img`
@@ -179,7 +177,7 @@ const Skill = styled.div`
   }
 
   ${up("xxxl")} {
-    margin-top: 30px;
+    margin-top: 27px;
   }
 `;
 
