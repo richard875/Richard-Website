@@ -20,7 +20,7 @@ const Inspector = ({
   });
 
   useFrame(() => {
-    euler.y -= 0.005;
+    euler.y -= 0.002;
     set({ rotation: euler.toArray().slice(0, 3) as number[] });
   });
 
