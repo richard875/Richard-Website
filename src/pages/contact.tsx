@@ -20,7 +20,6 @@ import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
-import convertToRoman from "../helper/convertToRoman";
 import { EMAIL } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -29,15 +28,6 @@ const TITLE = "Contact Me";
 const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
 const ARROW = "../../static/images/indexCircle/arrow.svg";
 const CIRCLE = "../../static/images/indexCircle/circle.png";
-
-const Production = () => {
-  return (
-    <p className="mt-5 md:mt-0">
-      {new Date().getFullYear()} A Richard Lee's production |{" "}
-      {convertToRoman(new Date().getFullYear())}
-    </p>
-  );
-};
 
 const Contact = ({
   location,
@@ -118,7 +108,11 @@ const Contact = ({
                 </span>
               </ContactEmail>
             </div>
-            {useBreakpoint(up("md")) && <Production />}
+            {useBreakpoint(up("md")) && (
+              <p className="mt-5 md:mt-0">
+                {new Date().getFullYear()} Richard Lee
+              </p>
+            )}
             <CircleContainer
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
@@ -177,7 +171,9 @@ const Contact = ({
                 animate={{ opacity: 1 }}
                 transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
               >
-                <Production />
+                <p className="mt-5 md:mt-0">
+                  {new Date().getFullYear()} Richard Lee
+                </p>
               </motion.div>
             )}
             <motion.div
