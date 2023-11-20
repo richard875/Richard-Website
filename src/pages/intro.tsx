@@ -27,7 +27,13 @@ const LINKEDIN = "https://www.linkedin.com/in/richard875/";
 const GITHUB = "https://github.com/richard875";
 const SYDNEY_OPERA_HOUSE = "https://www.sydneyoperahouse.com/";
 
-const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
+const CallToAction = ({
+  isDarkMode,
+  setTransitionColor,
+}: {
+  isDarkMode: boolean;
+  setTransitionColor: (color: string) => void;
+}) => {
   return (
     <Cta
       className="font-secondary-normal"
@@ -40,7 +46,16 @@ const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
       }}
     >
       <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
-        <span onClick={(e) => experience(e, isDarkMode)}>
+        <span
+          onClick={(e) => {
+            setTransitionColor(
+              isDarkMode
+                ? COLOR.BACKGROUND_BLACK
+                : COLOR.BACKGROUND_WHITE_SECONDARY
+            );
+            experience(e, isDarkMode);
+          }}
+        >
           Work Experience & Projects
         </span>
       </div>
@@ -51,6 +66,9 @@ const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
 
 const Experience = () => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [transitionColor, setTransitionColor] = React.useState(
+    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
+  );
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
@@ -70,11 +88,7 @@ const Experience = () => {
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.5 }}
     >
-      <InitialTransition
-        color={
-          isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
-        }
-      />
+      <InitialTransition color={transitionColor} />
       <Left>
         {useBreakpoint(up("sm")) && (
           <div className="w-full flex items-center justify-between mb-[2vw]">
@@ -86,7 +100,14 @@ const Experience = () => {
             >
               <FontAwesomeIcon icon={faCircleChevronLeft} className="mt-0.5" />
               <div className="cursor-pointer text-base pl-2 hover:pl-3 transition-all ease-in-out underline underline-offset-4">
-                <span onClick={(e) => home(e)}>Home</span>
+                <span
+                  onClick={(e) => {
+                    setTransitionColor(COLOR.BACKGROUND_WHITE);
+                    home(e);
+                  }}
+                >
+                  Home
+                </span>
               </div>
             </Cta>
           </div>
@@ -136,11 +157,19 @@ const Experience = () => {
           </Email>
           . I hope you find my page enjoyable and have a great day!
         </LeftText>
-        {useBreakpoint(down("sm")) && <CallToAction isDarkMode={isDarkMode} />}
+        {useBreakpoint(down("sm")) && (
+          <CallToAction
+            isDarkMode={isDarkMode}
+            setTransitionColor={setTransitionColor}
+          />
+        )}
         <Logos />
         {useBreakpoint(up("sm")) && (
           <div className="w-full flex items-center justify-end">
-            <CallToAction isDarkMode={isDarkMode} />
+            <CallToAction
+              isDarkMode={isDarkMode}
+              setTransitionColor={setTransitionColor}
+            />
           </div>
         )}
       </Left>
