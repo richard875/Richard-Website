@@ -146,7 +146,10 @@ const Container = styled.div`
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: -10px;
+
+  ${up("md")} {
+    margin-bottom: -10px;
+  }
 `;
 
 const Logo = styled.img`
