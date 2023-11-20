@@ -49,8 +49,8 @@ const Container = styled(motion.div)`
   ${up("sm")} {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
-    margin-top: 5vw;
-    margin-bottom: 5vw;
+    margin-top: 4vw;
+    margin-bottom: 4vw;
   }
 
   ${up("lg")} {

@@ -91,7 +91,7 @@ const Experience = () => {
       <InitialTransition color={transitionColor} />
       <Left>
         {useBreakpoint(up("sm")) && (
-          <div className="w-full flex items-center justify-between mb-[2vw]">
+          <div className="w-full flex items-center justify-between sm:mb-[4vw] lg:mb-[2vw]">
             <Cta
               className="font-secondary-normal !text-white"
               initial={{ opacity: 0 }}
