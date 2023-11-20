@@ -42,8 +42,8 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
         animate={{ opacity: 1 }}
         transition={{
           stiffness: 0,
-          duration: 1,
-          delay: 1,
+          duration: 0.4,
+          delay: 0.1,
         }}
       >
         {useBreakpoint(up("xxxl")) && (
@@ -66,34 +66,43 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
             />
           )}
         </TitleWrapper>
-
+        <Skill>
+          <SkillsText isTitle={true}>Proficient:</SkillsText>
+        </Skill>
         {(skillsData as Skills).primary.map(
           (skill: SkillType, index: number) => (
             <Skill key={index}>
               <SkillsTextWrapper>
-                <SkillsText className="pt-1">{skill.displayName}</SkillsText>
+                <SkillsText isTitle={false}>
+                  {useBreakpoint(down("md")) && <> - </>}
+                  {skill.displayName}
+                </SkillsText>
                 <SkillsImage
                   src={iconPicker(skill.name, isDarkMode)}
                   alt={skill.displayName}
                 ></SkillsImage>
               </SkillsTextWrapper>
-              <SkillsBar
-                isDarkMode={isDarkMode}
-                initial={{ width: 0 }}
-                animate={{ width: skill.skill! + "%" }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 35,
-                  mass: 1,
-                  delay: 1.7,
-                }}
-              ></SkillsBar>
+              {useBreakpoint(up("md")) && (
+                <SkillsBar
+                  isDarkMode={isDarkMode}
+                  initial={{ width: 0 }}
+                  animate={{ width: skill.skill! + "%" }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 35,
+                    mass: 1,
+                    delay: 0.4,
+                  }}
+                ></SkillsBar>
+              )}
             </Skill>
           )
         )}
         <Skill>
-          <SkillsText className="pt-1">Other:</SkillsText>
+          <SkillsText isTitle={true} className="pt-1">
+            Familiar:
+          </SkillsText>
         </Skill>
         <SecondarySkillsWrapper>
           {(skillsData as Skills).secondary
@@ -163,7 +172,11 @@ const Title = styled.p`
 `;
 
 const Skill = styled.div`
-  margin-top: 20px;
+  margin-top: 15px;
+
+  ${up("md")} {
+    margin-top: 20px;
+  }
 
   ${up("xxxl")} {
     margin-top: 30px;
@@ -177,10 +190,12 @@ const SkillsTextWrapper = styled.div`
 `;
 
 const SkillsText = styled.p`
-  font-size: 18px;
+  font-size: ${({ isTitle }: { isTitle: boolean }) =>
+    isTitle ? "22px" : "18px"};
 
   ${up("xxxl")} {
-    font-size: 20px;
+    font-size: ${({ isTitle }: { isTitle: boolean }) =>
+      isTitle ? "24px" : "20px"};
   }
 `;
 

@@ -18,7 +18,6 @@ import Layout from "../components/global/layout";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import Block from "../components/projects/block";
-import SkillsBlock from "../components/projects/skillsBlock";
 import MousePosition from "../types/mousePosition";
 import projectsData from "../../static/data/projects.json";
 import MyProjects from "../types/myProjects";
@@ -101,8 +100,7 @@ const Projects = ({
               : COLOR.BACKGROUND_WHITE_SECONDARY
           }
         />
-        <Horizontal ref={slider} entryLength={projectsData.length + 1}>
-          <SkillsBlock isDarkMode={isDarkMode} />
+        <Horizontal ref={slider} entryLength={projectsData.length}>
           {projectsData.map((project: MyProjects, index: number) => {
             return (
               <Block
