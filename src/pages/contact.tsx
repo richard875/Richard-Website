@@ -23,6 +23,8 @@ import MousePosition from "../types/mousePosition";
 import { EMAIL } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const TITLE = "Contact Me";
 const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
@@ -181,6 +183,21 @@ const Contact = ({
               animate={{ opacity: 1 }}
               transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
             >
+              <div className="flex mb-4">
+                <FontAwesomeIcon
+                  icon={faLinkedin}
+                  size={"2x"}
+                  className="mr-5"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                />
+                <FontAwesomeIcon
+                  icon={faGithub}
+                  size={"2x"}
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                />
+              </div>
               <p className="mb-2 text-lg">{URL}</p>
               <p>
                 <span
