@@ -4,6 +4,7 @@ import chancery from "../../static/images/logos/chancery.png";
 import cie from "../../static/images/logos/cie.png";
 import nasdaq from "../../static/images/logos/nasdaq.svg";
 import nasdaqBlack from "../../static/images/logos/nasdaq-black.svg";
+import maily from "../../static/images/logos/maily.svg";
 import neetcode from "../../static/images/logos/neetcode.svg";
 import neetcodeBlack from "../../static/images/logos/neetcode-black.svg";
 import slik from "../../static/images/logos/slik.svg";
@@ -50,6 +51,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return cie;
     case "nasdaq":
       return isDark ? nasdaq : nasdaqBlack;
+    case "maily":
+      return maily;
     case "neetcode":
       return isDark ? neetcode : neetcodeBlack;
     case "slik":
