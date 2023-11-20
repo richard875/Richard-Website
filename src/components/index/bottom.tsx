@@ -6,7 +6,7 @@ import { up, down, between } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { StaticImage } from "gatsby-plugin-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
@@ -58,16 +58,23 @@ const Bottom = ({
         <div ref={sub2Ref}>University of Sydney</div>
       </SmallText>
       <Button>
-        <div ref={contactRef} className="flex items-center">
+        <div
+          ref={contactRef}
+          className="flex items-center font-secondary-normal"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
           <div
-            className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 font-secondary-normal"
-            onClick={(e) => experience(e)}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
+            onClick={(e) => intro(e)}
+            className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
           >
             My experience
           </div>
-          <FontAwesomeIcon icon={faAngleRight} size={"xs"} className="mt-0.5" />
+          <FontAwesomeIcon
+            icon={faCircleChevronRight}
+            size={"sm"}
+            className="mt-1"
+          />
         </div>
       </Button>
 
