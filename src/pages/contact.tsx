@@ -472,11 +472,7 @@ const CircleContainer = styled.span`
     right: 15vw;
 
     &:hover {
-      transform: rotate(103.7deg) scale(1.07);
-
-      ${Circle} {
-        animation: none;
-      }
+      transform: rotate(-170deg) scale(1.07);
     }
   }
 
