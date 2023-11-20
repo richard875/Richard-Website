@@ -82,14 +82,8 @@ const IndexPage = ({
           transform: "scaleX(1) scaleY(1) translateY(0px)",
         }}
         transition={{
-          opacity: {
-            duration: 1,
-          },
-          transform: {
-            type: "spring",
-            stiffness: 65,
-            delay: 1.5,
-          },
+          opacity: { duration: 0.7 },
+          transform: { type: "spring", stiffness: 65, delay: 0.2 },
         }}
       >
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
@@ -125,7 +119,7 @@ const IndexPage = ({
         </Box>
         <LoadableCursorSsr
           hover={hover}
-          delay={2.5}
+          delay={0.5}
           position={location.state!}
           isBlack={true}
           isIndexPage={true}

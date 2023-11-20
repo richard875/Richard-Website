@@ -78,11 +78,7 @@ const Contact = ({
         className="font-secondary-normal"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{
-          stiffness: 0,
-          duration: 1,
-          delay: 0.5,
-        }}
+        transition={{ stiffness: 0, duration: 0.4 }}
       >
         <InitialTransition color={transitionColor} />
         <Top>
@@ -100,11 +96,7 @@ const Contact = ({
           <Left
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{
-              stiffness: 0,
-              duration: 1,
-              delay: 1,
-            }}
+            transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
           >
             <div>
               <ContactText>Get in touch with me!</ContactText>
@@ -135,8 +127,8 @@ const Contact = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{
-                  duration: 3,
-                  delay: 1.3,
+                  duration: 0.4,
+                  delay: 0.3,
                   ease: [0, 0.71, 0.2, 1.01],
                 }}
               >
@@ -151,11 +143,7 @@ const Contact = ({
                 {useBreakpoint(down("md")) && (
                   <StaticImage
                     width={60}
-                    style={{
-                      position: "relative",
-                      left: 55,
-                      bottom: 98,
-                    }}
+                    style={{ position: "relative", left: 55, bottom: 98 }}
                     src={ARROW}
                     alt="Resume Circle"
                     placeholder="none"
@@ -164,11 +152,7 @@ const Contact = ({
                 {useBreakpoint(between("md", "lg")) && (
                   <StaticImage
                     width={72}
-                    style={{
-                      position: "absolute",
-                      left: 64,
-                      bottom: 84.5,
-                    }}
+                    style={{ position: "absolute", left: 64, bottom: 84.5 }}
                     src={ARROW}
                     alt="Resume Circle"
                     placeholder="none"
@@ -177,11 +161,7 @@ const Contact = ({
                 {useBreakpoint(up("lg")) && (
                   <StaticImage
                     width={80}
-                    style={{
-                      position: "absolute",
-                      left: 85,
-                      bottom: 108,
-                    }}
+                    style={{ position: "absolute", left: 85, bottom: 108 }}
                     src={ARROW}
                     alt="Resume Circle"
                     placeholder="none"
@@ -195,11 +175,7 @@ const Contact = ({
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{
-                  stiffness: 0,
-                  duration: 1,
-                  delay: 1.9,
-                }}
+                transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
               >
                 <Production />
               </motion.div>
@@ -207,11 +183,7 @@ const Contact = ({
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{
-                stiffness: 0,
-                duration: 1,
-                delay: 1.6,
-              }}
+              transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
             >
               <p className="mb-2 text-lg">{URL}</p>
               <p>
@@ -296,7 +268,7 @@ const Contact = ({
         </Box>
         <LoadableCursorSsr
           hover={hover}
-          delay={1.5}
+          delay={0.5}
           position={location.state!}
           isBlack={false}
           fallback={<></>}

@@ -6,15 +6,9 @@ import { COLOR } from "../../styles/theme";
 const Loading = () => {
   return (
     <Container
-      initial={{
-        opacity: 1,
-      }}
-      animate={{
-        opacity: 0,
-      }}
-      transition={{
-        delay: 2.7,
-      }}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 0 }}
+      transition={{ delay: 0.7 }}
     ></Container>
   );
 };

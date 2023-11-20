@@ -46,8 +46,8 @@ const Block = ({
         animate={{ opacity: 1 }}
         transition={{
           stiffness: 0,
-          duration: 1,
-          delay: 0.4 + 0.3 * (index + 2),
+          duration: 0.4,
+          delay: 0.1 * (index + 2),
         }}
       >
         <Logo

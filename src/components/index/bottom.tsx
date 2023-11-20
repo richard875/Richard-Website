@@ -33,14 +33,13 @@ const Bottom = ({
   const countryRef = React.useRef(null);
 
   React.useEffect(() => {
-    gsap.defaults({ ease: "power4.out", duration: 1.8 });
-    gsap.from(topNameRef.current, gsapAnimationIndex(450, 2.2, 0));
-    gsap.from(topGreetingRef.current, gsapAnimationIndex(450, 2.2, 0));
-    gsap.from(nameRef.current, gsapAnimationIndex(450, 2.5, 0));
-    gsap.from(sub1Ref.current, gsapAnimationIndex(350, 2.6, 0));
-    gsap.from(sub2Ref.current, gsapAnimationIndex(350, 2.8, 0));
-    gsap.from(contactRef.current, gsapAnimationIndex(350, 3.1, 0));
-    gsap.from(countryRef.current, gsapAnimationIndex(350, 3.3, 0));
+    gsap.defaults({ ease: "power4.out", duration: 1 });
+    gsap.from(topGreetingRef.current, gsapAnimationIndex(450, 1, 0));
+    gsap.from(nameRef.current, gsapAnimationIndex(350, 1.2, 0));
+    gsap.from(sub1Ref.current, gsapAnimationIndex(350, 1.3, 0));
+    gsap.from(sub2Ref.current, gsapAnimationIndex(350, 1.4, 0));
+    gsap.from(contactRef.current, gsapAnimationIndex(350, 1.5, 0));
+    gsap.from(countryRef.current, gsapAnimationIndex(350, 1.6, 0));
   }, []);
 
   return (
@@ -96,8 +95,8 @@ const Bottom = ({
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
-            duration: 0.8,
-            delay: 4,
+            duration: 2,
+            delay: 1.5,
             ease: [0, 0.71, 0.2, 1.01],
           }}
         >

@@ -18,8 +18,8 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
         animate={{ opacity: 1 }}
         transition={{
           stiffness: 0,
-          duration: 1,
-          delay: 0.4 + 0.3 * 2,
+          duration: 0.4,
+          delay: 0.1 * 2,
         }}
       >
         <Logo

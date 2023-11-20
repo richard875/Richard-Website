@@ -1,7 +1,7 @@
 import * as React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
-import { up, down } from "styled-breakpoints";
+import { up } from "styled-breakpoints";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import contact from "../../routes/contact";
@@ -16,9 +16,9 @@ const Top = ({
   const projectRef = React.useRef(null);
 
   React.useEffect(() => {
-    gsap.defaults({ ease: "power4.out", duration: 1.8 });
-    gsap.from(emailRef.current, gsapAnimationIndex(150, 2, 20));
-    gsap.from(projectRef.current, gsapAnimationIndex(150, 2, 20));
+    gsap.defaults({ ease: "power4.out", duration: 1 });
+    gsap.from(emailRef.current, gsapAnimationIndex(150, 1, 20));
+    gsap.from(projectRef.current, gsapAnimationIndex(150, 1, 20));
   }, []);
 
   return (

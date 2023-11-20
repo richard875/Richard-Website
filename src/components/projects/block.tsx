@@ -44,11 +44,7 @@ const Block = ({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{
-          stiffness: 0,
-          duration: 1,
-          delay: 0.4 + 0.3 * (index + 3),
-        }}
+        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * (index + 3) }}
       >
         <Logo
           height={project.imageHeight}

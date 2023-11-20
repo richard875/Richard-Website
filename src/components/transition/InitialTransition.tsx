@@ -10,15 +10,9 @@ const InitialTransition = ({ color }: { color: string }) => {
   return (
     <Transition
       color={color}
-      initial={{
-        bottom: 0,
-        height: "0px",
-      }}
+      initial={{ bottom: 0, height: "0px" }}
       exit={{ height: "100vh" }}
-      transition={{
-        duration: 1.7,
-        ease: [0.87, 0, 0.13, 1],
-      }}
+      transition={{ duration: 0.8, ease: [0.87, 0, 0.13, 1] }}
     ></Transition>
   );
 };

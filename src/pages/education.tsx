@@ -57,11 +57,7 @@ const Education = ({
         isDarkMode={isDarkMode}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{
-          stiffness: 0,
-          duration: 1,
-          delay: 0.5,
-        }}
+        transition={{ stiffness: 0, duration: 0.4 }}
       >
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
         <Top isDarkMode={isDarkMode}>
@@ -81,7 +77,7 @@ const Education = ({
         </Horizontal>
         <LoadableCursorSsr
           hover={hover}
-          delay={1.5}
+          delay={0.5}
           position={location.state!}
           isBlack={!isDarkMode}
           fallback={<></>}

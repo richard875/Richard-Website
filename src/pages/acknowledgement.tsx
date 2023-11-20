@@ -39,11 +39,7 @@ const Acknowledgement = ({
     <Container
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{
-        stiffness: 0,
-        duration: 1,
-        delay: 0.5,
-      }}
+      transition={{ stiffness: 0, duration: 0.4 }}
     >
       <InitialTransition color={COLOR.BACKGROUND_WHITE} />
       <Wrapper>
@@ -51,10 +47,7 @@ const Acknowledgement = ({
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 1,
-          }}
+          transition={{ stiffness: 0, duration: 0.4 }}
         >
           We acknowledge the Traditional Owners of the land where we work and
           live. We pay our respects to Elders past, present and emerging. We
@@ -66,11 +59,7 @@ const Acknowledgement = ({
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 1,
-            delay: 1,
-          }}
+          transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
           <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
             <span
@@ -86,7 +75,7 @@ const Acknowledgement = ({
       </Wrapper>
       <LoadableCursorSsr
         hover={hover}
-        delay={1.5}
+        delay={0.3}
         position={location.state!}
         isBlack={false}
         fallback={<></>}

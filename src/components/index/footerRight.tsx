@@ -10,7 +10,7 @@ const FooterRight = () => {
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out" });
-    gsap.from(timeRef.current, 1.8, gsapAnimationIndex(150, 3.4, 20));
+    gsap.from(timeRef.current, 1, gsapAnimationIndex(150, 1, 20));
   }, []);
 
   return (
