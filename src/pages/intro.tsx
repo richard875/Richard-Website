@@ -40,7 +40,9 @@ const CallToAction = ({ isDarkMode }: { isDarkMode: boolean }) => {
       }}
     >
       <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
-        <span onClick={(e) => experience(e, isDarkMode)}>Work Experience</span>
+        <span onClick={(e) => experience(e, isDarkMode)}>
+          Work Experience & Projects
+        </span>
       </div>
       <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
     </Cta>
@@ -87,7 +89,6 @@ const Experience = () => {
                 <span onClick={(e) => home(e)}>Home</span>
               </div>
             </Cta>
-            <CallToAction isDarkMode={isDarkMode} />
           </div>
         )}
         <LeftText
@@ -137,6 +138,11 @@ const Experience = () => {
         </LeftText>
         {useBreakpoint(down("sm")) && <CallToAction isDarkMode={isDarkMode} />}
         <Logos />
+        {useBreakpoint(up("sm")) && (
+          <div className="w-full flex items-center justify-end">
+            <CallToAction isDarkMode={isDarkMode} />
+          </div>
+        )}
       </Left>
       <Right className="select-none">
         <motion.div

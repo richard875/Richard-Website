@@ -55,7 +55,7 @@ const Container = styled(motion.div)`
 
   ${up("lg")} {
     margin-top: 2vw;
-    margin-bottom: 0;
+    margin-bottom: 2vw;
   }
 `;
 
