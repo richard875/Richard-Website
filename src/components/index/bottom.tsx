@@ -16,15 +16,14 @@ const CIRCLE = "../../../static/images/indexCircle/circle.png";
 const Bottom = ({
   setHover,
   acknowledgement,
-  experience,
+  intro,
   isIphoneXPwa,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
   acknowledgement: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  experience: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  intro: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   isIphoneXPwa: boolean;
 }) => {
-  const topNameRef = React.useRef(null);
   const topGreetingRef = React.useRef(null);
   const nameRef = React.useRef(null);
   const sub1Ref = React.useRef(null);
@@ -275,7 +274,11 @@ const CircleContainer = styled.span`
   user-select: none;
 
   &:hover {
-    transform: rotate(-360deg) scale(1.07);
+    transform: rotate(103.7deg) scale(1.07);
+
+    ${Circle} {
+      animation: none;
+    }
   }
 
   ${up("sm")} {
@@ -290,6 +293,6 @@ const CircleContainer = styled.span`
 
   ${up("xxl")} {
     bottom: 15vh;
-    right: calc(150px - 0.7vw);
+    right: 15vh;
   }
 `;

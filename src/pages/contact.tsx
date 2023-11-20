@@ -202,7 +202,7 @@ const Contact = ({
                   onMouseLeave={() => setHover(false)}
                   onClick={(e) => {
                     setTransitionColor(COLOR.BACKGROUND_BLACK);
-                    experience(e);
+                    intro(e);
                   }}
                 >
                   Intro
@@ -219,7 +219,7 @@ const Contact = ({
                         ? COLOR.BACKGROUND_BLACK
                         : COLOR.BACKGROUND_WHITE_SECONDARY
                     );
-                    work(e, isDarkMode);
+                    experience(e, isDarkMode);
                   }}
                 >
                   Experience
@@ -447,7 +447,11 @@ const CircleContainer = styled.span`
     right: 15vw;
 
     &:hover {
-      transform: rotate(-360deg) scale(1.07);
+      transform: rotate(103.7deg) scale(1.07);
+
+      ${Circle} {
+        animation: none;
+      }
     }
   }
 
