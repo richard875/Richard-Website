@@ -1,6 +1,6 @@
 [
   {
-    "name": "Leetcode Algorithm Practice Web Application",
+    "name": "algome - Leetcode Algorithm Practice Web Application",
     "image": "neetcode",
     "imageAlt": "Leetcode Algorithm Practice",
     "imageHeight": 45,
@@ -37,7 +37,7 @@
     ]
   },
   {
-    "name": "Chrome extension to enable YouTube comment section",
+    "name": "YouComment - Chrome extension to enable YouTube comment section",
     "image": "youtube",
     "imageAlt": "YouComment - YouTube Comment Extension",
     "imageHeight": 35,
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "name": "Nasdaq ETF portfolio copier and autotrader",
+    "name": "Autotrader - Nasdaq ETF portfolio copier and autotrader",
     "image": "nasdaq",
     "imageAlt": "Nasdaq ETF Autotrader",
     "imageHeight": 40,
@@ -110,7 +110,7 @@
     ]
   },
   {
-    "name": "University of Auckland Morotsport Club Mobile Application",
+    "name": "Piston - University of Auckland Morotsport Club Mobile Application",
     "image": "piston",
     "imageAlt": "Morotsport Club Application",
     "imageHeight": 45,
