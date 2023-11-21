@@ -6,7 +6,6 @@ import nasdaq from "../../static/images/logos/nasdaq.svg";
 import nasdaqBlack from "../../static/images/logos/nasdaq-black.svg";
 import maily from "../../static/images/logos/maily.svg";
 import neetcode from "../../static/images/logos/neetcode.svg";
-import neetcodeBlack from "../../static/images/logos/neetcode-black.svg";
 import slik from "../../static/images/logos/slik.svg";
 import slikBlack from "../../static/images/logos/slik-black.svg";
 import nzGovt from "../../static/images/logos/nzgovt.png";
@@ -55,7 +54,7 @@ const iconPicker = (logo: string, isDark: boolean) => {
     case "maily":
       return maily;
     case "neetcode":
-      return isDark ? neetcode : neetcodeBlack;
+      return neetcode;
     case "slik":
       return isDark ? slik : slikBlack;
     case "nzgovt":
