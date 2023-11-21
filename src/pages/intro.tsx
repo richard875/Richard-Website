@@ -122,8 +122,8 @@ const Experience = () => {
             delay: 0.2,
           }}
         >
-          G'day, I'm Richard. I'm a postgraduate student at the{" "}
-          <Usyd>University of Sydney</Usyd>,{" "}
+          G'day, I'm Richard. I'm a Software Engineer and Creative Designer from{" "}
+          <Sydney>Sydney</Sydney>,{" "}
           <Australia
             onClick={(e) => {
               e.preventDefault();
@@ -281,7 +281,7 @@ const HoverableTextUnderline = styled(HoverableText)`
   text-underline-offset: 4px;
 `;
 
-const Usyd = styled.span`
+const Sydney = styled.span`
   color: ${COLOR.USYD_ORANGE};
 `;
 
