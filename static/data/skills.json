@@ -16,23 +16,23 @@
       "skill": 65
     },
     {
-      "name": "csharp",
-      "displayName": "C# / Visual Basic",
+      "name": "go",
+      "displayName": "Go",
       "skill": 65
     },
     {
       "name": "dotnet",
-      "displayName": ".NET",
+      "displayName": ".NET / C#",
+      "skill": 65
+    },
+    {
+      "name": "swift",
+      "displayName": "Swift",
       "skill": 65
     },
     {
       "name": "mongodb",
       "displayName": "MongoDB",
-      "skill": 65
-    },
-    {
-      "name": "postgresql",
-      "displayName": "SQL",
       "skill": 65
     }
   ],
@@ -54,10 +54,9 @@
       "displayName": "GraphQL"
     },
     {
-      "name": "go",
-      "displayName": "Go"
+      "name": "postgresql",
+      "displayName": "SQL"
     },
-
     {
       "name": "python",
       "displayName": "Python"
