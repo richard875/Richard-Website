@@ -78,7 +78,7 @@ const IndexPage = ({
           transform: "scaleX(1) scaleY(1) translateY(0px)",
         }}
         transition={{
-          opacity: { duration: 0.7 },
+          opacity: { duration: 0.5 },
           transform: { type: "spring", stiffness: 65, delay: 0.2 },
         }}
       >
