@@ -61,11 +61,11 @@ const Bottom = ({
         <div
           ref={contactRef}
           className="flex items-center font-secondary-normal"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
         >
           <div
             onClick={(e) => intro(e)}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
             className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
           >
             My experience
