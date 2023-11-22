@@ -38,6 +38,7 @@ const Block = ({
   return (
     <Container
       className="font-primary-normal"
+      isFirst={index == 0}
       isLast={index == projectData.length - 1}
       isDarkMode={isDarkMode}
     >
@@ -132,7 +133,8 @@ const Block = ({
 export default Block;
 
 const Container = styled.div`
-  margin-top: 30px;
+  margin-top: ${({ isFirst }: { isFirst: boolean }) =>
+    isFirst ? "0" : "30px"};
   padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
   padding-right: ${BLOCK_PADDING + "px"};
@@ -145,9 +147,11 @@ const Container = styled.div`
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({
+      isFirst,
       isLast,
       isDarkMode,
     }: {
+      isFirst: boolean;
       isLast: boolean;
       isDarkMode: boolean;
     }) =>

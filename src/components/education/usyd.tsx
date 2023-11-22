@@ -62,7 +62,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
 export default Usyd;
 
 const Container = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
   padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
   padding-right: ${BLOCK_PADDING + "px"};
