@@ -204,6 +204,11 @@ const SkillsImage = styled.img`
   height: 20px;
   width: auto;
   margin-left: 10px;
+  margin-bottom: 6.5px;
+
+  ${up("sm")} {
+    margin-bottom: 3px;
+  }
 
   ${up("xxxl")} {
     height: 23px;
