@@ -7,6 +7,7 @@ const TextSection = ({
   isFirst,
   content, // In type JobDescription
   textUnderline, // In type JobDescription
+  textHighlight, // In type JobDescription
   url, // In type JobDescription
   clickableRef,
   setHover,
@@ -16,15 +17,22 @@ const TextSection = ({
   isFirst: boolean;
   content: string;
   textUnderline?: boolean;
+  textHighlight?: boolean;
   url?: string;
   clickableRef: React.RefObject<HTMLAnchorElement>;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplayMedia: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
 }) => {
+  const renderSpace = (sentenceSlice: String) => {
+    const firstChar = Array.from(sentenceSlice).at(0);
+    if (firstChar === "," || firstChar === ".") return "";
+    else return " ";
+  };
+
   return (
     <>
-      {isFirst ? "• " : " "}
+      {isFirst ? "• " : renderSpace(content)}
       {textUnderline ? (
         <Link
           ref={clickableRef}
@@ -44,6 +52,8 @@ const TextSection = ({
         >
           {content}
         </Link>
+      ) : textHighlight ? (
+        <Highlight isDarkMode={isDarkMode}>{content}</Highlight>
       ) : (
         content
       )}
@@ -70,4 +80,11 @@ const Link = styled.a`
       isDarkMode ? COLOR.BLUE : COLOR.RED};
     text-decoration-line: underline;
   }
+`;
+
+const Highlight = styled.span`
+  margin: 0;
+  padding: 0;
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BLUE : COLOR.RED};
 `;
