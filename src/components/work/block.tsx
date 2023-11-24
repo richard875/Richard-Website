@@ -7,7 +7,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import { CSSTransition } from "react-transition-group";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
-import TextWithLink from "../../components/work/textWithLink";
+import TextSection from "./textSection";
 import WorkExperience from "../../types/workExperience";
 import SentenceDescription from "../../types/sentenceDescription";
 import workData from "../../../static/data/work.json";
@@ -78,7 +78,7 @@ const Block = ({
               <JobDescriptionText key={index} isFirst={index == 0}>
                 {description.map(
                   (sentence: SentenceDescription, index: number) => (
-                    <TextWithLink
+                    <TextSection
                       key={index}
                       isFirst={index == 0}
                       clickableRef={clickableRef}

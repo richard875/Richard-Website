@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { up } from "styled-breakpoints";
 import { COLOR } from "../../styles/theme";
 
-const TextWithLink = ({
+const TextSection = ({
   isFirst,
   content, // In type JobDescription
   textUnderline, // In type JobDescription
@@ -51,7 +51,7 @@ const TextWithLink = ({
   );
 };
 
-export default TextWithLink;
+export default TextSection;
 
 const Link = styled.a`
   cursor: none;
