@@ -2,7 +2,7 @@
   {
     "company": "qantas",
     "imageHeight": 45,
-    "jobTitle": "Software Engineer",
+    "jobTitle": "Senior Software Engineer",
     "companyTitle": "Qantas Airways",
     "start": {
       "mobile": "Dec 2022",
@@ -17,28 +17,102 @@
     "description": [
       [
         {
-          "content": "Develop and deliver software assets for Qantas Loyalty business unit, including Qantas Frequent Flyer and Qantas Business Rewards"
+          "content": "In a team of"
+        },
+        {
+          "content": "Five",
+          "textHighlight": true
+        },
+        {
+          "content": ", I led the successful delivery of the largest internal marketing application serving over"
+        },
+        {
+          "content": "150",
+          "textHighlight": true
+        },
+        {
+          "content": "employees across"
+        },
+        {
+          "content": "12",
+          "textHighlight": true
+        },
+        {
+          "content": "Qantas Loyalty Marketing Channels leveraging"
+        },
+        {
+          "content": "Preact",
+          "textHighlight": true
+        },
+        {
+          "content": ","
+        },
+        {
+          "content": "AWS Lambda",
+          "textHighlight": true
+        },
+        {
+          "content": ", and"
+        },
+        {
+          "content": "Amazon RDS",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Use skills in TypeScript/Node.JS/JavaScript, database (SQL/RDBMS), REST/GraphQL APIs, end-to-end website development and CI/CD for GitHub"
+          "content": "Implemented a new deployment pattern collaborating with DevOps Team utilising"
+        },
+        {
+          "content": "Akamai",
+          "textHighlight": true
+        },
+        {
+          "content": ","
+        },
+        {
+          "content": "AWS Lambda",
+          "textHighlight": true
+        },
+        {
+          "content": ", and"
+        },
+        {
+          "content": "Elastic Load Balancer",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Contribute to team efforts to deliver value to customers by being a fast learner, strong team player, having a positive attitude and supporting what you build with monitoring and operational responsibilities."
+          "content": "Reduced organisational AWS expenditure by over"
+        },
+        {
+          "content": "$55,000 annually",
+          "textHighlight": true
+        },
+        {
+          "content": "through strategic decommissioning of a redundant prior project."
         }
       ]
     ],
     "techStack": [
-      "TypeScript",
-      "Node.JS",
-      "SQL/RDBMS",
-      "REST API",
-      "GraphQL",
-      "CI/CD",
-      "AWS"
+      "Preact",
+      "Express.js",
+      "AWS Lambda",
+      "AWS RDS",
+      "AWS Redshift",
+      "Jenkins",
+      "Terraform",
+      "Ansible",
+      "Splunk",
+      "Jest",
+      "Mocha Test"
     ]
   },
   {
@@ -59,36 +133,95 @@
     "description": [
       [
         {
-          "content": "Created Australia's first Metaverse virtual playground with Three.js and Blender for hosting virtual meetings and corporate events"
+          "content": "Pioneered Australia's"
+        },
+        {
+          "content": "First",
+          "textHighlight": true
+        },
+        {
+          "content": "Metaverse Virtual Playground utilising"
+        },
+        {
+          "content": "Three.js",
+          "textHighlight": true
+        },
+        {
+          "content": "and"
+        },
+        {
+          "content": "Blender",
+          "textHighlight": true
+        },
+        {
+          "content": "for corporate gatherings and virtual meetings."
         }
       ],
       [
         {
-          "content": "Developed statically generated web apps with Gatsby for Nine News, including"
+          "content": "Engineered static web applications leveraging"
+        },
+        {
+          "content": "Gatsby",
+          "textHighlight": true
+        },
+        {
+          "content": "for"
+        },
+        {
+          "content": "Nine News",
+          "textHighlight": true
+        },
+        {
+          "content": ", including"
         },
         {
           "content": "Sydney Morning Herald's Annual Impact Report",
           "textUnderline": true,
           "url": "https://impact-report.smh.com.au/"
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Migrated a legacy email builder app from Angular to React for better maintainability and redesigned its UI for a refined user experience"
+          "content": "Undertook the migration of a"
+        },
+        {
+          "content": "legacy",
+          "textHighlight": true
+        },
+        {
+          "content": "email builder app from"
+        },
+        {
+          "content": "Angular",
+          "textHighlight": true
+        },
+        {
+          "content": "to"
+        },
+        {
+          "content": "React",
+          "textHighlight": true
+        },
+        {
+          "content": ", optimising maintenance and enhancing user interface."
         }
       ]
     ],
     "techStack": [
       "React/Gatsby",
-      "Contentful",
       "Node.js/Nest.js",
       "MongoDB",
+      "Contentful",
+      "AWS S3",
       "Three.js",
       "GSAP",
       "Blender",
       "Netlify",
-      "Heroku",
-      "AWS"
+      "Heroku"
     ],
     "isMedia": true,
     "media": "smh"
@@ -111,26 +244,61 @@
     "description": [
       [
         {
-          "content": "Developed and designed a monitoring web application with Angular and .NET Core to monitor hospitals' legacy system status"
+          "content": "Developed and designed a web application utilising"
+        },
+        {
+          "content": "Angular",
+          "textHighlight": true
+        },
+        {
+          "content": "and"
+        },
+        {
+          "content": ".NET Core",
+          "textHighlight": true
+        },
+        {
+          "content": "to monitor hospitals' legacy system status."
         }
       ],
       [
         {
-          "content": "Implemented and designed a bespoke management dashboard web application for the admin to manipulate data stored in Redis"
+          "content": "Conceptualised and implemented a bespoke management web app empowering administrators to manage data stored in"
+        },
+        {
+          "content": "Redis",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Improved Google Chrome's lighthouse score for an application by over 60% by redesigning the frontend layout structure"
+          "content": "Elevated an application's"
+        },
+        {
+          "content": "Google Chrome Lighthouse Score",
+          "textHighlight": true
+        },
+        {
+          "content": "by over"
+        },
+        {
+          "content": "60%",
+          "textHighlight": true
+        },
+        {
+          "content": "through a complete redesign of the frontend layout structure."
         }
       ]
     ],
     "techStack": [
       "Angular",
       ".NET",
-      "Redis",
       "C#",
       "TypeScript",
+      "Redis",
       "Oracle SQL Database",
       "Jira",
       "Azure DevOps"
@@ -154,38 +322,66 @@
     "description": [
       [
         {
-          "content": "Engaged and worked with clients from all sectors to develop custom applications to suit their business needs"
+          "content": "Collaborated closely with clients across industries to architect and deliver tailor-made applications aligning with their business needs."
         }
       ],
       [
         {
-          "content": "Complete redesign of the"
+          "content": "Implemented an overhaul of the"
         },
         {
-          "content": "company website",
+          "content": "corporate website",
           "textUnderline": true,
           "url": "https://canary.co.nz/"
         },
         {
-          "content": "by incorporating modern design principles and technologies"
+          "content": "with"
+        },
+        {
+          "content": "ASP.NET",
+          "textHighlight": true
+        },
+        {
+          "content": ", injecting modern design principles for an enhanced user experience."
         }
       ],
       [
         {
-          "content": "Reduced an application's runtime error by over 65% by migrating the backend server to TypeScript and introducing unit tests"
+          "content": "Reduced an application's runtime error by over"
+        },
+        {
+          "content": "65%",
+          "textHighlight": true
+        },
+        {
+          "content": "by migrating the backend server to"
+        },
+        {
+          "content": "TypeScript",
+          "textHighlight": true
+        },
+        {
+          "content": "and introducing"
+        },
+        {
+          "content": "Unit Tests",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ]
     ],
     "techStack": [
       "Vue",
-      "TypeScript",
       "ASP.NET",
       "C#/VB",
+      "TypeScript",
       "Microsoft SQL Server",
-      "Knockout.js",
       "Jenkins",
+      "Knockout.js",
       "TeamCity",
-      "Octopus"
+      "Octopus Deploy"
     ]
   },
   {
