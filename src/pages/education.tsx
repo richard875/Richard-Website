@@ -180,6 +180,6 @@ const Bottom = styled.div`
   justify-content: space-between;
   border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode
-      ? `0.5px solid ${COLOR.BORDER_WHITE}`
-      : `0.5px solid ${COLOR.BORDER_BLACK}`};
+      ? `0.7px solid ${COLOR.BORDER_WHITE}`
+      : `0.7px solid ${COLOR.BORDER_BLACK}`};
 `;
