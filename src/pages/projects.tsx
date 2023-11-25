@@ -106,6 +106,7 @@ const Projects = ({
               <Block
                 key={index}
                 project={project}
+                dataLength={projectsData.length}
                 index={index}
                 setHover={setHover}
                 isDarkMode={isDarkMode}

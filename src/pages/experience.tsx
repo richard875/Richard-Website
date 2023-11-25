@@ -102,6 +102,7 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
               <Block
                 key={index}
                 experience={experience}
+                dataLength={workData.length}
                 index={index}
                 setHover={setHover}
                 isDarkMode={isDarkMode}

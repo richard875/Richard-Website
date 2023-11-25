@@ -6,11 +6,10 @@ import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { CSSTransition } from "react-transition-group";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
-import TextWithLink from "../../components/projects/textWithLink";
+import TextSection from "../global/textSection";
 import ProjectLink from "./projectLink";
 import MyProjects from "../../types/myProjects";
 import SentenceDescription from "../../types/sentenceDescription";
-import projectData from "../../../static/data/projects.json";
 import mediaPicker from "../../helper/mediaPicker";
 import {
   BLOCK_PADDING,
@@ -22,11 +21,13 @@ import {
 
 const Block = ({
   project,
+  dataLength,
   index,
   setHover,
   isDarkMode,
 }: {
   project: MyProjects;
+  dataLength: number;
   index: number;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
@@ -39,7 +40,7 @@ const Block = ({
     <Container
       className="font-primary-normal"
       isFirst={index == 0}
-      isLast={index == projectData.length - 1}
+      isLast={index == dataLength - 1}
       isDarkMode={isDarkMode}
     >
       <motion.div

@@ -7,10 +7,9 @@ import useWindowSize from "../../hooks/useWindowSize";
 import { CSSTransition } from "react-transition-group";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
-import TextSection from "./textSection";
+import TextSection from "../global/textSection";
 import WorkExperience from "../../types/workExperience";
 import SentenceDescription from "../../types/sentenceDescription";
-import workData from "../../../static/data/work.json";
 import mediaPicker from "../../helper/mediaPicker";
 import {
   BLOCK_PADDING,
@@ -22,11 +21,13 @@ import {
 
 const Block = ({
   experience,
+  dataLength,
   index,
   setHover,
   isDarkMode,
 }: {
   experience: WorkExperience;
+  dataLength: number;
   index: number;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
@@ -38,17 +39,13 @@ const Block = ({
   return (
     <Container
       className="font-primary-normal"
-      isLast={index == workData.length - 1}
+      isLast={index == dataLength - 1}
       isDarkMode={isDarkMode}
     >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{
-          stiffness: 0,
-          duration: 0.4,
-          delay: 0.1 * (index + 2),
-        }}
+        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * (index + 2) }}
       >
         <Logo
           height={experience.imageHeight}
