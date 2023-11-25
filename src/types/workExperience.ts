@@ -16,7 +16,6 @@ type WorkExperience = {
   country: string;
   description: SentenceDescription[][];
   techStack: string[];
-  isMedia?: boolean;
   media?: string;
 };
 
