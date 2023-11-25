@@ -6,7 +6,6 @@ import { COLOR } from "../../styles/theme";
 const TextSection = ({
   isFirst,
   content, // In type JobDescription
-  textUnderline, // In type JobDescription
   textHighlight, // In type JobDescription
   url, // In type JobDescription
   clickableRef,
@@ -16,7 +15,6 @@ const TextSection = ({
 }: {
   isFirst: boolean;
   content: string;
-  textUnderline?: boolean;
   textHighlight?: boolean;
   url?: string;
   clickableRef: React.RefObject<HTMLAnchorElement>;
@@ -33,11 +31,10 @@ const TextSection = ({
   return (
     <>
       {isFirst ? "• " : renderSpace(content)}
-      {textUnderline ? (
+      {!!url ? (
         <Link
           ref={clickableRef}
           href={url}
-          hasLink={!!url}
           isDarkMode={isDarkMode}
           target="_blank"
           rel="noopener noreferrer"
@@ -65,15 +62,9 @@ export default TextSection;
 
 const Link = styled.a`
   cursor: none;
-  text-decoration-line: ${(props: { hasLink: boolean }) =>
-    props.hasLink ? "underline" : undefined};
-  color: ${({
-    hasLink,
-    isDarkMode,
-  }: {
-    hasLink: boolean;
-    isDarkMode: boolean;
-  }) => (hasLink ? (isDarkMode ? COLOR.BLUE : COLOR.RED) : undefined)};
+  text-decoration-line: underline;
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BLUE : COLOR.RED};
 
   ${up("md")} {
     color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
