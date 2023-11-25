@@ -33,7 +33,7 @@ import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TITLE = "Work Experience";
+const TITLE = "Skills and Work Experience";
 const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
 
 const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {

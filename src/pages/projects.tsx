@@ -32,7 +32,7 @@ import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TITLE = "Skills and Projects";
+const TITLE = "Projects";
 const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
 
 const Projects = ({
