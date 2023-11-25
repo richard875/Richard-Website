@@ -477,9 +477,15 @@ const Circle = styled.div`
   }
 `;
 
-const CircleContainer = styled.span`
+const CircleContainer = styled.div`
+  width: 170px;
+  height: 170px;
   transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
   user-select: none;
+
+  &:hover {
+    transform: rotate(-170deg) scale(1.07);
+  }
 
   ${down("md")} {
     margin-top: 30px;
@@ -487,15 +493,15 @@ const CircleContainer = styled.span`
 
   ${up("md")} {
     position: absolute;
+    width: 200px;
+    height: 200px;
     bottom: 45vh;
     right: 15vw;
-
-    &:hover {
-      transform: rotate(-170deg) scale(1.07);
-    }
   }
 
-  ${up("xxl")} {
+  ${up("lg")} {
+    width: 250px;
+    height: 250px;
     bottom: 50vh;
     right: 15vw;
   }
