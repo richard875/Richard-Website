@@ -69,7 +69,7 @@ const Container = styled.div`
   border-right: none;
 
   ${up("md")} {
-    flex: auto;
+    flex: 0.5;
     margin-top: 0;
     padding-bottom: 0;
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
