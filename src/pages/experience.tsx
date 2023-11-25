@@ -6,7 +6,7 @@ import { GatsbyLinkProps } from "gatsby";
 import Route from "../routes/route";
 import projects from "../routes/projects";
 import styled from "styled-components";
-import { COPYRIGHT, PAGE_TITLE } from "../constants/meta";
+import { COPYRIGHT, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import useWindowSize from "../hooks/useWindowSize";
@@ -41,8 +41,22 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
   const slider = React.useRef<HTMLDivElement>(null);
   const component = React.useRef<HTMLDivElement>(null);
 
+  // Hooks
   const [hover, setHover] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [isIphoneX, setIsIphoneX] = React.useState(false);
+
+  // Detect if the page is opened as a PWA
+  const params = new URLSearchParams((location as any).search);
+  const isPwa = params.get(MODE) === STANDALONE;
+
+  // Detect if the page is opened on an iPhone X or newer
+  React.useEffect(() => {
+    let iPhone =
+      /iPhone/.test(navigator.userAgent) && !(window as any).MSStream;
+    let aspect = window.screen.width / window.screen.height;
+    setIsIphoneX(iPhone && aspect.toFixed(3) === "0.462");
+  }, []);
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -111,7 +125,11 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
             );
           })}
           {useBreakpoint(down("md")) && (
-            <Bottom className="font-secondary-normal" isDarkMode={isDarkMode}>
+            <Bottom
+              className="font-secondary-normal"
+              isDarkMode={isDarkMode}
+              isIphoneXPwa={isIphoneX && isPwa}
+            >
               <p className="my-2">{COPYRIGHT}</p>
             </Bottom>
           )}
@@ -226,7 +244,13 @@ const Horizontal = styled.div`
 
 const Bottom = styled.div`
   margin-top: 15px;
-  margin-bottom: 2px;
+  margin-bottom: ${({
+    isDarkMode,
+    isIphoneXPwa,
+  }: {
+    isDarkMode: boolean;
+    isIphoneXPwa: boolean;
+  }) => (isIphoneXPwa ? "15px" : "2px")};
   margin-left: ${BLOCK_PADDING + "px"};
   width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
   display: flex;

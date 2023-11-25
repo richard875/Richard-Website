@@ -2,7 +2,7 @@ import * as React from "react";
 import type { HeadFC } from "gatsby";
 import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
-import { URL, PAGE_TITLE } from "../constants/meta";
+import { URL, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
 import Route from "../routes/route";
 import home from "../routes/home";
 import intro from "../routes/intro";
@@ -37,10 +37,23 @@ const Contact = ({
   location: GatsbyLinkProps<MousePosition>;
 }) => {
   const [hover, setHover] = React.useState(false);
+  const [isIphoneX, setIsIphoneX] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
     COLOR.BACKGROUND_WHITE
   );
+
+  // Detect if the page is opened as a PWA
+  const params = new URLSearchParams((location as any).search);
+  const isPwa = params.get(MODE) === STANDALONE;
+
+  // Detect if the page is opened on an iPhone X or newer
+  React.useEffect(() => {
+    let iPhone =
+      /iPhone/.test(navigator.userAgent) && !(window as any).MSStream;
+    let aspect = window.screen.width / window.screen.height;
+    setIsIphoneX(iPhone && aspect.toFixed(3) === "0.462");
+  }, []);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
@@ -164,7 +177,7 @@ const Contact = ({
               </motion.div>
             </CircleContainer>
           </Left>
-          <Right>
+          <Right isIphoneXPwa={isIphoneX && isPwa}>
             {useBreakpoint(down("md")) && (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -401,7 +414,8 @@ const Right = styled.div`
   ${down("md")} {
     flex: 1;
     align-items: flex-start;
-    padding-bottom: 20px;
+    padding-bottom: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
+      isIphoneXPwa ? "30px" : "20px"};
   }
 `;
 
