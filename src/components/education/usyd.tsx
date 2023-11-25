@@ -88,6 +88,7 @@ const Logo = styled.img`
     15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   margin-bottom: ${({ height }: { height: number }) =>
     15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  user-select: none;
 
   ${up("md")} {
     margin-top: ${({ height }: { height: number }) =>

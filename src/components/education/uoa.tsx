@@ -42,7 +42,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
           • Class representative for the Computer Science department
         </SummaryText>
         <img
-          className="mt-8 mb-2 h-4 w-auto"
+          className="mt-8 mb-2 h-4 w-auto select-none"
           src={iconPicker("redbull", isDarkMode)}
           alt="Red Bull"
         />
@@ -54,7 +54,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
           University life as well as promote Safe Driving
         </p>
         <img
-          className="mt-5 mb-2 h-5 w-auto"
+          className="mt-5 mb-2 h-5 w-auto select-none"
           src={iconPicker("cie", isDarkMode)}
           alt="CIE"
         />
@@ -95,6 +95,7 @@ const Logo = styled.img`
     15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   margin-bottom: ${({ height }: { height: number }) =>
     15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  user-select: none;
 
   ${up("md")} {
     margin-top: ${({ height }: { height: number }) =>

@@ -29,7 +29,9 @@ const FooterRight = () => {
   return (
     <Container ref={timeRef}>
       <Indicator></Indicator>
-      <div className="font-secondary-normal">Sydney&nbsp;{time}</div>
+      <div className="font-secondary-normal select-none">
+        Sydney&nbsp;{time}
+      </div>
     </Container>
   );
 };

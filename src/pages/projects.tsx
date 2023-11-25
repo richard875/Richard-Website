@@ -222,6 +222,7 @@ const Top = styled.div`
 
 const Title = styled.p`
   font-size: 20px;
+  user-select: none;
 
   ${up("md")} {
     font-size: 25px;
@@ -251,4 +252,5 @@ const CallToAction = styled.div`
   display: flex;
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
+  user-select: none;
 `;

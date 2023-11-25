@@ -41,7 +41,7 @@ const Top = ({
 
       <div
         ref={projectRef}
-        className="font-secondary-normal"
+        className="font-secondary-normal select-none"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => contact(e)}

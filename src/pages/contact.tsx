@@ -343,6 +343,7 @@ const Top = styled.div`
 
 const Title = styled.p`
   font-size: 20px;
+  user-select: none;
 
   ${up("md")} {
     font-size: 25px;

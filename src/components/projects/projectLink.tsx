@@ -49,6 +49,7 @@ const Cta = styled.div`
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
   font-size: 16px;
+  user-select: none;
 
   ${up("md")} {
     margin-left: 0;

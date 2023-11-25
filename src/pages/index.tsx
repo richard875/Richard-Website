@@ -96,7 +96,7 @@ const IndexPage = ({
           <div ref={acknowledgementRef}>
             {useBreakpoint(down("sm")) && isIphoneX && isPwa && (
               <div
-                className="font-secondary-normal mt-2 ml-1"
+                className="font-secondary-normal mt-2 ml-1 select-none"
                 onClick={(e) => acknowledgement(e)}
               >
                 Acknowledgement of Country

@@ -27,7 +27,7 @@ const CallToAction = ({
     >
       <div
         onClick={(e) => navigator(e, isDarkMode)}
-        className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
+        className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2 select-none"
       >
         {name}
       </div>

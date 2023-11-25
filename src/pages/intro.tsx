@@ -45,7 +45,7 @@ const CallToAction = ({
         delay: 0.2,
       }}
     >
-      <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
+      <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 select-none">
         <span
           onClick={(e) => {
             setTransitionColor(
@@ -99,7 +99,7 @@ const Experience = () => {
               transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
             >
               <FontAwesomeIcon icon={faCircleChevronLeft} className="mt-0.5" />
-              <div className="cursor-pointer text-base pl-2 hover:pl-3 transition-all ease-in-out underline underline-offset-4">
+              <div className="cursor-pointer text-base pl-2 hover:pl-3 transition-all ease-in-out underline underline-offset-4 select-none">
                 <span
                   onClick={(e) => {
                     setTransitionColor(COLOR.BACKGROUND_WHITE);

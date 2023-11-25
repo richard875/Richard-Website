@@ -155,6 +155,7 @@ const TitleWrapper = styled.div`
 const Logo = styled.img`
   height: ${({ height }: { height: number }) => height + "px"};
   width: auto;
+  user-select: none;
 
   ${up("xxxl")} {
     margin-top: ${({ height }: { height: number }) =>
@@ -205,6 +206,7 @@ const SkillsImage = styled.img`
   width: auto;
   margin-left: 10px;
   margin-bottom: 6.5px;
+  user-select: none;
 
   ${up("sm")} {
     margin-bottom: 3px;

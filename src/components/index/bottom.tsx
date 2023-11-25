@@ -81,7 +81,7 @@ const Bottom = ({
       <Country>
         <div
           ref={countryRef}
-          className="font-primary-normal"
+          className="font-primary-normal select-none"
           onClick={(e) => acknowledgement(e)}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}

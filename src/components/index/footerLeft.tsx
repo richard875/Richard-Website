@@ -21,7 +21,7 @@ const FooterLeft = ({
   return (
     <Container ref={acknowledgementRef}>
       <div
-        className="font-secondary-normal"
+        className="font-secondary-normal select-none"
         onClick={(e) => acknowledgement(e)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
