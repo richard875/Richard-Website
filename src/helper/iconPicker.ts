@@ -20,7 +20,8 @@ import uoa from "../../static/images/logos/uoa.png";
 import usyd from "../../static/images/logos/usyd.svg";
 import usydBlack from "../../static/images/logos/usyd-black.svg";
 import yourcar from "../../static/images/logos/yourcar.svg";
-import youtube from "../../static/images/logos/youtube.svg";
+import youtube from "../../static/images/logos/youtube.png";
+import youtubeBlack from "../../static/images/logos/youtube-black.png";
 
 import angular from "../../static/images/skills/angular.svg";
 import aws from "../../static/images/skills/aws.svg";
@@ -74,7 +75,7 @@ const iconPicker = (logo: string, isDark: boolean) => {
     case "yourcar":
       return yourcar;
     case "youtube":
-      return youtube;
+      return isDark ? youtube : youtubeBlack;
     case "angular":
       return angular;
     case "aws":
