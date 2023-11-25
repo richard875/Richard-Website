@@ -192,7 +192,12 @@ const MediaWrapper = styled.div`
 const Media = styled.div`
   margin: 0 auto;
   width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
-    portraitOperation ? "60%" : "100%"};
+    portraitOperation ? "50%" : "100%"};
+
+  ${up("xxxl")} {
+    width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
+      portraitOperation ? "55%" : "100%"};
+  }
 `;
 
 const Video = styled.video`
