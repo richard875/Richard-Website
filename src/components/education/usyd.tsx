@@ -30,13 +30,35 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
         <UniversityText isDarkMode={isDarkMode}>
           The University of Sydney
         </UniversityText>
-        <p className="mt-1 text-lg xxxl:text-xl">
+        <p className="mt-1 mb-9 text-lg xxxl:text-xl">
           Bachelor of Science (Honours) | Computer Science
         </p>
         <SummaryText>
-          • Achieved excellent grades in Computer Science and Mathematics
-          courses, including Algorithms and Data Structures, OOP, DBMS
-          Architecture and discrete mathematics
+          • I conducted extensive research and authored an
+          <Highlight isDarkMode={isDarkMode}>&nbsp;Honours Thesis</Highlight> at
+          the University of Sydney titled
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;"Performance Gap: Traditional VM Containers vs. Serverless
+            WebAssembly Frameworks on the Edge"
+          </Highlight>
+          . This comprehensive study delved into performance disparities while
+          also exploring the utilisation of
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;WebAssembly in web browsers
+          </Highlight>
+          , enabling functionalities previously deemed unattainable. The
+          findings offered valuable insights into optimising software execution
+          within <Highlight isDarkMode={isDarkMode}>edge computing</Highlight>,
+          addressing pivotal benchmarks in modern Software Engineering
+          paradigms.
+        </SummaryText>
+        <SummaryText>
+          •{" "}
+          <Highlight isDarkMode={isDarkMode}>
+            Research Interests:&nbsp;
+          </Highlight>
+          WebAssembly, Edge Computing, Serverless Computing, Virtual Machine
+          Containerisation.
         </SummaryText>
         <p
           style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}
@@ -45,14 +67,26 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
           Academic Experience
         </p>
         <p className="mt-2 text-base xxxl:text-lg">
-          - Achieved excellent grades in Computer Science and Mathematics
-          courses, including Algorithms and Data Structures, OOP, DBMS
-          Architecture and discrete mathematics
+          - Employed as an
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;Academic Teaching Assistant&nbsp;
+          </Highlight>
+          for SOFT2412 -
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;Agile Software Development Practices (Java)
+          </Highlight>
+          , demonstrating expertise in facilitating educational modules within
+          an esteemed academic program.
         </p>
         <p className="mt-2 text-base xxxl:text-lg">
-          - Achieved excellent grades in Computer Science and Mathematics
-          courses, including Algorithms and Data Structures, OOP, DBMS
-          Architecture and discrete mathematics
+          - As an
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;Academic Teaching Assistant
+          </Highlight>
+          , I guided students through Agile Software Development Practices in
+          <Highlight isDarkMode={isDarkMode}>&nbsp;Java</Highlight>, facilitated
+          workshops, graded assignments, and collaborated on curriculum
+          development to align with industry standards.
         </p>
       </motion.div>
     </Container>
@@ -121,4 +155,9 @@ const SummaryText = styled.p`
     font-size: 20px;
     line-height: 30px;
   }
+`;
+
+const Highlight = styled.span`
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BLUE : COLOR.RED};
 `;
