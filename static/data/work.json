@@ -543,22 +543,84 @@
     "description": [
       [
         {
-          "content": "Working in a team of four, we revamped the website for the university's startup incubator"
+          "content": "Working in a team of"
+        },
+        {
+          "content": "Four",
+          "textHighlight": true
+        },
+        {
+          "content": ", I implemented innovative upgrades to the website for the University's startup incubator"
         },
         {
           "content": "Velocity",
           "url": "https://www.velocity.auckland.ac.nz/"
         },
         {
-          "content": "using Javascript and WordPress"
+          "content": ", utilising"
+        },
+        {
+          "content": "JavaScript",
+          "textHighlight": true
+        },
+        {
+          "content": "and"
+        },
+        {
+          "content": "WordPress",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Maintenance of the Velocity Website"
+          "content": "Collaborated closely with University senior management to strategise and execute seamless"
+        },
+        {
+          "content": "communication plans",
+          "textHighlight": true
+        },
+        {
+          "content": ", ensuring a coordinated and effective website"
+        },
+        {
+          "content": "deployment",
+          "textHighlight": true
+        },
+        {
+          "content": "."
+        }
+      ],
+      [
+        {
+          "content": "Orchestrated ongoing"
+        },
+        {
+          "content": "maintenance",
+          "textHighlight": true
+        },
+        {
+          "content": "and"
+        },
+        {
+          "content": "enhancements",
+          "textHighlight": true
+        },
+        {
+          "content": "for the Velocity Website to ensure seamless functionality and user experience."
         }
       ]
     ],
-    "techStack": ["WordPress", "HTML", "CSS", "Javascript", "Git"]
+    "techStack": [
+      "Communication Skills",
+      "Project Management",
+      "WordPress",
+      "HTML",
+      "CSS",
+      "Javascript",
+      "Git"
+    ]
   }
 ]
