@@ -20,7 +20,7 @@ import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
-import { EMAIL } from "../constants/meta";
+import { EMAIL, LINKEDIN_URL, GITHUB_URL } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -185,17 +185,25 @@ const Contact = ({
             >
               <div className="flex mb-4">
                 <FontAwesomeIcon
-                  icon={faLinkedin}
+                  icon={faLinkedin as any}
                   size={"2x"}
                   className="mr-5"
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open(LINKEDIN_URL, "_blank");
+                  }}
                 />
                 <FontAwesomeIcon
-                  icon={faGithub}
+                  icon={faGithub as any}
                   size={"2x"}
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open(GITHUB_URL, "_blank");
+                  }}
                 />
               </div>
               <p className="mb-2 text-lg">{URL}</p>

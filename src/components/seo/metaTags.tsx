@@ -2,6 +2,8 @@ import * as React from "react";
 import {
   NAME,
   URL,
+  LINKEDIN_URL,
+  GITHUB_URL,
   ORGANIZATION,
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
@@ -67,8 +69,8 @@ const MetaTags = ({
                 "image": "https://${URL}${MetaImage}",
                 "sameAs": [
                     "https://${URL}${path}",
-                    "https://github.com/richard875",
-                    "https://www.linkedin.com/in/richard875/"
+                    "${LINKEDIN_URL}",
+                    "${GITHUB_URL}"
                 ],
                 "jobTitle": "Software Engineer",
                 "worksFor": {

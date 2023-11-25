@@ -1,6 +1,8 @@
 export const NAME = "Richard Lee";
 export const URL = process.env.GATSBY_SITE_URL;
 export const EMAIL = `hello@${URL}`;
+export const LINKEDIN_URL = "https://www.linkedin.com/in/richard875";
+export const GITHUB_URL = "https://github.com/richard875";
 export const MODE = "mode";
 export const STANDALONE = "standalone";
 export const STANDALONE_URL = `?${MODE}=${STANDALONE}`;
