@@ -6,7 +6,7 @@ import { GatsbyLinkProps } from "gatsby";
 import Route from "../routes/route";
 import education from "../routes/education";
 import styled from "styled-components";
-import { PAGE_TITLE } from "../constants/meta";
+import { COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
 import useWindowSize from "../hooks/useWindowSize";
@@ -113,6 +113,11 @@ const Projects = ({
               />
             );
           })}
+          {useBreakpoint(down("md")) && (
+            <Bottom className="font-secondary-normal" isDarkMode={isDarkMode}>
+              <p className="my-2">{COPYRIGHT}</p>
+            </Bottom>
+          )}
         </Horizontal>
         <Top isDarkMode={isDarkMode}>
           <Title className="font-secondary-normal">{TITLE}</Title>

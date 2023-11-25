@@ -7,6 +7,7 @@ export const MODE = "mode";
 export const STANDALONE = "standalone";
 export const STANDALONE_URL = `?${MODE}=${STANDALONE}`;
 export const ORGANIZATION = process.env.GATSBY_ORGANIZATION;
+export const COPYRIGHT = `© ${new Date().getFullYear()} ${NAME}`;
 
 export const SITE_TITLE = `${NAME} | Software Engineer | Sydney, Australia`;
 export const PAGE_TITLE = ` | ${NAME} | Software Engineer`;

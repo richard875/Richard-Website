@@ -20,7 +20,7 @@ import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
-import { EMAIL, LINKEDIN_URL, GITHUB_URL } from "../constants/meta";
+import { EMAIL, LINKEDIN_URL, GITHUB_URL, COPYRIGHT } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -111,9 +111,7 @@ const Contact = ({
               </ContactEmail>
             </div>
             {useBreakpoint(up("md")) && (
-              <p className="mt-5 md:mt-0">
-                {new Date().getFullYear()} Richard Lee
-              </p>
+              <p className="mt-5 md:mt-0">{COPYRIGHT}</p>
             )}
             <CircleContainer
               onMouseEnter={() => setHover(true)}
@@ -173,9 +171,7 @@ const Contact = ({
                 animate={{ opacity: 1 }}
                 transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
               >
-                <p className="mt-5 md:mt-0">
-                  {new Date().getFullYear()} Richard Lee
-                </p>
+                <p className="mt-5 md:mt-0">{COPYRIGHT}</p>
               </motion.div>
             )}
             <motion.div
