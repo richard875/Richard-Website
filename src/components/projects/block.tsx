@@ -33,7 +33,7 @@ const Block = ({
   isDarkMode: boolean;
 }) => {
   const mediaRef = React.useRef<HTMLDivElement>(null);
-  const projectRef = React.useRef<HTMLDivElement>(null);
+  const clickableRef = React.useRef<HTMLAnchorElement>(null);
   const [displayMedia, setDisplayMedia] = React.useState(false);
 
   return (
@@ -53,18 +53,8 @@ const Block = ({
           src={iconPicker(project.image, isDarkMode)}
           alt={project.imageAlt}
         />
-        <ProjectName
-          isDarkMode={isDarkMode}
-          ref={projectRef}
-          className={
-            project.hasMedia ? "md:underline md:decoration-dotted" : ""
-          }
-          onMouseEnter={() => setDisplayMedia(true)}
-          onMouseLeave={() => setDisplayMedia(false)}
-        >
-          {project.name}
-        </ProjectName>
-        <JobDescriptionText isFirst={false}>
+        <ProjectName isDarkMode={isDarkMode}>{project.name}</ProjectName>
+        <DescriptionText isFirst={false}>
           <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
             Utilised:
           </span>
@@ -72,32 +62,36 @@ const Block = ({
             (tech: string, index: number) =>
               `${index == 0 ? " " : " • "}${tech}`
           )}
-        </JobDescriptionText>
+        </DescriptionText>
         {project.description.map(
           (description: SentenceDescription[], index: number) => {
             return (
-              <JobDescriptionText key={index} isFirst={index == 0}>
+              <DescriptionText key={index} isFirst={index == 0}>
                 {description.map(
                   (sentence: SentenceDescription, index: number) => (
-                    <TextWithLink
+                    <TextSection
                       key={index}
                       isFirst={index == 0}
-                      {...sentence} // Only content
+                      clickableRef={clickableRef}
+                      setHover={setHover}
+                      setDisplayMedia={setDisplayMedia}
+                      isDarkMode={isDarkMode}
+                      {...sentence} // content and url
                     />
                   )
                 )}
-              </JobDescriptionText>
+              </DescriptionText>
             );
           }
         )}
-        {project.hasLink && (
+        {!!project.linkUrl && (
           <ProjectLink
             url={project.linkUrl!}
             setHover={setHover}
             isDarkMode={isDarkMode}
           />
         )}
-        {useBreakpoint(up("md")) && project.hasMedia && (
+        {useBreakpoint(up("md")) && !!project.media && (
           <CSSTransition
             nodeRef={mediaRef}
             in={displayMedia}
@@ -106,7 +100,7 @@ const Block = ({
             unmountOnExit
           >
             <MediaWrapper
-              top={projectRef.current?.getBoundingClientRect().bottom!}
+              top={clickableRef.current?.getBoundingClientRect().bottom!}
             >
               <Media
                 portraitOperation={project.portraitOperation!}
@@ -232,7 +226,7 @@ const ProjectName = styled.p`
   }
 `;
 
-const JobDescriptionText = styled.p`
+const DescriptionText = styled.p`
   margin-top: ${({ isFirst }: { isFirst: boolean }) =>
     isFirst ? "25px" : "20px"};
   font-size: 18px;
