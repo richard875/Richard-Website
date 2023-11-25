@@ -60,7 +60,7 @@ const Block = ({
         <Secondary>
           {experience.city}, {experience.country}
         </Secondary>
-        <JobDescriptionText isFirst={false}>
+        <DescriptionText isFirst={false}>
           <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
             Tech stack:
           </span>
@@ -68,11 +68,11 @@ const Block = ({
             (tech: string, index: number) =>
               `${index == 0 ? " " : " • "}${tech}`
           )}
-        </JobDescriptionText>
+        </DescriptionText>
         {experience.description.map(
           (description: SentenceDescription[], index: number) => {
             return (
-              <JobDescriptionText key={index} isFirst={index == 0}>
+              <DescriptionText key={index} isFirst={index == 0}>
                 {description.map(
                   (sentence: SentenceDescription, index: number) => (
                     <TextSection
@@ -82,16 +82,15 @@ const Block = ({
                       setHover={setHover}
                       setDisplayMedia={setDisplayMedia}
                       isDarkMode={isDarkMode}
-                      {...sentence} // content, textUnderline and url
+                      {...sentence} // content and url
                     />
                   )
                 )}
-              </JobDescriptionText>
+              </DescriptionText>
             );
           }
         )}
-
-        {useBreakpoint(up("md")) && experience.isMedia && (
+        {useBreakpoint(up("md")) && !!experience.media && (
           <CSSTransition
             nodeRef={mediaRef}
             in={displayMedia}
@@ -189,7 +188,7 @@ const Secondary = styled.p`
   }
 `;
 
-const JobDescriptionText = styled.p`
+const DescriptionText = styled.p`
   margin-top: ${({ isFirst }: { isFirst: boolean }) =>
     isFirst ? "25px" : "20px"};
   font-size: 18px;
