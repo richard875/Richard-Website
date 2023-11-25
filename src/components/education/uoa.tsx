@@ -16,11 +16,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{
-          stiffness: 0,
-          duration: 0.4,
-          delay: 0.1 * 3,
-        }}
+        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * 3 }}
       >
         <Logo
           height={55}
@@ -34,12 +30,37 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
           Bachelor of Science | Computer Science
         </p>
         <SummaryText>
-          • Achieved excellent grades in Computer Science and Mathematics
-          courses, including Algorithms and Data Structures, OOP, DBMS
-          Architecture and discrete mathematics
+          • Attained exemplary academic performance in Computer Science and
+          Mathematics disciplines, excelling in coursework encompassing
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;Algorithms and Data Structures
+          </Highlight>
+          ,
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;Object-Oriented Programming (OOP)
+          </Highlight>
+          ,
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;Database Management System (DBMS) Architecture
+          </Highlight>
+          , and
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;Discrete Mathematics
+          </Highlight>
+          .
         </SummaryText>
         <SummaryText>
-          • Class representative for the Computer Science department
+          • I served as the appointed
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;class representative&nbsp;
+          </Highlight>
+          for the Computer Science department, demonstrating
+          <Highlight isDarkMode={isDarkMode}>&nbsp;leadership&nbsp;</Highlight>
+          and
+          <Highlight isDarkMode={isDarkMode}>
+            &nbsp;effective communication&nbsp;
+          </Highlight>
+          skills.
         </SummaryText>
         <img
           className="mt-8 mb-2 h-4 w-auto select-none"
@@ -50,8 +71,11 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
           President of the University of Auckland Motorsport Club
         </SecondaryTitle>
         <p className="text-base xxxl:text-lg">
-          - Sponsored by Red Bull, we thrive to create entertainment for busy
-          University life as well as promote Safe Driving
+          - Led initiatives in partnership with
+          <Highlight isDarkMode={isDarkMode}>&nbsp;Red Bull</Highlight>,
+          promoting both entertainment options for the active University
+          community and advocating for&nbsp;
+          <Highlight isDarkMode={isDarkMode}>Safe Driving Practices</Highlight>.
         </p>
         <img
           className="mt-5 mb-2 h-5 w-auto select-none"
@@ -62,9 +86,11 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
           University of Auckland Centre for Innovation and Entrepreneurship
         </SecondaryTitle>
         <p className="text-base xxxl:text-lg">
-          - Hosted and facilitated fortnightly innovation seminars as the Master
-          of Ceremonies, guiding discussions and encouraging participation among
-          attendees
+          - Directed and Hosted fortnightly innovation seminars as the&nbsp;
+          <Highlight isDarkMode={isDarkMode}>Master of Ceremonies</Highlight>,
+          adeptly guiding discussions and encouraging active engagement among
+          participants to drive&nbsp;
+          <Highlight isDarkMode={isDarkMode}>collaborative ideation</Highlight>.
         </p>
       </motion.div>
     </Container>
@@ -80,7 +106,7 @@ const Container = styled.div`
   padding-right: ${BLOCK_PADDING + "px"};
 
   ${up("md")} {
-    flex: auto;
+    flex: 0.5;
     margin-top: 0;
     padding-bottom: 0;
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
@@ -140,4 +166,9 @@ const SummaryText = styled.p`
     font-size: 20px;
     line-height: 30px;
   }
+`;
+
+const Highlight = styled.span`
+  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode ? COLOR.BLUE : COLOR.RED};
 `;
