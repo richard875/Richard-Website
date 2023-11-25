@@ -26,7 +26,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
         <UniversityText isDarkMode={isDarkMode}>
           The University of Auckland
         </UniversityText>
-        <p className="mt-1 text-lg xxxl:text-xl">
+        <p className="mt-1 mb-9 text-lg xxxl:text-xl">
           Bachelor of Science | Computer Science
         </p>
         <SummaryText>
