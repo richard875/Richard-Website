@@ -105,7 +105,7 @@
     ]
   },
   {
-    "name": "algome - Leetcode Algorithm Practice Web Application",
+    "name": "Algome - Leetcode Algorithm Practice Web Application",
     "image": "neetcode",
     "imageAlt": "Leetcode Algorithm Practice",
     "imageHeight": 45,
@@ -317,7 +317,7 @@
     "name": "Piston - University of Auckland Morotsport Club Mobile Application",
     "image": "piston",
     "imageAlt": "Morotsport Club Application",
-    "imageHeight": 45,
+    "imageHeight": 40,
     "linkUrl": "https://github.com/richard875/Motorsport-Club",
     "media": "piston",
     "portraitOperation": true,

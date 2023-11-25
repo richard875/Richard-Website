@@ -400,21 +400,51 @@
     "description": [
       [
         {
-          "content": "Improved front-end fetch logic by adding helper functions"
+          "content": "Enhanced frontend fetch logic by adding efficient helper functions, significantly improving"
+        },
+        {
+          "content": "data retrieval and processing speed",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Improved mobile browsing experience by redesigning the mobile layout"
+          "content": "Optimised the mobile browsing experience by incorporating a comprehensive redesign of the mobile layout, resulting in a more intuitive and responsive interface that boosted"
+        },
+        {
+          "content": "user engagement and satisfaction",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Created the front-end UI and logic for the feedback button"
+          "content": "Conducted the end-to-end development of frontend UI and logic for the feedback button, integrating user-friendly design elements and robust functionality, enhancing"
+        },
+        {
+          "content": "user interaction and feedback collection",
+          "textHighlight": true
+        },
+        {
+          "content": "mechanisms."
         }
       ]
     ],
-    "techStack": ["React", "Node.js", "jQuery", "Bootstrap"]
+    "techStack": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "jQuery",
+      "Bootstrap",
+      "Jira",
+      "Trello",
+      "Heroku"
+    ]
   },
   {
     "company": "yourcar",
@@ -434,17 +464,52 @@
     "description": [
       [
         {
-          "content": "Developed an internal tool that calculates the write-off percentage of New Zealand new vehicles in the first 18 months of purchase"
+          "content": "Engineered an internal tool to precisely compute the"
+        },
+        {
+          "content": "write-off percentage",
+          "textHighlight": true
+        },
+        {
+          "content": "for newly purchased New Zealand vehicles within an"
+        },
+        {
+          "content": "18-month window",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Improved company web application's durability by implementing a complete functional test on the frontend site using Cypress"
+          "content": "Elevated the resilience of the company's web application by undertaking comprehensive"
+        },
+        {
+          "content": "end-to-end testing",
+          "textHighlight": true
+        },
+        {
+          "content": "on the frontend platform utilising"
+        },
+        {
+          "content": "Cypress",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Gained valuable professional experience by working in a fast-paced startup environment"
+          "content": "Navigated and thrived in a"
+        },
+        {
+          "content": "dynamic startup environment",
+          "textHighlight": true
+        },
+        {
+          "content": ", acquiring valuable professional experience in a high-paced setting."
         }
       ]
     ],
