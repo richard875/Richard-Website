@@ -26,7 +26,7 @@ const SecondarySkills = ({
     <SecondarySkillsItem isDarkMode={isDarkMode}>
       <SecondarySkillsText>{skill.displayName}</SecondarySkillsText>
       <SkillsImage
-        className="!ml-1"
+        className="!ml-1 !mb-0"
         src={iconPicker(skill.name, isDarkMode)}
         alt={skill.displayName}
       ></SkillsImage>
@@ -40,11 +40,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{
-          stiffness: 0,
-          duration: 0.4,
-          delay: 0.1,
-        }}
+        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 }}
       >
         {useBreakpoint(up("xxxl")) && (
           <Logo
@@ -205,7 +201,7 @@ const SkillsImage = styled.img`
   height: 20px;
   width: auto;
   margin-left: 10px;
-  margin-bottom: 6.5px;
+  margin-bottom: 4px;
   user-select: none;
 
   ${up("sm")} {

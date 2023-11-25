@@ -5,8 +5,9 @@ import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
-import { PAGE_TITLE } from "../constants/meta";
+import { COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import { up, down } from "styled-breakpoints";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
@@ -72,6 +73,11 @@ const Education = ({
         <Horizontal>
           <Usyd isDarkMode={isDarkMode} />
           <Uoa isDarkMode={isDarkMode} />
+          {useBreakpoint(down("md")) && (
+            <Bottom className="font-secondary-normal" isDarkMode={isDarkMode}>
+              <p className="my-2">{COPYRIGHT}</p>
+            </Bottom>
+          )}
         </Horizontal>
         <LoadableCursorSsr
           hover={hover}
@@ -162,4 +168,18 @@ const Horizontal = styled.div`
     padding-top: 19.5px;
     padding-bottom: 20px;
   }
+`;
+
+const Bottom = styled.div`
+  margin-top: 15px;
+  margin-bottom: 2px;
+  margin-left: ${BLOCK_PADDING + "px"};
+  width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode
+      ? `0.5px solid ${COLOR.BORDER_WHITE}`
+      : `0.5px solid ${COLOR.BORDER_BLACK}`};
 `;

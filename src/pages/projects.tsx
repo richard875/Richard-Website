@@ -253,6 +253,20 @@ const Horizontal = styled.div`
   }
 `;
 
+const Bottom = styled.div`
+  margin-top: 15px;
+  margin-bottom: 2px;
+  margin-left: ${BLOCK_PADDING + "px"};
+  width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode
+      ? `0.5px solid ${COLOR.BORDER_WHITE}`
+      : `0.5px solid ${COLOR.BORDER_BLACK}`};
+`;
+
 const CallToAction = styled.div`
   display: flex;
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>

@@ -6,8 +6,9 @@ import { GatsbyLinkProps } from "gatsby";
 import Route from "../routes/route";
 import projects from "../routes/projects";
 import styled from "styled-components";
-import { PAGE_TITLE } from "../constants/meta";
-import { up } from "styled-breakpoints";
+import { COPYRIGHT, PAGE_TITLE } from "../constants/meta";
+import { up, down } from "styled-breakpoints";
+import { useBreakpoint } from "styled-breakpoints/react-styled";
 import useWindowSize from "../hooks/useWindowSize";
 import type { HeadFC } from "gatsby";
 import { COLOR } from "../styles/theme";
@@ -18,7 +19,7 @@ import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import Block from "../components/work/block";
-import SkillsBlock from "../components/experience/skillsBlock";
+import SkillsBlock from "../components/work/skillsBlock";
 import MousePosition from "../types/mousePosition";
 import workData from "../../static/data/work.json";
 import WorkExperience from "../types/workExperience";
@@ -109,6 +110,11 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
               />
             );
           })}
+          {useBreakpoint(down("md")) && (
+            <Bottom className="font-secondary-normal" isDarkMode={isDarkMode}>
+              <p className="my-2">{COPYRIGHT}</p>
+            </Bottom>
+          )}
         </Horizontal>
         <Top isDarkMode={isDarkMode}>
           <Title className="font-secondary-normal">{TITLE}</Title>
@@ -216,4 +222,18 @@ const Horizontal = styled.div`
     width: ${({ entryLength }: { entryLength: number }) =>
       `${entryLength * BLOCK_WIDTH_DESKTOP}px`};
   }
+`;
+
+const Bottom = styled.div`
+  margin-top: 15px;
+  margin-bottom: 2px;
+  margin-left: ${BLOCK_PADDING + "px"};
+  width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
+    isDarkMode
+      ? `0.5px solid ${COLOR.BORDER_WHITE}`
+      : `0.5px solid ${COLOR.BORDER_BLACK}`};
 `;
