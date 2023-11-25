@@ -175,21 +175,21 @@
     "description": [
       [
         {
-          "content": "Developed a"
+          "content": "Engineered a"
         },
         {
           "content": "Google Chrome Browser Extension",
           "textHighlight": true
         },
         {
-          "content": "that lets user comment on"
+          "content": "enabling users to post comments on"
         },
         {
           "content": "\"comment disabled\"",
           "textHighlight": true
         },
         {
-          "content": "YouTube videos."
+          "content": "YouTube videos, expanding engagement opportunities."
         }
       ],
       [
@@ -201,19 +201,19 @@
           "textHighlight": true
         },
         {
-          "content": "that sorts comments with timestamp and number of likes as attributes."
+          "content": "leveraging timestamp and likes attributes to proficiently sort comments, enhancing user experience through organised content presentation."
         }
       ],
       [
         {
-          "content": "Host on"
+          "content": "Hosted the backend on"
         },
         {
           "content": "Amazon Web Services",
           "textHighlight": true
         },
         {
-          "content": "with"
+          "content": "utilising"
         },
         {
           "content": "AWS DynamoDB",
@@ -227,7 +227,7 @@
           "textHighlight": true
         },
         {
-          "content": "."
+          "content": ", ensuring scalable and efficient performance."
         }
       ],
       [
@@ -246,18 +246,18 @@
           "textHighlight": true
         },
         {
-          "content": "for one-click log in."
+          "content": "for streamlined one-click log-in functionality, optimising user accessibility and security measures."
         }
       ]
     ],
     "techStack": [
-      "jQuery",
-      "AJAX",
+      "Node.js",
       "AWS DynamoDB",
       "AWS Lambda",
-      "Serverless",
-      "Chrome extension SDK",
-      "Node.js"
+      "Serverless Framework",
+      "OAuth",
+      "OpenCV",
+      "Chrome Extension SDK"
     ]
   },
   {
@@ -268,49 +268,51 @@
     "description": [
       [
         {
-          "content": "Developed an"
+          "content": "Implemented an"
         },
         {
           "content": "Automation Application",
           "textHighlight": true
         },
         {
-          "content": "that fetches ETF portfolios from web APIs and calculates changes made since the last fetch."
+          "content": "to retrieve ETF portfolios via web APIs, enabling real-time calculation of alterations since the previous data fetch."
         }
       ],
       [
         {
-          "content": "Software sends out"
+          "content": "Integrated the functionality to send out"
         },
         {
-          "content": "daily reports",
+          "content": "automated daily reports",
           "textHighlight": true
         },
         {
-          "content": "to notify the user of portfolio changes."
+          "content": ", keeping users informed of portfolio modifications."
         }
       ],
       [
         {
-          "content": "When connected to trading brokers, the software uses API calls to"
+          "content": "Incorporated features that make API calls within the software to"
         },
         {
           "content": "execute orders",
           "textHighlight": true
         },
         {
-          "content": "."
+          "content": "when interfacing with trading brokers, ensuring seamless transaction execution."
         }
       ]
     ],
     "techStack": [
+      "TypeScript",
       "Node.js",
       "AJAX",
-      "TypeScript",
+      "Service Worker API",
       "Moment.js",
       "Nodemailer",
       "Shell commands",
-      "Beautifulsoup"
+      "Beautifulsoup",
+      "Selenium"
     ]
   },
   {
@@ -324,14 +326,14 @@
     "description": [
       [
         {
-          "content": "Developed a"
+          "content": "Conducted the development of a"
         },
         {
-          "content": "Cross-Platform Mobile App",
+          "content": "Cross-Platform Mobile Application",
           "url": "https://github.com/richard875/Motorsport-Club"
         },
         {
-          "content": "for my University Club to share news and upcoming events using"
+          "content": "for my University Club, facilitating seamless dissemination of news and upcoming events, employing"
         },
         {
           "content": "React Native",
@@ -350,14 +352,14 @@
       ],
       [
         {
-          "content": "Created a backend"
+          "content": "Designed and developed a robust backend"
         },
         {
           "content": "RESTful API",
           "textHighlight": true
         },
         {
-          "content": "for the App with"
+          "content": "for the Application, leveraging"
         },
         {
           "content": "AWS DynamoDB",
@@ -371,10 +373,10 @@
           "textHighlight": true
         },
         {
-          "content": "utilising the"
+          "content": "within the"
         },
         {
-          "content": "Serverless Framework",
+          "content": "Serverless Framework Architecture",
           "textHighlight": true
         },
         {
@@ -383,17 +385,25 @@
       ],
       [
         {
-          "content": "Maintenance of the App including posting new articles, fixing bugs and issuing updates."
+          "content": "Oversaw comprehensive"
+        },
+        {
+          "content": "maintenance",
+          "textHighlight": true
+        },
+        {
+          "content": "of the Application, encompassing article publication, bug resolution, and regular updates to ensure optimal functionality and user experience."
         }
       ]
     ],
     "techStack": [
+      "Node.js/JavaScript",
       "React Native",
       "Expo",
       "React Router",
       "AWS DynamoDB",
       "AWS Lambda",
-      "The Serverless Framework"
+      "Serverless Framework"
     ]
   }
 ]
