@@ -71,6 +71,11 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
           President of the University of Auckland Motorsport Club
         </SecondaryTitle>
         <p className="text-base xxxl:text-lg">
+          - <Highlight isDarkMode={isDarkMode}>Founded</Highlight> the
+          University of Auckland Motorsport Club with around
+          <Highlight isDarkMode={isDarkMode}>&nbsp;800</Highlight> Members.
+        </p>
+        <p className="text-base xxxl:text-lg">
           - Led initiatives in partnership with
           <Highlight isDarkMode={isDarkMode}>&nbsp;Red Bull</Highlight>,
           promoting both entertainment options for the active University

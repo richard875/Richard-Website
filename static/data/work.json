@@ -249,7 +249,7 @@
           "textHighlight": true
         },
         {
-          "content": "and"
+          "content": "and "
         },
         {
           "content": ".NET Core",
@@ -619,7 +619,7 @@
       "WordPress",
       "HTML",
       "CSS",
-      "Javascript",
+      "JavaScript",
       "Git"
     ]
   }
