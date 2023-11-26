@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
+import getResume from "../../helper/getResume";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";
 const CIRCLE = "../../../static/images/indexCircle/circle.png";
@@ -96,6 +97,10 @@ const Bottom = ({
         isIphoneXPwa={isIphoneXPwa}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
+        onClick={(e) => {
+          e.preventDefault();
+          getResume();
+        }}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -273,6 +278,7 @@ const Circle = styled.div`
 
 const CircleContainer = styled.span`
   position: absolute;
+  border-radius: 99px;
   bottom: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
     isIphoneXPwa ? "5vh" : "10vh"};
   right: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>

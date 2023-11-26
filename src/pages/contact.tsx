@@ -25,6 +25,7 @@ import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
+import getResume from "../helper/getResume";
 
 const TITLE = "Contact Me";
 const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
@@ -129,6 +130,10 @@ const Contact = ({
             <CircleContainer
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                getResume();
+              }}
             >
               <motion.div
                 initial={{ opacity: 0 }}
@@ -480,6 +485,7 @@ const Circle = styled.div`
 const CircleContainer = styled.div`
   width: 170px;
   height: 170px;
+  border-radius: 99px;
   transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
   user-select: none;
 
