@@ -8,11 +8,11 @@
     "gatsby"
   ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop -H 0.0.0.0",
-    "build": "gatsby build",
+    "develop": "NODE_ENV=development gatsby develop",
+    "start": "NODE_ENV=development gatsby develop -H 0.0.0.0",
+    "build": "NODE_ENV=production gatsby build",
     "serve": "gatsby serve -H 0.0.0.0",
-    "deliver": "gatsby clean && gatsby build && gatsby serve -H 0.0.0.0",
+    "deliver": "NODE_ENV=production gatsby clean && gatsby build && gatsby serve -H 0.0.0.0",
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit"
   },

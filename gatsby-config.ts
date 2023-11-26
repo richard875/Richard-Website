@@ -1,24 +1,23 @@
+import dotenv from "dotenv";
 import type { GatsbyConfig } from "gatsby";
 import { COLOR } from "./src/styles/theme";
 import {
   NAME,
-  URL,
   SITE_TITLE,
   SITE_DESCRIPTION,
   MODE,
   STANDALONE,
 } from "./src/constants/meta";
 
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+const SITE_URL = `https://${process.env.GATSBY_SITE_URL}`;
 
 const config: GatsbyConfig = {
   siteMetadata: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     image: `static/images/splash/apple-splash-2224-1668.jpg`,
-    siteUrl: `https://${URL}`,
+    siteUrl: SITE_URL,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
@@ -26,7 +25,10 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     `gatsby-plugin-postcss`,
-    `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: { resolveSiteUrl: () => SITE_URL },
+    },
     `gatsby-plugin-netlify`,
     `gatsby-plugin-no-sourcemaps`,
     `gatsby-plugin-styled-components`,
