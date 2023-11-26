@@ -7,6 +7,8 @@
     "linkUrl": "https://github.com/richard875/MailyBackend",
     "media": "maily",
     "portraitOperation": true,
+    "widthLarge": "55%",
+    "widthMedium": "55%",
     "description": [
       [
         {
@@ -323,6 +325,8 @@
     "linkUrl": "https://github.com/richard875/Motorsport-Club",
     "media": "piston",
     "portraitOperation": true,
+    "widthLarge": "50%",
+    "widthMedium": "45%",
     "description": [
       [
         {

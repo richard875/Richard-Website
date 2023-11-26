@@ -104,6 +104,8 @@ const Block = ({
             >
               <Media
                 portraitOperation={project.portraitOperation!}
+                widthLarge={project.widthLarge!}
+                widthMedium={project.widthMedium!}
                 ref={mediaRef}
               >
                 <Video
@@ -192,12 +194,24 @@ const MediaWrapper = styled.div`
 
 const Media = styled.div`
   margin: 0 auto;
-  width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
-    portraitOperation ? "50%" : "100%"};
+  width: ${({
+    portraitOperation,
+    widthLarge,
+    widthMedium,
+  }: {
+    portraitOperation: boolean;
+    widthLarge: string;
+    widthMedium: string;
+  }) => (portraitOperation ? widthMedium : "100%")};
 
   ${up("xxxl")} {
-    width: ${({ portraitOperation }: { portraitOperation: boolean }) =>
-      portraitOperation ? "55%" : "100%"};
+    width: ${({
+      portraitOperation,
+      widthLarge,
+    }: {
+      portraitOperation: boolean;
+      widthLarge: string;
+    }) => (portraitOperation ? widthLarge : "100%")};
   }
 `;
 

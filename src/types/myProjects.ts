@@ -8,6 +8,8 @@ type MyProjects = {
   linkUrl?: string;
   media?: string;
   portraitOperation?: boolean; // true for portrait, false for landscape
+  widthLarge?: string;
+  widthMedium?: string;
   description: SentenceDescription[][];
   techStack: string[];
 };
