@@ -8,6 +8,8 @@ import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
 } from "../../constants/meta";
+import favicon from "../../../static/images/favicon.png";
+import { COLOR } from "../../styles/theme";
 
 const MetaTags = ({
   name,
@@ -57,6 +59,9 @@ const MetaTags = ({
       <meta property="twitter:description" content={SITE_DESCRIPTION} />
       <meta property="twitter:keywords" content={SITE_KEYWORDS} />
       <meta property="twitter:image" content={`https://${URL}${MetaImage}`} />
+
+      {/* Favicons */}
+      <link rel="mask-icon" href={favicon} color={COLOR.BACKGROUND_WHITE} />
 
       {/* Google Rich Results */}
       <script type="application/ld+json">

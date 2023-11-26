@@ -44,12 +44,6 @@ const config: GatsbyConfig = {
     },
     `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        icon: `static/images/favicon.png`,
-      },
-    },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     {
