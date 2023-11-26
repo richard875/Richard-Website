@@ -73,6 +73,12 @@ const config: GatsbyConfig = {
       __key: `images`,
     },
     `gatsby-plugin-offline`,
+    {
+      resolve: "gatsby-plugin-brotli",
+      options: {
+        extensions: ["css", "html", "js", "svg", "json"],
+      },
+    },
   ],
 };
 
