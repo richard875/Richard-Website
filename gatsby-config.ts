@@ -49,6 +49,12 @@ const config: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
+        icon: `static/images/favicon.png`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
         name: SITE_TITLE,
         short_name: NAME,
         start_url: `/?${MODE}=${STANDALONE}`,
