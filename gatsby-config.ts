@@ -81,6 +81,14 @@ const config: GatsbyConfig = {
         extensions: ["css", "html", "js", "svg", "json"],
       },
     },
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: SITE_URL,
+        sitemap: `${SITE_URL}/sitemap/sitemap-index.xml`,
+        policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
   ],
 };
 
