@@ -23,7 +23,6 @@ import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const CURRENT_PAGE_TITLE = `G'day${PAGE_TITLE}`;
 const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
-const SYDNEY_OPERA_HOUSE = "https://www.sydneyoperahouse.com/";
 
 const CallToAction = ({
   isDarkMode,
@@ -167,7 +166,7 @@ const Experience = () => {
           </div>
         )}
       </Left>
-      <Right className="select-none">
+      <Right>
         <motion.div
           className="w-full h-full"
           initial={{ opacity: 0 }}
@@ -191,13 +190,7 @@ const Experience = () => {
           }}
         >
           <span className="font-secondary-normal cursor-pointer">
-            <a
-              href={SYDNEY_OPERA_HOUSE}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Sydney Opera House
-            </a>
+            Sydney Opera House
           </span>
         </SydneyOperaHouseInfoText>
       </Right>
@@ -299,6 +292,7 @@ const Email = styled(HoverableTextUnderline)`
 const Right = styled.div`
   height: 500px;
   cursor: grab;
+  user-select: none;
   background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
 
   &:active {

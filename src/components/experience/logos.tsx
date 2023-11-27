@@ -11,14 +11,9 @@ import { COLOR } from "../../styles/theme";
 const Logos = () => {
   return (
     <Container
-      className="select-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{
-        stiffness: 0,
-        duration: 0.4,
-        delay: 0.2,
-      }}
+      transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
     >
       <QantasLogo>
         <img src={qantas} alt="Qantas" />
@@ -45,6 +40,7 @@ const Container = styled(motion.div)`
   grid-template-columns: 1fr;
   grid-template-rows: repeat(4, 1fr);
   grid-auto-rows: minmax(100px, auto);
+  user-select: none;
 
   ${up("sm")} {
     grid-template-columns: repeat(4, 1fr);
