@@ -189,9 +189,7 @@ const Experience = () => {
             delay: 0.4,
           }}
         >
-          <span className="font-secondary-normal cursor-pointer">
-            Sydney Opera House
-          </span>
+          <span className="font-secondary-normal">Sydney Opera House</span>
         </SydneyOperaHouseInfoText>
       </Right>
     </Container>
