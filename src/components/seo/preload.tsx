@@ -2,7 +2,6 @@ import * as React from "react";
 import fontPrimaryNormal from "../../../static/fonts/SansSerifFLF-Demibold.woff";
 import fontPrimaryBold from "../../../static/fonts/SansSerifBldFLF.woff";
 import fontSecondaryNormal from "../../../static/fonts/BwGradual-Medium.ttf";
-import fontSecondaryBold from "../../../static/fonts/sf-pro-medium.otf";
 import canary from "../../../static/videos/canary.mp4";
 import cie from "../../../static/videos/cie.mp4";
 import maily from "../../../static/videos/maily.mp4";
@@ -33,13 +32,6 @@ const Preload = () => {
         href={fontSecondaryNormal}
         as="font"
         type="font/ttf"
-        crossOrigin="anonymous"
-      />
-      <link
-        rel="preload"
-        href={fontSecondaryBold}
-        as="font"
-        type="font/otf"
         crossOrigin="anonymous"
       />
 
