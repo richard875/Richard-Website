@@ -1,4 +1,8 @@
 const PDF_PATH = "/richard-lee-resume.pdf";
-const getResume = () => window.open(PDF_PATH, "_blank");
+
+const getResume = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  e.preventDefault();
+  window.open(PDF_PATH, "_blank");
+};
 
 export default getResume;

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
@@ -19,7 +19,7 @@ import Usyd from "../components/education/usyd";
 import Uoa from "../components/education/uoa";
 import MousePosition from "../types/mousePosition";
 import contact from "../routes/contact";
-import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
+import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 gsap.registerPlugin(ScrollTrigger);

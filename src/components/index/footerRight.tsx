@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
 import { up } from "styled-breakpoints";

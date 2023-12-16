@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import fontPrimaryNormal from "../../../static/fonts/SansSerifFLF-Demibold.woff";
 import fontPrimaryBold from "../../../static/fonts/SansSerifBldFLF.woff";
 import fontSecondaryNormal from "../../../static/fonts/BwGradual-Medium.ttf";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { GatsbyLinkProps } from "gatsby";
 import Route from "../routes/route";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
@@ -28,7 +28,7 @@ import {
   BLOCK_PADDING_DESKTOP,
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
-} from "../constants/workPage";
+} from "../constants/margin";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 gsap.registerPlugin(ScrollTrigger);

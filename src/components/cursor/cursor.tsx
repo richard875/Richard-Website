@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
 import styled, { css } from "styled-components";

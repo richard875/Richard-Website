@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 // Splash images
 import splash640x1136 from "../../../static/images/splash/apple-splash-640-1136.jpg";
 import splash750x1334 from "../../../static/images/splash/apple-splash-750-1334.jpg";

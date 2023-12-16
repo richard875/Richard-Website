@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { up } from "styled-breakpoints";
@@ -17,7 +17,7 @@ import {
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
   IMAGE_DEFAULT_HEIGHT,
-} from "../../constants/workPage";
+} from "../../constants/margin";
 
 const Block = ({
   experience,

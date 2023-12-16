@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { navigate } from "gatsby";
 import Route from "../routes/route";
 

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
 import styled from "styled-components";
@@ -97,10 +97,7 @@ const Bottom = ({
         isIphoneXPwa={isIphoneXPwa}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        onClick={(e) => {
-          e.preventDefault();
-          getResume();
-        }}
+        onClick={(e) => getResume(e)}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}

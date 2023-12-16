@@ -1,19 +1,20 @@
-import { useState, useEffect } from "react";
-import { window } from "browser-monads"; //npm i browser-monads
+import React from "react";
+import { window } from "browser-monads-ts";
 
 const useWindowSize = () => {
-  const [windowSize, setWindowSize] = useState({
-    width: undefined,
-    height: undefined,
+  const [windowSize, setWindowSize] = React.useState({
+    width: undefined as number | undefined,
+    height: undefined as number | undefined,
   });
 
-  useEffect(() => {
-    function handleResize() {
+  React.useEffect(() => {
+    const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
-    }
+    };
+
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);

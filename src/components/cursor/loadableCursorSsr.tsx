@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Loadable from "@loadable/component";
 
 const LoadableCursorSsr = Loadable(() => import("./cursorSsr"));

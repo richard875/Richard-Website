@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import type { HeadFC } from "gatsby";
 import { GatsbyLinkProps } from "gatsby";
 import { motion } from "framer-motion";
@@ -21,7 +21,7 @@ import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
 import { EMAIL, LINKEDIN_URL, GITHUB_URL, COPYRIGHT } from "../constants/meta";
-import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/workPage";
+import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -130,10 +130,7 @@ const Contact = ({
             <CircleContainer
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
-              onClick={(e) => {
-                e.preventDefault();
-                getResume();
-              }}
+              onClick={(e) => getResume(e)}
             >
               <motion.div
                 initial={{ opacity: 0 }}

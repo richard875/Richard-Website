@@ -1,7 +1,7 @@
-import * as React from "react";
+import React from "react";
 import MousePosition from "../types/mousePosition";
 
-export default function useMousePosition(position: MousePosition) {
+const useMousePosition = (position: MousePosition) => {
   const [mousePosition, setMousePosition] = React.useState<MousePosition>({
     x: position?.x ?? window.innerWidth / 2,
     y: position?.y ?? window.innerHeight / 2,
@@ -16,4 +16,6 @@ export default function useMousePosition(position: MousePosition) {
   }, []);
 
   return mousePosition;
-}
+};
+
+export default useMousePosition;

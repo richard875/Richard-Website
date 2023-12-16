@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { isDesktop } from "react-device-detect";
 import Cursor from "./cursor";
 import MousePosition from "../../types/mousePosition";
