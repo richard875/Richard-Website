@@ -1,54 +1,55 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby minimal TypeScript starter
-</h1>
+![Richard-Website](https://socialify.git.ci/richard875/Richard-Website/image?description=1&descriptionEditable=Richard-Lee.com%202023%20Redesign&language=1&name=1&pattern=Plus&theme=Dark)
 
-## 🚀 Quick start
+[![Website](https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://richard-lee.com/?utm_source=github&utm_medium=web)&nbsp;
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/richard875)
 
-1.  **Create a Gatsby site.**
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
+![Gatsby](https://img.shields.io/badge/Gatsby-663399?style=for-the-badge&logo=gatsby&logoColor=white)&nbsp;
+![Tailwind-CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)&nbsp;
+![ThreeJs](https://img.shields.io/badge/ThreeJs-black?style=for-the-badge&logo=three.js&logoColor=white)
 
-    Use the Gatsby CLI to create a new site, specifying the minimal TypeScript starter.
+## Overview
 
-    ```shell
-    # create a new Gatsby site using the minimal TypeScript starter
-    npm init gatsby
-    ```
+This repository contains the codebase for the redesign of my personal website, [richard-lee.com](https://richard-lee.com/?utm_source=github&utm_medium=web). The website has undergone a significant overhaul to enhance user experience, incorporate modern design elements, and improve performance.
 
-2.  **Start developing.**
+## Features
 
-    Navigate into your new site’s directory and start it up.
+- **Fresh Design**: A modern, clean, and intuitive design that aims to provide a seamless browsing experience.
+- **Responsive Layout**: Ensures compatibility across various devices and screen sizes for optimal viewing.
+- **Improved Performance**: Optimised code and assets to enhance site speed and overall performance.
+- **Enhanced Content**: Updated content, portfolio, and page sections to reflect recent projects and experiences.
+- **Accessibility**: Implemented accessibility features to ensure inclusivity for all users.
+- **Tech Stack**: Built using TypeScript, React, Gatsby, Tailwind CSS, Three.js, and more.
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+## Installation
 
-3.  **Open the code and start customizing!**
+To run this project locally, follow these steps:
 
-    Your site is now running at http://localhost:8000!
+1. Clone this repository: `git clone git@github.com:richard875/Richard-Website.git`
+2. Navigate to the project folder
+3. Install dependencies: `npm install`
+4. Start the development server: `npm start`
+5. Open your browser and visit: `http://localhost:8000` to view the website.
 
-    Edit `src/pages/index.tsx` to see your site update in real-time!
+## Usage
 
-4.  **Learn more**
+- Explore the website by navigating through different sections.
+- Provide feedback, report issues, or contribute to the project by creating pull requests.
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+## Contributions
 
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+Contributions are welcome! If you'd like to contribute:
 
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+1. Fork the repository.
+2. Create your feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a pull request detailing the changes proposed.
 
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+## Feedback
 
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+Your feedback is highly appreciated! Feel free to [reach out](mailto:hello@richard-lee.com) with suggestions, bug reports, or any other comments.
 
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+## License
 
-## 🚀 Quick start (Gatsby Cloud)
-
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
+This project is licensed under the [MIT License](LICENSE).
