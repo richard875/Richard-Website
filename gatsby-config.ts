@@ -13,6 +13,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 const SITE_URL = `https://${process.env.GATSBY_SITE_URL}`;
 
 const config: GatsbyConfig = {
+  trailingSlash: `always`,
   siteMetadata: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
@@ -36,9 +37,14 @@ const config: GatsbyConfig = {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
         trackingIds: [process.env.STREAM_ID, process.env.GA_ID],
+        gtagConfig: {
+          anonymize_ip: true,
+          cookie_expires: 0,
+        },
         pluginConfig: {
           head: true,
-          anonymize: true,
+          respectDNT: false,
+          delayOnRouteUpdate: 0,
         },
       },
     },
