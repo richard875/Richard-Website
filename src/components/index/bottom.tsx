@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { StaticImage } from "gatsby-plugin-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import getResume from "../../helper/getResume";
@@ -132,11 +132,11 @@ const Container = styled.div`
   padding: 15px 12px;
   background: linear-gradient(90deg, #f55591 0%, #f9c41a 100%);
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     padding: 3vh 5vw;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     padding: 3vh 3vw;
   }
 `;
@@ -146,11 +146,11 @@ const SmallText = styled.div`
   color: ${COLOR.WHITE};
   overflow: hidden;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     font-size: 20px;
   }
 
-  @media ${size.up.xxl} {
+  @media ${layout.up.xxl} {
     font-size: 25px;
   }
 `;
@@ -162,17 +162,17 @@ const Name = styled.div`
   color: ${COLOR.WHITE};
   -webkit-text-stroke: 0.12rem ${COLOR.BLACK};
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     font-size: 80px;
     line-height: 80px;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     font-size: 100px;
     line-height: 100px;
   }
 
-  @media ${size.up.xxl} {
+  @media ${layout.up.xxl} {
     margin-top: 1vw;
     font-size: 130px;
     line-height: 120px;
@@ -186,12 +186,12 @@ const Button = styled.div`
   user-select: none;
   overflow: hidden;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     font-size: 18px;
     margin-top: 50px;
   }
 
-  @media ${size.up.xxl} {
+  @media ${layout.up.xxl} {
     font-size: 20px;
   }
 `;
@@ -203,12 +203,12 @@ const Country = styled.div`
   color: ${COLOR.WHITE};
   overflow: hidden;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     font-size: 17px;
     bottom: 8vh;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     display: none;
   }
 `;
@@ -230,12 +230,12 @@ const Circle = styled.div`
     }
   }
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     width: 150px;
     height: 150px;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     width: 170px;
     height: 170px;
   }
@@ -255,17 +255,17 @@ const CircleContainer = styled.span`
     transform: rotate(-170deg) scale(1.07);
   }
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     bottom: 10vh;
     right: 75px;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     bottom: 12vh;
     right: 115px;
   }
 
-  @media ${size.up.xxl} {
+  @media ${layout.up.xxl} {
     bottom: 15vh;
     right: 15vh;
   }

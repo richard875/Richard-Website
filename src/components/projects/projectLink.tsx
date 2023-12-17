@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 
 const ProjectLink = ({
@@ -51,11 +51,11 @@ const Cta = styled.div`
   font-size: 16px;
   user-select: none;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     margin-left: 0;
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     font-size: 18px;
   }
 `;

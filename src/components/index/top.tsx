@@ -1,7 +1,7 @@
 import React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import contact from "../../routes/contact";
@@ -65,18 +65,18 @@ const Container = styled.div`
   overflow: hidden;
   border-bottom: 3px solid ${COLOR.BLACK};
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     font-size: 17px;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     height: 60px;
     font-size: 25px;
     padding-left: 28px;
     padding-right: 28px;
   }
 
-  @media ${size.up.xxl} {
+  @media ${layout.up.xxl} {
     height: 9vh;
     font-size: 30px;
   }

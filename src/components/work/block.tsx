@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import useWindowSize from "../../hooks/useWindowSize";
 import { CSSTransition } from "react-transition-group";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import TextSection from "../global/textSection";
@@ -121,7 +121,7 @@ const Container = styled.div`
   padding-right: ${BLOCK_PADDING + "px"};
   border-right: none;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     margin-top: 0;
     padding-bottom: 0;
     width: ${BLOCK_WIDTH + "px"};
@@ -140,7 +140,7 @@ const Container = styled.div`
         : `0.5px solid ${COLOR.BACKGROUND_BLACK}`)};
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     width: ${BLOCK_WIDTH_DESKTOP + "px"};
   }
 `;
@@ -154,7 +154,7 @@ const Logo = styled.img`
     15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   user-select: none;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     margin-top: ${({ height }: { height: number }) =>
       10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
     margin-bottom: ${({ height }: { height: number }) =>
@@ -167,7 +167,7 @@ const JobTitle = styled.p`
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BLUE : COLOR.RED};
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     font-size: 24px;
   }
 `;
@@ -175,7 +175,7 @@ const JobTitle = styled.p`
 const Company = styled.p`
   font-size: 22px;
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     font-size: 24px;
   }
 `;
@@ -183,7 +183,7 @@ const Company = styled.p`
 const Secondary = styled.p`
   font-size: 16px;
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     font-size: 18px;
   }
 `;
@@ -194,11 +194,11 @@ const DescriptionText = styled.p`
   font-size: 18px;
   line-height: 25px;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     margin-top: ${({ isFirst }: { isFirst: boolean }) =>
       isFirst ? "40px" : "20px"};
     width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
@@ -214,12 +214,12 @@ const Media = styled.div`
   bottom: ${({ top }: { top: number }) =>
     useWindowSize().height! - top + 20 + "px"};
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     display: block;
     width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 `;

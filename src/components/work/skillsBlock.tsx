@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import skillsData from "../../../static/data/skills.json";
 import iconPicker from "../../helper/iconPicker";
@@ -119,7 +119,7 @@ const Container = styled.div`
   padding-right: ${BLOCK_PADDING + "px"};
   border-right: none;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     padding-top: 0;
     padding-bottom: 0;
     width: ${BLOCK_WIDTH + "px"};
@@ -131,7 +131,7 @@ const Container = styled.div`
         : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     width: ${BLOCK_WIDTH_DESKTOP + "px"};
   }
 `;
@@ -140,7 +140,7 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     margin-bottom: -10px;
   }
 `;
@@ -151,7 +151,7 @@ const Logo = styled.img`
   user-select: none;
   margin-left: 8px;
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     margin-top: ${({ height }: { height: number }) =>
       10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
     margin-bottom: ${({ height }: { height: number }) =>
@@ -162,7 +162,7 @@ const Logo = styled.img`
 const Title = styled.p`
   font-size: 23px;
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     font-size: 25px;
   }
 `;
@@ -170,11 +170,11 @@ const Title = styled.p`
 const Skill = styled.div`
   margin-top: 15px;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     margin-top: 20px;
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     margin-top: 27px;
   }
 `;
@@ -189,7 +189,7 @@ const SkillsText = styled.p`
   font-size: ${({ isTitle }: { isTitle: boolean }) =>
     isTitle ? "22px" : "18px"};
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     font-size: ${({ isTitle }: { isTitle: boolean }) =>
       isTitle ? "24px" : "20px"};
   }
@@ -202,11 +202,11 @@ const SkillsImage = styled.img`
   margin-bottom: 4px;
   user-select: none;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     margin-bottom: 3px;
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     height: 23px;
   }
 `;
@@ -217,7 +217,7 @@ const SkillsBar = styled(motion.div)`
     isDarkMode ? COLOR.BLUE : COLOR.RED};
   display: none;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     display: block;
   }
 `;
@@ -228,7 +228,7 @@ const SecondarySkillsWrapper = styled.div`
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 10px;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 `;
@@ -243,7 +243,7 @@ const SecondarySkillsItem = styled.div`
       ? `0.5px solid ${COLOR.BORDER_WHITE}`
       : `0.5px solid ${COLOR.BORDER_BLACK}`};
 
-  @media ${size.down.sm} {
+  @media ${layout.down.sm} {
     &:nth-child(n + 4) {
       border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
         isDarkMode
@@ -256,7 +256,7 @@ const SecondarySkillsItem = styled.div`
     }
   }
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     &:nth-child(n + 5) {
       border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
         isDarkMode

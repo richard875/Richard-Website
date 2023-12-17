@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { PAGE_TITLE } from "../constants/meta";
 import type { HeadFC } from "gatsby";
-import size from "../styles/layout";
+import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -206,7 +206,7 @@ export const Head: HeadFC = () => (
 );
 
 const Container = styled(motion.div)`
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -217,15 +217,15 @@ const Left = styled.div`
   padding: 30px;
   background-color: ${COLOR.BACKGROUND_BLACK};
 
-  @media ${size.down.sm} {
+  @media ${layout.down.sm} {
     padding-bottom: 10px;
   }
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     padding: 50px;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     width: 55vw;
     height: 100vh;
     padding: 6vw;
@@ -240,12 +240,12 @@ const LeftText = styled(motion.div)`
   font-size: 6vw;
   line-height: 1.65;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     font-size: 3vw;
     line-height: 1.8;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     font-size: 1.85vw;
     line-height: 1.8;
   }
@@ -292,11 +292,11 @@ const Right = styled.div`
     cursor: grabbing;
   }
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     height: 60vh;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     width: 45vw;
     height: 100vh;
   }
@@ -319,7 +319,7 @@ const Cta = styled(motion.div)`
   color: ${COLOR.BRIGHT_GREEN};
   font-size: 19px;
 
-  @media ${size.down.sm} {
+  @media ${layout.down.sm} {
     margin-top: 8vw;
   }
 `;

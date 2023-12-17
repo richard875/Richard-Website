@@ -9,7 +9,7 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { PAGE_TITLE } from "../constants/meta";
 import useWindowSize from "../hooks/useWindowSize";
 import type { HeadFC } from "gatsby";
-import size from "../styles/layout";
+import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
@@ -115,7 +115,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     width: 70%;
   }
 `;
@@ -126,12 +126,12 @@ const AcknowledgementText = styled(motion.div)`
   color: ${COLOR.WHITE};
   margin-bottom: 15px;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     font-size: 3vw;
     line-height: 1.8;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     font-size: 1.85vw;
   }
 `;

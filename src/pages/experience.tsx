@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { COPYRIGHT, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
 import useWindowSize from "../hooks/useWindowSize";
 import type { HeadFC } from "gatsby";
-import size from "../styles/layout";
+import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
@@ -178,7 +178,7 @@ const Container = styled(motion.div)`
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.WHITE : COLOR.BLACK};
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     overflow-x: hidden;
   }
 `;
@@ -200,7 +200,7 @@ const Top = styled.div`
   background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
     width: calc(100% - ${BLOCK_PADDING_DESKTOP * 2 + "px"});
   }
@@ -210,7 +210,7 @@ const Title = styled.p`
   font-size: 20px;
   user-select: none;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     font-size: 25px;
   }
 `;
@@ -219,7 +219,7 @@ const Horizontal = styled.div`
   flex-wrap: wrap;
   padding-top: 40px;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     padding-top: 66px;
     padding-bottom: 20px;
     width: ${({ entryLength }: { entryLength: number }) =>
@@ -228,7 +228,7 @@ const Horizontal = styled.div`
     display: flex;
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     width: ${({ entryLength }: { entryLength: number }) =>
       `${entryLength * BLOCK_WIDTH_DESKTOP}px`};
   }
@@ -253,7 +253,7 @@ const Bottom = styled.div`
       ? `0.5px solid ${COLOR.BORDER_WHITE}`
       : `0.5px solid ${COLOR.BORDER_BLACK}`};
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     display: none;
   }
 `;

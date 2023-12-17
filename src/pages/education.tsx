@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Route from "../routes/route";
 import { COPYRIGHT, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
 import type { HeadFC } from "gatsby";
-import size from "../styles/layout";
+import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
@@ -150,13 +150,13 @@ const Top = styled.div`
   background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
-  @media ${size.down.md} {
+  @media ${layout.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
     position: fixed;
     z-index: 9999;
   }
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
     margin-right: ${BLOCK_PADDING_DESKTOP + "px"};
   }
@@ -166,7 +166,7 @@ const Title = styled.p`
   font-size: 20px;
   user-select: none;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     font-size: 25px;
   }
 `;
@@ -174,7 +174,7 @@ const Title = styled.p`
 const Horizontal = styled.div`
   padding-top: 39px;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     display: flex;
     height: calc(100vh - 46.5px);
     padding-top: 19.5px;
@@ -201,7 +201,7 @@ const Bottom = styled.div`
       ? `0.7px solid ${COLOR.BORDER_WHITE}`
       : `0.7px solid ${COLOR.BORDER_BLACK}`};
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     display: none;
   }
 `;

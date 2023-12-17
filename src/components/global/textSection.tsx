@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 
 const TextSection = ({
@@ -66,7 +66,7 @@ const Link = styled.a`
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BLUE : COLOR.RED};
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
       isDarkMode ? COLOR.BLUE : COLOR.RED};
     text-decoration-line: underline;

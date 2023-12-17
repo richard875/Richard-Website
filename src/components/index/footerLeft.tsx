@@ -1,7 +1,7 @@
 import React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const FooterLeft = ({
@@ -40,7 +40,7 @@ const Container = styled.div`
   align-items: center;
   margin-left: 15px;
 
-  @media ${size.up.xxl} {
+  @media ${layout.up.xxl} {
     font-size: 18px;
   }
 `;

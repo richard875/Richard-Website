@@ -11,7 +11,7 @@ import projects from "../routes/projects";
 import education from "../routes/education";
 import styled from "styled-components";
 import { StaticImage } from "gatsby-plugin-image";
-import size from "../styles/layout";
+import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
@@ -302,7 +302,7 @@ const Container = styled(motion.div)`
   background-color: ${COLOR.BACKGROUND_BLACK};
   cursor: none;
 
-  @media ${size.down.md} {
+  @media ${layout.down.md} {
     @media screen and (max-height: 100vh) {
       padding-bottom: 20px;
     }
@@ -319,13 +319,13 @@ const Top = styled.div`
   border-bottom: 0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY};
   background-color: ${COLOR.BACKGROUND_BLACK};
 
-  @media ${size.down.md} {
+  @media ${layout.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
     position: fixed;
     justify-content: space-between;
   }
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
     margin-right: ${BLOCK_PADDING_DESKTOP + "px"};
   }
@@ -335,7 +335,7 @@ const Title = styled.p`
   font-size: 20px;
   user-select: none;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     font-size: 25px;
   }
 `;
@@ -345,7 +345,7 @@ const Box = styled.div`
   padding-left: 20px;
   padding-right: 20px;
 
-  @media ${size.down.md} {
+  @media ${layout.down.md} {
     display: flex;
     flex-direction: column;
     @media screen and (min-height: 100vh) {
@@ -353,7 +353,7 @@ const Box = styled.div`
     }
   }
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     display: flex;
     height: calc(100vh - 46.5px);
     padding-top: 6vw;
@@ -362,7 +362,7 @@ const Box = styled.div`
     padding-right: 50px;
   }
 
-  @media ${size.up.xl} {
+  @media ${layout.up.xl} {
     padding-left: 100px;
     padding-right: 100px;
   }
@@ -380,11 +380,11 @@ const Right = styled.div`
   display: flex;
   flex-direction: column-reverse;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     align-items: center;
   }
 
-  @media ${size.down.md} {
+  @media ${layout.down.md} {
     flex: 1;
     align-items: flex-start;
     padding-bottom: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
@@ -396,7 +396,7 @@ const ContactText = styled.p`
   font-size: 12.5vw;
   line-height: 15vw;
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     font-size: 7.5vw;
     line-height: 9vw;
   }
@@ -405,19 +405,19 @@ const ContactText = styled.p`
 const ContactEmail = styled.p`
   font-size: 19px;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     font-size: 24px;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     font-size: 26px;
   }
 
-  @media ${size.up.xl} {
+  @media ${layout.up.xl} {
     font-size: 28px;
   }
 
-  @media ${size.up.xxxl} {
+  @media ${layout.up.xxxl} {
     font-size: 30px;
   }
 `;
@@ -439,12 +439,12 @@ const Circle = styled.div`
     }
   }
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     width: 200px;
     height: 200px;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     width: 250px;
     height: 250px;
   }
@@ -461,11 +461,11 @@ const CircleContainer = styled.div`
     transform: rotate(-170deg) scale(1.07);
   }
 
-  @media ${size.down.md} {
+  @media ${layout.down.md} {
     margin-top: 30px;
   }
 
-  @media ${size.up.md} {
+  @media ${layout.up.md} {
     position: absolute;
     width: 200px;
     height: 200px;
@@ -473,7 +473,7 @@ const CircleContainer = styled.div`
     right: 15vw;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     width: 250px;
     height: 250px;
     bottom: 50vh;

@@ -5,7 +5,7 @@ import uoa from "../../../static/images/logos/uoa.png";
 import usyd from "../../../static/images/logos/usyd.svg";
 import qantas from "../../../static/images/logos/qantas.svg";
 import nzgovt from "../../../static/images/logos/nzgovt.png";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 
 const Logos = () => {
@@ -42,14 +42,14 @@ const Container = styled(motion.div)`
   grid-auto-rows: minmax(100px, auto);
   user-select: none;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
     margin-top: 4vw;
     margin-bottom: 4vw;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     margin-top: 2vw;
     margin-bottom: 2vw;
   }
@@ -60,15 +60,15 @@ const Logo = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media ${size.down.sm} {
+  @media ${layout.down.sm} {
     height: 35vw !important;
   }
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     height: 10vw !important;
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     height: 5.5vw !important;
   }
 `;
@@ -76,7 +76,7 @@ const Logo = styled.div`
 const QantasLogo = styled(Logo)`
   border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     border-bottom: 0;
     border-right: 0.5px solid ${COLOR.BORDER_WHITE};
   }
@@ -84,11 +84,11 @@ const QantasLogo = styled(Logo)`
   img {
     height: 8vw;
 
-    @media ${size.up.sm} {
+    @media ${layout.up.sm} {
       height: 3vw;
     }
 
-    @media ${size.up.lg} {
+    @media ${layout.up.lg} {
       height: 1.7vw;
     }
   }
@@ -97,7 +97,7 @@ const QantasLogo = styled(Logo)`
 const NzGovtLogo = styled(Logo)`
   border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     border-bottom: 0;
     border-right: 0.5px solid ${COLOR.BORDER_WHITE};
   }
@@ -105,11 +105,11 @@ const NzGovtLogo = styled(Logo)`
   img {
     height: 10vw;
 
-    @media ${size.up.sm} {
+    @media ${layout.up.sm} {
       height: 4.5vw;
     }
 
-    @media ${size.up.lg} {
+    @media ${layout.up.lg} {
       height: 2.5vw;
     }
   }
@@ -118,7 +118,7 @@ const NzGovtLogo = styled(Logo)`
 const UsydLogo = styled(Logo)`
   border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     border-bottom: 0;
     border-right: 0.5px solid ${COLOR.BORDER_WHITE};
   }
@@ -126,11 +126,11 @@ const UsydLogo = styled(Logo)`
   img {
     height: 11vw;
 
-    @media ${size.up.sm} {
+    @media ${layout.up.sm} {
       height: 4.5vw;
     }
 
-    @media ${size.up.lg} {
+    @media ${layout.up.lg} {
       height: 2.5vw;
     }
   }
@@ -140,11 +140,11 @@ const UoaLogo = styled(Logo)`
   img {
     height: 13vw;
 
-    @media ${size.up.sm} {
+    @media ${layout.up.sm} {
       height: 5vw;
     }
 
-    @media ${size.up.lg} {
+    @media ${layout.up.lg} {
       height: 2.6vw;
     }
   }

@@ -2,7 +2,7 @@ import React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
-import size from "../../styles/layout";
+import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 
 const getTimeInSydney = () =>
@@ -44,7 +44,7 @@ const Container = styled.div`
   align-items: center;
   margin-right: 15px;
 
-  @media ${size.up.xxl} {
+  @media ${layout.up.xxl} {
     font-size: 18px;
   }
 `;

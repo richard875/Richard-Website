@@ -10,7 +10,7 @@ import { SITE_TITLE, MODE, STANDALONE } from "../constants/meta";
 import gsapAnimationIndex from "../helper/gsapAnimationIndex";
 import useWindowSize from "../hooks/useWindowSize";
 import type { HeadFC } from "gatsby";
-import size from "../styles/layout";
+import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
@@ -139,7 +139,7 @@ const Container = styled(motion.div)`
   background-color: ${COLOR.BACKGROUND_WHITE};
   cursor: none;
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     align-items: center;
   }
 `;
@@ -149,17 +149,17 @@ const Box = styled.div`
   height: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
     useWindowSize().height! - (isIphoneXPwa ? 85 : 30) + "px"};
 
-  @media ${size.down.sm} {
+  @media ${layout.down.sm} {
     margin-top: 15px;
     position: relative;
   }
 
-  @media ${size.up.sm} {
+  @media ${layout.up.sm} {
     width: calc(100vw - 70px);
     height: ${() => useWindowSize().height! - 70 + "px"};
   }
 
-  @media ${size.up.lg} {
+  @media ${layout.up.lg} {
     width: calc(100vw - 135px);
     height: ${() => useWindowSize().height! - 120 + "px"};
   }
@@ -182,7 +182,7 @@ const Footer = styled.div`
   justify-content: space-between;
   overflow: hidden;
 
-  @media ${size.down.lg} {
+  @media ${layout.down.lg} {
     display: none;
   }
 `;
