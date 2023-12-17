@@ -1,8 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { up, down } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
+import size from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import skillsData from "../../../static/data/skills.json";
 import iconPicker from "../../helper/iconPicker";
@@ -42,32 +41,28 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
         animate={{ opacity: 1 }}
         transition={{ stiffness: 0, duration: 0.4, delay: 0.1 }}
       >
-        {useBreakpoint(up("xxxl")) && (
+        <Logo
+          className="hidden xxxl:block"
+          height={50}
+          src={iconPicker("react", isDarkMode)}
+          alt={"My Skills"}
+        />
+        <TitleWrapper>
+          <Title>Proficient Skills</Title>
           <Logo
-            height={50}
+            className="xxxl:hidden"
+            height={30}
+            style={{ paddingBottom: "5px" }}
             src={iconPicker("react", isDarkMode)}
             alt={"My Skills"}
           />
-        )}
-
-        <TitleWrapper>
-          <Title>Proficient Skills</Title>
-          {useBreakpoint(down("xxxl")) && (
-            <Logo
-              height={30}
-              className="ml-2"
-              style={{ paddingBottom: "5px" }}
-              src={iconPicker("react", isDarkMode)}
-              alt={"My Skills"}
-            />
-          )}
         </TitleWrapper>
         {(skillsData as Skills).primary.map(
           (skill: SkillType, index: number) => (
             <Skill key={index}>
               <SkillsTextWrapper>
                 <SkillsText isTitle={false}>
-                  {useBreakpoint(down("md")) && <> - </>}
+                  <span className="md:hidden"> - </span>
                   {skill.displayName}
                 </SkillsText>
                 <SkillsImage
@@ -75,20 +70,18 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
                   alt={skill.displayName}
                 ></SkillsImage>
               </SkillsTextWrapper>
-              {useBreakpoint(up("md")) && (
-                <SkillsBar
-                  isDarkMode={isDarkMode}
-                  initial={{ width: 0 }}
-                  animate={{ width: skill.skill! + "%" }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 35,
-                    mass: 1,
-                    delay: 0.4,
-                  }}
-                ></SkillsBar>
-              )}
+              <SkillsBar
+                isDarkMode={isDarkMode}
+                initial={{ width: 0 }}
+                animate={{ width: skill.skill! + "%" }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 35,
+                  mass: 1,
+                  delay: 0.4,
+                }}
+              ></SkillsBar>
             </Skill>
           )
         )}
@@ -99,7 +92,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
         </Skill>
         <SecondarySkillsWrapper>
           {(skillsData as Skills).secondary
-            .slice(0, useBreakpoint(up("sm")) ? 8 : 9)
+            .slice(0, 8)
             .map((skill: SkillType, index: number) => (
               <SecondarySkills
                 key={index}
@@ -107,6 +100,10 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
                 isDarkMode={isDarkMode}
               />
             ))}
+          <SecondarySkills
+            skill={(skillsData as Skills).secondary[8]}
+            isDarkMode={isDarkMode}
+          />
         </SecondarySkillsWrapper>
       </motion.div>
     </Container>
@@ -122,7 +119,7 @@ const Container = styled.div`
   padding-right: ${BLOCK_PADDING + "px"};
   border-right: none;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     padding-top: 0;
     padding-bottom: 0;
     width: ${BLOCK_WIDTH + "px"};
@@ -134,7 +131,7 @@ const Container = styled.div`
         : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     width: ${BLOCK_WIDTH_DESKTOP + "px"};
   }
 `;
@@ -143,7 +140,7 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     margin-bottom: -10px;
   }
 `;
@@ -152,8 +149,9 @@ const Logo = styled.img`
   height: ${({ height }: { height: number }) => height + "px"};
   width: auto;
   user-select: none;
+  margin-left: 8px;
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     margin-top: ${({ height }: { height: number }) =>
       10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
     margin-bottom: ${({ height }: { height: number }) =>
@@ -164,7 +162,7 @@ const Logo = styled.img`
 const Title = styled.p`
   font-size: 23px;
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     font-size: 25px;
   }
 `;
@@ -172,11 +170,11 @@ const Title = styled.p`
 const Skill = styled.div`
   margin-top: 15px;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     margin-top: 20px;
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     margin-top: 27px;
   }
 `;
@@ -191,7 +189,7 @@ const SkillsText = styled.p`
   font-size: ${({ isTitle }: { isTitle: boolean }) =>
     isTitle ? "22px" : "18px"};
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     font-size: ${({ isTitle }: { isTitle: boolean }) =>
       isTitle ? "24px" : "20px"};
   }
@@ -204,11 +202,11 @@ const SkillsImage = styled.img`
   margin-bottom: 4px;
   user-select: none;
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     margin-bottom: 3px;
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     height: 23px;
   }
 `;
@@ -217,6 +215,11 @@ const SkillsBar = styled(motion.div)`
   height: 4px;
   background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BLUE : COLOR.RED};
+  display: none;
+
+  @media ${size.up.md} {
+    display: block;
+  }
 `;
 
 const SecondarySkillsWrapper = styled.div`
@@ -225,7 +228,7 @@ const SecondarySkillsWrapper = styled.div`
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 10px;
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 `;
@@ -240,7 +243,7 @@ const SecondarySkillsItem = styled.div`
       ? `0.5px solid ${COLOR.BORDER_WHITE}`
       : `0.5px solid ${COLOR.BORDER_BLACK}`};
 
-  ${down("sm")} {
+  @media ${size.down.sm} {
     &:nth-child(n + 4) {
       border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
         isDarkMode
@@ -253,7 +256,7 @@ const SecondarySkillsItem = styled.div`
     }
   }
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     &:nth-child(n + 5) {
       border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
         isDarkMode
@@ -263,6 +266,10 @@ const SecondarySkillsItem = styled.div`
 
     &:nth-child(4n + 1) {
       border-left: none;
+    }
+
+    &:last-of-type {
+      display: none;
     }
   }
 `;

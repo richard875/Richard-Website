@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { up } from "styled-breakpoints";
+import size from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import {
@@ -110,7 +110,7 @@ const Container = styled.div`
   padding-left: ${BLOCK_PADDING + "px"};
   padding-right: ${BLOCK_PADDING + "px"};
 
-  ${up("md")} {
+  @media ${size.up.md} {
     flex: 0.5;
     margin-top: 0;
     padding-bottom: 0;
@@ -128,7 +128,7 @@ const Logo = styled.img`
     15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   user-select: none;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     margin-top: ${({ height }: { height: number }) =>
       10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
     margin-bottom: ${({ height }: { height: number }) =>
@@ -141,7 +141,7 @@ const UniversityText = styled.p`
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BLUE : COLOR.RED};
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     font-size: 24px;
   }
 `;
@@ -152,7 +152,7 @@ const SecondaryTitle = styled.p`
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BLUE : COLOR.RED};
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     font-size: 20px;
     line-height: 28px;
   }
@@ -163,11 +163,11 @@ const SummaryText = styled.p`
   font-size: 18px;
   line-height: 25px;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     width: 90%;
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     font-size: 20px;
     line-height: 30px;
   }

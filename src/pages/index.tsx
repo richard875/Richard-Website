@@ -7,16 +7,14 @@ import intro from "../routes/intro";
 import acknowledgement from "../routes/acknowledgement";
 import styled from "styled-components";
 import { SITE_TITLE, MODE, STANDALONE } from "../constants/meta";
-import { up, down } from "styled-breakpoints";
 import gsapAnimationIndex from "../helper/gsapAnimationIndex";
 import useWindowSize from "../hooks/useWindowSize";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
 import type { HeadFC } from "gatsby";
+import size from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
-import Layout from "../components/global/layout";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import Loading from "../components/index/loading";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -67,7 +65,7 @@ const IndexPage = ({
   }, []);
 
   return (
-    <Layout>
+    <>
       <Container
         initial={{
           opacity: 0,
@@ -93,8 +91,8 @@ const IndexPage = ({
               isIphoneXPwa={isIphoneX && isPwa}
             />
           </Wrapper>
-          <div ref={acknowledgementRef}>
-            {useBreakpoint(down("sm")) && isIphoneX && isPwa && (
+          <div ref={acknowledgementRef} className="sm:hidden">
+            {isIphoneX && isPwa && (
               <div
                 className="font-secondary-normal mt-2 ml-1 select-none"
                 onClick={(e) => acknowledgement(e)}
@@ -103,15 +101,10 @@ const IndexPage = ({
               </div>
             )}
           </div>
-          {useBreakpoint(up("lg")) && (
-            <Footer>
-              <FooterLeft
-                setHover={setHover}
-                acknowledgement={acknowledgement}
-              />
-              <FooterRight />
-            </Footer>
-          )}
+          <Footer>
+            <FooterLeft setHover={setHover} acknowledgement={acknowledgement} />
+            <FooterRight />
+          </Footer>
         </Box>
         <LoadableCursorSsr
           hover={hover}
@@ -123,7 +116,7 @@ const IndexPage = ({
         />
       </Container>
       <Loading />
-    </Layout>
+    </>
   );
 };
 
@@ -146,7 +139,7 @@ const Container = styled(motion.div)`
   background-color: ${COLOR.BACKGROUND_WHITE};
   cursor: none;
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     align-items: center;
   }
 `;
@@ -156,17 +149,17 @@ const Box = styled.div`
   height: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
     useWindowSize().height! - (isIphoneXPwa ? 85 : 30) + "px"};
 
-  ${down("sm")} {
+  @media ${size.down.sm} {
     margin-top: 15px;
     position: relative;
   }
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     width: calc(100vw - 70px);
     height: ${() => useWindowSize().height! - 70 + "px"};
   }
 
-  ${up("lg")} {
+  @media ${size.up.lg} {
     width: calc(100vw - 135px);
     height: ${() => useWindowSize().height! - 120 + "px"};
   }
@@ -188,4 +181,8 @@ const Footer = styled.div`
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
+
+  @media ${size.down.lg} {
+    display: none;
+  }
 `;

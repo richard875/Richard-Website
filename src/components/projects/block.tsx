@@ -1,9 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { up } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { CSSTransition } from "react-transition-group";
+import size from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import TextSection from "../global/textSection";
@@ -91,7 +90,7 @@ const Block = ({
             isDarkMode={isDarkMode}
           />
         )}
-        {useBreakpoint(up("md")) && !!project.media && (
+        {!!project.media && (
           <CSSTransition
             nodeRef={mediaRef}
             in={displayMedia}
@@ -137,7 +136,7 @@ const Container = styled.div`
   padding-right: ${BLOCK_PADDING + "px"};
   border-right: none;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     margin-top: 0;
     padding-bottom: 0;
     width: ${BLOCK_WIDTH + "px"};
@@ -158,7 +157,7 @@ const Container = styled.div`
         : `0.5px solid ${COLOR.BACKGROUND_BLACK}`)};
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     width: ${BLOCK_WIDTH_DESKTOP + "px"};
   }
 `;
@@ -172,22 +171,24 @@ const Logo = styled.img`
     15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   user-select: none;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     margin-top: ${({ height }: { height: number }) =>
       10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   }
 `;
 
 const MediaWrapper = styled.div`
+  display: none;
   position: absolute;
   z-index: 99999 !important;
   top: ${({ top }: { top: number }) => top + 15 + "px"};
 
-  ${up("md")} {
+  @media ${size.up.md} {
+    display: block;
     width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 `;
@@ -204,7 +205,7 @@ const Media = styled.div`
     widthMedium: string;
   }) => (portraitOperation ? widthMedium : "100%")};
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     width: ${({
       portraitOperation,
       widthLarge,
@@ -241,7 +242,7 @@ const ProjectName = styled.p`
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BLUE : COLOR.RED};
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     font-size: 24px;
   }
 `;
@@ -252,11 +253,11 @@ const DescriptionText = styled.p`
   font-size: 18px;
   line-height: 25px;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     margin-top: ${({ isFirst }: { isFirst: boolean }) =>
       isFirst ? "35px" : "20px"};
     width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};

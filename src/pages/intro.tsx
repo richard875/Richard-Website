@@ -4,8 +4,6 @@ import Route from "../routes/route";
 import home from "../routes/home";
 import experience from "../routes/experience";
 import styled from "styled-components";
-import { up, down } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleChevronLeft,
@@ -13,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { PAGE_TITLE } from "../constants/meta";
 import type { HeadFC } from "gatsby";
+import size from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -83,28 +82,26 @@ const Experience = () => {
     >
       <InitialTransition color={transitionColor} />
       <Left>
-        {useBreakpoint(up("sm")) && (
-          <div className="w-full flex items-center justify-between sm:mb-[4vw] lg:mb-[2vw]">
-            <Cta
-              className="font-secondary-normal !text-white"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-            >
-              <FontAwesomeIcon icon={faCircleChevronLeft} className="mt-0.5" />
-              <div className="cursor-pointer text-base pl-2 hover:pl-3 transition-all ease-in-out underline underline-offset-4 select-none">
-                <span
-                  onClick={(e) => {
-                    setTransitionColor(COLOR.BACKGROUND_WHITE);
-                    home(e);
-                  }}
-                >
-                  Home
-                </span>
-              </div>
-            </Cta>
-          </div>
-        )}
+        <div className="hidden sm:flex w-full items-center justify-between sm:mb-[4vw] lg:mb-[2vw]">
+          <Cta
+            className="font-secondary-normal !text-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+          >
+            <FontAwesomeIcon icon={faCircleChevronLeft} className="mt-0.5" />
+            <div className="cursor-pointer text-base pl-2 hover:pl-3 transition-all ease-in-out underline underline-offset-4 select-none">
+              <span
+                onClick={(e) => {
+                  setTransitionColor(COLOR.BACKGROUND_WHITE);
+                  home(e);
+                }}
+              >
+                Home
+              </span>
+            </div>
+          </Cta>
+        </div>
         <LeftText
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
@@ -150,21 +147,19 @@ const Experience = () => {
           </Email>
           . I hope you find my page enjoyable and have a great day!
         </LeftText>
-        {useBreakpoint(down("sm")) && (
+        <div className="sm:hidden">
           <CallToAction
             isDarkMode={isDarkMode}
             setTransitionColor={setTransitionColor}
           />
-        )}
+        </div>
         <Logos />
-        {useBreakpoint(up("sm")) && (
-          <div className="w-full flex items-center justify-end">
-            <CallToAction
-              isDarkMode={isDarkMode}
-              setTransitionColor={setTransitionColor}
-            />
-          </div>
-        )}
+        <div className="hidden sm:flex w-full items-center justify-end">
+          <CallToAction
+            isDarkMode={isDarkMode}
+            setTransitionColor={setTransitionColor}
+          />
+        </div>
       </Left>
       <Right>
         <motion.div
@@ -211,7 +206,7 @@ export const Head: HeadFC = () => (
 );
 
 const Container = styled(motion.div)`
-  ${up("lg")} {
+  @media ${size.up.lg} {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -222,15 +217,15 @@ const Left = styled.div`
   padding: 30px;
   background-color: ${COLOR.BACKGROUND_BLACK};
 
-  ${down("sm")} {
+  @media ${size.down.sm} {
     padding-bottom: 10px;
   }
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     padding: 50px;
   }
 
-  ${up("lg")} {
+  @media ${size.up.lg} {
     width: 55vw;
     height: 100vh;
     padding: 6vw;
@@ -245,12 +240,12 @@ const LeftText = styled(motion.div)`
   font-size: 6vw;
   line-height: 1.65;
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     font-size: 3vw;
     line-height: 1.8;
   }
 
-  ${up("lg")} {
+  @media ${size.up.lg} {
     font-size: 1.85vw;
     line-height: 1.8;
   }
@@ -297,11 +292,11 @@ const Right = styled.div`
     cursor: grabbing;
   }
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     height: 60vh;
   }
 
-  ${up("lg")} {
+  @media ${size.up.lg} {
     width: 45vw;
     height: 100vh;
   }
@@ -324,7 +319,7 @@ const Cta = styled(motion.div)`
   color: ${COLOR.BRIGHT_GREEN};
   font-size: 19px;
 
-  ${down("sm")} {
+  @media ${size.down.sm} {
     margin-top: 8vw;
   }
 `;

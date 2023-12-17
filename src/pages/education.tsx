@@ -6,12 +6,10 @@ import { GatsbyLinkProps } from "gatsby";
 import styled from "styled-components";
 import Route from "../routes/route";
 import { COPYRIGHT, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
-import { up, down } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
 import type { HeadFC } from "gatsby";
+import size from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
-import Layout from "../components/global/layout";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
@@ -67,45 +65,41 @@ const Education = ({
   }, []);
 
   return (
-    <Layout>
-      <Container
-        isDarkMode={isDarkMode}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ stiffness: 0, duration: 0.4 }}
-      >
-        <InitialTransition color={COLOR.BACKGROUND_BLACK} />
-        <Top isDarkMode={isDarkMode}>
-          <Title className="font-secondary-normal">{TITLE}</Title>
-          <CallToAction
-            name="Contact"
-            setHover={setHover}
-            isDarkMode={isDarkMode}
-            navigator={contact}
-          />
-        </Top>
-        <Horizontal>
-          <Usyd isDarkMode={isDarkMode} />
-          <Uoa isDarkMode={isDarkMode} />
-          {useBreakpoint(down("md")) && (
-            <Bottom
-              className="font-secondary-normal"
-              isDarkMode={isDarkMode}
-              isIphoneXPwa={isIphoneX && isPwa}
-            >
-              <p className="my-2">{COPYRIGHT}</p>
-            </Bottom>
-          )}
-        </Horizontal>
-        <LoadableCursorSsr
-          hover={hover}
-          delay={0.5}
-          position={location.state!}
-          isBlack={!isDarkMode}
-          fallback={<></>}
+    <Container
+      isDarkMode={isDarkMode}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ stiffness: 0, duration: 0.4 }}
+    >
+      <InitialTransition color={COLOR.BACKGROUND_BLACK} />
+      <Top isDarkMode={isDarkMode}>
+        <Title className="font-secondary-normal">{TITLE}</Title>
+        <CallToAction
+          name="Contact"
+          setHover={setHover}
+          isDarkMode={isDarkMode}
+          navigator={contact}
         />
-      </Container>
-    </Layout>
+      </Top>
+      <Horizontal>
+        <Usyd isDarkMode={isDarkMode} />
+        <Uoa isDarkMode={isDarkMode} />
+        <Bottom
+          className="font-secondary-normal"
+          isDarkMode={isDarkMode}
+          isIphoneXPwa={isIphoneX && isPwa}
+        >
+          <p className="my-2">{COPYRIGHT}</p>
+        </Bottom>
+      </Horizontal>
+      <LoadableCursorSsr
+        hover={hover}
+        delay={0.5}
+        position={location.state!}
+        isBlack={!isDarkMode}
+        fallback={<></>}
+      />
+    </Container>
   );
 };
 
@@ -156,13 +150,13 @@ const Top = styled.div`
   background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
-  ${down("md")} {
+  @media ${size.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
     position: fixed;
     z-index: 9999;
   }
 
-  ${up("md")} {
+  @media ${size.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
     margin-right: ${BLOCK_PADDING_DESKTOP + "px"};
   }
@@ -172,7 +166,7 @@ const Title = styled.p`
   font-size: 20px;
   user-select: none;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     font-size: 25px;
   }
 `;
@@ -180,7 +174,7 @@ const Title = styled.p`
 const Horizontal = styled.div`
   padding-top: 39px;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     display: flex;
     height: calc(100vh - 46.5px);
     padding-top: 19.5px;
@@ -206,4 +200,8 @@ const Bottom = styled.div`
     isDarkMode
       ? `0.7px solid ${COLOR.BORDER_WHITE}`
       : `0.7px solid ${COLOR.BORDER_BLACK}`};
+
+  @media ${size.up.md} {
+    display: none;
+  }
 `;

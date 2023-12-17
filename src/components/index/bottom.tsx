@@ -2,11 +2,10 @@ import React from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { up, down, between } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
 import { StaticImage } from "gatsby-plugin-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import size from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import getResume from "../../helper/getResume";
@@ -87,9 +86,7 @@ const Bottom = ({
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
-          {useBreakpoint(down("lg")) &&
-            !isIphoneXPwa &&
-            "Acknowledgement of Country"}
+          {!isIphoneXPwa && "Acknowledgement of Country"}
         </div>
       </Country>
 
@@ -116,45 +113,12 @@ const Bottom = ({
               placeholder="none"
             />
           </Circle>
-          {useBreakpoint(down("sm")) && (
-            <StaticImage
-              width={45}
-              style={{
-                position: "absolute",
-                left: 42.5,
-                bottom: 56,
-              }}
-              src={ARROW}
-              alt="Resume Circle"
-              placeholder="none"
-            />
-          )}
-          {useBreakpoint(between("sm", "lg")) && (
-            <StaticImage
-              width={50}
-              style={{
-                position: "absolute",
-                left: 50,
-                bottom: 65,
-              }}
-              src={ARROW}
-              alt="Resume Circle"
-              placeholder="none"
-            />
-          )}
-          {useBreakpoint(up("lg")) && (
-            <StaticImage
-              width={60}
-              style={{
-                position: "absolute",
-                left: 55,
-                bottom: 72,
-              }}
-              src={ARROW}
-              alt="Resume Circle"
-              placeholder="none"
-            />
-          )}
+          <StaticImage
+            className="!absolute !left-[42.5px] !bottom-[56px] sm:!left-[50px] sm:!bottom-[65px] lg:!left-[55px] lg:!bottom-[72px] w-[45px] sm:w-[50px] lg:w-[60px]"
+            src={ARROW}
+            alt="Resume Circle"
+            placeholder="none"
+          />
         </motion.div>
       </CircleContainer>
     </Container>
@@ -168,11 +132,11 @@ const Container = styled.div`
   padding: 15px 12px;
   background: linear-gradient(90deg, #f55591 0%, #f9c41a 100%);
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     padding: 3vh 5vw;
   }
 
-  ${up("lg")} {
+  @media ${size.up.lg} {
     padding: 3vh 3vw;
   }
 `;
@@ -182,11 +146,11 @@ const SmallText = styled.div`
   color: ${COLOR.WHITE};
   overflow: hidden;
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     font-size: 20px;
   }
 
-  ${up("xxl")} {
+  @media ${size.up.xxl} {
     font-size: 25px;
   }
 `;
@@ -198,17 +162,17 @@ const Name = styled.div`
   color: ${COLOR.WHITE};
   -webkit-text-stroke: 0.12rem ${COLOR.BLACK};
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     font-size: 80px;
     line-height: 80px;
   }
 
-  ${up("lg")} {
+  @media ${size.up.lg} {
     font-size: 100px;
     line-height: 100px;
   }
 
-  ${up("xxl")} {
+  @media ${size.up.xxl} {
     margin-top: 1vw;
     font-size: 130px;
     line-height: 120px;
@@ -222,12 +186,12 @@ const Button = styled.div`
   user-select: none;
   overflow: hidden;
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     font-size: 18px;
     margin-top: 50px;
   }
 
-  ${up("xxl")} {
+  @media ${size.up.xxl} {
     font-size: 20px;
   }
 `;
@@ -239,9 +203,13 @@ const Country = styled.div`
   color: ${COLOR.WHITE};
   overflow: hidden;
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     font-size: 17px;
     bottom: 8vh;
+  }
+
+  @media ${size.up.lg} {
+    display: none;
   }
 `;
 
@@ -262,12 +230,12 @@ const Circle = styled.div`
     }
   }
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     width: 150px;
     height: 150px;
   }
 
-  ${up("lg")} {
+  @media ${size.up.lg} {
     width: 170px;
     height: 170px;
   }
@@ -287,17 +255,17 @@ const CircleContainer = styled.span`
     transform: rotate(-170deg) scale(1.07);
   }
 
-  ${up("sm")} {
+  @media ${size.up.sm} {
     bottom: 10vh;
     right: 75px;
   }
 
-  ${up("lg")} {
+  @media ${size.up.lg} {
     bottom: 12vh;
     right: 115px;
   }
 
-  ${up("xxl")} {
+  @media ${size.up.xxl} {
     bottom: 15vh;
     right: 15vh;
   }

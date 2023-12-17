@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { up } from "styled-breakpoints";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import size from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 
 const ProjectLink = ({
@@ -51,11 +51,11 @@ const Cta = styled.div`
   font-size: 16px;
   user-select: none;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     margin-left: 0;
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     font-size: 18px;
   }
 `;

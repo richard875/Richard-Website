@@ -7,14 +7,12 @@ import Route from "../routes/route";
 import education from "../routes/education";
 import styled from "styled-components";
 import { COPYRIGHT, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
-import { up, down } from "styled-breakpoints";
-import { useBreakpoint } from "styled-breakpoints/react-styled";
 import useWindowSize from "../hooks/useWindowSize";
 import type { HeadFC } from "gatsby";
+import size from "../styles/layout";
 import { COLOR } from "../styles/theme";
 import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
-import Layout from "../components/global/layout";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import Block from "../components/projects/block";
@@ -79,7 +77,7 @@ const Projects = ({
     return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
   }, []);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
       let ctx = gsap.context(() => {
         gsap.to(slider.current, {
@@ -99,88 +97,81 @@ const Projects = ({
   }, [windowWidth]);
 
   return (
-    <Layout>
-      <Container
-        ref={component}
-        isDarkMode={isDarkMode}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ stiffness: 0, duration: 0.4 }}
-      >
-        <InitialTransition
-          color={
-            isDarkMode || toContact
-              ? COLOR.BACKGROUND_BLACK
-              : COLOR.BACKGROUND_WHITE_SECONDARY
-          }
-        />
-        <Horizontal ref={slider} entryLength={projectsData.length}>
-          {projectsData.map((project: MyProjects, index: number) => {
-            return (
-              <Block
-                key={index}
-                project={project}
-                dataLength={projectsData.length}
-                index={index}
-                setHover={setHover}
-                isDarkMode={isDarkMode}
-              />
-            );
-          })}
-          {useBreakpoint(down("md")) && (
-            <Bottom
-              className="font-secondary-normal"
+    <Container
+      ref={component}
+      isDarkMode={isDarkMode}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ stiffness: 0, duration: 0.4 }}
+    >
+      <InitialTransition
+        color={
+          isDarkMode || toContact
+            ? COLOR.BACKGROUND_BLACK
+            : COLOR.BACKGROUND_WHITE_SECONDARY
+        }
+      />
+      <Horizontal ref={slider} entryLength={projectsData.length}>
+        {projectsData.map((project: MyProjects, index: number) => {
+          return (
+            <Block
+              key={index}
+              project={project}
+              dataLength={projectsData.length}
+              index={index}
+              setHover={setHover}
               isDarkMode={isDarkMode}
-              isIphoneXPwa={isIphoneX && isPwa}
-            >
-              <p className="my-2">{COPYRIGHT}</p>
-            </Bottom>
-          )}
-        </Horizontal>
-        <Top isDarkMode={isDarkMode}>
-          <Title className="font-secondary-normal">{TITLE}</Title>
-          <CallToAction
-            className="font-secondary-normal"
-            isDarkMode={isDarkMode}
+            />
+          );
+        })}
+        <Bottom
+          className="font-secondary-normal"
+          isDarkMode={isDarkMode}
+          isIphoneXPwa={isIphoneX && isPwa}
+        >
+          <p className="my-2">{COPYRIGHT}</p>
+        </Bottom>
+      </Horizontal>
+      <Top isDarkMode={isDarkMode}>
+        <Title className="font-secondary-normal">{TITLE}</Title>
+        <CallToAction className="font-secondary-normal" isDarkMode={isDarkMode}>
+          <div
+            className="underline underline-offset-2"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            onClick={(e) => {
+              setToContact(false);
+              education(e, isDarkMode);
+            }}
           >
-            <div
-              className="underline underline-offset-2"
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-              onClick={(e) => {
-                setToContact(false);
-                education(e, isDarkMode);
-              }}
-            >
-              Education
-            </div>
-            <span className="font-primary-normal pt-0.5 md:pt-0">
-              &nbsp;{useBreakpoint(up("md")) && " "}
-              {useBreakpoint(down("md")) && "|"}
-              {useBreakpoint(up("md")) && " "}&nbsp;
-            </span>
-            <div
-              className="underline underline-offset-2"
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-              onClick={(e) => {
-                setToContact(true);
-                contact(e);
-              }}
-            >
-              Contact
-            </div>
-          </CallToAction>
-        </Top>
-        <LoadableCursorSsr
-          hover={hover}
-          delay={0.5}
-          position={location.state!}
-          isBlack={!isDarkMode}
-          fallback={<></>}
-        />
-      </Container>
-    </Layout>
+            Education
+          </div>
+          <span className="font-primary-normal pt-0.5 md:pt-0">
+            &nbsp;<span className="hidden md:inline-block">&nbsp;</span>
+            <span className="md:hidden">|</span>
+            <span className="hidden md:inline-block">&nbsp;</span>&nbsp;
+          </span>
+          <div
+            className="underline underline-offset-2"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            onClick={(e) => {
+              setToContact(true);
+              contact(e);
+            }}
+          >
+            Contact
+          </div>
+        </CallToAction>
+      </Top>
+      <LoadableCursorSsr
+        hover={hover}
+        delay={0.5}
+        position={location.state!}
+        isBlack={!isDarkMode}
+        fallback={<></>}
+      />
+    </Container>
   );
 };
 
@@ -215,7 +206,7 @@ const Container = styled(motion.div)`
   color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.WHITE : COLOR.BLACK};
 
-  ${up("md")} {
+  @media ${size.up.md} {
     overflow-x: hidden;
   }
 `;
@@ -237,7 +228,7 @@ const Top = styled.div`
   background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
     isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
-  ${up("md")} {
+  @media ${size.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
     width: calc(100% - ${BLOCK_PADDING_DESKTOP * 2 + "px"});
   }
@@ -247,7 +238,7 @@ const Title = styled.p`
   font-size: 20px;
   user-select: none;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     font-size: 25px;
   }
 `;
@@ -256,7 +247,7 @@ const Horizontal = styled.div`
   flex-wrap: wrap;
   padding-top: 40px;
 
-  ${up("md")} {
+  @media ${size.up.md} {
     padding-top: 66px;
     padding-bottom: 20px;
     width: ${({ entryLength }: { entryLength: number }) =>
@@ -265,7 +256,7 @@ const Horizontal = styled.div`
     display: flex;
   }
 
-  ${up("xxxl")} {
+  @media ${size.up.xxxl} {
     width: ${({ entryLength }: { entryLength: number }) =>
       `${entryLength * BLOCK_WIDTH_DESKTOP}px`};
   }
@@ -289,6 +280,10 @@ const Bottom = styled.div`
     isDarkMode
       ? `0.5px solid ${COLOR.BORDER_WHITE}`
       : `0.5px solid ${COLOR.BORDER_BLACK}`};
+
+  @media ${size.up.md} {
+    display: none;
+  }
 `;
 
 const CallToAction = styled.div`
