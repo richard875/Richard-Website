@@ -38,8 +38,8 @@ const Block = ({
   return (
     <Container
       className="font-primary-normal"
-      isLast={index == dataLength - 1}
-      isDarkMode={isDarkMode}
+      $isLast={index == dataLength - 1}
+      $isDarkMode={isDarkMode}
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -47,11 +47,11 @@ const Block = ({
         transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * (index + 2) }}
       >
         <Logo
-          height={experience.imageHeight}
+          $height={experience.imageHeight}
           src={iconPicker(experience.company, isDarkMode)}
           alt={experience.companyTitle}
         />
-        <JobTitle isDarkMode={isDarkMode}>{experience.jobTitle}</JobTitle>
+        <JobTitle $isDarkMode={isDarkMode}>{experience.jobTitle}</JobTitle>
         <Company>{experience.companyTitle}</Company>
         <Secondary className="mt-6 xxxl:mt-9">
           {experience.start.desktop} — {experience.end.desktop}
@@ -59,7 +59,7 @@ const Block = ({
         <Secondary>
           {experience.city}, {experience.country}
         </Secondary>
-        <DescriptionText isFirst={false}>
+        <DescriptionText $isFirst={false}>
           <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
             Tech stack:
           </span>
@@ -71,7 +71,7 @@ const Block = ({
         {experience.description.map(
           (description: SentenceDescription[], index: number) => {
             return (
-              <DescriptionText key={index} isFirst={index == 0}>
+              <DescriptionText key={index} $isFirst={index == 0}>
                 {description.map(
                   (sentence: SentenceDescription, index: number) => (
                     <TextSection
@@ -99,9 +99,15 @@ const Block = ({
           >
             <Media
               ref={mediaRef}
-              top={clickableRef.current?.getBoundingClientRect().top!}
+              $top={clickableRef.current?.getBoundingClientRect().top!}
             >
-              <Video preload="auto" isDarkMode={isDarkMode} autoPlay loop muted>
+              <Video
+                preload="auto"
+                $isDarkMode={isDarkMode}
+                autoPlay
+                loop
+                muted
+              >
                 <source src={mediaPicker(experience.media!)} type="video/mp4" />
               </Video>
             </Media>
@@ -114,7 +120,10 @@ const Block = ({
 
 export default Block;
 
-const Container = styled.div`
+const Container = styled.div<{
+  $isLast: boolean;
+  $isDarkMode: boolean;
+}>`
   margin-top: 30px;
   padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
@@ -127,15 +136,9 @@ const Container = styled.div`
     width: ${BLOCK_WIDTH + "px"};
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
-    border-right: ${({
-      isLast,
-      isDarkMode,
-    }: {
-      isLast: boolean;
-      isDarkMode: boolean;
-    }) =>
-      !isLast &&
-      (isDarkMode
+    border-right: ${({ $isLast, $isDarkMode }) =>
+      !$isLast &&
+      ($isDarkMode
         ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
         : `0.5px solid ${COLOR.BACKGROUND_BLACK}`)};
   }
@@ -145,27 +148,26 @@ const Container = styled.div`
   }
 `;
 
-const Logo = styled.img`
-  height: ${({ height }: { height: number }) => height + "px"};
+const Logo = styled.img<{ $height: number }>`
+  height: ${({ $height }) => $height + "px"};
   width: auto;
-  margin-top: ${({ height }: { height: number }) =>
-    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-  margin-bottom: ${({ height }: { height: number }) =>
-    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  margin-top: ${({ $height }) =>
+    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  margin-bottom: ${({ $height }) =>
+    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   user-select: none;
 
   @media ${layout.up.md} {
-    margin-top: ${({ height }: { height: number }) =>
-      10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-    margin-bottom: ${({ height }: { height: number }) =>
-      30 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-top: ${({ $height }) =>
+      10 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-bottom: ${({ $height }) =>
+      30 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   }
 `;
 
-const JobTitle = styled.p`
+const JobTitle = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
@@ -188,9 +190,8 @@ const Secondary = styled.p`
   }
 `;
 
-const DescriptionText = styled.p`
-  margin-top: ${({ isFirst }: { isFirst: boolean }) =>
-    isFirst ? "25px" : "20px"};
+const DescriptionText = styled.p<{ $isFirst: boolean }>`
+  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
   font-size: 18px;
   line-height: 25px;
 
@@ -199,20 +200,18 @@ const DescriptionText = styled.p`
   }
 
   @media ${layout.up.xxxl} {
-    margin-top: ${({ isFirst }: { isFirst: boolean }) =>
-      isFirst ? "40px" : "20px"};
+    margin-top: ${({ $isFirst }) => ($isFirst ? "40px" : "20px")};
     width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
     font-size: 20px;
     line-height: 30px;
   }
 `;
 
-const Media = styled.div`
+const Media = styled.div<{ $top: number }>`
   display: none;
   position: absolute;
   z-index: 99999 !important;
-  bottom: ${({ top }: { top: number }) =>
-    useWindowSize().height! - top + 20 + "px"};
+  bottom: ${({ $top }) => useWindowSize().height! - $top + 20 + "px"};
 
   @media ${layout.up.md} {
     display: block;
@@ -224,11 +223,11 @@ const Media = styled.div`
   }
 `;
 
-const Video = styled.video`
+const Video = styled.video<{ $isDarkMode: boolean }>`
   border-radius: 10px;
   z-index: 99999 !important;
-  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BACKGROUND_WHITE_SECONDARY : COLOR.BACKGROUND_BLACK};
+  background-color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BACKGROUND_WHITE_SECONDARY : COLOR.BACKGROUND_BLACK};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),

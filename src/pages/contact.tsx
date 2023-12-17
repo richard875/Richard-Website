@@ -153,7 +153,7 @@ const Contact = ({
             </motion.div>
           </CircleContainer>
         </Left>
-        <Right isIphoneXPwa={isIphoneX && isPwa}>
+        <Right $isIphoneXPwa={isIphoneX && isPwa}>
           <motion.div
             className="md:hidden"
             initial={{ opacity: 0 }}
@@ -375,7 +375,7 @@ const Left = styled(motion.div)`
   justify-content: space-between;
 `;
 
-const Right = styled.div`
+const Right = styled.div<{ $isIphoneXPwa: boolean }>`
   flex: 0.35;
   display: flex;
   flex-direction: column-reverse;
@@ -387,8 +387,7 @@ const Right = styled.div`
   @media ${layout.down.md} {
     flex: 1;
     align-items: flex-start;
-    padding-bottom: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
-      isIphoneXPwa ? "30px" : "20px"};
+    padding-bottom: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "30px" : "20px")};
   }
 `;
 

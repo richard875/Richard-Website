@@ -38,9 +38,9 @@ const Block = ({
   return (
     <Container
       className="font-primary-normal"
-      isFirst={index == 0}
-      isLast={index == dataLength - 1}
-      isDarkMode={isDarkMode}
+      $isFirst={index == 0}
+      $isLast={index == dataLength - 1}
+      $isDarkMode={isDarkMode}
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -48,12 +48,12 @@ const Block = ({
         transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * (index + 3) }}
       >
         <Logo
-          height={project.imageHeight}
+          $height={project.imageHeight}
           src={iconPicker(project.image, isDarkMode)}
           alt={project.imageAlt}
         />
-        <ProjectName isDarkMode={isDarkMode}>{project.name}</ProjectName>
-        <DescriptionText isFirst={false}>
+        <ProjectName $isDarkMode={isDarkMode}>{project.name}</ProjectName>
+        <DescriptionText $isFirst={false}>
           <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
             Utilised:
           </span>
@@ -65,7 +65,7 @@ const Block = ({
         {project.description.map(
           (description: SentenceDescription[], index: number) => {
             return (
-              <DescriptionText key={index} isFirst={index == 0}>
+              <DescriptionText key={index} $isFirst={index == 0}>
                 {description.map(
                   (sentence: SentenceDescription, index: number) => (
                     <TextSection
@@ -99,12 +99,12 @@ const Block = ({
             unmountOnExit
           >
             <MediaWrapper
-              top={clickableRef.current?.getBoundingClientRect().bottom!}
+              $top={clickableRef.current?.getBoundingClientRect().bottom!}
             >
               <Media
-                portraitOperation={project.portraitOperation!}
-                widthLarge={project.widthLarge!}
-                widthMedium={project.widthMedium!}
+                $portraitOperation={project.portraitOperation!}
+                $widthLarge={project.widthLarge!}
+                $widthMedium={project.widthMedium!}
                 ref={mediaRef}
               >
                 <Video
@@ -112,8 +112,8 @@ const Block = ({
                   loop
                   muted
                   preload="auto"
-                  isDarkMode={isDarkMode}
-                  portraitOperation={project.portraitOperation!}
+                  $isDarkMode={isDarkMode}
+                  $portraitOperation={project.portraitOperation!}
                 >
                   <source src={mediaPicker(project.media!)} type="video/mp4" />
                 </Video>
@@ -128,9 +128,12 @@ const Block = ({
 
 export default Block;
 
-const Container = styled.div`
-  margin-top: ${({ isFirst }: { isFirst: boolean }) =>
-    isFirst ? "0" : "30px"};
+const Container = styled.div<{
+  $isFirst: boolean;
+  $isLast: boolean;
+  $isDarkMode: boolean;
+}>`
+  margin-top: ${({ $isFirst }) => ($isFirst ? "0" : "30px")};
   padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
   padding-right: ${BLOCK_PADDING + "px"};
@@ -142,17 +145,9 @@ const Container = styled.div`
     width: ${BLOCK_WIDTH + "px"};
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
-    border-right: ${({
-      isFirst,
-      isLast,
-      isDarkMode,
-    }: {
-      isFirst: boolean;
-      isLast: boolean;
-      isDarkMode: boolean;
-    }) =>
-      !isLast &&
-      (isDarkMode
+    border-right: ${({ $isLast, $isDarkMode }) =>
+      !$isLast &&
+      ($isDarkMode
         ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
         : `0.5px solid ${COLOR.BACKGROUND_BLACK}`)};
   }
@@ -162,26 +157,26 @@ const Container = styled.div`
   }
 `;
 
-const Logo = styled.img`
-  height: ${({ height }: { height: number }) => height + "px"};
+const Logo = styled.img<{ $height: number }>`
+  height: ${({ $height }) => $height + "px"};
   width: auto;
-  margin-top: ${({ height }: { height: number }) =>
-    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-  margin-bottom: ${({ height }: { height: number }) =>
-    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  margin-top: ${({ $height }) =>
+    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  margin-bottom: ${({ $height }) =>
+    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   user-select: none;
 
   @media ${layout.up.md} {
-    margin-top: ${({ height }: { height: number }) =>
-      10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-top: ${({ $height }) =>
+      10 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   }
 `;
 
-const MediaWrapper = styled.div`
+const MediaWrapper = styled.div<{ $top: number }>`
   display: none;
   position: absolute;
   z-index: 99999 !important;
-  top: ${({ top }: { top: number }) => top + 15 + "px"};
+  top: ${({ $top }) => $top + 15 + "px"};
 
   @media ${layout.up.md} {
     display: block;
@@ -193,41 +188,30 @@ const MediaWrapper = styled.div`
   }
 `;
 
-const Media = styled.div`
+const Media = styled.div<{
+  $portraitOperation: boolean;
+  $widthLarge: string;
+  $widthMedium: string;
+}>`
   margin: 0 auto;
-  width: ${({
-    portraitOperation,
-    widthLarge,
-    widthMedium,
-  }: {
-    portraitOperation: boolean;
-    widthLarge: string;
-    widthMedium: string;
-  }) => (portraitOperation ? widthMedium : "100%")};
+  width: ${({ $portraitOperation, $widthMedium }) =>
+    $portraitOperation ? $widthMedium : "100%"};
 
   @media ${layout.up.xxxl} {
-    width: ${({
-      portraitOperation,
-      widthLarge,
-    }: {
-      portraitOperation: boolean;
-      widthLarge: string;
-    }) => (portraitOperation ? widthLarge : "100%")};
+    width: ${({ $portraitOperation, $widthLarge }) =>
+      $portraitOperation ? $widthLarge : "100%"};
   }
 `;
 
-const Video = styled.video`
-  border-radius: ${({ portraitOperation }: { portraitOperation: boolean }) =>
-    portraitOperation ? "20px" : "10px"};
+const Video = styled.video<{
+  $isDarkMode: boolean;
+  $portraitOperation: boolean;
+}>`
+  border-radius: ${({ $portraitOperation }) =>
+    $portraitOperation ? "20px" : "10px"};
   z-index: 99999 !important;
-  background-color: ${({
-    isDarkMode,
-    portraitOperation,
-  }: {
-    isDarkMode: boolean;
-    portraitOperation: boolean;
-  }) =>
-    isDarkMode ? COLOR.BACKGROUND_WHITE_SECONDARY : COLOR.BACKGROUND_BLACK};
+  background-color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BACKGROUND_WHITE_SECONDARY : COLOR.BACKGROUND_BLACK};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
@@ -236,20 +220,18 @@ const Video = styled.video`
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 `;
 
-const ProjectName = styled.p`
+const ProjectName = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
   line-height: 30px;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
   }
 `;
 
-const DescriptionText = styled.p`
-  margin-top: ${({ isFirst }: { isFirst: boolean }) =>
-    isFirst ? "25px" : "20px"};
+const DescriptionText = styled.p<{ $isFirst: boolean }>`
+  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
   font-size: 18px;
   line-height: 25px;
 
@@ -258,8 +240,7 @@ const DescriptionText = styled.p`
   }
 
   @media ${layout.up.xxxl} {
-    margin-top: ${({ isFirst }: { isFirst: boolean }) =>
-      isFirst ? "35px" : "20px"};
+    margin-top: ${({ $isFirst }) => ($isFirst ? "35px" : "20px")};
     width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
     font-size: 20px;
     line-height: 30px;

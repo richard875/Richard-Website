@@ -91,7 +91,7 @@ const Bottom = ({
       </Country>
 
       <CircleContainer
-        isIphoneXPwa={isIphoneXPwa}
+        $isIphoneXPwa={isIphoneXPwa}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => getResume(e)}
@@ -241,13 +241,11 @@ const Circle = styled.div`
   }
 `;
 
-const CircleContainer = styled.span`
+const CircleContainer = styled.span<{ $isIphoneXPwa: boolean }>`
   position: absolute;
   border-radius: 99px;
-  bottom: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
-    isIphoneXPwa ? "5vh" : "10vh"};
-  right: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
-    isIphoneXPwa ? "35px" : "45px"};
+  bottom: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "5vh" : "10vh")};
+  right: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "35px" : "45px")};
   transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
   user-select: none;
 

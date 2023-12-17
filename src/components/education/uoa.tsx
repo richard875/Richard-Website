@@ -19,11 +19,11 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
         transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * 3 }}
       >
         <Logo
-          height={55}
+          $height={55}
           src={iconPicker("uoa", isDarkMode)}
           alt="University of Auckland"
         />
-        <UniversityText isDarkMode={isDarkMode}>
+        <UniversityText $isDarkMode={isDarkMode}>
           The University of Auckland
         </UniversityText>
         <p className="mt-1 mb-9 text-lg xxxl:text-xl">
@@ -32,32 +32,32 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
         <SummaryText>
           • Attained exemplary academic performance in Computer Science and
           Mathematics disciplines, excelling in coursework encompassing
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;Algorithms and Data Structures
           </Highlight>
           ,
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;Object-Oriented Programming (OOP)
           </Highlight>
           ,
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;Database Management System (DBMS) Architecture
           </Highlight>
           , and
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;Discrete Mathematics
           </Highlight>
           .
         </SummaryText>
         <SummaryText>
           • I served as the appointed
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;class representative&nbsp;
           </Highlight>
           for the Computer Science department, demonstrating
-          <Highlight isDarkMode={isDarkMode}>&nbsp;leadership&nbsp;</Highlight>
+          <Highlight $isDarkMode={isDarkMode}>&nbsp;leadership&nbsp;</Highlight>
           and
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;effective communication&nbsp;
           </Highlight>
           skills.
@@ -67,35 +67,37 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => {
           src={iconPicker("redbull", isDarkMode)}
           alt="Red Bull"
         />
-        <SecondaryTitle isDarkMode={isDarkMode}>
+        <SecondaryTitle $isDarkMode={isDarkMode}>
           President of the University of Auckland Motorsport Club
         </SecondaryTitle>
         <p className="text-base xxxl:text-lg">
-          - <Highlight isDarkMode={isDarkMode}>Founded</Highlight> the
+          - <Highlight $isDarkMode={isDarkMode}>Founded</Highlight> the
           University of Auckland Motorsport Club with around
-          <Highlight isDarkMode={isDarkMode}>&nbsp;800</Highlight> Members.
+          <Highlight $isDarkMode={isDarkMode}>&nbsp;800</Highlight> Members.
         </p>
         <p className="text-base xxxl:text-lg">
           - Led initiatives in partnership with
-          <Highlight isDarkMode={isDarkMode}>&nbsp;Red Bull</Highlight>,
+          <Highlight $isDarkMode={isDarkMode}>&nbsp;Red Bull</Highlight>,
           promoting both entertainment options for the active University
           community and advocating for&nbsp;
-          <Highlight isDarkMode={isDarkMode}>Safe Driving Practices</Highlight>.
+          <Highlight $isDarkMode={isDarkMode}>Safe Driving Practices</Highlight>
+          .
         </p>
         <img
           className="mt-5 mb-2 h-5 w-auto select-none"
           src={iconPicker("cie", isDarkMode)}
           alt="CIE"
         />
-        <SecondaryTitle isDarkMode={isDarkMode}>
+        <SecondaryTitle $isDarkMode={isDarkMode}>
           University of Auckland Centre for Innovation and Entrepreneurship
         </SecondaryTitle>
         <p className="text-base xxxl:text-lg">
           - Directed and Hosted fortnightly innovation seminars as the&nbsp;
-          <Highlight isDarkMode={isDarkMode}>Master of Ceremonies</Highlight>,
+          <Highlight $isDarkMode={isDarkMode}>Master of Ceremonies</Highlight>,
           adeptly guiding discussions and encouraging active engagement among
           participants to drive&nbsp;
-          <Highlight isDarkMode={isDarkMode}>collaborative ideation</Highlight>.
+          <Highlight $isDarkMode={isDarkMode}>collaborative ideation</Highlight>
+          .
         </p>
       </motion.div>
     </Container>
@@ -119,38 +121,36 @@ const Container = styled.div`
   }
 `;
 
-const Logo = styled.img`
-  height: ${({ height }: { height: number }) => height + "px"};
+const Logo = styled.img<{ $height: number }>`
+  height: ${({ $height }) => $height + "px"};
   width: auto;
-  margin-top: ${({ height }: { height: number }) =>
-    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-  margin-bottom: ${({ height }: { height: number }) =>
-    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  margin-top: ${({ $height }) =>
+    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  margin-bottom: ${({ $height }) =>
+    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   user-select: none;
 
   @media ${layout.up.md} {
-    margin-top: ${({ height }: { height: number }) =>
-      10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-    margin-bottom: ${({ height }: { height: number }) =>
-      30 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-top: ${({ $height }) =>
+      10 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-bottom: ${({ $height }) =>
+      30 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   }
 `;
 
-const UniversityText = styled.p`
+const UniversityText = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
   }
 `;
 
-const SecondaryTitle = styled.p`
+const SecondaryTitle = styled.p<{ $isDarkMode: boolean }>`
   font-size: 18px;
   line-height: 28px;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 20px;
@@ -173,7 +173,6 @@ const SummaryText = styled.p`
   }
 `;
 
-const Highlight = styled.span`
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+const Highlight = styled.span<{ $isDarkMode: boolean }>`
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 `;

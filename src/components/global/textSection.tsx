@@ -35,7 +35,7 @@ const TextSection = ({
         <Link
           ref={clickableRef}
           href={url}
-          isDarkMode={isDarkMode}
+          $isDarkMode={isDarkMode}
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => {
@@ -50,7 +50,7 @@ const TextSection = ({
           {content}
         </Link>
       ) : textHighlight ? (
-        <Highlight isDarkMode={isDarkMode}>{content}</Highlight>
+        <Highlight $isDarkMode={isDarkMode}>{content}</Highlight>
       ) : (
         content
       )}
@@ -60,22 +60,19 @@ const TextSection = ({
 
 export default TextSection;
 
-const Link = styled.a`
+const Link = styled.a<{ $isDarkMode: boolean }>`
   cursor: none;
   text-decoration-line: underline;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 
   @media ${layout.up.md} {
-    color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-      isDarkMode ? COLOR.BLUE : COLOR.RED};
+    color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
     text-decoration-line: underline;
   }
 `;
 
-const Highlight = styled.span`
+const Highlight = styled.span<{ $isDarkMode: boolean }>`
   margin: 0;
   padding: 0;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 `;

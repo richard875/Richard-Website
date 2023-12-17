@@ -99,7 +99,7 @@ const Projects = ({
   return (
     <Container
       ref={component}
-      isDarkMode={isDarkMode}
+      $isDarkMode={isDarkMode}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.4 }}
@@ -111,7 +111,7 @@ const Projects = ({
             : COLOR.BACKGROUND_WHITE_SECONDARY
         }
       />
-      <Horizontal ref={slider} entryLength={projectsData.length}>
+      <Horizontal ref={slider} $entryLength={projectsData.length}>
         {projectsData.map((project: MyProjects, index: number) => {
           return (
             <Block
@@ -126,15 +126,18 @@ const Projects = ({
         })}
         <Bottom
           className="font-secondary-normal"
-          isDarkMode={isDarkMode}
-          isIphoneXPwa={isIphoneX && isPwa}
+          $isDarkMode={isDarkMode}
+          $isIphoneXPwa={isIphoneX && isPwa}
         >
           <p className="my-2">{COPYRIGHT}</p>
         </Bottom>
       </Horizontal>
-      <Top isDarkMode={isDarkMode}>
+      <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{TITLE}</Title>
-        <CallToAction className="font-secondary-normal" isDarkMode={isDarkMode}>
+        <CallToAction
+          className="font-secondary-normal"
+          $isDarkMode={isDarkMode}
+        >
           <div
             className="underline underline-offset-2"
             onMouseEnter={() => setHover(true)}
@@ -199,19 +202,18 @@ export const Head: HeadFC = () => (
   </>
 );
 
-const Container = styled(motion.div)`
+const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
   cursor: none;
-  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.WHITE : COLOR.BLACK};
+  background-color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.WHITE : COLOR.BLACK)};
 
   @media ${layout.up.md} {
     overflow-x: hidden;
   }
 `;
 
-const Top = styled.div`
+const Top = styled.div<{ $isDarkMode: boolean }>`
   position: fixed;
   top: 0;
   margin-left: ${BLOCK_PADDING + "px"};
@@ -221,12 +223,12 @@ const Top = styled.div`
   justify-content: space-between;
   padding-top: 5px;
   padding-bottom: 3px;
-  border-bottom: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode
+  border-bottom: ${({ $isDarkMode }) =>
+    $isDarkMode
       ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
       : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
-  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
+  background-color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
   @media ${layout.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
@@ -243,41 +245,36 @@ const Title = styled.p`
   }
 `;
 
-const Horizontal = styled.div`
+const Horizontal = styled.div<{ $entryLength: number }>`
   flex-wrap: wrap;
   padding-top: 40px;
 
   @media ${layout.up.md} {
     padding-top: 66px;
     padding-bottom: 20px;
-    width: ${({ entryLength }: { entryLength: number }) =>
-      `${entryLength * BLOCK_WIDTH}px`};
+    width: ${({ $entryLength }) => `${$entryLength * BLOCK_WIDTH}px`};
     height: 100vh;
     display: flex;
   }
 
   @media ${layout.up.xxxl} {
-    width: ${({ entryLength }: { entryLength: number }) =>
-      `${entryLength * BLOCK_WIDTH_DESKTOP}px`};
+    width: ${({ $entryLength }) => `${$entryLength * BLOCK_WIDTH_DESKTOP}px`};
   }
 `;
 
-const Bottom = styled.div`
+const Bottom = styled.div<{
+  $isDarkMode: boolean;
+  $isIphoneXPwa: boolean;
+}>`
   margin-top: 15px;
-  margin-bottom: ${({
-    isDarkMode,
-    isIphoneXPwa,
-  }: {
-    isDarkMode: boolean;
-    isIphoneXPwa: boolean;
-  }) => (isIphoneXPwa ? "15px" : "2px")};
+  margin-bottom: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "15px" : "2px")};
   margin-left: ${BLOCK_PADDING + "px"};
   width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode
+  border-top: ${({ $isDarkMode }) =>
+    $isDarkMode
       ? `0.5px solid ${COLOR.BORDER_WHITE}`
       : `0.5px solid ${COLOR.BORDER_BLACK}`};
 
@@ -286,9 +283,9 @@ const Bottom = styled.div`
   }
 `;
 
-const CallToAction = styled.div`
+const CallToAction = styled.div<{ $isDarkMode: boolean }>`
   display: flex;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
+  color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
   user-select: none;
 `;

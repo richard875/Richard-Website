@@ -20,7 +20,7 @@ const CallToAction = ({
 }) => {
   return (
     <Cta
-      isDarkMode={isDarkMode}
+      $isDarkMode={isDarkMode}
       className="font-secondary-normal"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -42,9 +42,9 @@ const CallToAction = ({
 
 export default CallToAction;
 
-const Cta = styled.div`
+const Cta = styled.div<{ $isDarkMode: boolean }>`
   display: flex;
   align-items: center;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
+  color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
 `;

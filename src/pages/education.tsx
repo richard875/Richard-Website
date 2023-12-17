@@ -66,13 +66,13 @@ const Education = ({
 
   return (
     <Container
-      isDarkMode={isDarkMode}
+      $isDarkMode={isDarkMode}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.4 }}
     >
       <InitialTransition color={COLOR.BACKGROUND_BLACK} />
-      <Top isDarkMode={isDarkMode}>
+      <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{TITLE}</Title>
         <CallToAction
           name="Contact"
@@ -86,8 +86,8 @@ const Education = ({
         <Uoa isDarkMode={isDarkMode} />
         <Bottom
           className="font-secondary-normal"
-          isDarkMode={isDarkMode}
-          isIphoneXPwa={isIphoneX && isPwa}
+          $isDarkMode={isDarkMode}
+          $isIphoneXPwa={isIphoneX && isPwa}
         >
           <p className="my-2">{COPYRIGHT}</p>
         </Bottom>
@@ -126,16 +126,15 @@ export const Head: HeadFC = () => (
   </>
 );
 
-const Container = styled(motion.div)`
+const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
   cursor: none;
   height: 100vh;
-  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.WHITE : COLOR.BLACK};
+  background-color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.WHITE : COLOR.BLACK)};
 `;
 
-const Top = styled.div`
+const Top = styled.div<{ $isDarkMode: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -143,12 +142,12 @@ const Top = styled.div`
   padding-bottom: 3px;
   margin-left: ${BLOCK_PADDING + "px"};
   margin-right: ${BLOCK_PADDING + "px"};
-  border-bottom: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode
+  border-bottom: ${({ $isDarkMode }) =>
+    $isDarkMode
       ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
       : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
-  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
+  background-color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
 
   @media ${layout.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
@@ -182,22 +181,19 @@ const Horizontal = styled.div`
   }
 `;
 
-const Bottom = styled.div`
+const Bottom = styled.div<{
+  $isDarkMode: boolean;
+  $isIphoneXPwa: boolean;
+}>`
   margin-top: 15px;
-  padding-bottom: ${({
-    isDarkMode,
-    isIphoneXPwa,
-  }: {
-    isDarkMode: boolean;
-    isIphoneXPwa: boolean;
-  }) => (isIphoneXPwa ? "15px" : "2px")};
+  padding-bottom: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "15px" : "2px")};
   margin-left: ${BLOCK_PADDING + "px"};
   width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode
+  border-top: ${({ $isDarkMode }: { $isDarkMode: boolean }) =>
+    $isDarkMode
       ? `0.7px solid ${COLOR.BORDER_WHITE}`
       : `0.7px solid ${COLOR.BORDER_BLACK}`};
 

@@ -12,7 +12,7 @@ import {
 
 const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
-    <Container className="font-primary-normal" isDarkMode={isDarkMode}>
+    <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -23,11 +23,11 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
         }}
       >
         <Logo
-          height={50}
+          $height={50}
           src={iconPicker("usyd", isDarkMode)}
           alt="University of Sydney"
         />
-        <UniversityText isDarkMode={isDarkMode}>
+        <UniversityText $isDarkMode={isDarkMode}>
           The University of Sydney
         </UniversityText>
         <p className="mt-1 mb-9 text-lg xxxl:text-xl">
@@ -35,26 +35,28 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
         </p>
         <SummaryText>
           • I conducted extensive research and authored an
-          <Highlight isDarkMode={isDarkMode}>&nbsp;Honours Thesis</Highlight> at
-          the University of Sydney titled
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
+            &nbsp;Honours Thesis
+          </Highlight>{" "}
+          at the University of Sydney titled
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;"Performance Gap: Traditional VM Containers vs. Serverless
             WebAssembly Frameworks on the Edge"
           </Highlight>
           . This comprehensive study delved into performance disparities while
           also exploring the utilisation of
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;WebAssembly in web browsers
           </Highlight>
           , enabling functionalities previously deemed unattainable. The
           findings offered valuable insights into optimising software execution
-          within <Highlight isDarkMode={isDarkMode}>edge computing</Highlight>,
+          within <Highlight $isDarkMode={isDarkMode}>edge computing</Highlight>,
           addressing pivotal benchmarks in modern Software Engineering
           paradigms.
         </SummaryText>
         <SummaryText>
           •{" "}
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             Research Interests:&nbsp;
           </Highlight>
           WebAssembly, Edge Computing, Serverless Computing, Virtual Machine
@@ -68,11 +70,11 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
         </p>
         <p className="mt-2 text-base xxxl:text-lg">
           - Employed as an
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;Academic Teaching Assistant&nbsp;
           </Highlight>
           for SOFT2412 -
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;Agile Software Development Practices (Java)
           </Highlight>
           , demonstrating expertise in facilitating educational modules within
@@ -80,13 +82,13 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
         </p>
         <p className="mt-2 text-base xxxl:text-lg">
           - As an
-          <Highlight isDarkMode={isDarkMode}>
+          <Highlight $isDarkMode={isDarkMode}>
             &nbsp;Academic Teaching Assistant
           </Highlight>
           , I guided students through Agile Software Development Practices in
-          <Highlight isDarkMode={isDarkMode}>&nbsp;Java</Highlight>, facilitated
-          workshops, graded assignments, and collaborated on curriculum
-          development to align with industry standards.
+          <Highlight $isDarkMode={isDarkMode}>&nbsp;Java</Highlight>,
+          facilitated workshops, graded assignments, and collaborated on
+          curriculum development to align with industry standards.
         </p>
       </motion.div>
     </Container>
@@ -95,7 +97,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
 
 export default Usyd;
 
-const Container = styled.div`
+const Container = styled.div<{ $isDarkMode: boolean }>`
   margin-top: 20px;
   padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
@@ -108,34 +110,33 @@ const Container = styled.div`
     padding-bottom: 0;
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
-    border-right: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-      isDarkMode
+    border-right: ${({ $isDarkMode }) =>
+      $isDarkMode
         ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
         : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
   }
 `;
 
-const Logo = styled.img`
-  height: ${({ height }: { height: number }) => height + "px"};
+const Logo = styled.img<{ $height: number }>`
+  height: ${({ $height }) => $height + "px"};
   width: auto;
-  margin-top: ${({ height }: { height: number }) =>
-    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-  margin-bottom: ${({ height }: { height: number }) =>
-    15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  margin-top: ${({ $height }) =>
+    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+  margin-bottom: ${({ $height }) =>
+    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   user-select: none;
 
   @media ${layout.up.md} {
-    margin-top: ${({ height }: { height: number }) =>
-      10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-    margin-bottom: ${({ height }: { height: number }) =>
-      30 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-top: ${({ $height }) =>
+      10 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-bottom: ${({ $height }) =>
+      30 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   }
 `;
 
-const UniversityText = styled.p`
+const UniversityText = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
@@ -157,7 +158,6 @@ const SummaryText = styled.p`
   }
 `;
 
-const Highlight = styled.span`
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+const Highlight = styled.span<{ $isDarkMode: boolean }>`
+  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 `;

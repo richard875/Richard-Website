@@ -22,7 +22,7 @@ const SecondarySkills = ({
   isDarkMode: boolean;
 }) => {
   return (
-    <SecondarySkillsItem isDarkMode={isDarkMode}>
+    <SecondarySkillsItem $isDarkMode={isDarkMode}>
       <SecondarySkillsText>{skill.displayName}</SecondarySkillsText>
       <SkillsImage
         className="!ml-1 !mb-0"
@@ -35,7 +35,7 @@ const SecondarySkills = ({
 
 const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
-    <Container className="font-primary-normal" isDarkMode={isDarkMode}>
+    <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -43,7 +43,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
       >
         <Logo
           className="hidden xxxl:block"
-          height={50}
+          $height={50}
           src={iconPicker("react", isDarkMode)}
           alt={"My Skills"}
         />
@@ -51,7 +51,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
           <Title>Proficient Skills</Title>
           <Logo
             className="xxxl:hidden"
-            height={30}
+            $height={30}
             style={{ paddingBottom: "5px" }}
             src={iconPicker("react", isDarkMode)}
             alt={"My Skills"}
@@ -61,7 +61,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
           (skill: SkillType, index: number) => (
             <Skill key={index}>
               <SkillsTextWrapper>
-                <SkillsText isTitle={false}>
+                <SkillsText $isTitle={false}>
                   <span className="md:hidden"> - </span>
                   {skill.displayName}
                 </SkillsText>
@@ -71,7 +71,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
                 ></SkillsImage>
               </SkillsTextWrapper>
               <SkillsBar
-                isDarkMode={isDarkMode}
+                $isDarkMode={isDarkMode}
                 initial={{ width: 0 }}
                 animate={{ width: skill.skill! + "%" }}
                 transition={{
@@ -86,7 +86,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
           )
         )}
         <Skill>
-          <SkillsText isTitle={true} className="pt-1">
+          <SkillsText $isTitle={true} className="pt-1">
             Familiar Skills
           </SkillsText>
         </Skill>
@@ -112,7 +112,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
 
 export default SkillsBlock;
 
-const Container = styled.div`
+const Container = styled.div<{ $isDarkMode: boolean }>`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
@@ -125,8 +125,8 @@ const Container = styled.div`
     width: ${BLOCK_WIDTH + "px"};
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
-    border-right: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-      isDarkMode
+    border-right: ${({ $isDarkMode }) =>
+      $isDarkMode
         ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
         : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
   }
@@ -145,17 +145,17 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const Logo = styled.img`
-  height: ${({ height }: { height: number }) => height + "px"};
+const Logo = styled.img<{ $height: number }>`
+  height: ${({ $height }) => $height + "px"};
   width: auto;
   user-select: none;
   margin-left: 8px;
 
   @media ${layout.up.xxxl} {
-    margin-top: ${({ height }: { height: number }) =>
-      10 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-    margin-bottom: ${({ height }: { height: number }) =>
-      15 - (height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-top: ${({ $height }) =>
+      10 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
+    margin-bottom: ${({ $height }) =>
+      15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   }
 `;
 
@@ -185,13 +185,11 @@ const SkillsTextWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-const SkillsText = styled.p`
-  font-size: ${({ isTitle }: { isTitle: boolean }) =>
-    isTitle ? "22px" : "18px"};
+const SkillsText = styled.p<{ $isTitle: boolean }>`
+  font-size: ${({ $isTitle }) => ($isTitle ? "22px" : "18px")};
 
   @media ${layout.up.xxxl} {
-    font-size: ${({ isTitle }: { isTitle: boolean }) =>
-      isTitle ? "24px" : "20px"};
+    font-size: ${({ $isTitle }) => ($isTitle ? "24px" : "20px")};
   }
 `;
 
@@ -211,10 +209,10 @@ const SkillsImage = styled.img`
   }
 `;
 
-const SkillsBar = styled(motion.div)`
+const SkillsBar = styled(motion.div)<{ $isDarkMode: boolean }>`
   height: 4px;
-  background-color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BLUE : COLOR.RED};
+  background-color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BLUE : COLOR.RED};
   display: none;
 
   @media ${layout.up.md} {
@@ -233,20 +231,20 @@ const SecondarySkillsWrapper = styled.div`
   }
 `;
 
-const SecondarySkillsItem = styled.div`
+const SecondarySkillsItem = styled.div<{ $isDarkMode: boolean }>`
   padding: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode
+  border-left: ${({ $isDarkMode }) =>
+    $isDarkMode
       ? `0.5px solid ${COLOR.BORDER_WHITE}`
       : `0.5px solid ${COLOR.BORDER_BLACK}`};
 
   @media ${layout.down.sm} {
     &:nth-child(n + 4) {
-      border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-        isDarkMode
+      border-top: ${({ $isDarkMode }) =>
+        $isDarkMode
           ? `0.5px solid ${COLOR.BORDER_WHITE}`
           : `0.5px solid ${COLOR.BORDER_BLACK}`};
     }
@@ -258,8 +256,8 @@ const SecondarySkillsItem = styled.div`
 
   @media ${layout.up.sm} {
     &:nth-child(n + 5) {
-      border-top: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-        isDarkMode
+      border-top: ${({ $isDarkMode }) =>
+        $isDarkMode
           ? `0.5px solid ${COLOR.BORDER_WHITE}`
           : `0.5px solid ${COLOR.BORDER_BLACK}`};
     }

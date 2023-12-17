@@ -81,7 +81,7 @@ const IndexPage = ({
         }}
       >
         <InitialTransition color={COLOR.BACKGROUND_BLACK} />
-        <Box isIphoneXPwa={isIphoneX && isPwa}>
+        <Box $isIphoneXPwa={isIphoneX && isPwa}>
           <Wrapper>
             <Top setHover={setHover} />
             <Bottom
@@ -144,10 +144,10 @@ const Container = styled(motion.div)`
   }
 `;
 
-const Box = styled.div`
+const Box = styled.div<{ $isIphoneXPwa: boolean }>`
   width: calc(100vw - 30px);
-  height: ${({ isIphoneXPwa }: { isIphoneXPwa: boolean }) =>
-    useWindowSize().height! - (isIphoneXPwa ? 85 : 30) + "px"};
+  height: ${({ $isIphoneXPwa }) =>
+    useWindowSize().height! - ($isIphoneXPwa ? 85 : 30) + "px"};
 
   @media ${layout.down.sm} {
     margin-top: 15px;

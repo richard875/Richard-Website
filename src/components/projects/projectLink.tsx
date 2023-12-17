@@ -15,7 +15,7 @@ const ProjectLink = ({
   isDarkMode: boolean;
 }) => {
   return (
-    <Cta className="font-secondary-normal" isDarkMode={isDarkMode}>
+    <Cta className="font-secondary-normal" $isDarkMode={isDarkMode}>
       <span
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -41,13 +41,13 @@ const ProjectLink = ({
 
 export default ProjectLink;
 
-const Cta = styled.div`
+const Cta = styled.div<{ $isDarkMode: boolean }>`
   display: flex;
   align-items: center;
   margin-top: 20px;
   margin-left: 5px;
-  color: ${({ isDarkMode }: { isDarkMode: boolean }) =>
-    isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
+  color: ${({ $isDarkMode }) =>
+    $isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
   font-size: 16px;
   user-select: none;
 
