@@ -1,6 +1,6 @@
 import React from "react";
 import * as THREE from "three";
-import { useDrag } from "react-use-gesture";
+import { useDrag } from "@use-gesture/react";
 import { a, useSpring } from "@react-spring/three";
 import { useThree, useFrame } from "@react-three/fiber";
 
@@ -14,6 +14,7 @@ const Inspector = ({
   const { size } = useThree();
   const euler = React.useMemo(() => new THREE.Euler(), []);
   const [spring, set] = useSpring(() => ({ rotation: [0, 0, 0] }));
+
   const bind = useDrag(({ delta: [dx, dy] }) => {
     euler.y += (dx / size.width) * responsiveness;
     set({ rotation: euler.toArray().slice(0, 3) as number[] });
