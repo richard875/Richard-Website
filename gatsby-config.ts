@@ -34,7 +34,6 @@ const config: GatsbyConfig = {
       options: { resolveSiteUrl: () => SITE_URL },
     },
     `gatsby-plugin-netlify`,
-    `gatsby-plugin-no-sourcemaps`,
     `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-plugin-google-gtag`,

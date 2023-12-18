@@ -35,8 +35,7 @@ const SydneyOperaHouse = React.memo(() => {
   return (
     <Canvas
       shadows
-      colorManagement
-      dpr={[1, 2]}
+      legacy={true}
       camera={{ position: [0, 2.6, 5], fov: 65 }}
       style={{ background: "#fff8f0" }}
     >
