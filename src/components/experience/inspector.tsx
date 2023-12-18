@@ -1,34 +1,32 @@
 import React from "react";
-import * as THREE from "three";
-import { useDrag } from "@use-gesture/react";
+import { useFrame } from "@react-three/fiber";
+import { useGesture } from "@use-gesture/react";
 import { a, useSpring } from "@react-spring/three";
-import { useThree, useFrame } from "@react-three/fiber";
 
-const Inspector = ({
-  responsiveness = 20,
-  children,
-}: {
-  responsiveness: number;
-  children: any;
-}) => {
-  const { size } = useThree();
-  const euler = React.useMemo(() => new THREE.Euler(), []);
-  const [spring, set] = useSpring(() => ({ rotation: [0, 0, 0] }));
+const Inspector = ({ children }: { children: any }) => {
+  const [{ rot, scale }, api] = useSpring(() => ({
+    rot: [0, 0, 0],
+    scale: [1, 1, 1],
+  }));
 
-  const bind = useDrag(({ delta: [dx, dy] }) => {
-    euler.y += (dx / size.width) * responsiveness;
-    set({ rotation: euler.toArray().slice(0, 3) as number[] });
-  });
+  const bind = useGesture(
+    {
+      onDrag: ({ active, offset: [y, z] }) => {
+        api.start({
+          rot: [0, y / 50, 0],
+          scale: active ? [1.1, 1.1, 1.1] : [1, 1, 1],
+        });
+      },
+    },
+    { drag: { preventScroll: true } }
+  );
 
-  useFrame(() => {
-    euler.y -= 0.002;
-    set({ rotation: euler.toArray().slice(0, 3) as number[] });
-  });
+  useFrame(() => api.start({ rot: [0, rot.get()[1] - 0.02, 0] }));
 
   return (
-    <a.group {...bind()} {...spring}>
+    <a.mesh {...bind()} rotation={rot} scale={scale}>
       {children}
-    </a.group>
+    </a.mesh>
   );
 };
 

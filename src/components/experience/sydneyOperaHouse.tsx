@@ -8,7 +8,7 @@ import {
   ColorAverage,
   HueSaturation,
 } from "@react-three/postprocessing";
-import { Resizer, KernelSize, BlendFunction } from "postprocessing";
+import { Resolution, KernelSize, BlendFunction } from "postprocessing";
 import Mesh from "./mesh";
 import Inspector from "./inspector";
 
@@ -37,7 +37,7 @@ const SydneyOperaHouse = React.memo(() => {
       shadows
       legacy={true}
       camera={{ position: [0, 2.6, 5], fov: 65 }}
-      style={{ background: "#fff8f0" }}
+      className="canvas"
     >
       <Model />
     </Canvas>
@@ -45,7 +45,6 @@ const SydneyOperaHouse = React.memo(() => {
 });
 
 const Model = React.memo(() => {
-  const sydneyOperaHouseRef = React.useRef();
   const { scene } = useThree();
 
   React.useEffect(() => {
@@ -117,16 +116,17 @@ const Model = React.memo(() => {
   return (
     <>
       <ambientLight intensity={0.2} />
-      <Inspector>
-        <Mesh ref={sydneyOperaHouseRef} />
-      </Inspector>
-
+      <React.Suspense fallback={null}>
+        <Inspector>
+          <Mesh />
+        </Inspector>
+      </React.Suspense>
       <EffectComposer>
         <Bloom
           intensity={10.0} // The bloom intensity.
           blurPass={undefined} // A blur pass.
-          width={Resizer.AUTO_SIZE} // render width
-          height={Resizer.AUTO_SIZE} // render height
+          width={Resolution.AUTO_SIZE} // render width
+          height={Resolution.AUTO_SIZE} // render height
           kernelSize={KernelSize.LARGE} // blur kernel size
           luminanceThreshold={1} // luminance threshold. Raise this value to mask out darker elements in the scene.
           luminanceSmoothing={0.5} // smoothness of the luminance threshold. Range is [0, 1]

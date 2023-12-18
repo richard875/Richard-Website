@@ -161,7 +161,18 @@ const Experience = () => {
           />
         </div>
       </Left>
-      <Right>
+      <Right
+        onTouchStart={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          document.body.style.overflow = "hidden";
+        }}
+        onTouchEnd={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          document.body.style.overflow = "auto";
+        }}
+      >
         <motion.div
           className="w-full h-full"
           initial={{ opacity: 0 }}
