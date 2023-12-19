@@ -13,7 +13,9 @@ import styled from "styled-components";
 import { StaticImage } from "gatsby-plugin-image";
 import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
+import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
+import Preload from "../components/seo/preload";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
@@ -285,15 +287,16 @@ const Contact = ({
 export default Contact;
 
 export const Head: HeadFC = () => (
-  <>
+  <Splash>
     <title>{CURRENT_PAGE_TITLE}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <Preload />
     <MetaTags
       path={Route.Contact}
       MetaImage={MetaImage}
       name={CURRENT_PAGE_TITLE}
     />
-  </>
+  </Splash>
 );
 
 const Container = styled(motion.div)`

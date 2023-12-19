@@ -9,7 +9,9 @@ import { COPYRIGHT, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
 import type { HeadFC } from "gatsby";
 import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
+import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
+import Preload from "../components/seo/preload";
 import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
@@ -106,7 +108,7 @@ const Education = ({
 export default Education;
 
 export const Head: HeadFC = () => (
-  <>
+  <Splash>
     <title>{CURRENT_PAGE_TITLE}</title>
     <meta
       name="theme-color"
@@ -118,12 +120,13 @@ export const Head: HeadFC = () => (
       content={COLOR.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
+    <Preload />
     <MetaTags
       path={Route.Education}
       MetaImage={MetaImage}
       name={CURRENT_PAGE_TITLE}
     />
-  </>
+  </Splash>
 );
 
 const Container = styled(motion.div)<{ $isDarkMode: boolean }>`

@@ -13,7 +13,9 @@ import { PAGE_TITLE } from "../constants/meta";
 import type { HeadFC } from "gatsby";
 import layout from "../styles/layout";
 import { COLOR } from "../styles/theme";
+import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
+import Preload from "../components/seo/preload";
 import InitialTransition from "../components/transition/InitialTransition";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
@@ -205,15 +207,16 @@ const Experience = () => {
 export default Experience;
 
 export const Head: HeadFC = () => (
-  <>
+  <Splash>
     <title>{CURRENT_PAGE_TITLE}</title>
     <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <Preload />
     <MetaTags
       path={Route.Intro}
       MetaImage={MetaImage}
       name={CURRENT_PAGE_TITLE}
     />
-  </>
+  </Splash>
 );
 
 const Container = styled(motion.div)`
