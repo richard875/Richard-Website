@@ -387,6 +387,7 @@ const Right = styled.div<{ $isIphoneXPwa: boolean }>`
   @media ${layout.down.md} {
     flex: 1;
     align-items: flex-start;
+    margin-top: 30px;
     padding-bottom: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "30px" : "20px")};
   }
 `;
