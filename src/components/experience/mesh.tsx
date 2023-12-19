@@ -4,11 +4,10 @@ import { useGLTF } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
+const MODEL_PATH = "/models/sydneyOperaHouse/sydneyOperaHouse.gltf";
+
 const Mesh = (props: any) => {
-  const { nodes, materials } = useLoader(
-    GLTFLoader,
-    "/models/sydneyOperaHouse/sydneyOperaHouse.gltf"
-  );
+  const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
 
   return (
     <group position={[0, 0.25, 0]} {...props} dispose={null}>
@@ -800,4 +799,4 @@ const Mesh = (props: any) => {
 
 export default Mesh;
 
-useGLTF.preload("/models/sydneyOperaHouse/sydneyOperaHouse.gltf");
+useGLTF.preload(MODEL_PATH);
