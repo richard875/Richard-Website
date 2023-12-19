@@ -11,7 +11,7 @@ const Cursor = ({
   delay,
   position,
   isBlack,
-  isIndexPage,
+  isIndexPage = false,
 }: {
   hover: boolean;
   delay: number;
@@ -22,8 +22,8 @@ const Cursor = ({
   if (typeof window === "undefined") return <></>;
   const { x, y } = useMousePosition(position);
 
-  const ringRef = React.useRef<HTMLDivElement>();
-  const dotRef = React.useRef<HTMLDivElement>();
+  const ringRef = React.useRef(null);
+  const dotRef = React.useRef(null);
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out", duration: 0.2 });
@@ -42,15 +42,15 @@ const Cursor = ({
     >
       <Ring
         ref={ringRef}
-        hover={hover}
-        black={isBlack}
-        isIndexPage={isIndexPage}
+        $hover={hover}
+        $black={isBlack}
+        $isIndexPage={isIndexPage}
       ></Ring>
       <Dot
         ref={dotRef}
-        hover={hover}
-        black={isBlack}
-        isIndexPage={isIndexPage}
+        $hover={hover}
+        $black={isBlack}
+        $isIndexPage={isIndexPage}
       ></Dot>
     </Container>
   );
@@ -60,15 +60,19 @@ export default Cursor;
 
 const Container = styled(motion.span)``;
 
-const Ring = styled.div`
+const Ring = styled.div<{
+  $black: boolean;
+  $isIndexPage: boolean;
+  $hover: boolean;
+}>`
   position: fixed;
   top: 0;
   left: 0;
-  width: ${(props: any) =>
-    props.black && props.isIndexPage ? "30px" : "25px"};
-  height: ${(props: any) =>
-    props.black && props.isIndexPage ? "30px" : "25px"};
-  border: 2px solid ${(props: any) => (props.black ? COLOR.BLACK : "lightgray")};
+  width: ${({ $black, $isIndexPage }) =>
+    $black && $isIndexPage ? "30px" : "25px"};
+  height: ${({ $black, $isIndexPage }) =>
+    $black && $isIndexPage ? "30px" : "25px"};
+  border: 2px solid ${({ $black }) => ($black ? COLOR.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
@@ -83,8 +87,8 @@ const Ring = styled.div`
   z-index: 999;
   pointer-events: none;
 
-  ${(props: any) =>
-    props.hover &&
+  ${({ $hover }) =>
+    $hover &&
     css`
       opacity: 0.7;
       transform: translate(-50%, -50%) scale(2.5);
@@ -92,14 +96,18 @@ const Ring = styled.div`
     `};
 `;
 
-const Dot = styled.div`
+const Dot = styled.div<{
+  $black: boolean;
+  $isIndexPage: boolean;
+  $hover: boolean;
+}>`
   position: fixed;
   top: 50%;
   left: 50%;
   width: 8px;
   height: 8px;
-  background-color: ${(props: any) =>
-    props.black && props.isIndexPage ? COLOR.BLACK : "transparent"};
+  background-color: ${({ $black, $isIndexPage }) =>
+    $black && $isIndexPage ? COLOR.BLACK : "transparent"};
   border-radius: 100%;
   transform: translate(-50%, -50%) scale(1);
   transition: 0.3s cubic-bezier(0.75, -1.27, 0.3, 2.33) transform 0.4s,
@@ -108,8 +116,8 @@ const Dot = styled.div`
   z-index: 999;
   pointer-events: none;
 
-  ${(props: any) =>
-    props.hover &&
+  ${({ $hover }) =>
+    $hover &&
     css`
       opacity: 0.5;
       transform: translate(-50%, -50%) scale(0);
