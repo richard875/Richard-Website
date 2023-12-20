@@ -1,4 +1,6 @@
 import React from "react";
+import { COLOR } from "../../styles/theme";
+import favicon from "../../../static/images/favicon.png";
 import {
   NAME,
   URL,
@@ -8,8 +10,6 @@ import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
 } from "../../constants/meta";
-import favicon from "../../../static/images/favicon.png";
-import { COLOR } from "../../styles/theme";
 
 const MetaTags = ({
   name,
@@ -77,6 +77,8 @@ const MetaTags = ({
                     "${LINKEDIN_URL}",
                     "${GITHUB_URL}"
                 ],
+                "datePublished": "${dateString}",
+                "dateModified": "${dateString}",
                 "jobTitle": "Software Engineer",
                 "worksFor": {
                     "@type": "Organization",

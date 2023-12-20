@@ -9,41 +9,39 @@ import neetcode from "../../../static/videos/neetcode.mp4";
 import piston from "../../../static/videos/piston.mp4";
 import smh from "../../../static/videos/smh.mp4";
 
-const Preload = () => {
-  return (
-    <>
-      {/* Preload Fonts */}
-      <link
-        rel="preload"
-        href={fontPrimaryNormal}
-        as="font"
-        type="font/woff"
-        crossOrigin="anonymous"
-      />
-      <link
-        rel="preload"
-        href={fontPrimaryBold}
-        as="font"
-        type="font/woff"
-        crossOrigin="anonymous"
-      />
-      <link
-        rel="preload"
-        href={fontSecondaryNormal}
-        as="font"
-        type="font/ttf"
-        crossOrigin="anonymous"
-      />
+const Preload = () => (
+  <>
+    {/* Preload Fonts */}
+    <link
+      rel="preload"
+      href={fontPrimaryNormal}
+      as="font"
+      type="font/woff"
+      crossOrigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href={fontPrimaryBold}
+      as="font"
+      type="font/woff"
+      crossOrigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href={fontSecondaryNormal}
+      as="font"
+      type="font/ttf"
+      crossOrigin="anonymous"
+    />
 
-      {/* Preload Content */}
-      <link rel="preload" href={canary} as="video" type="video/mp4" />
-      <link rel="preload" href={cie} as="video" type="video/mp4" />
-      <link rel="preload" href={maily} as="video" type="video/mp4" />
-      <link rel="preload" href={neetcode} as="video" type="video/mp4" />
-      <link rel="preload" href={piston} as="video" type="video/mp4" />
-      <link rel="preload" href={smh} as="video" type="video/mp4" />
-    </>
-  );
-};
+    {/* Preload Content */}
+    <link rel="preload" href={canary} as="video" type="video/mp4" />
+    <link rel="preload" href={cie} as="video" type="video/mp4" />
+    <link rel="preload" href={maily} as="video" type="video/mp4" />
+    <link rel="preload" href={neetcode} as="video" type="video/mp4" />
+    <link rel="preload" href={piston} as="video" type="video/mp4" />
+    <link rel="preload" href={smh} as="video" type="video/mp4" />
+  </>
+);
 
 export default Preload;
