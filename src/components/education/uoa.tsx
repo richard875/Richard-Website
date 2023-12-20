@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import Icon from "../../enums/icons";
 import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
@@ -19,7 +20,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
     >
       <Logo
         $height={55}
-        src={iconPicker("uoa", isDarkMode)}
+        src={iconPicker(Icon.UoA, isDarkMode)}
         alt="University of Auckland"
       />
       <UniversityText $isDarkMode={isDarkMode}>
@@ -63,7 +64,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
       </SummaryText>
       <img
         className="mt-8 mb-2 h-4 w-auto select-none"
-        src={iconPicker("redbull", isDarkMode)}
+        src={iconPicker(Icon.Redbull, isDarkMode)}
         alt="Red Bull"
       />
       <SecondaryTitle $isDarkMode={isDarkMode}>
@@ -86,7 +87,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
       </p>
       <img
         className="mt-5 mb-2 h-5 w-auto select-none"
-        src={iconPicker("cie", isDarkMode)}
+        src={iconPicker(Icon.Cie, isDarkMode)}
         alt="CIE"
       />
       <SecondaryTitle $isDarkMode={isDarkMode}>

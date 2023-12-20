@@ -1,3 +1,5 @@
+import Icon from "../enums/icons";
+
 import canary from "../../static/images/logos/canary.svg";
 import canaryBlack from "../../static/images/logos/canary-black.svg";
 import chancery from "../../static/images/logos/chancery.png";
@@ -44,74 +46,74 @@ import vue from "../../static/images/skills/vue.svg";
 
 const iconPicker = (logo: string, isDark: boolean) => {
   switch (logo) {
-    case "canary":
+    case Icon.Canary:
       return isDark ? canary : canaryBlack;
-    case "chancery":
+    case Icon.Chancery:
       return chancery;
-    case "cie":
+    case Icon.Cie:
       return cie;
-    case "nasdaq":
+    case Icon.Nasdaq:
       return isDark ? nasdaq : nasdaqBlack;
-    case "maily":
+    case Icon.Maily:
       return maily;
-    case "neetcode":
+    case Icon.Neetcode:
       return neetcode;
-    case "slik":
+    case Icon.Slik:
       return isDark ? slik : slikBlack;
-    case "nzgovt":
+    case Icon.NzGovt:
       return isDark ? nzGovt : nzGovtBlack;
-    case "panopto":
+    case Icon.Panopto:
       return isDark ? panopto : panoptoBlack;
-    case "piston":
+    case Icon.Piston:
       return piston;
-    case "qantas":
+    case Icon.Qantas:
       return isDark ? qantas : qantasBlack;
-    case "redbull":
+    case Icon.Redbull:
       return redbull;
-    case "uoa":
+    case Icon.UoA:
       return uoa;
-    case "usyd":
+    case Icon.USYD:
       return isDark ? usyd : usydBlack;
-    case "yourcar":
+    case Icon.Yourcar:
       return yourcar;
-    case "youtube":
+    case Icon.YouTube:
       return isDark ? youtube : youtubeBlack;
-    case "angular":
+    case Icon.Angular:
       return angular;
-    case "aws":
+    case Icon.AWS:
       return aws;
-    case "csharp":
+    case Icon.CSharp:
       return csharp;
-    case "docker":
+    case Icon.Docker:
       return docker;
-    case "dotnet":
+    case Icon.DotNet:
       return dotnet;
-    case "go":
+    case Icon.Go:
       return go;
-    case "graphql":
+    case Icon.GraphQL:
       return graphql;
-    case "jenkins":
+    case Icon.Jenkins:
       return jenkins;
-    case "mongodb":
+    case Icon.MongoDB:
       return mongodb;
-    case "postgresql":
+    case Icon.PostgreSQL:
       return postgresql;
-    case "python":
+    case Icon.Python:
       return python;
-    case "react":
+    case Icon.React:
       return react;
-    case "svelte":
+    case Icon.Svelte:
       return svelte;
-    case "swift":
+    case Icon.Swift:
       return swift;
-    case "threejs":
+    case Icon.ThreeJS:
       return isDark ? threejs : threejsBlack;
-    case "typescript":
+    case Icon.TypeScript:
       return typescript;
-    case "vue":
+    case Icon.Vue:
       return vue;
     default:
-      return "";
+      return Icon.Empty;
   }
 };
 

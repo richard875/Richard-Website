@@ -1,5 +1,7 @@
+import Icon from "../enums/icons";
+
 export type Skill = {
-  name: string;
+  name: Icon;
   displayName: string;
   skill?: number;
 };

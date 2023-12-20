@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import Icon from "../../enums/icons";
 import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
@@ -19,7 +20,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
     >
       <Logo
         $height={50}
-        src={iconPicker("usyd", isDarkMode)}
+        src={iconPicker(Icon.USYD, isDarkMode)}
         alt="University of Sydney"
       />
       <UniversityText $isDarkMode={isDarkMode}>

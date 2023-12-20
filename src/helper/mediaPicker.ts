@@ -1,3 +1,4 @@
+import Media from "../enums/media";
 import canary from "../../static/videos/canary.mp4";
 import cie from "../../static/videos/cie.mp4";
 import maily from "../../static/videos/maily.mp4";
@@ -7,20 +8,20 @@ import smh from "../../static/videos/smh.mp4";
 
 const mediaPicker = (media: string) => {
   switch (media) {
-    case "canary":
+    case Media.Canary:
       return canary;
-    case "cie":
+    case Media.Cie:
       return cie;
-    case "maily":
+    case Media.Maily:
       return maily;
-    case "neetcode":
+    case Media.Neetcode:
       return neetcode;
-    case "piston":
+    case Media.Piston:
       return piston;
-    case "smh":
+    case Media.SMH:
       return smh;
     default:
-      return "";
+      return Media.Empty;
   }
 };
 

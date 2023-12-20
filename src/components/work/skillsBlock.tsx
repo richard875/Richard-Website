@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import Icon from "../../enums/icons";
 import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
@@ -41,7 +42,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
       <Logo
         className="hidden xxxl:block"
         $height={50}
-        src={iconPicker("react", isDarkMode)}
+        src={iconPicker(Icon.React, isDarkMode)}
         alt={"My Skills"}
       />
       <TitleWrapper>
@@ -50,7 +51,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
           className="xxxl:hidden"
           $height={30}
           style={{ paddingBottom: "5px" }}
-          src={iconPicker("react", isDarkMode)}
+          src={iconPicker(Icon.React, isDarkMode)}
           alt={"My Skills"}
         />
       </TitleWrapper>
