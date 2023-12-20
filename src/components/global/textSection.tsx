@@ -28,6 +28,11 @@ const TextSection = ({
     else return " ";
   };
 
+  const mouseAction = (action: boolean) => {
+    setHover(action);
+    setDisplayMedia(action);
+  };
+
   return (
     <>
       {isFirst ? "• " : renderSpace(content)}
@@ -38,14 +43,8 @@ const TextSection = ({
           $isDarkMode={isDarkMode}
           target="_blank"
           rel="noopener noreferrer"
-          onMouseEnter={() => {
-            setHover(true);
-            setDisplayMedia(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-            setDisplayMedia(false);
-          }}
+          onMouseEnter={() => mouseAction(true)}
+          onMouseLeave={() => mouseAction(false)}
         >
           {content}
         </Link>
@@ -66,8 +65,8 @@ const Link = styled.a<{ $isDarkMode: boolean }>`
   color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
 
   @media ${layout.up.md} {
-    color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
     text-decoration-line: underline;
+    color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
   }
 `;
 
