@@ -1,13 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import useWindowSize from "../../hooks/useWindowSize";
 import { CSSTransition } from "react-transition-group";
 import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
 import TextSection from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
+import useWindowSize from "../../hooks/useWindowSize";
 import WorkExperience from "../../types/workExperience";
 import SentenceDescription from "../../types/sentenceDescription";
 import {
