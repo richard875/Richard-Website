@@ -12,7 +12,7 @@ import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
-import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
+import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import Usyd from "../components/education/usyd";
@@ -94,12 +94,11 @@ const Education = ({
           <p className="my-2">{COPYRIGHT}</p>
         </Bottom>
       </Horizontal>
-      <LoadableCursorSsr
+      <Cursor
         hover={hover}
         delay={0.5}
         position={location.state!}
         isBlack={!isDarkMode}
-        fallback={<></>}
       />
     </Container>
   );

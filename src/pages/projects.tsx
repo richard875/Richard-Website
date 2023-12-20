@@ -14,7 +14,7 @@ import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
-import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
+import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import Block from "../components/projects/block";
 import MousePosition from "../types/mousePosition";
@@ -168,12 +168,11 @@ const Projects = ({
           </div>
         </CallToAction>
       </Top>
-      <LoadableCursorSsr
+      <Cursor
         hover={hover}
         delay={0.5}
         position={location.state!}
         isBlack={!isDarkMode}
-        fallback={<></>}
       />
     </Container>
   );

@@ -2,9 +2,10 @@ import React from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
+import { isDesktop } from "react-device-detect";
 import { COLOR } from "../../styles/theme";
-import useMousePosition from "../../hooks/useMousePosition";
 import MousePosition from "../../types/mousePosition";
+import useMousePosition from "../../hooks/useMousePosition";
 
 const Cursor = ({
   hover,
@@ -19,7 +20,6 @@ const Cursor = ({
   isBlack: boolean;
   isIndexPage?: boolean;
 }) => {
-  if (typeof window === "undefined") return <></>;
   const { x, y } = useMousePosition(position);
 
   const ringRef = React.useRef(null);
@@ -35,30 +35,30 @@ const Cursor = ({
   }, [x, y]);
 
   return (
-    <Container
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1, delay: delay }}
-    >
-      <Ring
-        ref={ringRef}
-        $hover={hover}
-        $black={isBlack}
-        $isIndexPage={isIndexPage}
-      ></Ring>
-      <Dot
-        ref={dotRef}
-        $hover={hover}
-        $black={isBlack}
-        $isIndexPage={isIndexPage}
-      ></Dot>
-    </Container>
+    isDesktop && (
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: delay }}
+      >
+        <Ring
+          ref={ringRef}
+          $hover={hover}
+          $black={isBlack}
+          $isIndexPage={isIndexPage}
+        ></Ring>
+        <Dot
+          ref={dotRef}
+          $hover={hover}
+          $black={isBlack}
+          $isIndexPage={isIndexPage}
+        ></Dot>
+      </motion.span>
+    )
   );
 };
 
 export default Cursor;
-
-const Container = styled(motion.span)``;
 
 const Ring = styled.div<{
   $black: boolean;

@@ -14,7 +14,7 @@ import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
-import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
+import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -75,12 +75,11 @@ const Acknowledgement = ({
           <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
         </Cta>
       </Wrapper>
-      <LoadableCursorSsr
+      <Cursor
         hover={hover}
         delay={0.3}
         position={location.state!}
         isBlack={false}
-        fallback={<></>}
       />
     </Container>
   );

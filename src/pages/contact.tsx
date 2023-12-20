@@ -16,7 +16,7 @@ import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
 import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
-import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
+import Cursor from "../components/cursor/cursor";
 import InitialTransition from "../components/transition/InitialTransition";
 import CallToAction from "../components/global/callToAction";
 import MousePosition from "../types/mousePosition";
@@ -273,12 +273,11 @@ const Contact = ({
           </motion.div>
         </Right>
       </Box>
-      <LoadableCursorSsr
+      <Cursor
         hover={hover}
         delay={0.5}
         position={location.state!}
         isBlack={false}
-        fallback={<></>}
       />
     </Container>
   );
