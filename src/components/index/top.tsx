@@ -3,9 +3,9 @@ import gsap from "gsap";
 import styled from "styled-components";
 import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
-import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import contact from "../../routes/contact";
 import { EMAIL } from "../../constants/meta";
+import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const Top = ({
   setHover,
@@ -38,7 +38,6 @@ const Top = ({
           {EMAIL}
         </a>
       </div>
-
       <div
         ref={projectRef}
         className="font-secondary-normal select-none"

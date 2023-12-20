@@ -1,9 +1,9 @@
 import React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
-import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
+import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const getTimeInSydney = () =>
   new Date().toLocaleTimeString("en-AU", {
@@ -55,7 +55,6 @@ const Indicator = styled.div`
   margin-right: 7px;
   border-radius: 99px;
   background: ${COLOR.DIM_GREEN};
-
   animation: blink 3s ease-out infinite;
 
   @keyframes blink {

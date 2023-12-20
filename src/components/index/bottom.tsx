@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
-import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import getResume from "../../helper/getResume";
+import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";
 const CIRCLE = "../../../static/images/indexCircle/circle.png";
@@ -77,7 +77,6 @@ const Bottom = ({
           />
         </div>
       </Button>
-
       <Country>
         <div
           ref={countryRef}
@@ -89,7 +88,6 @@ const Bottom = ({
           {!isIphoneXPwa && "Acknowledgement of Country"}
         </div>
       </Country>
-
       <CircleContainer
         $isIphoneXPwa={isIphoneXPwa}
         onMouseEnter={() => setHover(true)}
@@ -99,11 +97,7 @@ const Bottom = ({
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 2,
-            delay: 1.5,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
+          transition={{ duration: 2, delay: 1.5, ease: [0, 0.71, 0.2, 1.01] }}
         >
           <Circle>
             <StaticImage
@@ -143,8 +137,8 @@ const Container = styled.div`
 
 const SmallText = styled.div`
   font-size: 18px;
-  color: ${COLOR.WHITE};
   overflow: hidden;
+  color: ${COLOR.WHITE};
 
   @media ${layout.up.sm} {
     font-size: 20px;
@@ -182,9 +176,9 @@ const Name = styled.div`
 const Button = styled.div`
   font-size: 16px;
   margin-top: 20px;
-  color: ${COLOR.WHITE};
-  user-select: none;
   overflow: hidden;
+  user-select: none;
+  color: ${COLOR.WHITE};
 
   @media ${layout.up.sm} {
     font-size: 18px;
@@ -197,15 +191,15 @@ const Button = styled.div`
 `;
 
 const Country = styled.div`
-  font-size: 16px;
-  position: absolute;
   bottom: 1.5vh;
-  color: ${COLOR.WHITE};
+  font-size: 16px;
   overflow: hidden;
+  position: absolute;
+  color: ${COLOR.WHITE};
 
   @media ${layout.up.sm} {
-    font-size: 17px;
     bottom: 8vh;
+    font-size: 17px;
   }
 
   @media ${layout.up.lg} {
@@ -220,8 +214,8 @@ const Circle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${COLOR.BRIGHT_GREEN};
   border: 2px solid ${COLOR.BLACK};
+  background: ${COLOR.BRIGHT_GREEN};
   animation: rotation 12s infinite linear;
 
   @keyframes rotation {

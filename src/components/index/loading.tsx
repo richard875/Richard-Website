@@ -3,15 +3,13 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { COLOR } from "../../styles/theme";
 
-const Loading = () => {
-  return (
-    <Container
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 0 }}
-      transition={{ delay: 0.7 }}
-    ></Container>
-  );
-};
+const Loading = () => (
+  <Container
+    initial={{ opacity: 1 }}
+    animate={{ opacity: 0 }}
+    transition={{ delay: 0.7 }}
+  ></Container>
+);
 
 export default Loading;
 
@@ -43,8 +41,8 @@ const Container = styled(motion.div)`
     height: 8px;
     top: -1px;
     left: -1px;
-    background-color: ${COLOR.BLACK};
     border-radius: 50%;
+    background-color: ${COLOR.BLACK};
   }
 
   @-webkit-keyframes spHydro {
