@@ -1,35 +1,33 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import layout from "../../styles/layout";
+import { COLOR } from "../../styles/theme";
 import uoa from "../../../static/images/logos/uoa.png";
 import usyd from "../../../static/images/logos/usyd.svg";
 import qantas from "../../../static/images/logos/qantas.svg";
 import nzgovt from "../../../static/images/logos/nzgovt.png";
-import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 
-const Logos = () => {
-  return (
-    <Container
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-    >
-      <QantasLogo>
-        <img src={qantas} alt="Qantas" />
-      </QantasLogo>
-      <NzGovtLogo>
-        <img src={nzgovt} alt="New Zealand Government" />
-      </NzGovtLogo>
-      <UsydLogo>
-        <img src={usyd} alt="University of Sydney" />
-      </UsydLogo>
-      <UoaLogo>
-        <img src={uoa} alt="University of Auckland" />
-      </UoaLogo>
-    </Container>
-  );
-};
+const Logos = () => (
+  <Container
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+  >
+    <QantasLogo>
+      <img src={qantas} alt="Qantas" />
+    </QantasLogo>
+    <NzGovtLogo>
+      <img src={nzgovt} alt="New Zealand Government" />
+    </NzGovtLogo>
+    <UsydLogo>
+      <img src={usyd} alt="University of Sydney" />
+    </UsydLogo>
+    <UoaLogo>
+      <img src={uoa} alt="University of Auckland" />
+    </UoaLogo>
+  </Container>
+);
 
 export default Logos;
 
@@ -43,10 +41,10 @@ const Container = styled(motion.div)`
   user-select: none;
 
   @media ${layout.up.sm} {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr;
     margin-top: 4vw;
     margin-bottom: 4vw;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
   }
 
   @media ${layout.up.lg} {

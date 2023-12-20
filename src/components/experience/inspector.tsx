@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useGesture } from "@use-gesture/react";
 import { a, useSpring } from "@react-spring/three";
 
-const Inspector = ({ children }: { children: any }) => {
+const Inspector = ({ children }: { children: React.JSX.Element }) => {
   const [{ rot, scale }, api] = useSpring(() => ({
     rot: [0, 0, 0],
     scale: [1, 1, 1],
@@ -11,7 +11,7 @@ const Inspector = ({ children }: { children: any }) => {
 
   const bind = useGesture(
     {
-      onDrag: ({ active, offset: [y, z] }) => {
+      onDrag: ({ active, offset: [y] }) => {
         api.start({
           rot: [0, y / 50, 0],
           scale: active ? [1.1, 1.1, 1.1] : [1, 1, 1],

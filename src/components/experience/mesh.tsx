@@ -6,11 +6,11 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const MODEL_PATH = "/models/sydneyOperaHouse/sydneyOperaHouse.gltf";
 
-const Mesh = (props: any) => {
+const Mesh = () => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
 
   return (
-    <group position={[0, 0.25, 0]} {...props} dispose={null}>
+    <group position={[0, 0.25, 0]} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.0003}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group position={[588.78, 396.08, 2376.67]}>
