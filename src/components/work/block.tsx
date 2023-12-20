@@ -5,11 +5,11 @@ import useWindowSize from "../../hooks/useWindowSize";
 import { CSSTransition } from "react-transition-group";
 import layout from "../../styles/layout";
 import { COLOR } from "../../styles/theme";
-import iconPicker from "../../helper/iconPicker";
 import TextSection from "../global/textSection";
+import iconPicker from "../../helper/iconPicker";
+import mediaPicker from "../../helper/mediaPicker";
 import WorkExperience from "../../types/workExperience";
 import SentenceDescription from "../../types/sentenceDescription";
-import mediaPicker from "../../helper/mediaPicker";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -19,15 +19,15 @@ import {
 } from "../../constants/margin";
 
 const Block = ({
-  experience,
-  dataLength,
   index,
+  dataLength,
+  experience,
   setHover,
   isDarkMode,
 }: {
-  experience: WorkExperience;
-  dataLength: number;
   index: number;
+  dataLength: number;
+  experience: WorkExperience;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
 }) => {
@@ -69,25 +69,23 @@ const Block = ({
           )}
         </DescriptionText>
         {experience.description.map(
-          (description: SentenceDescription[], index: number) => {
-            return (
-              <DescriptionText key={index} $isFirst={index == 0}>
-                {description.map(
-                  (sentence: SentenceDescription, index: number) => (
-                    <TextSection
-                      key={index}
-                      isFirst={index == 0}
-                      clickableRef={clickableRef}
-                      setHover={setHover}
-                      setDisplayMedia={setDisplayMedia}
-                      isDarkMode={isDarkMode}
-                      {...sentence} // content and url
-                    />
-                  )
-                )}
-              </DescriptionText>
-            );
-          }
+          (description: SentenceDescription[], index: number) => (
+            <DescriptionText key={index} $isFirst={index == 0}>
+              {description.map(
+                (sentence: SentenceDescription, index: number) => (
+                  <TextSection
+                    key={index}
+                    isFirst={index == 0}
+                    clickableRef={clickableRef}
+                    setHover={setHover}
+                    setDisplayMedia={setDisplayMedia}
+                    isDarkMode={isDarkMode}
+                    {...sentence} // content and url
+                  />
+                )
+              )}
+            </DescriptionText>
+          )
         )}
         {!!experience.media && (
           <CSSTransition
@@ -149,8 +147,8 @@ const Container = styled.div<{
 `;
 
 const Logo = styled.img<{ $height: number }>`
-  height: ${({ $height }) => $height + "px"};
   width: auto;
+  height: ${({ $height }) => $height + "px"};
   margin-top: ${({ $height }) =>
     15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   margin-bottom: ${({ $height }) =>
@@ -191,19 +189,19 @@ const Secondary = styled.p`
 `;
 
 const DescriptionText = styled.p<{ $isFirst: boolean }>`
-  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
   font-size: 18px;
   line-height: 25px;
+  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
 
   @media ${layout.up.md} {
     width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
   @media ${layout.up.xxxl} {
-    margin-top: ${({ $isFirst }) => ($isFirst ? "40px" : "20px")};
-    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
     font-size: 20px;
     line-height: 30px;
+    margin-top: ${({ $isFirst }) => ($isFirst ? "40px" : "20px")};
+    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 `;
 
