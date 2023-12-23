@@ -1,11 +1,12 @@
 import React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
-import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
-import contact from "../../routes/contact";
+import Route from "../../routes/route";
+import routeTo from "../../routes/routeTo";
 import { EMAIL } from "../../constants/meta";
+import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const Top = ({
   setHover,
@@ -38,13 +39,12 @@ const Top = ({
           {EMAIL}
         </a>
       </div>
-
       <div
         ref={projectRef}
         className="font-secondary-normal select-none"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        onClick={(e) => contact(e)}
+        onClick={(e) => routeTo(e, Route.Contact, true)}
       >
         CONTACT
       </div>
@@ -63,7 +63,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-  border-bottom: 3px solid ${COLOR.BLACK};
+  border-bottom: 3px solid ${Color.BLACK};
 
   @media ${layout.up.sm} {
     font-size: 17px;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 
 const TextSection = ({
   isFirst,
@@ -28,6 +28,11 @@ const TextSection = ({
     else return " ";
   };
 
+  const mouseAction = (action: boolean) => {
+    setHover(action);
+    setDisplayMedia(action);
+  };
+
   return (
     <>
       {isFirst ? "• " : renderSpace(content)}
@@ -38,14 +43,8 @@ const TextSection = ({
           $isDarkMode={isDarkMode}
           target="_blank"
           rel="noopener noreferrer"
-          onMouseEnter={() => {
-            setHover(true);
-            setDisplayMedia(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-            setDisplayMedia(false);
-          }}
+          onMouseEnter={() => mouseAction(true)}
+          onMouseLeave={() => mouseAction(false)}
         >
           {content}
         </Link>
@@ -63,16 +62,16 @@ export default TextSection;
 const Link = styled.a<{ $isDarkMode: boolean }>`
   cursor: none;
   text-decoration-line: underline;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
   @media ${layout.up.md} {
-    color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
     text-decoration-line: underline;
+    color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
   }
 `;
 
 const Highlight = styled.span<{ $isDarkMode: boolean }>`
   margin: 0;
   padding: 0;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 `;

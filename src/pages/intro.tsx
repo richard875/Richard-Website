@@ -1,28 +1,29 @@
 import React from "react";
+import type { HeadFC } from "gatsby";
+import styled from "styled-components";
 import { motion } from "framer-motion";
 import Route from "../routes/route";
-import home from "../routes/home";
-import experience from "../routes/experience";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import routeTo from "../routes/routeTo";
 import {
   faCircleChevronLeft,
   faCircleChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { PAGE_TITLE } from "../constants/meta";
-import type { HeadFC } from "gatsby";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Color from "../enums/color";
 import layout from "../styles/layout";
-import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
-import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
-import InitialTransition from "../components/transition/InitialTransition";
+import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
+import InitialTransition from "../components/transition/InitialTransition";
+import setOverflow from "../helper/setOverflow";
+import useDarkModeManager from "../hooks/useDarkModeManager";
+import { INTRO_TITLE, PAGE_TITLE } from "../constants/meta";
 import { EMAIL, LINKEDIN_URL, GITHUB_URL } from "../constants/meta";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
-const CURRENT_PAGE_TITLE = `G'day${PAGE_TITLE}`;
+const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
 const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
 
 const CallToAction = ({
@@ -30,51 +31,37 @@ const CallToAction = ({
   setTransitionColor,
 }: {
   isDarkMode: boolean;
-  setTransitionColor: (color: string) => void;
-}) => {
-  return (
-    <Cta
-      className="font-secondary-normal"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-    >
-      <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 select-none">
-        <span
-          onClick={(e) => {
-            setTransitionColor(
-              isDarkMode
-                ? COLOR.BACKGROUND_BLACK
-                : COLOR.BACKGROUND_WHITE_SECONDARY
-            );
-            experience(e, isDarkMode);
-          }}
-        >
-          Work Experience & Projects
-        </span>
-      </div>
-      <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
-    </Cta>
-  );
-};
+  setTransitionColor: (color: Color) => void;
+}) => (
+  <Cta
+    className="font-secondary-normal"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+  >
+    <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 select-none">
+      <span
+        onClick={(e) => {
+          setTransitionColor(
+            isDarkMode
+              ? Color.BACKGROUND_BLACK
+              : Color.BACKGROUND_WHITE_SECONDARY
+          );
+          routeTo(e, Route.Experience, false, isDarkMode);
+        }}
+      >
+        Work Experience & Projects
+      </span>
+    </div>
+    <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
+  </Cta>
+);
 
 const Experience = () => {
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [transitionColor, setTransitionColor] = React.useState(
-    isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
+    isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY
   );
-
-  React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-
-    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
-    const updateIsDarkMode = () => setIsDarkMode(mediaQueryList.matches);
-
-    mediaQueryList.addEventListener("change", updateIsDarkMode);
-    updateIsDarkMode();
-
-    return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
-  }, []);
 
   return (
     <Container
@@ -95,8 +82,8 @@ const Experience = () => {
             <div className="cursor-pointer text-base pl-2 hover:pl-3 transition-all ease-in-out underline underline-offset-4 select-none">
               <span
                 onClick={(e) => {
-                  setTransitionColor(COLOR.BACKGROUND_WHITE);
-                  home(e);
+                  setTransitionColor(Color.BACKGROUND_WHITE);
+                  routeTo(e, Route.Home, true, true, Color.BACKGROUND_WHITE);
                 }}
               >
                 Home
@@ -108,21 +95,17 @@ const Experience = () => {
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 0.4,
-            delay: 0.2,
-          }}
+          transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
-          G'day, I'm Richard. I'm a Software Engineer and Creative Designer from{" "}
-          <Sydney>Sydney</Sydney>,{" "}
+          G'day, I'm Richard. I'm a Software Engineer and Creative Designer from
+          <Sydney>&nbsp;Sydney</Sydney>,
           <Australia
             onClick={(e) => {
               e.preventDefault();
               window.open(AUSTRALIA, "_blank");
             }}
           >
-            Australia
+            &nbsp;Australia
           </Australia>
           . On this corner of the internet, you'll find information about me.
           You can connect with me on&nbsp;
@@ -164,38 +147,21 @@ const Experience = () => {
         </div>
       </Left>
       <Right
-        onTouchStart={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          document.body.style.overflow = "hidden";
-        }}
-        onTouchEnd={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          document.body.style.overflow = "auto";
-        }}
+        onTouchStart={(e) => setOverflow(e, true)}
+        onTouchEnd={(e) => setOverflow(e, false)}
       >
         <motion.div
           className="w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 0.4,
-            delay: 0.4,
-          }}
+          transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
         >
           <SydneyOperaHouse />
         </motion.div>
-
         <SydneyOperaHouseInfoText
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{
-            stiffness: 0,
-            duration: 0.4,
-            delay: 0.4,
-          }}
+          transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
         >
           <span className="font-secondary-normal">Sydney Opera House</span>
         </SydneyOperaHouseInfoText>
@@ -209,7 +175,7 @@ export default Experience;
 export const Head: HeadFC = () => (
   <Splash>
     <title>{CURRENT_PAGE_TITLE}</title>
-    <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <meta name="theme-color" content={Color.BACKGROUND_BLACK} />
     <Preload />
     <MetaTags
       path={Route.Intro}
@@ -229,7 +195,7 @@ const Container = styled(motion.div)`
 
 const Left = styled.div`
   padding: 30px;
-  background-color: ${COLOR.BACKGROUND_BLACK};
+  background-color: ${Color.BACKGROUND_BLACK};
 
   @media ${layout.down.sm} {
     padding-bottom: 10px;
@@ -250,9 +216,9 @@ const Left = styled.div`
 `;
 
 const LeftText = styled(motion.div)`
-  color: ${COLOR.WHITE};
   font-size: 6vw;
   line-height: 1.65;
+  color: ${Color.WHITE};
 
   @media ${layout.up.sm} {
     font-size: 3vw;
@@ -271,36 +237,36 @@ const HoverableText = styled.span`
 
 const HoverableTextUnderline = styled(HoverableText)`
   padding-bottom: 8px;
-  text-decoration-line: underline;
   text-underline-offset: 4px;
+  text-decoration-line: underline;
 `;
 
 const Sydney = styled.span`
-  color: ${COLOR.USYD_ORANGE};
+  color: ${Color.SYDNEY_ORANGE};
 `;
 
 const Australia = styled(HoverableText)`
-  color: ${COLOR.AUSTRALIA_GOLD};
   cursor: pointer;
+  color: ${Color.AUSTRALIA_GOLD};
 `;
 
 const LinkedIn = styled(HoverableTextUnderline)`
-  color: ${COLOR.LINKEDIN_BLUE};
+  color: ${Color.LINKEDIN_BLUE};
 `;
 
 const Github = styled(HoverableTextUnderline)`
-  color: ${COLOR.BACKGROUND_WHITE};
+  color: ${Color.BACKGROUND_WHITE};
 `;
 
 const Email = styled(HoverableTextUnderline)`
-  color: ${COLOR.BLUE};
+  color: ${Color.BLUE};
 `;
 
 const Right = styled.div`
   height: 500px;
   cursor: grab;
   user-select: none;
-  background-color: ${COLOR.BACKGROUND_WHITE_SECONDARY};
+  background-color: ${Color.BACKGROUND_WHITE_SECONDARY};
 
   &:active {
     cursor: grabbing;
@@ -317,21 +283,21 @@ const Right = styled.div`
 `;
 
 const SydneyOperaHouseInfoText = styled(motion.div)`
-  font-size: 14px;
-  position: relative;
-  bottom: 10%;
-  margin-left: auto;
-  margin-right: auto;
   left: 0;
   right: 0;
+  bottom: 10%;
+  font-size: 14px;
+  position: relative;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const Cta = styled(motion.div)`
   display: flex;
   align-items: center;
-  color: ${COLOR.BRIGHT_GREEN};
   font-size: 19px;
+  color: ${Color.BRIGHT_GREEN};
 
   @media ${layout.down.sm} {
     margin-top: 8vw;

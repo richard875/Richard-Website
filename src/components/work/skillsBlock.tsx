@@ -1,10 +1,11 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import Icon from "../../enums/icons";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
-import skillsData from "../../../static/data/skills.json";
 import iconPicker from "../../helper/iconPicker";
+import skillsData from "../../../static/data/skills.json";
 import Skills, { Skill as SkillType } from "../../types/skills";
 import {
   BLOCK_PADDING,
@@ -20,95 +21,89 @@ const SecondarySkills = ({
 }: {
   skill: SkillType;
   isDarkMode: boolean;
-}) => {
-  return (
-    <SecondarySkillsItem $isDarkMode={isDarkMode}>
-      <SecondarySkillsText>{skill.displayName}</SecondarySkillsText>
-      <SkillsImage
-        className="!ml-1 !mb-0"
-        src={iconPicker(skill.name, isDarkMode)}
-        alt={skill.displayName}
-      ></SkillsImage>
-    </SecondarySkillsItem>
-  );
-};
+}) => (
+  <SecondarySkillsItem $isDarkMode={isDarkMode}>
+    <SecondarySkillsText>{skill.displayName}</SecondarySkillsText>
+    <SkillsImage
+      className="!ml-1 !mb-0"
+      src={iconPicker(skill.name, isDarkMode)}
+      alt={skill.displayName}
+    ></SkillsImage>
+  </SecondarySkillsItem>
+);
 
-const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => {
-  return (
-    <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 }}
-      >
+const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
+  <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ stiffness: 0, duration: 0.4, delay: 0.1 }}
+    >
+      <Logo
+        className="hidden xxxl:block"
+        $height={50}
+        src={iconPicker(Icon.React, isDarkMode)}
+        alt={"My Skills"}
+      />
+      <TitleWrapper>
+        <Title>Proficient Skills</Title>
         <Logo
-          className="hidden xxxl:block"
-          $height={50}
-          src={iconPicker("react", isDarkMode)}
+          className="xxxl:hidden"
+          $height={30}
+          style={{ paddingBottom: "5px" }}
+          src={iconPicker(Icon.React, isDarkMode)}
           alt={"My Skills"}
         />
-        <TitleWrapper>
-          <Title>Proficient Skills</Title>
-          <Logo
-            className="xxxl:hidden"
-            $height={30}
-            style={{ paddingBottom: "5px" }}
-            src={iconPicker("react", isDarkMode)}
-            alt={"My Skills"}
-          />
-        </TitleWrapper>
-        {(skillsData as Skills).primary.map(
-          (skill: SkillType, index: number) => (
-            <Skill key={index}>
-              <SkillsTextWrapper>
-                <SkillsText $isTitle={false}>
-                  <span className="md:hidden"> - </span>
-                  {skill.displayName}
-                </SkillsText>
-                <SkillsImage
-                  src={iconPicker(skill.name, isDarkMode)}
-                  alt={skill.displayName}
-                ></SkillsImage>
-              </SkillsTextWrapper>
-              <SkillsBar
-                $isDarkMode={isDarkMode}
-                initial={{ width: 0 }}
-                animate={{ width: skill.skill! + "%" }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 35,
-                  mass: 1,
-                  delay: 0.4,
-                }}
-              ></SkillsBar>
-            </Skill>
-          )
-        )}
-        <Skill>
-          <SkillsText $isTitle={true} className="pt-1">
-            Familiar Skills
-          </SkillsText>
+      </TitleWrapper>
+      {(skillsData as Skills).primary.map((skill: SkillType, index: number) => (
+        <Skill key={index}>
+          <SkillsTextWrapper>
+            <SkillsText $isTitle={false}>
+              <span className="md:hidden"> - </span>
+              {skill.displayName}
+            </SkillsText>
+            <SkillsImage
+              src={iconPicker(skill.name, isDarkMode)}
+              alt={skill.displayName}
+            ></SkillsImage>
+          </SkillsTextWrapper>
+          <SkillsBar
+            $isDarkMode={isDarkMode}
+            initial={{ width: 0 }}
+            animate={{ width: skill.skill! + "%" }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 35,
+              mass: 1,
+              delay: 0.4,
+            }}
+          ></SkillsBar>
         </Skill>
-        <SecondarySkillsWrapper>
-          {(skillsData as Skills).secondary
-            .slice(0, 8)
-            .map((skill: SkillType, index: number) => (
-              <SecondarySkills
-                key={index}
-                skill={skill}
-                isDarkMode={isDarkMode}
-              />
-            ))}
-          <SecondarySkills
-            skill={(skillsData as Skills).secondary[8]}
-            isDarkMode={isDarkMode}
-          />
-        </SecondarySkillsWrapper>
-      </motion.div>
-    </Container>
-  );
-};
+      ))}
+      <Skill>
+        <SkillsText $isTitle={true} className="pt-1">
+          Familiar Skills
+        </SkillsText>
+      </Skill>
+      <SecondarySkillsWrapper>
+        {(skillsData as Skills).secondary
+          .slice(0, 8)
+          .map((skill: SkillType, index: number) => (
+            <SecondarySkills
+              key={index}
+              skill={skill}
+              isDarkMode={isDarkMode}
+            />
+          ))}
+        <SecondarySkills
+          skill={(skillsData as Skills).secondary[8]}
+          isDarkMode={isDarkMode}
+        />
+      </SecondarySkillsWrapper>
+    </motion.div>
+  </Container>
+);
 
 export default SkillsBlock;
 
@@ -127,8 +122,8 @@ const Container = styled.div<{ $isDarkMode: boolean }>`
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isDarkMode }) =>
       $isDarkMode
-        ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
+        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
+        : `0.5px solid ${Color.BACKGROUND_BLACK}`};
   }
 
   @media ${layout.up.xxxl} {
@@ -146,10 +141,10 @@ const TitleWrapper = styled.div`
 `;
 
 const Logo = styled.img<{ $height: number }>`
-  height: ${({ $height }) => $height + "px"};
   width: auto;
-  user-select: none;
+  height: ${({ $height }) => $height + "px"};
   margin-left: 8px;
+  user-select: none;
 
   @media ${layout.up.xxxl} {
     margin-top: ${({ $height }) =>
@@ -194,8 +189,8 @@ const SkillsText = styled.p<{ $isTitle: boolean }>`
 `;
 
 const SkillsImage = styled.img`
-  height: 20px;
   width: auto;
+  height: 20px;
   margin-left: 10px;
   margin-bottom: 4px;
   user-select: none;
@@ -212,7 +207,7 @@ const SkillsImage = styled.img`
 const SkillsBar = styled(motion.div)<{ $isDarkMode: boolean }>`
   height: 4px;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? COLOR.BLUE : COLOR.RED};
+    $isDarkMode ? Color.BLUE : Color.RED};
   display: none;
 
   @media ${layout.up.md} {
@@ -238,15 +233,15 @@ const SecondarySkillsItem = styled.div<{ $isDarkMode: boolean }>`
   justify-content: center;
   border-left: ${({ $isDarkMode }) =>
     $isDarkMode
-      ? `0.5px solid ${COLOR.BORDER_WHITE}`
-      : `0.5px solid ${COLOR.BORDER_BLACK}`};
+      ? `0.5px solid ${Color.BORDER_WHITE}`
+      : `0.5px solid ${Color.BORDER_BLACK}`};
 
   @media ${layout.down.sm} {
     &:nth-child(n + 4) {
       border-top: ${({ $isDarkMode }) =>
         $isDarkMode
-          ? `0.5px solid ${COLOR.BORDER_WHITE}`
-          : `0.5px solid ${COLOR.BORDER_BLACK}`};
+          ? `0.5px solid ${Color.BORDER_WHITE}`
+          : `0.5px solid ${Color.BORDER_BLACK}`};
     }
 
     &:nth-child(3n + 1) {
@@ -258,8 +253,8 @@ const SecondarySkillsItem = styled.div<{ $isDarkMode: boolean }>`
     &:nth-child(n + 5) {
       border-top: ${({ $isDarkMode }) =>
         $isDarkMode
-          ? `0.5px solid ${COLOR.BORDER_WHITE}`
-          : `0.5px solid ${COLOR.BORDER_BLACK}`};
+          ? `0.5px solid ${Color.BORDER_WHITE}`
+          : `0.5px solid ${Color.BORDER_BLACK}`};
     }
 
     &:nth-child(4n + 1) {

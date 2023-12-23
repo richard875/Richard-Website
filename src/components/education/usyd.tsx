@@ -1,8 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import Icon from "../../enums/icons";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import {
   BLOCK_PADDING,
@@ -10,90 +11,81 @@ import {
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
 
-const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => {
-  return (
-    <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          stiffness: 0,
-          duration: 0.4,
-          delay: 0.1 * 2,
-        }}
+const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
+  <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * 2 }}
+    >
+      <Logo
+        $height={50}
+        src={iconPicker(Icon.USYD, isDarkMode)}
+        alt="University of Sydney"
+      />
+      <UniversityText $isDarkMode={isDarkMode}>
+        The University of Sydney
+      </UniversityText>
+      <p className="mt-1 mb-9 text-lg xxxl:text-xl">
+        Bachelor of Science (Honours) | Computer Science
+      </p>
+      <SummaryText>
+        • I conducted extensive research and authored an
+        <Highlight $isDarkMode={isDarkMode}>
+          &nbsp;Honours Thesis&nbsp;
+        </Highlight>
+        at the University of Sydney titled
+        <Highlight $isDarkMode={isDarkMode}>
+          &nbsp;"Performance Gap: Traditional VM Containers vs. Serverless
+          WebAssembly Frameworks on the Edge"
+        </Highlight>
+        . This comprehensive study delved into performance disparities while
+        also exploring the utilisation of
+        <Highlight $isDarkMode={isDarkMode}>
+          &nbsp;WebAssembly in web browsers
+        </Highlight>
+        , enabling functionalities previously deemed unattainable. The findings
+        offered valuable insights into optimising software execution within
+        <Highlight $isDarkMode={isDarkMode}>&nbsp;edge computing</Highlight>,
+        addressing pivotal benchmarks in modern Software Engineering paradigms.
+      </SummaryText>
+      <SummaryText>
+        •&nbsp;
+        <Highlight $isDarkMode={isDarkMode}>Research Interests:</Highlight>
+        &nbsp;WebAssembly, Edge Computing, Serverless Computing, Virtual Machine
+        Containerisation.
+      </SummaryText>
+      <p
+        style={{ color: isDarkMode ? Color.BLUE : Color.RED }}
+        className="mt-8 text-lg xxxl:text-xl"
       >
-        <Logo
-          $height={50}
-          src={iconPicker("usyd", isDarkMode)}
-          alt="University of Sydney"
-        />
-        <UniversityText $isDarkMode={isDarkMode}>
-          The University of Sydney
-        </UniversityText>
-        <p className="mt-1 mb-9 text-lg xxxl:text-xl">
-          Bachelor of Science (Honours) | Computer Science
-        </p>
-        <SummaryText>
-          • I conducted extensive research and authored an
-          <Highlight $isDarkMode={isDarkMode}>
-            &nbsp;Honours Thesis
-          </Highlight>{" "}
-          at the University of Sydney titled
-          <Highlight $isDarkMode={isDarkMode}>
-            &nbsp;"Performance Gap: Traditional VM Containers vs. Serverless
-            WebAssembly Frameworks on the Edge"
-          </Highlight>
-          . This comprehensive study delved into performance disparities while
-          also exploring the utilisation of
-          <Highlight $isDarkMode={isDarkMode}>
-            &nbsp;WebAssembly in web browsers
-          </Highlight>
-          , enabling functionalities previously deemed unattainable. The
-          findings offered valuable insights into optimising software execution
-          within <Highlight $isDarkMode={isDarkMode}>edge computing</Highlight>,
-          addressing pivotal benchmarks in modern Software Engineering
-          paradigms.
-        </SummaryText>
-        <SummaryText>
-          •{" "}
-          <Highlight $isDarkMode={isDarkMode}>
-            Research Interests:&nbsp;
-          </Highlight>
-          WebAssembly, Edge Computing, Serverless Computing, Virtual Machine
-          Containerisation.
-        </SummaryText>
-        <p
-          style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}
-          className="mt-8 text-lg xxxl:text-xl"
-        >
-          Academic Experience
-        </p>
-        <p className="mt-2 text-base xxxl:text-lg">
-          - Employed as an
-          <Highlight $isDarkMode={isDarkMode}>
-            &nbsp;Academic Teaching Assistant&nbsp;
-          </Highlight>
-          for SOFT2412 -
-          <Highlight $isDarkMode={isDarkMode}>
-            &nbsp;Agile Software Development Practices (Java)
-          </Highlight>
-          , demonstrating expertise in facilitating educational modules within
-          an esteemed academic program.
-        </p>
-        <p className="mt-2 text-base xxxl:text-lg">
-          - As an
-          <Highlight $isDarkMode={isDarkMode}>
-            &nbsp;Academic Teaching Assistant
-          </Highlight>
-          , I guided students through Agile Software Development Practices in
-          <Highlight $isDarkMode={isDarkMode}>&nbsp;Java</Highlight>,
-          facilitated workshops, graded assignments, and collaborated on
-          curriculum development to align with industry standards.
-        </p>
-      </motion.div>
-    </Container>
-  );
-};
+        Academic Experience
+      </p>
+      <p className="mt-2 text-base xxxl:text-lg">
+        - Employed as an
+        <Highlight $isDarkMode={isDarkMode}>
+          &nbsp;Academic Teaching Assistant&nbsp;
+        </Highlight>
+        for SOFT2412 -
+        <Highlight $isDarkMode={isDarkMode}>
+          &nbsp;Agile Software Development Practices (Java)
+        </Highlight>
+        , demonstrating expertise in facilitating educational modules within an
+        esteemed academic program.
+      </p>
+      <p className="mt-2 text-base xxxl:text-lg">
+        - As an
+        <Highlight $isDarkMode={isDarkMode}>
+          &nbsp;Academic Teaching Assistant
+        </Highlight>
+        , I guided students through Agile Software Development Practices in
+        <Highlight $isDarkMode={isDarkMode}>&nbsp;Java</Highlight>, facilitated
+        workshops, graded assignments, and collaborated on curriculum
+        development to align with industry standards.
+      </p>
+    </motion.div>
+  </Container>
+);
 
 export default Usyd;
 
@@ -112,14 +104,14 @@ const Container = styled.div<{ $isDarkMode: boolean }>`
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isDarkMode }) =>
       $isDarkMode
-        ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
+        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
+        : `0.5px solid ${Color.BACKGROUND_BLACK}`};
   }
 `;
 
 const Logo = styled.img<{ $height: number }>`
-  height: ${({ $height }) => $height + "px"};
   width: auto;
+  height: ${({ $height }) => $height + "px"};
   margin-top: ${({ $height }) =>
     15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   margin-bottom: ${({ $height }) =>
@@ -136,7 +128,7 @@ const Logo = styled.img<{ $height: number }>`
 
 const UniversityText = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
@@ -159,5 +151,5 @@ const SummaryText = styled.p`
 `;
 
 const Highlight = styled.span<{ $isDarkMode: boolean }>`
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 `;

@@ -1,8 +1,9 @@
+import Icon from "../enums/icons";
 import SentenceDescription from "./sentenceDescription";
 
 type MyProjects = {
   name: string;
-  image: string;
+  image: Icon;
   imageAlt: string;
   imageHeight: number;
   linkUrl?: string;

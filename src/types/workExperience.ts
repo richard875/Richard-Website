@@ -1,3 +1,4 @@
+import Media from "../enums/media";
 import SentenceDescription from "./sentenceDescription";
 
 type JobPeriod = {
@@ -16,7 +17,7 @@ type WorkExperience = {
   country: string;
   description: SentenceDescription[][];
   techStack: string[];
-  media?: string;
+  media?: Media;
 };
 
 export default WorkExperience;

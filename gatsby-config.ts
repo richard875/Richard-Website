@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import type { GatsbyConfig } from "gatsby";
-import { COLOR } from "./src/styles/theme";
+import Color from "./src/enums/color";
 import {
   NAME,
   SITE_TITLE,
@@ -68,7 +68,7 @@ const config: GatsbyConfig = {
         short_name: NAME,
         start_url: `/?${MODE}=${STANDALONE}`,
         background_color: `#BAE6C3`,
-        theme_color: COLOR.BACKGROUND_WHITE,
+        theme_color: Color.BACKGROUND_WHITE,
         display: STANDALONE,
         icon: `static/images/pwas/pwa-1024.png`,
         include_favicon: false,

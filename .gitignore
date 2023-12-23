@@ -1,11 +1,14 @@
+# Node.js and Gatsby
 node_modules/
 .cache/
 public
 src/gatsby-types.d.ts
 package-lock.json
 
+# macOS
 .DS_Store
 
+# Env files
 .env
 .env.development
 .env.production

@@ -1,17 +1,15 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
-import { COLOR } from "../../styles/theme";
+import { motion } from "framer-motion";
+import Color from "../../enums/color";
 
-const Loading = () => {
-  return (
-    <Container
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 0 }}
-      transition={{ delay: 0.7 }}
-    ></Container>
-  );
-};
+const Loading = () => (
+  <Container
+    initial={{ opacity: 1 }}
+    animate={{ opacity: 0 }}
+    transition={{ delay: 0.7 }}
+  ></Container>
+);
 
 export default Loading;
 
@@ -31,7 +29,7 @@ const Container = styled(motion.div)`
   text-align: center;
 
   position: absolute;
-  border: 2px ${COLOR.BLACK} solid;
+  border: 2px ${Color.BLACK} solid;
   border-radius: 50%;
   -webkit-animation: spHydro 1s infinite linear;
   animation: spHydro 1s infinite linear;
@@ -43,8 +41,8 @@ const Container = styled(motion.div)`
     height: 8px;
     top: -1px;
     left: -1px;
-    background-color: ${COLOR.BLACK};
     border-radius: 50%;
+    background-color: ${Color.BLACK};
   }
 
   @-webkit-keyframes spHydro {

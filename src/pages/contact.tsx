@@ -1,71 +1,43 @@
 import React from "react";
-import type { HeadFC } from "gatsby";
-import { GatsbyLinkProps } from "gatsby";
-import { motion } from "framer-motion";
-import { URL, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
-import Route from "../routes/route";
-import home from "../routes/home";
-import intro from "../routes/intro";
-import experience from "../routes/experience";
-import projects from "../routes/projects";
-import education from "../routes/education";
+import { HeadFC } from "gatsby";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import { WindowLocation } from "@reach/router";
 import { StaticImage } from "gatsby-plugin-image";
-import layout from "../styles/layout";
-import { COLOR } from "../styles/theme";
-import Splash from "../components/seo/splash";
-import MetaTags from "../components/seo/metaTags";
-import Preload from "../components/seo/preload";
-import LoadableCursorSsr from "../components/cursor/loadableCursorSsr";
-import InitialTransition from "../components/transition/InitialTransition";
-import CallToAction from "../components/global/callToAction";
-import MousePosition from "../types/mousePosition";
-import { EMAIL, LINKEDIN_URL, GITHUB_URL, COPYRIGHT } from "../constants/meta";
-import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
+import Route from "../routes/route";
+import routeTo from "../routes/routeTo";
+import Color from "../enums/color";
+import layout from "../styles/layout";
+import Splash from "../components/seo/splash";
+import Preload from "../components/seo/preload";
+import Cursor from "../components/cursor/cursor";
+import MetaTags from "../components/seo/metaTags";
+import CallToAction from "../components/global/callToAction";
+import InitialTransition from "../components/transition/InitialTransition";
 import getResume from "../helper/getResume";
+import MousePosition from "../types/mousePosition";
+import usePwaDetection from "../hooks/usePwaDetection";
+import useDarkModeManager from "../hooks/useDarkModeManager";
+import useIphoneXDetection from "../hooks/useIphoneXDetection";
+import { URL, PAGE_TITLE, CONTACT_TITLE } from "../constants/meta";
+import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
+import { EMAIL, LINKEDIN_URL, GITHUB_URL, COPYRIGHT } from "../constants/meta";
+import MetaImage from "../../static/images/meta/metaImage.jpg";
 
-const TITLE = "Contact Me";
-const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
+const CURRENT_PAGE_TITLE = `${CONTACT_TITLE}${PAGE_TITLE}`;
 const ARROW = "../../static/images/indexCircle/arrow.svg";
 const CIRCLE = "../../static/images/indexCircle/circle.png";
 
-const Contact = ({
-  location,
-}: {
-  location: GatsbyLinkProps<MousePosition>;
-}) => {
+const Contact = ({ location }: { location: WindowLocation }) => {
+  const isPwa = usePwaDetection(location);
+  const isIphoneX = useIphoneXDetection();
+  const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [hover, setHover] = React.useState(false);
-  const [isIphoneX, setIsIphoneX] = React.useState(false);
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    COLOR.BACKGROUND_WHITE
+    Color.BACKGROUND_WHITE
   );
-
-  // Detect if the page is opened as a PWA
-  const params = new URLSearchParams((location as any).search);
-  const isPwa = params.get(MODE) === STANDALONE;
-
-  // Detect if the page is opened on an iPhone X or newer
-  React.useEffect(() => {
-    let iPhone =
-      /iPhone/.test(navigator.userAgent) && !(window as any).MSStream;
-    let aspect = window.screen.width / window.screen.height;
-    setIsIphoneX(iPhone && aspect.toFixed(3) === "0.462");
-  }, []);
-
-  React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
-    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
-    const updateIsDarkMode = () => setIsDarkMode(mediaQueryList.matches);
-
-    mediaQueryList.addEventListener("change", updateIsDarkMode);
-    updateIsDarkMode();
-
-    return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
-  }, []);
 
   React.useEffect(() => {
     const overflow = window.matchMedia("(min-height: 100vh)").matches
@@ -88,13 +60,15 @@ const Contact = ({
       <InitialTransition color={transitionColor} />
       <Top>
         <Title className="font-secondary-normal">
-          {TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
+          {CONTACT_TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
         </Title>
         <CallToAction
           name="Home"
           setHover={setHover}
-          isDarkMode={true}
-          navigator={home}
+          route={Route.Home}
+          singleColor={true}
+          isDarkMode={isDarkMode}
+          defaultColor={Color.BACKGROUND_WHITE}
         />
       </Top>
       <Box>
@@ -125,9 +99,9 @@ const Contact = ({
           </div>
           <p className="hidden md:block mt-5 md:mt-0">{COPYRIGHT}</p>
           <CircleContainer
+            onClick={(e) => getResume(e)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onClick={(e) => getResume(e)}
           >
             <motion.div
               initial={{ opacity: 0 }}
@@ -171,8 +145,8 @@ const Contact = ({
           >
             <div className="flex mb-4">
               <FontAwesomeIcon
-                icon={faLinkedin as any}
                 size={"2x"}
+                icon={faLinkedin}
                 className="mr-5"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
@@ -182,8 +156,8 @@ const Contact = ({
                 }}
               />
               <FontAwesomeIcon
-                icon={faGithub as any}
                 size={"2x"}
+                icon={faGithub}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 onClick={(e) => {
@@ -199,8 +173,8 @@ const Contact = ({
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 onClick={(e) => {
-                  setTransitionColor(COLOR.BACKGROUND_WHITE);
-                  home(e);
+                  setTransitionColor(Color.BACKGROUND_WHITE);
+                  routeTo(e, Route.Home, true, false, Color.BACKGROUND_WHITE);
                 }}
               >
                 Home
@@ -212,8 +186,8 @@ const Contact = ({
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 onClick={(e) => {
-                  setTransitionColor(COLOR.BACKGROUND_BLACK);
-                  intro(e);
+                  setTransitionColor(Color.BACKGROUND_BLACK);
+                  routeTo(e, Route.Intro, true);
                 }}
               >
                 Intro
@@ -227,10 +201,10 @@ const Contact = ({
                 onClick={(e) => {
                   setTransitionColor(
                     isDarkMode
-                      ? COLOR.BACKGROUND_BLACK
-                      : COLOR.BACKGROUND_WHITE_SECONDARY
+                      ? Color.BACKGROUND_BLACK
+                      : Color.BACKGROUND_WHITE_SECONDARY
                   );
-                  experience(e, isDarkMode);
+                  routeTo(e, Route.Experience, false, isDarkMode);
                 }}
               >
                 Experience
@@ -244,10 +218,10 @@ const Contact = ({
                 onClick={(e) => {
                   setTransitionColor(
                     isDarkMode
-                      ? COLOR.BACKGROUND_BLACK
-                      : COLOR.BACKGROUND_WHITE_SECONDARY
+                      ? Color.BACKGROUND_BLACK
+                      : Color.BACKGROUND_WHITE_SECONDARY
                   );
-                  projects(e, isDarkMode);
+                  routeTo(e, Route.Projects, false, isDarkMode);
                 }}
               >
                 Projects
@@ -261,10 +235,10 @@ const Contact = ({
                 onClick={(e) => {
                   setTransitionColor(
                     isDarkMode
-                      ? COLOR.BACKGROUND_BLACK
-                      : COLOR.BACKGROUND_WHITE_SECONDARY
+                      ? Color.BACKGROUND_BLACK
+                      : Color.BACKGROUND_WHITE_SECONDARY
                   );
-                  education(e, isDarkMode);
+                  routeTo(e, Route.Education, false, isDarkMode);
                 }}
               >
                 Education
@@ -273,12 +247,11 @@ const Contact = ({
           </motion.div>
         </Right>
       </Box>
-      <LoadableCursorSsr
-        hover={hover}
+      <Cursor
         delay={0.5}
-        position={location.state!}
+        hover={hover}
         isBlack={false}
-        fallback={<></>}
+        position={location.state! as MousePosition}
       />
     </Container>
   );
@@ -289,7 +262,7 @@ export default Contact;
 export const Head: HeadFC = () => (
   <Splash>
     <title>{CURRENT_PAGE_TITLE}</title>
-    <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <meta name="theme-color" content={Color.BACKGROUND_BLACK} />
     <Preload />
     <MetaTags
       path={Route.Contact}
@@ -301,8 +274,8 @@ export const Head: HeadFC = () => (
 
 const Container = styled(motion.div)`
   width: 100vw;
-  color: ${COLOR.WHITE};
-  background-color: ${COLOR.BACKGROUND_BLACK};
+  color: ${Color.WHITE};
+  background-color: ${Color.BACKGROUND_BLACK};
   cursor: none;
 
   @media ${layout.down.md} {
@@ -319,8 +292,8 @@ const Top = styled.div`
   padding-bottom: 3px;
   margin-left: ${BLOCK_PADDING + "px"};
   margin-right: ${BLOCK_PADDING + "px"};
-  border-bottom: 0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY};
-  background-color: ${COLOR.BACKGROUND_BLACK};
+  background-color: ${Color.BACKGROUND_BLACK};
+  border-bottom: 0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY};
 
   @media ${layout.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
@@ -432,8 +405,8 @@ const Circle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${COLOR.BRIGHT_GREEN};
-  border: 2px solid ${COLOR.BLACK};
+  border: 2px solid ${Color.BLACK};
+  background: ${Color.BRIGHT_GREEN};
   animation: rotation 12s infinite linear;
 
   @keyframes rotation {
@@ -456,9 +429,9 @@ const Circle = styled.div`
 const CircleContainer = styled.div`
   width: 170px;
   height: 170px;
+  user-select: none;
   border-radius: 99px;
   transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
-  user-select: none;
 
   &:hover {
     transform: rotate(-170deg) scale(1.07);

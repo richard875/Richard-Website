@@ -15,22 +15,20 @@ import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { VERTEX_SHADER, FRAGMENT_SHADER } from "./shader";
 
-const SydneyOperaHouse = React.memo(() => {
-  return (
-    <Canvas
-      shadows
-      legacy={true}
-      camera={{ position: [0, 2.6, 5], fov: 65 }}
-      className="canvas"
-    >
-      <Model />
-    </Canvas>
-  );
-});
+const SydneyOperaHouse = React.memo(() => (
+  <Canvas
+    shadows
+    legacy={true}
+    camera={{ position: [0, 2.6, 5], fov: 65 }}
+    className="canvas"
+  >
+    <Model />
+  </Canvas>
+));
 
 const Model = React.memo(() => {
+  const cameraDirection = 50;
   const { scene } = useThree();
-  let cameraDirection = 50;
 
   // Hooks
   const [ambientLightIntensity, setAmbientLightIntensity] = React.useState(0.2);
@@ -108,7 +106,7 @@ const Model = React.memo(() => {
     scene.fog = new THREE.Fog(scene.background, 1, 25);
     scene.fog.color.copy(uniforms["bottomColor"].value);
 
-    // LIL GUI Settings
+    // Lil GUI Settings
     if (IS_DEV) createPanel();
   }, []);
 
@@ -119,7 +117,7 @@ const Model = React.memo(() => {
     const dirLightFolder = panel.addFolder("Direct Light");
     const groundFolder = panel.addFolder("Ground");
     const skyFolder = panel.addFolder("Sky");
-    const effectsFolder = panel.addFolder("Effect");
+    const effectsFolder = panel.addFolder("Effects");
     panel.close();
 
     const settings = {
@@ -337,9 +335,11 @@ const Model = React.memo(() => {
           side={THREE.BackSide}
         />
       </mesh>
+      {/* Model */}
       <Inspector>
         <Mesh />
       </Inspector>
+      {/* Effects */}
       <EffectComposer>
         <Bloom
           intensity={bloomIntensity} // The bloom intensity.

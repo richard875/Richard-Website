@@ -1,15 +1,15 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
-import useWindowSize from "../../hooks/useWindowSize";
+import { motion } from "framer-motion";
 import { CSSTransition } from "react-transition-group";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
-import iconPicker from "../../helper/iconPicker";
 import TextSection from "../global/textSection";
+import iconPicker from "../../helper/iconPicker";
+import mediaPicker from "../../helper/mediaPicker";
+import useWindowSize from "../../hooks/useWindowSize";
 import WorkExperience from "../../types/workExperience";
 import SentenceDescription from "../../types/sentenceDescription";
-import mediaPicker from "../../helper/mediaPicker";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -19,15 +19,15 @@ import {
 } from "../../constants/margin";
 
 const Block = ({
-  experience,
-  dataLength,
   index,
+  dataLength,
+  experience,
   setHover,
   isDarkMode,
 }: {
-  experience: WorkExperience;
-  dataLength: number;
   index: number;
+  dataLength: number;
+  experience: WorkExperience;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
 }) => {
@@ -60,7 +60,7 @@ const Block = ({
           {experience.city}, {experience.country}
         </Secondary>
         <DescriptionText $isFirst={false}>
-          <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
+          <span style={{ color: isDarkMode ? Color.BLUE : Color.RED }}>
             Tech stack:
           </span>
           {experience.techStack.map(
@@ -69,25 +69,23 @@ const Block = ({
           )}
         </DescriptionText>
         {experience.description.map(
-          (description: SentenceDescription[], index: number) => {
-            return (
-              <DescriptionText key={index} $isFirst={index == 0}>
-                {description.map(
-                  (sentence: SentenceDescription, index: number) => (
-                    <TextSection
-                      key={index}
-                      isFirst={index == 0}
-                      clickableRef={clickableRef}
-                      setHover={setHover}
-                      setDisplayMedia={setDisplayMedia}
-                      isDarkMode={isDarkMode}
-                      {...sentence} // content and url
-                    />
-                  )
-                )}
-              </DescriptionText>
-            );
-          }
+          (description: SentenceDescription[], index: number) => (
+            <DescriptionText key={index} $isFirst={index == 0}>
+              {description.map(
+                (sentence: SentenceDescription, index: number) => (
+                  <TextSection
+                    key={index}
+                    isFirst={index == 0}
+                    clickableRef={clickableRef}
+                    setHover={setHover}
+                    setDisplayMedia={setDisplayMedia}
+                    isDarkMode={isDarkMode}
+                    {...sentence} // content and url
+                  />
+                )
+              )}
+            </DescriptionText>
+          )
         )}
         {!!experience.media && (
           <CSSTransition
@@ -139,8 +137,8 @@ const Container = styled.div<{
     border-right: ${({ $isLast, $isDarkMode }) =>
       !$isLast &&
       ($isDarkMode
-        ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${COLOR.BACKGROUND_BLACK}`)};
+        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
+        : `0.5px solid ${Color.BACKGROUND_BLACK}`)};
   }
 
   @media ${layout.up.xxxl} {
@@ -149,8 +147,8 @@ const Container = styled.div<{
 `;
 
 const Logo = styled.img<{ $height: number }>`
-  height: ${({ $height }) => $height + "px"};
   width: auto;
+  height: ${({ $height }) => $height + "px"};
   margin-top: ${({ $height }) =>
     15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   margin-bottom: ${({ $height }) =>
@@ -167,7 +165,7 @@ const Logo = styled.img<{ $height: number }>`
 
 const JobTitle = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
@@ -191,19 +189,19 @@ const Secondary = styled.p`
 `;
 
 const DescriptionText = styled.p<{ $isFirst: boolean }>`
-  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
   font-size: 18px;
   line-height: 25px;
+  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
 
   @media ${layout.up.md} {
     width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 
   @media ${layout.up.xxxl} {
-    margin-top: ${({ $isFirst }) => ($isFirst ? "40px" : "20px")};
-    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
     font-size: 20px;
     line-height: 30px;
+    margin-top: ${({ $isFirst }) => ($isFirst ? "40px" : "20px")};
+    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
   }
 `;
 
@@ -227,7 +225,7 @@ const Video = styled.video<{ $isDarkMode: boolean }>`
   border-radius: 10px;
   z-index: 99999 !important;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? COLOR.BACKGROUND_WHITE_SECONDARY : COLOR.BACKGROUND_BLACK};
+    $isDarkMode ? Color.BACKGROUND_WHITE_SECONDARY : Color.BACKGROUND_BLACK};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),

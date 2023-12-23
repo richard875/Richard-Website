@@ -1,6 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const InitialTransition = ({ color }: { color: string }) => {
   React.useEffect(() => {
@@ -21,7 +21,7 @@ export default InitialTransition;
 
 const Transition = styled(motion.div)`
   width: 100vw;
-  position: absolute;
   z-index: 99999;
+  position: absolute;
   background-color: ${(props: any) => props.color};
 `;

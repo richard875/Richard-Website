@@ -1,4 +1,6 @@
 import React from "react";
+import Color from "../../enums/color";
+import favicon from "../../../static/images/favicon.png";
 import {
   NAME,
   URL,
@@ -8,8 +10,6 @@ import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
 } from "../../constants/meta";
-import favicon from "../../../static/images/favicon.png";
-import { COLOR } from "../../styles/theme";
 
 const MetaTags = ({
   name,
@@ -61,7 +61,7 @@ const MetaTags = ({
       <meta property="twitter:image" content={`https://${URL}${MetaImage}`} />
 
       {/* Favicons */}
-      <link rel="mask-icon" href={favicon} color={COLOR.BACKGROUND_WHITE} />
+      <link rel="mask-icon" href={favicon} color={Color.BACKGROUND_WHITE} />
 
       {/* Google Rich Results */}
       <script type="application/ld+json">
@@ -77,6 +77,8 @@ const MetaTags = ({
                     "${LINKEDIN_URL}",
                     "${GITHUB_URL}"
                 ],
+                "datePublished": "${dateString}",
+                "dateModified": "${dateString}",
                 "jobTitle": "Software Engineer",
                 "worksFor": {
                     "@type": "Organization",
