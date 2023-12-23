@@ -67,6 +67,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
           setHover={setHover}
           route={Route.Home}
           singleColor={true}
+          isDarkMode={isDarkMode}
           defaultColor={Color.BACKGROUND_WHITE}
         />
       </Top>
