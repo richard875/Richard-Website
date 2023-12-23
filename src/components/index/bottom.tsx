@@ -5,8 +5,10 @@ import styled from "styled-components";
 import { StaticImage } from "gatsby-plugin-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
+import Route from "../../routes/route";
+import routeTo from "../../routes/routeTo";
 import getResume from "../../helper/getResume";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
@@ -15,13 +17,9 @@ const CIRCLE = "../../../static/images/indexCircle/circle.png";
 
 const Bottom = ({
   setHover,
-  acknowledgement,
-  intro,
   isIphoneXPwa,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
-  acknowledgement: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  intro: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   isIphoneXPwa: boolean;
 }) => {
   const topGreetingRef = React.useRef(null);
@@ -63,7 +61,7 @@ const Bottom = ({
           className="flex items-center font-secondary-normal"
         >
           <div
-            onClick={(e) => intro(e)}
+            onClick={(e) => routeTo(e, Route.Intro, true)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
@@ -81,7 +79,7 @@ const Bottom = ({
         <div
           ref={countryRef}
           className="font-primary-normal select-none"
-          onClick={(e) => acknowledgement(e)}
+          onClick={(e) => routeTo(e, Route.Acknowledgement, true)}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
@@ -138,7 +136,7 @@ const Container = styled.div`
 const SmallText = styled.div`
   font-size: 18px;
   overflow: hidden;
-  color: ${COLOR.WHITE};
+  color: ${Color.WHITE};
 
   @media ${layout.up.sm} {
     font-size: 20px;
@@ -153,8 +151,8 @@ const Name = styled.div`
   font-size: 73px;
   line-height: 70px;
   overflow: hidden;
-  color: ${COLOR.WHITE};
-  -webkit-text-stroke: 0.12rem ${COLOR.BLACK};
+  color: ${Color.WHITE};
+  -webkit-text-stroke: 0.12rem ${Color.BLACK};
 
   @media ${layout.up.sm} {
     font-size: 80px;
@@ -178,7 +176,7 @@ const Button = styled.div`
   margin-top: 20px;
   overflow: hidden;
   user-select: none;
-  color: ${COLOR.WHITE};
+  color: ${Color.WHITE};
 
   @media ${layout.up.sm} {
     font-size: 18px;
@@ -195,7 +193,7 @@ const Country = styled.div`
   font-size: 16px;
   overflow: hidden;
   position: absolute;
-  color: ${COLOR.WHITE};
+  color: ${Color.WHITE};
 
   @media ${layout.up.sm} {
     bottom: 8vh;
@@ -214,8 +212,8 @@ const Circle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid ${COLOR.BLACK};
-  background: ${COLOR.BRIGHT_GREEN};
+  border: 2px solid ${Color.BLACK};
+  background: ${Color.BRIGHT_GREEN};
   animation: rotation 12s infinite linear;
 
   @keyframes rotation {

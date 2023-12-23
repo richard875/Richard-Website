@@ -2,14 +2,14 @@ import React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
 import layout from "../../styles/layout";
+import Route from "../../routes/route";
+import routeTo from "../../routes/routeTo";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const FooterLeft = ({
   setHover,
-  acknowledgement,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
-  acknowledgement: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }) => {
   const acknowledgementRef = React.useRef(null);
 
@@ -22,7 +22,7 @@ const FooterLeft = ({
     <Container ref={acknowledgementRef}>
       <div
         className="font-secondary-normal select-none"
-        onClick={(e) => acknowledgement(e)}
+        onClick={(e) => routeTo(e, Route.Acknowledgement, true)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >

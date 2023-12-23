@@ -1,7 +1,7 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
-import { COLOR } from "../../styles/theme";
+import { motion } from "framer-motion";
+import Color from "../../enums/color";
 
 const Loading = () => (
   <Container
@@ -29,7 +29,7 @@ const Container = styled(motion.div)`
   text-align: center;
 
   position: absolute;
-  border: 2px ${COLOR.BLACK} solid;
+  border: 2px ${Color.BLACK} solid;
   border-radius: 50%;
   -webkit-animation: spHydro 1s infinite linear;
   animation: spHydro 1s infinite linear;
@@ -42,7 +42,7 @@ const Container = styled(motion.div)`
     top: -1px;
     left: -1px;
     border-radius: 50%;
-    background-color: ${COLOR.BLACK};
+    background-color: ${Color.BLACK};
   }
 
   @-webkit-keyframes spHydro {
