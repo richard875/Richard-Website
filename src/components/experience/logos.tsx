@@ -1,8 +1,8 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 import uoa from "../../../static/images/logos/uoa.png";
 import usyd from "../../../static/images/logos/usyd.svg";
 import qantas from "../../../static/images/logos/qantas.svg";
@@ -72,11 +72,11 @@ const Logo = styled.div`
 `;
 
 const QantasLogo = styled(Logo)`
-  border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
+  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
 
   @media ${layout.up.sm} {
     border-bottom: 0;
-    border-right: 0.5px solid ${COLOR.BORDER_WHITE};
+    border-right: 0.5px solid ${Color.BORDER_WHITE};
   }
 
   img {
@@ -93,11 +93,11 @@ const QantasLogo = styled(Logo)`
 `;
 
 const NzGovtLogo = styled(Logo)`
-  border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
+  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
 
   @media ${layout.up.sm} {
     border-bottom: 0;
-    border-right: 0.5px solid ${COLOR.BORDER_WHITE};
+    border-right: 0.5px solid ${Color.BORDER_WHITE};
   }
 
   img {
@@ -114,11 +114,11 @@ const NzGovtLogo = styled(Logo)`
 `;
 
 const UsydLogo = styled(Logo)`
-  border-bottom: 0.5px solid ${COLOR.BORDER_WHITE};
+  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
 
   @media ${layout.up.sm} {
     border-bottom: 0;
-    border-right: 0.5px solid ${COLOR.BORDER_WHITE};
+    border-right: 0.5px solid ${Color.BORDER_WHITE};
   }
 
   img {

@@ -1,7 +1,7 @@
 import React from "react";
+import GUI from "lil-gui";
 import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
-import GUI from "lil-gui";
 import {
   EffectComposer,
   Bloom,
