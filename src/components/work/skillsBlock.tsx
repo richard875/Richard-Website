@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import Icon from "../../enums/icons";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import skillsData from "../../../static/data/skills.json";
 import Skills, { Skill as SkillType } from "../../types/skills";
@@ -122,8 +122,8 @@ const Container = styled.div<{ $isDarkMode: boolean }>`
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isDarkMode }) =>
       $isDarkMode
-        ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
+        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
+        : `0.5px solid ${Color.BACKGROUND_BLACK}`};
   }
 
   @media ${layout.up.xxxl} {
@@ -207,7 +207,7 @@ const SkillsImage = styled.img`
 const SkillsBar = styled(motion.div)<{ $isDarkMode: boolean }>`
   height: 4px;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? COLOR.BLUE : COLOR.RED};
+    $isDarkMode ? Color.BLUE : Color.RED};
   display: none;
 
   @media ${layout.up.md} {
@@ -233,15 +233,15 @@ const SecondarySkillsItem = styled.div<{ $isDarkMode: boolean }>`
   justify-content: center;
   border-left: ${({ $isDarkMode }) =>
     $isDarkMode
-      ? `0.5px solid ${COLOR.BORDER_WHITE}`
-      : `0.5px solid ${COLOR.BORDER_BLACK}`};
+      ? `0.5px solid ${Color.BORDER_WHITE}`
+      : `0.5px solid ${Color.BORDER_BLACK}`};
 
   @media ${layout.down.sm} {
     &:nth-child(n + 4) {
       border-top: ${({ $isDarkMode }) =>
         $isDarkMode
-          ? `0.5px solid ${COLOR.BORDER_WHITE}`
-          : `0.5px solid ${COLOR.BORDER_BLACK}`};
+          ? `0.5px solid ${Color.BORDER_WHITE}`
+          : `0.5px solid ${Color.BORDER_BLACK}`};
     }
 
     &:nth-child(3n + 1) {
@@ -253,8 +253,8 @@ const SecondarySkillsItem = styled.div<{ $isDarkMode: boolean }>`
     &:nth-child(n + 5) {
       border-top: ${({ $isDarkMode }) =>
         $isDarkMode
-          ? `0.5px solid ${COLOR.BORDER_WHITE}`
-          : `0.5px solid ${COLOR.BORDER_BLACK}`};
+          ? `0.5px solid ${Color.BORDER_WHITE}`
+          : `0.5px solid ${Color.BORDER_BLACK}`};
     }
 
     &:nth-child(4n + 1) {
