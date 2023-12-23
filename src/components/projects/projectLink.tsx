@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 
 const ProjectLink = ({
   url,
@@ -49,7 +49,7 @@ const Cta = styled.div<{ $isDarkMode: boolean }>`
   font-size: 16px;
   user-select: none;
   color: ${({ $isDarkMode }) =>
-    $isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
+    $isDarkMode ? Color.BRIGHT_GREEN : Color.DIM_GREEN};
 
   @media ${layout.up.md} {
     margin-left: 0;

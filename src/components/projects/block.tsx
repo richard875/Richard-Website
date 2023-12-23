@@ -1,15 +1,15 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { CSSTransition } from "react-transition-group";
-import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
-import iconPicker from "../../helper/iconPicker";
-import TextSection from "../global/textSection";
+import Color from "../../enums/color";
 import ProjectLink from "./projectLink";
+import layout from "../../styles/layout";
+import TextSection from "../global/textSection";
+import iconPicker from "../../helper/iconPicker";
+import mediaPicker from "../../helper/mediaPicker";
 import MyProjects from "../../types/myProjects";
 import SentenceDescription from "../../types/sentenceDescription";
-import mediaPicker from "../../helper/mediaPicker";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -54,7 +54,7 @@ const Block = ({
         />
         <ProjectName $isDarkMode={isDarkMode}>{project.name}</ProjectName>
         <DescriptionText $isFirst={false}>
-          <span style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}>
+          <span style={{ color: isDarkMode ? Color.BLUE : Color.RED }}>
             Utilised:
           </span>
           {project.techStack.map(
@@ -148,8 +148,8 @@ const Container = styled.div<{
     border-right: ${({ $isLast, $isDarkMode }) =>
       !$isLast &&
       ($isDarkMode
-        ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${COLOR.BACKGROUND_BLACK}`)};
+        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
+        : `0.5px solid ${Color.BACKGROUND_BLACK}`)};
   }
 
   @media ${layout.up.xxxl} {
@@ -211,7 +211,7 @@ const Video = styled.video<{
     $portraitOperation ? "20px" : "10px"};
   z-index: 99999 !important;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? COLOR.BACKGROUND_WHITE_SECONDARY : COLOR.BACKGROUND_BLACK};
+    $isDarkMode ? Color.BACKGROUND_WHITE_SECONDARY : Color.BACKGROUND_BLACK};
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
@@ -223,7 +223,7 @@ const Video = styled.video<{
 const ProjectName = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
   line-height: 30px;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
