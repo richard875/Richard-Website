@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import Icon from "../../enums/icons";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import {
   BLOCK_PADDING,
@@ -145,7 +145,7 @@ const Logo = styled.img<{ $height: number }>`
 
 const UniversityText = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
@@ -155,7 +155,7 @@ const UniversityText = styled.p<{ $isDarkMode: boolean }>`
 const SecondaryTitle = styled.p<{ $isDarkMode: boolean }>`
   font-size: 18px;
   line-height: 28px;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 20px;
@@ -179,5 +179,5 @@ const SummaryText = styled.p`
 `;
 
 const Highlight = styled.span<{ $isDarkMode: boolean }>`
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 `;

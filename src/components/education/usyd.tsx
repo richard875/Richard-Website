@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import Icon from "../../enums/icons";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 import iconPicker from "../../helper/iconPicker";
 import {
   BLOCK_PADDING,
@@ -56,7 +56,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
         Containerisation.
       </SummaryText>
       <p
-        style={{ color: isDarkMode ? COLOR.BLUE : COLOR.RED }}
+        style={{ color: isDarkMode ? Color.BLUE : Color.RED }}
         className="mt-8 text-lg xxxl:text-xl"
       >
         Academic Experience
@@ -104,8 +104,8 @@ const Container = styled.div<{ $isDarkMode: boolean }>`
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isDarkMode }) =>
       $isDarkMode
-        ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
+        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
+        : `0.5px solid ${Color.BACKGROUND_BLACK}`};
   }
 `;
 
@@ -128,7 +128,7 @@ const Logo = styled.img<{ $height: number }>`
 
 const UniversityText = styled.p<{ $isDarkMode: boolean }>`
   font-size: 22px;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
@@ -151,5 +151,5 @@ const SummaryText = styled.p`
 `;
 
 const Highlight = styled.span<{ $isDarkMode: boolean }>`
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 `;
