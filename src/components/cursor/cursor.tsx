@@ -1,10 +1,10 @@
 import React from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
-import { isDesktop } from "react-device-detect";
 import styled, { css } from "styled-components";
 import Color from "../../enums/color";
 import MousePosition from "../../types/mousePosition";
+import useIsDesktop from "../../hooks/useIsDesktop";
 import useMousePosition from "../../hooks/useMousePosition";
 
 const Cursor = ({
@@ -20,10 +20,10 @@ const Cursor = ({
   isBlack: boolean;
   isIndexPage?: boolean;
 }) => {
+  const isDesktop = useIsDesktop();
   const { x, y } = useMousePosition(position);
 
   const ringRef = React.useRef(null);
-
   const dotRef = React.useRef(null);
 
   React.useEffect(() => {
