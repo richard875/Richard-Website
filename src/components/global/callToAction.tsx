@@ -11,14 +11,14 @@ const CallToAction = ({
   setHover,
   route,
   singleColor,
-  isDarkMode = false,
+  isDarkMode,
   defaultColor = Color.BACKGROUND_BLACK,
 }: {
   name: string;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   route: Route;
   singleColor: boolean;
-  isDarkMode?: boolean;
+  isDarkMode: boolean;
   defaultColor?: Color;
 }) => {
   return (
