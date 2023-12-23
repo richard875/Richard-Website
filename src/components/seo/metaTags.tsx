@@ -1,5 +1,5 @@
 import React from "react";
-import { COLOR } from "../../styles/theme";
+import Color from "../../enums/color";
 import favicon from "../../../static/images/favicon.png";
 import {
   NAME,
@@ -61,7 +61,7 @@ const MetaTags = ({
       <meta property="twitter:image" content={`https://${URL}${MetaImage}`} />
 
       {/* Favicons */}
-      <link rel="mask-icon" href={favicon} color={COLOR.BACKGROUND_WHITE} />
+      <link rel="mask-icon" href={favicon} color={Color.BACKGROUND_WHITE} />
 
       {/* Google Rich Results */}
       <script type="application/ld+json">
