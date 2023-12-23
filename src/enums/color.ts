@@ -1,0 +1,21 @@
+enum Color {
+  // Theme Colors
+  RED = "#F33",
+  BLUE = "#2691EE",
+  WHITE = "#FFFFFF",
+  BLACK = "#040300",
+  DIM_GREEN = "#35BE27",
+  BRIGHT_GREEN = "#CDFF50",
+  BORDER_BLACK = "#808080",
+  BORDER_WHITE = "#DEE2E6",
+  BACKGROUND_BLACK = "#1E1E1E",
+  BACKGROUND_WHITE = "#F5EDE3",
+  BACKGROUND_WHITE_SECONDARY = "#F5F5F4",
+
+  // Social Colors
+  LINKEDIN_BLUE = "#0077b5",
+  SYDNEY_ORANGE = "#E14327",
+  AUSTRALIA_GOLD = "#FFCD00",
+}
+
+export default Color;
