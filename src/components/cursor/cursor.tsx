@@ -23,6 +23,7 @@ const Cursor = ({
   const { x, y } = useMousePosition(position);
 
   const ringRef = React.useRef(null);
+
   const dotRef = React.useRef(null);
 
   React.useEffect(() => {
