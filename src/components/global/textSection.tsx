@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { COLOR } from "../../styles/theme";
 
 const TextSection = ({
   isFirst,
@@ -62,16 +62,16 @@ export default TextSection;
 const Link = styled.a<{ $isDarkMode: boolean }>`
   cursor: none;
   text-decoration-line: underline;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
   @media ${layout.up.md} {
     text-decoration-line: underline;
-    color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+    color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
   }
 `;
 
 const Highlight = styled.span<{ $isDarkMode: boolean }>`
   margin: 0;
   padding: 0;
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.BLUE : COLOR.RED)};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 `;

@@ -2,21 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { COLOR } from "../../styles/theme";
+import Color from "../../enums/color";
+import Route from "../../routes/route";
+import routeTo from "../../routes/routeTo";
 
 const CallToAction = ({
   name,
   setHover,
-  isDarkMode,
-  navigator,
+  route,
+  singleColor,
+  isDarkMode = false,
+  defaultColor = Color.BACKGROUND_BLACK,
 }: {
   name: string;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
-  isDarkMode: boolean;
-  navigator: (
-    event: React.MouseEvent<any, MouseEvent>,
-    isDarkMode?: boolean
-  ) => void;
+  route: Route;
+  singleColor: boolean;
+  isDarkMode?: boolean;
+  defaultColor?: Color;
 }) => {
   return (
     <Cta
@@ -26,7 +29,9 @@ const CallToAction = ({
       onMouseLeave={() => setHover(false)}
     >
       <div
-        onClick={(e) => navigator(e, isDarkMode)}
+        onClick={(e) =>
+          routeTo(e, route, singleColor, isDarkMode, defaultColor)
+        }
         className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2 select-none"
       >
         {name}
@@ -46,5 +51,5 @@ const Cta = styled.div<{ $isDarkMode: boolean }>`
   display: flex;
   align-items: center;
   color: ${({ $isDarkMode }) =>
-    $isDarkMode ? COLOR.BRIGHT_GREEN : COLOR.DIM_GREEN};
+    $isDarkMode ? Color.BRIGHT_GREEN : Color.DIM_GREEN};
 `;
