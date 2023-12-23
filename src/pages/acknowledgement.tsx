@@ -15,7 +15,6 @@ import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
-import useWindowSize from "../hooks/useWindowSize";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 import { ACKNOWLEDGEMENT_TITLE, PAGE_TITLE } from "../constants/meta";
 
@@ -100,7 +99,7 @@ export const Head: HeadFC = () => (
 
 const Container = styled(motion.div)`
   width: 100vw;
-  height: ${() => useWindowSize().height! + "px"};
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
