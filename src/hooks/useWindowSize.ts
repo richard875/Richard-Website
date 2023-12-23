@@ -8,12 +8,11 @@ const useWindowSize = () => {
   });
 
   React.useEffect(() => {
-    const handleResize = () => {
+    const handleResize = () =>
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
-    };
 
     window.addEventListener("resize", handleResize);
     handleResize();
