@@ -1,56 +1,40 @@
 import React from "react";
 import gsap from "gsap";
-import { GatsbyLinkProps } from "gatsby";
-import { motion } from "framer-motion";
-import Route from "../routes/route";
-import intro from "../routes/intro";
-import acknowledgement from "../routes/acknowledgement";
+import { HeadFC } from "gatsby";
 import styled from "styled-components";
-import { SITE_TITLE, MODE, STANDALONE } from "../constants/meta";
-import gsapAnimationIndex from "../helper/gsapAnimationIndex";
-import useWindowSize from "../hooks/useWindowSize";
-import type { HeadFC } from "gatsby";
+import { motion } from "framer-motion";
+import { WindowLocation } from "@reach/router";
+import Color from "../enums/color";
 import layout from "../styles/layout";
-import { COLOR } from "../styles/theme";
+import Route from "../routes/route";
+import routeTo from "../routes/routeTo";
+import MousePosition from "../types/mousePosition";
+import { SITE_TITLE } from "../constants/meta";
+import useWindowSize from "../hooks/useWindowSize";
+import usePwaDetection from "../hooks/usePwaDetection";
+import useIphoneXDetection from "../hooks/useIphoneXDetection";
+import gsapAnimationIndex from "../helper/gsapAnimationIndex";
 import Splash from "../components/seo/splash";
-import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
-import InitialTransition from "../components/transition/InitialTransition";
+import MetaTags from "../components/seo/metaTags";
 import Top from "../components/index/top";
 import Bottom from "../components/index/bottom";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
-import MousePosition from "../types/mousePosition";
+import InitialTransition from "../components/transition/InitialTransition";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
-const IndexPage = ({
-  location,
-}: {
-  location: GatsbyLinkProps<MousePosition>;
-}) => {
-  // Refs
+const IndexPage = ({ location }: { location: WindowLocation }) => {
+  // Hooks and Refs
+  const isPwa = usePwaDetection(location);
+  const isIphoneX = useIphoneXDetection();
   const acknowledgementRef = React.useRef(null);
-
-  // Hooks
   const [hover, setHover] = React.useState(false);
-  const [isIphoneX, setIsIphoneX] = React.useState(false);
-
-  // Detect if the page is opened as a PWA
-  const params = new URLSearchParams((location as any).search);
-  const isPwa = params.get(MODE) === STANDALONE;
-
-  // Detect if the page is opened on an iPhone X or newer
-  React.useEffect(() => {
-    let iPhone =
-      /iPhone/.test(navigator.userAgent) && !(window as any).MSStream;
-    let aspect = window.screen.width / window.screen.height;
-    setIsIphoneX(iPhone && aspect.toFixed(3) === "0.462");
-  }, []);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_WHITE;
+    document.body.style.backgroundColor = Color.BACKGROUND_WHITE;
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -80,38 +64,33 @@ const IndexPage = ({
           transform: { type: "spring", stiffness: 65, delay: 0.2 },
         }}
       >
-        <InitialTransition color={COLOR.BACKGROUND_BLACK} />
+        <InitialTransition color={Color.BACKGROUND_BLACK} />
         <Box $isIphoneXPwa={isIphoneX && isPwa}>
           <Wrapper>
             <Top setHover={setHover} />
-            <Bottom
-              setHover={setHover}
-              acknowledgement={acknowledgement}
-              intro={intro}
-              isIphoneXPwa={isIphoneX && isPwa}
-            />
+            <Bottom setHover={setHover} isIphoneXPwa={isIphoneX && isPwa} />
           </Wrapper>
           <div ref={acknowledgementRef} className="sm:hidden">
             {isIphoneX && isPwa && (
               <div
                 className="font-secondary-normal mt-2 ml-1 select-none"
-                onClick={(e) => acknowledgement(e)}
+                onClick={(e) => routeTo(e, Route.Acknowledgement, true)}
               >
                 Acknowledgement of Country
               </div>
             )}
           </div>
           <Footer>
-            <FooterLeft setHover={setHover} acknowledgement={acknowledgement} />
+            <FooterLeft setHover={setHover} />
             <FooterRight />
           </Footer>
         </Box>
         <Cursor
           hover={hover}
           delay={0.5}
-          position={location.state!}
           isBlack={true}
           isIndexPage={true}
+          position={location.state! as MousePosition}
         />
       </Container>
       <Loading />
@@ -124,7 +103,7 @@ export default IndexPage;
 export const Head: HeadFC = () => (
   <Splash>
     <title>{SITE_TITLE}</title>
-    <meta name="theme-color" content={COLOR.BACKGROUND_WHITE} />
+    <meta name="theme-color" content={Color.BACKGROUND_WHITE} />
     <Preload />
     <MetaTags path={Route.Home} MetaImage={MetaImage} name={SITE_TITLE} />
   </Splash>
@@ -135,7 +114,7 @@ const Container = styled(motion.div)`
   height: ${() => useWindowSize().height! + "px"};
   display: flex;
   justify-content: center;
-  background-color: ${COLOR.BACKGROUND_WHITE};
+  background-color: ${Color.BACKGROUND_WHITE};
   cursor: none;
 
   @media ${layout.up.sm} {
@@ -167,9 +146,9 @@ const Box = styled.div<{ $isIphoneXPwa: boolean }>`
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  border: 3px solid ${COLOR.BLACK};
   display: flex;
   flex-direction: column;
+  border: 3px solid ${Color.BLACK};
 `;
 
 const Footer = styled.div`

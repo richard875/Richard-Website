@@ -1,35 +1,31 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { GatsbyLinkProps } from "gatsby";
-import Route from "../routes/route";
-import home from "../routes/home";
+import { HeadFC } from "gatsby";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import { WindowLocation } from "@reach/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { PAGE_TITLE } from "../constants/meta";
-import useWindowSize from "../hooks/useWindowSize";
-import type { HeadFC } from "gatsby";
+import Route from "../routes/route";
+import routeTo from "../routes/routeTo";
+import Color from "../enums/color";
 import layout from "../styles/layout";
-import { COLOR } from "../styles/theme";
 import Splash from "../components/seo/splash";
-import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
+import MetaTags from "../components/seo/metaTags";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
+import useWindowSize from "../hooks/useWindowSize";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
+import { ACKNOWLEDGEMENT_TITLE, PAGE_TITLE } from "../constants/meta";
 
-const CURRENT_PAGE_TITLE = `Acknowledgement${PAGE_TITLE}`;
+const CURRENT_PAGE_TITLE = `${ACKNOWLEDGEMENT_TITLE}${PAGE_TITLE}`;
 
-const Acknowledgement = ({
-  location,
-}: {
-  location: GatsbyLinkProps<MousePosition>;
-}) => {
+const Acknowledgement = ({ location }: { location: WindowLocation }) => {
   const [hover, setHover] = React.useState(false);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = COLOR.BACKGROUND_BLACK;
+    document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -43,7 +39,7 @@ const Acknowledgement = ({
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.4 }}
     >
-      <InitialTransition color={COLOR.BACKGROUND_WHITE} />
+      <InitialTransition color={Color.BACKGROUND_WHITE} />
       <Wrapper>
         <AcknowledgementText
           className="font-secondary-normal"
@@ -65,7 +61,9 @@ const Acknowledgement = ({
         >
           <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
             <span
-              onClick={(e) => home(e)}
+              onClick={(e) =>
+                routeTo(e, Route.Home, true, false, Color.BACKGROUND_WHITE)
+              }
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
@@ -78,7 +76,7 @@ const Acknowledgement = ({
       <Cursor
         hover={hover}
         delay={0.3}
-        position={location.state!}
+        position={location.state! as MousePosition}
         isBlack={false}
       />
     </Container>
@@ -90,7 +88,7 @@ export default Acknowledgement;
 export const Head: HeadFC = () => (
   <Splash>
     <title>{CURRENT_PAGE_TITLE}</title>
-    <meta name="theme-color" content={COLOR.BACKGROUND_BLACK} />
+    <meta name="theme-color" content={Color.BACKGROUND_BLACK} />
     <Preload />
     <MetaTags
       path={Route.Acknowledgement}
@@ -106,8 +104,8 @@ const Container = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${COLOR.WHITE};
-  background-color: ${COLOR.BACKGROUND_BLACK};
+  color: ${Color.WHITE};
+  background-color: ${Color.BACKGROUND_BLACK};
   cursor: none;
   user-select: none;
 `;
@@ -125,8 +123,8 @@ const Wrapper = styled.div`
 const AcknowledgementText = styled(motion.div)`
   font-size: 6vw;
   line-height: 1.65;
-  color: ${COLOR.WHITE};
   margin-bottom: 15px;
+  color: ${Color.WHITE};
 
   @media ${layout.up.sm} {
     font-size: 3vw;
@@ -141,8 +139,8 @@ const AcknowledgementText = styled(motion.div)`
 const Cta = styled(motion.div)`
   display: flex;
   align-items: center;
-  color: ${COLOR.BRIGHT_GREEN};
   font-size: 19px;
   margin-top: 15px;
   margin-bottom: 100px;
+  color: ${Color.BRIGHT_GREEN};
 `;

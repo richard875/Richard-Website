@@ -1,78 +1,51 @@
 import React from "react";
 import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
-import { GatsbyLinkProps } from "gatsby";
-import Route from "../routes/route";
-import projects from "../routes/projects";
+import { HeadFC } from "gatsby";
 import styled from "styled-components";
-import { COPYRIGHT, PAGE_TITLE, MODE, STANDALONE } from "../constants/meta";
-import useWindowSize from "../hooks/useWindowSize";
-import type { HeadFC } from "gatsby";
+import { motion } from "framer-motion";
+import { WindowLocation } from "@reach/router";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import Color from "../enums/color";
+import Route from "../routes/route";
 import layout from "../styles/layout";
-import { COLOR } from "../styles/theme";
+import Block from "../components/work/block";
 import Splash from "../components/seo/splash";
-import MetaTags from "../components/seo/metaTags";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
-import InitialTransition from "../components/transition/InitialTransition";
-import CallToAction from "../components/global/callToAction";
-import Block from "../components/work/block";
+import MetaTags from "../components/seo/metaTags";
 import SkillsBlock from "../components/work/skillsBlock";
+import CallToAction from "../components/global/callToAction";
+import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
-import workData from "../../static/data/work.json";
 import WorkExperience from "../types/workExperience";
+import useWindowSize from "../hooks/useWindowSize";
+import usePwaDetection from "../hooks/usePwaDetection";
+import useDarkModeManager from "../hooks/useDarkModeManager";
+import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
 } from "../constants/margin";
+import { EXPERIENCE_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
+import workData from "../../static/data/work.json";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TITLE = "Skills & Work Experience";
-const CURRENT_PAGE_TITLE = `${TITLE}${PAGE_TITLE}`;
+const CURRENT_PAGE_TITLE = `${EXPERIENCE_TITLE}${PAGE_TITLE}`;
 
-const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
-  const windowWidth = useWindowSize().width;
+const Work = ({ location }: { location: WindowLocation }) => {
   const slider = React.useRef<HTMLDivElement>(null);
   const component = React.useRef<HTMLDivElement>(null);
 
   // Hooks
+  const isPwa = usePwaDetection(location);
+  const isIphoneX = useIphoneXDetection();
+  const windowWidth = useWindowSize().width;
+  const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [isIphoneX, setIsIphoneX] = React.useState(false);
-
-  // Detect if the page is opened as a PWA
-  const params = new URLSearchParams((location as any).search);
-  const isPwa = params.get(MODE) === STANDALONE;
-
-  // Detect if the page is opened on an iPhone X or newer
-  React.useEffect(() => {
-    let iPhone =
-      /iPhone/.test(navigator.userAgent) && !(window as any).MSStream;
-    let aspect = window.screen.width / window.screen.height;
-    setIsIphoneX(iPhone && aspect.toFixed(3) === "0.462");
-  }, []);
-
-  React.useEffect(() => {
-    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
-    const updateIsDarkMode = () =>
-      setIsDarkMode(() => {
-        const isDarkMode = mediaQueryList.matches;
-        document.body.style.backgroundColor = isDarkMode
-          ? COLOR.BACKGROUND_BLACK
-          : COLOR.BACKGROUND_WHITE_SECONDARY;
-        return isDarkMode;
-      });
-
-    mediaQueryList.addEventListener("change", updateIsDarkMode);
-    updateIsDarkMode();
-
-    return () => mediaQueryList.removeEventListener("change", updateIsDarkMode);
-  }, []);
 
   React.useEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -103,23 +76,21 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
     >
       <InitialTransition
         color={
-          isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY
+          isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY
         }
       />
       <Horizontal ref={slider} $entryLength={workData.length + 1}>
         <SkillsBlock isDarkMode={isDarkMode} />
-        {workData.map((experience: WorkExperience, index: number) => {
-          return (
-            <Block
-              key={index}
-              experience={experience}
-              dataLength={workData.length}
-              index={index}
-              setHover={setHover}
-              isDarkMode={isDarkMode}
-            />
-          );
-        })}
+        {workData.map((experience: WorkExperience, index: number) => (
+          <Block
+            key={index}
+            index={index}
+            setHover={setHover}
+            experience={experience}
+            isDarkMode={isDarkMode}
+            dataLength={workData.length}
+          />
+        ))}
         <Bottom
           className="font-secondary-normal"
           $isDarkMode={isDarkMode}
@@ -129,19 +100,20 @@ const Work = ({ location }: { location: GatsbyLinkProps<MousePosition> }) => {
         </Bottom>
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
-        <Title className="font-secondary-normal">{TITLE}</Title>
+        <Title className="font-secondary-normal">{EXPERIENCE_TITLE}</Title>
         <CallToAction
           name="Projects"
           setHover={setHover}
+          route={Route.Projects}
+          singleColor={false}
           isDarkMode={isDarkMode}
-          navigator={projects}
         />
       </Top>
       <Cursor
-        hover={hover}
         delay={0.5}
-        position={location.state!}
+        hover={hover}
         isBlack={!isDarkMode}
+        position={location.state! as MousePosition}
       />
     </Container>
   );
@@ -154,12 +126,12 @@ export const Head: HeadFC = () => (
     <title>{CURRENT_PAGE_TITLE}</title>
     <meta
       name="theme-color"
-      content={COLOR.BACKGROUND_BLACK}
+      content={Color.BACKGROUND_BLACK}
       media="(prefers-color-scheme: dark)"
     />
     <meta
       name="theme-color"
-      content={COLOR.BACKGROUND_WHITE_SECONDARY}
+      content={Color.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
     <Preload />
@@ -174,8 +146,8 @@ export const Head: HeadFC = () => (
 const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
   cursor: none;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
-  color: ${({ $isDarkMode }) => ($isDarkMode ? COLOR.WHITE : COLOR.BLACK)};
+    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 
   @media ${layout.up.md} {
     overflow-x: hidden;
@@ -194,10 +166,10 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   padding-bottom: 3px;
   border-bottom: ${({ $isDarkMode }) =>
     $isDarkMode
-      ? `0.5px solid ${COLOR.BACKGROUND_WHITE_SECONDARY}`
-      : `0.5px solid ${COLOR.BACKGROUND_BLACK}`};
+      ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
+      : `0.5px solid ${Color.BACKGROUND_BLACK}`};
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? COLOR.BACKGROUND_BLACK : COLOR.BACKGROUND_WHITE_SECONDARY};
+    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
 
   @media ${layout.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
@@ -244,8 +216,8 @@ const Bottom = styled.div<{
   justify-content: space-between;
   border-top: ${({ $isDarkMode }: { $isDarkMode: boolean }) =>
     $isDarkMode
-      ? `0.5px solid ${COLOR.BORDER_WHITE}`
-      : `0.5px solid ${COLOR.BORDER_BLACK}`};
+      ? `0.5px solid ${Color.BORDER_WHITE}`
+      : `0.5px solid ${Color.BORDER_BLACK}`};
 
   @media ${layout.up.md} {
     display: none;
