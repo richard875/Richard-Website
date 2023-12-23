@@ -1,9 +1,9 @@
 import React from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
-import styled, { css } from "styled-components";
 import { isDesktop } from "react-device-detect";
-import { COLOR } from "../../styles/theme";
+import styled, { css } from "styled-components";
+import Color from "../../enums/color";
 import MousePosition from "../../types/mousePosition";
 import useMousePosition from "../../hooks/useMousePosition";
 
@@ -72,7 +72,7 @@ const Ring = styled.div<{
     $black && $isIndexPage ? "30px" : "25px"};
   height: ${({ $black, $isIndexPage }) =>
     $black && $isIndexPage ? "30px" : "25px"};
-  border: 2px solid ${({ $black }) => ($black ? COLOR.BLACK : "lightgray")};
+  border: 2px solid ${({ $black }) => ($black ? Color.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
@@ -107,7 +107,7 @@ const Dot = styled.div<{
   width: 8px;
   height: 8px;
   background-color: ${({ $black, $isIndexPage }) =>
-    $black && $isIndexPage ? COLOR.BLACK : "transparent"};
+    $black && $isIndexPage ? Color.BLACK : "transparent"};
   border-radius: 100%;
   transform: translate(-50%, -50%) scale(1);
   transition: 0.3s cubic-bezier(0.75, -1.27, 0.3, 2.33) transform 0.4s,
