@@ -48,7 +48,6 @@ const Education = ({ location }: { location: WindowLocation }) => {
           name="Contact"
           setHover={setHover}
           route={Route.Contact}
-          singleColor={true}
           isDarkMode={isDarkMode}
         />
       </Top>

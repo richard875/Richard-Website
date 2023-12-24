@@ -62,14 +62,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
         <Title className="font-secondary-normal">
           {CONTACT_TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
         </Title>
-        <CallToAction
-          name="Home"
-          setHover={setHover}
-          route={Route.Home}
-          singleColor={true}
-          isDarkMode={true}
-          defaultColor={Color.BACKGROUND_WHITE}
-        />
+        <CallToAction name="Home" setHover={setHover} route={Route.Home} />
       </Top>
       <Box>
         <Left

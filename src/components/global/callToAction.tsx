@@ -10,16 +10,12 @@ const CallToAction = ({
   name,
   setHover,
   route,
-  singleColor,
-  isDarkMode,
-  defaultColor = Color.BACKGROUND_BLACK,
+  isDarkMode = true,
 }: {
   name: string;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   route: Route;
-  singleColor: boolean;
-  isDarkMode: boolean;
-  defaultColor?: Color;
+  isDarkMode?: boolean;
 }) => {
   return (
     <Cta
@@ -29,9 +25,7 @@ const CallToAction = ({
       onMouseLeave={() => setHover(false)}
     >
       <div
-        onClick={(e) =>
-          routeTo(e, route, singleColor, isDarkMode, defaultColor)
-        }
+        onClick={(e) => routeTo(e, route, isDarkMode)}
         className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2 select-none"
       >
         {name}

@@ -105,7 +105,6 @@ const Work = ({ location }: { location: WindowLocation }) => {
           name="Projects"
           setHover={setHover}
           route={Route.Projects}
-          singleColor={false}
           isDarkMode={isDarkMode}
         />
       </Top>
