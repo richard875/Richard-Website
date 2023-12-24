@@ -27,6 +27,17 @@ const config: GatsbyConfig = {
   flags: {
     DEV_SSR: true,
   },
+  headers: [
+    {
+      source: `*`,
+      headers: [
+        {
+          key: `link-header`,
+          value: `win123`,
+        },
+      ],
+    },
+  ],
   plugins: [
     `gatsby-plugin-postcss`,
     {
