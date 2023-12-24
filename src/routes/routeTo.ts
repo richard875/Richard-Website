@@ -16,7 +16,7 @@ const routeTo = (
 
   switch (route) {
     case Route.Home:
-      document.body.style.backgroundColor = Color.BACKGROUND_WHITE_SECONDARY;
+      document.body.style.backgroundColor = Color.BACKGROUND_WHITE;
       break;
     case Route.Acknowledgement:
       document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
