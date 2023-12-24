@@ -102,10 +102,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{PROJECTS_TITLE}</Title>
-        <CallToAction
-          className="font-secondary-normal"
-          $isDarkMode={isDarkMode}
-        >
+        <Cta className="font-secondary-normal" $isDarkMode={isDarkMode}>
           <div
             className="underline underline-offset-2"
             onMouseEnter={() => setHover(true)}
@@ -133,7 +130,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
           >
             Contact
           </div>
-        </CallToAction>
+        </Cta>
       </Top>
       <Cursor
         delay={0.5}
@@ -250,7 +247,7 @@ const Bottom = styled.div<{
   }
 `;
 
-const CallToAction = styled.div<{ $isDarkMode: boolean }>`
+const Cta = styled.div<{ $isDarkMode: boolean }>`
   display: flex;
   user-select: none;
   color: ${({ $isDarkMode }) =>
