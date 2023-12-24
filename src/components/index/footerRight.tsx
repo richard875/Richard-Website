@@ -14,7 +14,7 @@ const getTimeInSydney = () =>
 
 const FooterRight = () => {
   const timeRef = React.useRef(null);
-  const [time, setTime] = React.useState(getTimeInSydney());
+  const [time, setTime] = React.useState("00:00");
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out" });
