@@ -112,16 +112,16 @@ const Contact = ({ location }: { location: WindowLocation }) => {
             >
               <Circle>
                 <StaticImage
-                  className="relative h-5/6 w-5/6"
-                  src={CIRCLE}
                   alt="Resume Circle"
+                  src={CIRCLE}
+                  className="relative h-5/6 w-5/6"
                   placeholder="none"
                 />
               </Circle>
               <StaticImage
-                className="!relative md:!absolute !w-[60px] md:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] md:!left-[64px] md:!bottom-[84.5px] lg:!left-[85px] lg:!bottom-[108px]"
-                src={ARROW}
                 alt="Resume Circle"
+                src={ARROW}
+                className="!relative md:!absolute !w-[60px] md:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] md:!left-[64px] md:!bottom-[84.5px] lg:!left-[85px] lg:!bottom-[108px]"
                 placeholder="none"
               />
             </motion.div>

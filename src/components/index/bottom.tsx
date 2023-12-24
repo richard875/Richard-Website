@@ -99,16 +99,16 @@ const Bottom = ({
         >
           <Circle>
             <StaticImage
-              className="relative h-5/6 w-5/6"
-              src={CIRCLE}
               alt="Resume Circle"
+              src={CIRCLE}
+              className="relative h-5/6 w-5/6"
               placeholder="none"
             />
           </Circle>
           <StaticImage
-            className="!absolute !left-[42.5px] !bottom-[56px] sm:!left-[50px] sm:!bottom-[65px] lg:!left-[55px] lg:!bottom-[72px] w-[45px] sm:w-[50px] lg:w-[60px]"
-            src={ARROW}
             alt="Resume Circle"
+            src={ARROW}
+            className="!absolute !left-[42.5px] !bottom-[56px] sm:!left-[50px] sm:!bottom-[65px] lg:!left-[55px] lg:!bottom-[72px] w-[45px] sm:w-[50px] lg:w-[60px]"
             placeholder="none"
           />
         </motion.div>
