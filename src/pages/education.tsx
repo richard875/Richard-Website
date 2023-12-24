@@ -18,7 +18,7 @@ import Usyd from "../components/education/usyd";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
-import CallToActionForward from "../components/global/callToActionForward";
+import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import { EDUCATION_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
@@ -44,7 +44,7 @@ const Education = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={Color.BACKGROUND_BLACK} />
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EDUCATION_TITLE}</Title>
-        <CallToActionForward
+        <CallToAction
           name="Contact"
           setHover={setHover}
           route={Route.Contact}

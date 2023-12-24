@@ -6,7 +6,7 @@ import Color from "../../enums/color";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 
-const CallToActionForward = ({
+const CallToAction = ({
   name,
   setHover,
   route,
@@ -41,7 +41,7 @@ const CallToActionForward = ({
   </Cta>
 );
 
-export default CallToActionForward;
+export default CallToAction;
 
 const Cta = styled.div<{ $isDarkMode: boolean }>`
   display: flex;

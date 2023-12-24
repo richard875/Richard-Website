@@ -14,7 +14,7 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import SkillsBlock from "../components/work/skillsBlock";
-import CallToActionForward from "../components/global/callToActionForward";
+import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import WorkExperience from "../types/workExperience";
@@ -101,7 +101,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EXPERIENCE_TITLE}</Title>
-        <CallToActionForward
+        <CallToAction
           name="Projects"
           setHover={setHover}
           route={Route.Projects}
