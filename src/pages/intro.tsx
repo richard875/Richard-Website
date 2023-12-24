@@ -41,7 +41,7 @@ const Experience = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-            onClick={(e) => setTransitionColor(Color.BACKGROUND_WHITE)}
+            onClick={() => setTransitionColor(Color.BACKGROUND_WHITE)}
           >
             <CallToAction
               name="Home"
@@ -102,7 +102,7 @@ const Experience = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-          onClick={(e) => {
+          onClick={() => {
             setTransitionColor(
               isDarkMode
                 ? Color.BACKGROUND_BLACK
