@@ -91,6 +91,15 @@ const MetaTags = ({
       {/* Favicons */}
       <link rel="mask-icon" href={favicon} color={Color.BACKGROUND_WHITE} />
 
+      {/* Canonical URLs */}
+      <link rel="canonical" href={`https://${URL}${Route.Home}`} />
+      <link rel="canonical" href={`https://${URL}${Route.Acknowledgement}`} />
+      <link rel="canonical" href={`https://${URL}${Route.Intro}`} />
+      <link rel="canonical" href={`https://${URL}${Route.Experience}`} />
+      <link rel="canonical" href={`https://${URL}${Route.Projects}`} />
+      <link rel="canonical" href={`https://${URL}${Route.Education}`} />
+      <link rel="canonical" href={`https://${URL}${Route.Contact}`} />
+
       {/* Google Rich Results */}
       <script type="application/ld+json">
         {`
