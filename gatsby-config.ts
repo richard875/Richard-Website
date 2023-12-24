@@ -29,11 +29,11 @@ const config: GatsbyConfig = {
   },
   headers: [
     {
-      source: `*`,
+      source: "*",
       headers: [
         {
-          key: `link-header`,
-          value: `win123`,
+          key: "Link",
+          value: `<${SITE_URL}/richard-lee-resume.pdf>; rel="canonical"`,
         },
       ],
     },
