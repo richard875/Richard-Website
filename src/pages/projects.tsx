@@ -119,36 +119,32 @@ const Projects = ({ location }: { location: WindowLocation }) => {
             />
           </div>
           <span className="hidden sm:block">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <Cta className="font-secondary-normal" $isDarkMode={isDarkMode}>
-            <div
-              className="underline underline-offset-2"
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-              onClick={(e) => {
-                setTransitionColor(
-                  isDarkMode
-                    ? Color.BACKGROUND_BLACK
-                    : Color.BACKGROUND_WHITE_SECONDARY
-                );
-                routeTo(e, Route.Education, isDarkMode);
-              }}
-            >
-              Education
-            </div>
-            <span className="font-primary-normal pt-0.5 md:pt-0">
-              &nbsp;<span className="hidden md:inline-block">&nbsp;</span>
-              <span className="md:hidden">|</span>
-              <span className="hidden md:inline-block">&nbsp;</span>&nbsp;
-            </span>
-            <div
-              className="underline underline-offset-2"
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-              onClick={(e) => routeTo(e, Route.Contact)}
-            >
-              Contact
-            </div>
+          <Cta
+            className="font-secondary-normal underline underline-offset-2"
+            $isDarkMode={isDarkMode}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            onClick={(e) => {
+              setTransitionColor(
+                isDarkMode
+                  ? Color.BACKGROUND_BLACK
+                  : Color.BACKGROUND_WHITE_SECONDARY
+              );
+              routeTo(e, Route.Education, isDarkMode);
+            }}
+          >
+            Education
           </Cta>
+          <span>&nbsp;&nbsp;</span>
+          <div onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}>
+            <CallToAction
+              name="Contact"
+              forward={true}
+              setHover={setHover}
+              route={Route.Contact}
+              isDarkMode={isDarkMode}
+            />
+          </div>
         </div>
       </Top>
       <Cursor
