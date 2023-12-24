@@ -4,7 +4,7 @@ import Color from "./src/enums/color";
 import {
   NAME,
   SITE_TITLE,
-  SITE_DESCRIPTION,
+  DESCRIPTION_INDEX,
   MODE,
   STANDALONE,
 } from "./src/constants/meta";
@@ -16,7 +16,7 @@ const config: GatsbyConfig = {
   trailingSlash: `always`,
   siteMetadata: {
     title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    description: DESCRIPTION_INDEX,
     image: `static/images/splash/apple-splash-2224-1668.jpg`,
     siteUrl: SITE_URL,
   },
