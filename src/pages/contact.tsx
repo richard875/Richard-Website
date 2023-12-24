@@ -14,7 +14,7 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
-import CallToAction from "../components/global/callToAction";
+import CallToActionForward from "../components/global/callToActionForward";
 import InitialTransition from "../components/transition/InitialTransition";
 import getResume from "../helper/getResume";
 import MousePosition from "../types/mousePosition";
@@ -62,7 +62,11 @@ const Contact = ({ location }: { location: WindowLocation }) => {
         <Title className="font-secondary-normal">
           {CONTACT_TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
         </Title>
-        <CallToAction name="Home" setHover={setHover} route={Route.Home} />
+        <CallToActionForward
+          name="Home"
+          setHover={setHover}
+          route={Route.Home}
+        />
       </Top>
       <Box>
         <Left
