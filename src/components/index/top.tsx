@@ -44,7 +44,7 @@ const Top = ({
         className="font-secondary-normal select-none"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        onClick={(e) => routeTo(e, Route.Contact, true)}
+        onClick={(e) => routeTo(e, Route.Contact)}
       >
         CONTACT
       </div>

@@ -61,7 +61,7 @@ const Bottom = ({
           className="flex items-center font-secondary-normal"
         >
           <div
-            onClick={(e) => routeTo(e, Route.Intro, true)}
+            onClick={(e) => routeTo(e, Route.Intro)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
@@ -79,7 +79,7 @@ const Bottom = ({
         <div
           ref={countryRef}
           className="font-primary-normal select-none"
-          onClick={(e) => routeTo(e, Route.Acknowledgement, true)}
+          onClick={(e) => routeTo(e, Route.Acknowledgement)}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >

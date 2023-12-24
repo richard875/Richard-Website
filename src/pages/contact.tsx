@@ -174,7 +174,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 onMouseLeave={() => setHover(false)}
                 onClick={(e) => {
                   setTransitionColor(Color.BACKGROUND_WHITE);
-                  routeTo(e, Route.Home, true, false, Color.BACKGROUND_WHITE);
+                  routeTo(e, Route.Home);
                 }}
               >
                 Home
@@ -187,7 +187,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 onMouseLeave={() => setHover(false)}
                 onClick={(e) => {
                   setTransitionColor(Color.BACKGROUND_BLACK);
-                  routeTo(e, Route.Intro, true);
+                  routeTo(e, Route.Intro);
                 }}
               >
                 Intro
@@ -204,7 +204,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                       ? Color.BACKGROUND_BLACK
                       : Color.BACKGROUND_WHITE_SECONDARY
                   );
-                  routeTo(e, Route.Experience, false, isDarkMode);
+                  routeTo(e, Route.Experience, isDarkMode);
                 }}
               >
                 Experience
@@ -221,7 +221,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                       ? Color.BACKGROUND_BLACK
                       : Color.BACKGROUND_WHITE_SECONDARY
                   );
-                  routeTo(e, Route.Projects, false, isDarkMode);
+                  routeTo(e, Route.Projects, isDarkMode);
                 }}
               >
                 Projects
@@ -238,7 +238,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                       ? Color.BACKGROUND_BLACK
                       : Color.BACKGROUND_WHITE_SECONDARY
                   );
-                  routeTo(e, Route.Education, false, isDarkMode);
+                  routeTo(e, Route.Education, isDarkMode);
                 }}
               >
                 Education

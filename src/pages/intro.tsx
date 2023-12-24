@@ -47,7 +47,7 @@ const CallToAction = ({
               ? Color.BACKGROUND_BLACK
               : Color.BACKGROUND_WHITE_SECONDARY
           );
-          routeTo(e, Route.Experience, false, isDarkMode);
+          routeTo(e, Route.Experience, isDarkMode);
         }}
       >
         Work Experience & Projects
@@ -83,7 +83,7 @@ const Experience = () => {
               <span
                 onClick={(e) => {
                   setTransitionColor(Color.BACKGROUND_WHITE);
-                  routeTo(e, Route.Home, true, true, Color.BACKGROUND_WHITE);
+                  routeTo(e, Route.Home);
                 }}
               >
                 Home

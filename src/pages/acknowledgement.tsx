@@ -60,9 +60,7 @@ const Acknowledgement = ({ location }: { location: WindowLocation }) => {
         >
           <div className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
             <span
-              onClick={(e) =>
-                routeTo(e, Route.Home, true, false, Color.BACKGROUND_WHITE)
-              }
+              onClick={(e) => routeTo(e, Route.Home)}
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >

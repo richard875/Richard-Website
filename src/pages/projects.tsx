@@ -112,7 +112,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
             onMouseLeave={() => setHover(false)}
             onClick={(e) => {
               setToContact(false);
-              routeTo(e, Route.Education, false, isDarkMode);
+              routeTo(e, Route.Education, isDarkMode);
             }}
           >
             Education
@@ -128,7 +128,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
             onMouseLeave={() => setHover(false)}
             onClick={(e) => {
               setToContact(true);
-              routeTo(e, Route.Contact, true);
+              routeTo(e, Route.Contact);
             }}
           >
             Contact

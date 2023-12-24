@@ -74,7 +74,7 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
             {isIphoneX && isPwa && (
               <div
                 className="font-secondary-normal mt-2 ml-1 select-none"
-                onClick={(e) => routeTo(e, Route.Acknowledgement, true)}
+                onClick={(e) => routeTo(e, Route.Acknowledgement)}
               >
                 Acknowledgement of Country
               </div>
