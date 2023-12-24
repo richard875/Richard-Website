@@ -30,7 +30,7 @@ const CallToAction = ({
         ? "pr-2 hover:pr-3 underline-offset-4"
         : "pl-2 hover:pl-3 underline-offset-4"
       : forward
-      ? "pr-1.5 hover:pr-3 underline-offset-2"
+      ? "pr-1.5 hover:pr-3 pl-1.5 hover:pl-0 underline-offset-2"
       : "pl-1.5 hover:pl-3 underline-offset-2";
 
   return (
@@ -45,7 +45,7 @@ const CallToAction = ({
         <FontAwesomeIcon
           icon={faCircleChevronLeft}
           size={fromIntro ? ("" as any) : "sm"}
-          className={fromIntro ? "mt-0.5" : "mt-1"}
+          className="mt-0.5"
         />
       )}
       <div
@@ -58,7 +58,7 @@ const CallToAction = ({
         <FontAwesomeIcon
           icon={faCircleChevronRight}
           size={fromIntro ? ("" as any) : "sm"}
-          className={fromIntro ? "mt-0.5" : "mt-1"}
+          className="mt-0.5"
         />
       )}
     </Cta>
