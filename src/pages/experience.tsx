@@ -103,6 +103,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
         <Title className="font-secondary-normal">{EXPERIENCE_TITLE}</Title>
         <CallToAction
           name="Projects"
+          forward={true}
           setHover={setHover}
           route={Route.Projects}
           isDarkMode={isDarkMode}

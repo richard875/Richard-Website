@@ -62,7 +62,12 @@ const Contact = ({ location }: { location: WindowLocation }) => {
         <Title className="font-secondary-normal">
           {CONTACT_TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
         </Title>
-        <CallToAction name="Home" setHover={setHover} route={Route.Home} />
+        <CallToAction
+          name="Home"
+          forward={true}
+          setHover={setHover}
+          route={Route.Home}
+        />
       </Top>
       <Box>
         <Left

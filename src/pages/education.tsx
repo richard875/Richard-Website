@@ -46,6 +46,7 @@ const Education = ({ location }: { location: WindowLocation }) => {
         <Title className="font-secondary-normal">{EDUCATION_TITLE}</Title>
         <CallToAction
           name="Contact"
+          forward={true}
           setHover={setHover}
           route={Route.Contact}
           isDarkMode={isDarkMode}

@@ -2,19 +2,14 @@ import React from "react";
 import type { HeadFC } from "gatsby";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import Route from "../routes/route";
-import routeTo from "../routes/routeTo";
-import {
-  faCircleChevronLeft,
-  faCircleChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Color from "../enums/color";
 import layout from "../styles/layout";
+import Route from "../routes/route";
 import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
+import CallToAction from "../components/global/callToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import InitialTransition from "../components/transition/InitialTransition";
 import setOverflow from "../helper/setOverflow";
@@ -26,41 +21,10 @@ import MetaImage from "../../static/images/meta/metaImage.jpg";
 const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
 const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
 
-const CallToAction = ({
-  isDarkMode,
-  setTransitionColor,
-}: {
-  isDarkMode: boolean;
-  setTransitionColor: (color: Color) => void;
-}) => (
-  <Cta
-    className="font-secondary-normal"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-  >
-    <div className="cursor-pointer pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4 select-none">
-      <span
-        onClick={(e) => {
-          setTransitionColor(
-            isDarkMode
-              ? Color.BACKGROUND_BLACK
-              : Color.BACKGROUND_WHITE_SECONDARY
-          );
-          routeTo(e, Route.Experience, isDarkMode);
-        }}
-      >
-        Work Experience & Projects
-      </span>
-    </div>
-    <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
-  </Cta>
-);
-
 const Experience = () => {
   const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [transitionColor, setTransitionColor] = React.useState(
-    isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY
+    Color.BACKGROUND_BLACK
   );
 
   return (
@@ -73,22 +37,20 @@ const Experience = () => {
       <Left>
         <div className="hidden sm:flex w-full items-center justify-between sm:mb-[4vw] lg:mb-[2vw]">
           <Cta
-            className="font-secondary-normal !text-white"
+            className="font-secondary-normal !text-base"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+            onClick={(e) => setTransitionColor(Color.BACKGROUND_WHITE)}
           >
-            <FontAwesomeIcon icon={faCircleChevronLeft} className="mt-0.5" />
-            <div className="cursor-pointer text-base pl-2 hover:pl-3 transition-all ease-in-out underline underline-offset-4 select-none">
-              <span
-                onClick={(e) => {
-                  setTransitionColor(Color.BACKGROUND_WHITE);
-                  routeTo(e, Route.Home);
-                }}
-              >
-                Home
-              </span>
-            </div>
+            <CallToAction
+              name="Home"
+              forward={false}
+              setHover={() => {}}
+              route={Route.Home}
+              isDarkMode={isDarkMode}
+              fromIntro={true}
+            />
           </Cta>
         </div>
         <LeftText
@@ -132,18 +94,33 @@ const Experience = () => {
           </Email>
           . I hope you find my page enjoyable and have a great day!
         </LeftText>
-        <div className="sm:hidden">
-          <CallToAction
-            isDarkMode={isDarkMode}
-            setTransitionColor={setTransitionColor}
-          />
+        <div className="hidden sm:block">
+          <Logos />
         </div>
-        <Logos />
-        <div className="hidden sm:flex w-full items-center justify-end">
+        <Cta
+          className="font-secondary-normal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+          onClick={(e) => {
+            setTransitionColor(
+              isDarkMode
+                ? Color.BACKGROUND_BLACK
+                : Color.BACKGROUND_WHITE_SECONDARY
+            );
+          }}
+        >
           <CallToAction
+            name="Work Experience & Projects"
+            forward={true}
+            setHover={() => {}}
+            route={Route.Experience}
             isDarkMode={isDarkMode}
-            setTransitionColor={setTransitionColor}
+            fromIntro={true}
           />
+        </Cta>
+        <div className="sm:hidden">
+          <Logos />
         </div>
       </Left>
       <Right
@@ -294,12 +271,13 @@ const SydneyOperaHouseInfoText = styled(motion.div)`
 `;
 
 const Cta = styled(motion.div)`
-  display: flex;
-  align-items: center;
   font-size: 19px;
-  color: ${Color.BRIGHT_GREEN};
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
 
   @media ${layout.down.sm} {
     margin-top: 8vw;
+    justify-content: flex-start;
   }
 `;
