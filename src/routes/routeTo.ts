@@ -8,20 +8,43 @@ import usePwaDetection from "../hooks/usePwaDetection";
 const routeTo = (
   event: React.MouseEvent<HTMLElement, MouseEvent>,
   route: Route,
-  singleColor: boolean,
-  isDarkMode: boolean = false,
-  defaultColor: Color = Color.BACKGROUND_BLACK
+  isDarkMode: boolean = true
 ) => {
   event.preventDefault();
   const isPwa = usePwaDetection(location as WindowLocation);
   const routeLink = `${route}${isPwa ? STANDALONE_URL : ""}`;
 
-  if (singleColor) {
-    document.body.style.backgroundColor = defaultColor;
-  } else {
-    document.body.style.backgroundColor = isDarkMode
-      ? Color.BACKGROUND_BLACK
-      : Color.BACKGROUND_WHITE_SECONDARY;
+  switch (route) {
+    case Route.Home:
+      document.body.style.backgroundColor = Color.BACKGROUND_WHITE_SECONDARY;
+      break;
+    case Route.Acknowledgement:
+      document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
+      break;
+    case Route.Intro:
+      document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
+      break;
+    case Route.Experience:
+      document.body.style.backgroundColor = isDarkMode
+        ? Color.BACKGROUND_BLACK
+        : Color.BACKGROUND_WHITE_SECONDARY;
+      break;
+    case Route.Projects:
+      document.body.style.backgroundColor = isDarkMode
+        ? Color.BACKGROUND_BLACK
+        : Color.BACKGROUND_WHITE_SECONDARY;
+      break;
+    case Route.Education:
+      document.body.style.backgroundColor = isDarkMode
+        ? Color.BACKGROUND_BLACK
+        : Color.BACKGROUND_WHITE_SECONDARY;
+      break;
+    case Route.Contact:
+      document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
+      break;
+    default:
+      document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
+      break;
   }
 
   navigate(routeLink, { state: { x: event.clientX, y: event.clientY } });
