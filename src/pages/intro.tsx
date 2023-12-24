@@ -24,7 +24,7 @@ const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
 const Experience = () => {
   const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_BLACK
+    Color.BACKGROUND_WHITE
   );
 
   return (
@@ -41,7 +41,6 @@ const Experience = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-            onClick={() => setTransitionColor(Color.BACKGROUND_WHITE)}
           >
             <CallToAction
               name="Home"
@@ -102,13 +101,13 @@ const Experience = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-          onClick={() => {
+          onClick={() =>
             setTransitionColor(
               isDarkMode
                 ? Color.BACKGROUND_BLACK
                 : Color.BACKGROUND_WHITE_SECONDARY
-            );
-          }}
+            )
+          }
         >
           <CallToAction
             name="Work Experience & Projects"

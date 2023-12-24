@@ -170,10 +170,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
-                onClick={(e) => {
-                  setTransitionColor(Color.BACKGROUND_WHITE);
-                  routeTo(e, Route.Home);
-                }}
+                onClick={(e) => routeTo(e, Route.Home)}
               >
                 Home
               </span>

@@ -33,6 +33,9 @@ const Education = ({ location }: { location: WindowLocation }) => {
   const isIphoneX = useIphoneXDetection();
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
+  const [transitionColor, setTransitionColor] = React.useState(
+    Color.BACKGROUND_BLACK
+  );
 
   return (
     <Container
@@ -41,16 +44,37 @@ const Education = ({ location }: { location: WindowLocation }) => {
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.4 }}
     >
-      <InitialTransition color={Color.BACKGROUND_BLACK} />
+      <InitialTransition color={transitionColor} />
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EDUCATION_TITLE}</Title>
-        <CallToAction
-          name="Contact"
-          forward={true}
-          setHover={setHover}
-          route={Route.Contact}
-          isDarkMode={isDarkMode}
-        />
+        <div className="flex items-center">
+          <div
+            className="hidden sm:block"
+            onClick={() =>
+              setTransitionColor(
+                isDarkMode
+                  ? Color.BACKGROUND_BLACK
+                  : Color.BACKGROUND_WHITE_SECONDARY
+              )
+            }
+          >
+            <CallToAction
+              name="Back"
+              forward={false}
+              setHover={setHover}
+              route={Route.Projects}
+              isDarkMode={isDarkMode}
+            />
+          </div>
+          <span className="hidden sm:block">&nbsp;&nbsp;</span>
+          <CallToAction
+            name="Contact"
+            forward={true}
+            setHover={setHover}
+            route={Route.Contact}
+            isDarkMode={isDarkMode}
+          />
+        </div>
       </Top>
       <Horizontal>
         <Usyd isDarkMode={isDarkMode} />

@@ -46,6 +46,9 @@ const Work = ({ location }: { location: WindowLocation }) => {
   const windowWidth = useWindowSize().width;
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
+  const [transitionColor, setTransitionColor] = React.useState(
+    Color.BACKGROUND_BLACK
+  );
 
   React.useEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -74,11 +77,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.4 }}
     >
-      <InitialTransition
-        color={
-          isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY
-        }
-      />
+      <InitialTransition color={transitionColor} />
       <Horizontal ref={slider} $entryLength={workData.length + 1}>
         <SkillsBlock isDarkMode={isDarkMode} />
         {workData.map((experience: WorkExperience, index: number) => (
@@ -101,13 +100,35 @@ const Work = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EXPERIENCE_TITLE}</Title>
-        <CallToAction
-          name="Projects"
-          forward={true}
-          setHover={setHover}
-          route={Route.Projects}
-          isDarkMode={isDarkMode}
-        />
+        <div className="flex items-center">
+          <div className="hidden sm:block">
+            <CallToAction
+              name="Back"
+              forward={false}
+              setHover={setHover}
+              route={Route.Intro}
+              isDarkMode={isDarkMode}
+            />
+          </div>
+          <span className="hidden sm:block">&nbsp;&nbsp;</span>
+          <div
+            onClick={() =>
+              setTransitionColor(
+                isDarkMode
+                  ? Color.BACKGROUND_BLACK
+                  : Color.BACKGROUND_WHITE_SECONDARY
+              )
+            }
+          >
+            <CallToAction
+              name="Projects"
+              forward={true}
+              setHover={setHover}
+              route={Route.Projects}
+              isDarkMode={isDarkMode}
+            />
+          </div>
+        </div>
       </Top>
       <Cursor
         delay={0.5}

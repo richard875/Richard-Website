@@ -20,6 +20,7 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import Block from "../components/projects/block";
 import MetaTags from "../components/seo/metaTags";
+import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import {
   BLOCK_PADDING,
@@ -45,7 +46,9 @@ const Projects = ({ location }: { location: WindowLocation }) => {
   const windowWidth = useWindowSize().width;
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
-  const [toContact, setToContact] = React.useState(false);
+  const [transitionColor, setTransitionColor] = React.useState(
+    Color.BACKGROUND_BLACK
+  );
 
   React.useEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -74,13 +77,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.4 }}
     >
-      <InitialTransition
-        color={
-          isDarkMode || toContact
-            ? Color.BACKGROUND_BLACK
-            : Color.BACKGROUND_WHITE_SECONDARY
-        }
-      />
+      <InitialTransition color={transitionColor} />
       <Horizontal ref={slider} $entryLength={projectsData.length}>
         {projectsData.map((project: MyProjects, index: number) => (
           <Block
@@ -102,35 +99,57 @@ const Projects = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{PROJECTS_TITLE}</Title>
-        <Cta className="font-secondary-normal" $isDarkMode={isDarkMode}>
+        <div className="flex items-center">
           <div
-            className="underline underline-offset-2"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            onClick={(e) => {
-              setToContact(false);
-              routeTo(e, Route.Education, isDarkMode);
-            }}
+            className="hidden sm:block"
+            onClick={() =>
+              setTransitionColor(
+                isDarkMode
+                  ? Color.BACKGROUND_BLACK
+                  : Color.BACKGROUND_WHITE_SECONDARY
+              )
+            }
           >
-            Education
+            <CallToAction
+              name="Back"
+              forward={false}
+              setHover={setHover}
+              route={Route.Experience}
+              isDarkMode={isDarkMode}
+            />
           </div>
-          <span className="font-primary-normal pt-0.5 md:pt-0">
-            &nbsp;<span className="hidden md:inline-block">&nbsp;</span>
-            <span className="md:hidden">|</span>
-            <span className="hidden md:inline-block">&nbsp;</span>&nbsp;
-          </span>
-          <div
-            className="underline underline-offset-2"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            onClick={(e) => {
-              setToContact(true);
-              routeTo(e, Route.Contact);
-            }}
-          >
-            Contact
-          </div>
-        </Cta>
+          <span className="hidden sm:block">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <Cta className="font-secondary-normal" $isDarkMode={isDarkMode}>
+            <div
+              className="underline underline-offset-2"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              onClick={(e) => {
+                setTransitionColor(
+                  isDarkMode
+                    ? Color.BACKGROUND_BLACK
+                    : Color.BACKGROUND_WHITE_SECONDARY
+                );
+                routeTo(e, Route.Education, isDarkMode);
+              }}
+            >
+              Education
+            </div>
+            <span className="font-primary-normal pt-0.5 md:pt-0">
+              &nbsp;<span className="hidden md:inline-block">&nbsp;</span>
+              <span className="md:hidden">|</span>
+              <span className="hidden md:inline-block">&nbsp;</span>&nbsp;
+            </span>
+            <div
+              className="underline underline-offset-2"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              onClick={(e) => routeTo(e, Route.Contact)}
+            >
+              Contact
+            </div>
+          </Cta>
+        </div>
       </Top>
       <Cursor
         delay={0.5}
