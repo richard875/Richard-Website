@@ -48,6 +48,12 @@ const config: GatsbyConfig = {
     "babel-plugin-styled-components",
     `gatsby-plugin-styled-components`,
     {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: `${process.env.TAG_ID}`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
         trackingIds: [process.env.STREAM_ID, process.env.GA_ID],
