@@ -25,10 +25,13 @@ export const INTRO_TITLE = "G'day";
 export const PROJECTS_TITLE = "Projects";
 export const CONTACT_TITLE = "Contact Me";
 export const EDUCATION_TITLE = "Education";
+export const NOT_FOUND_TITLE = "404 Not Found";
 export const ACKNOWLEDGEMENT_TITLE = "Acknowledgement";
 export const EXPERIENCE_TITLE = "Skills & Work Experience";
 
 // Descriptions
+export const DESCRIPTION_NOT_FOUND =
+  "The page you requested could not be found. Please verify the URL or return to the homepage.";
 export const DESCRIPTION_ACKNOWLEDGEMENT =
   "We acknowledge the Traditional Owners of the land where we work and live. We pay our respects to Elders past, present and emerging.";
 export const DESCRIPTION_CONTACT = `Connect with ${NAME}, ${OCCUPATION} extraordinaire! Reach out via email at ${EMAIL}. Explore ${URL} for his portfolio.`;

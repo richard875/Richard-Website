@@ -13,6 +13,7 @@ import {
   DESCRIPTION_CONTACT,
   DESCRIPTION_PROJECTS,
   DESCRIPTION_EDUCATION,
+  DESCRIPTION_NOT_FOUND,
   DESCRIPTION_EXPERIENCE,
   DESCRIPTION_ACKNOWLEDGEMENT,
 } from "../../constants/meta";
@@ -48,7 +49,7 @@ const MetaTags = ({
       case Route.Contact:
         return DESCRIPTION_CONTACT;
       default:
-        return DESCRIPTION_INDEX;
+        return DESCRIPTION_NOT_FOUND;
     }
   };
 

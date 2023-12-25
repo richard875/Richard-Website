@@ -6,6 +6,7 @@ enum Route {
   Projects = "/projects",
   Education = "/education",
   Contact = "/contact",
+  NotFound = "/404",
 }
 
 export default Route;
