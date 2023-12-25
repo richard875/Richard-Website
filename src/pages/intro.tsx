@@ -2,6 +2,7 @@ import React from "react";
 import type { HeadFC } from "gatsby";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { WindowLocation } from "@reach/router";
 import Color from "../enums/color";
 import layout from "../styles/layout";
 import Route from "../routes/route";
@@ -9,11 +10,14 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
+import Landscape from "../components/global/landscape";
 import CallToAction from "../components/global/callToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import InitialTransition from "../components/transition/InitialTransition";
 import setOverflow from "../helper/setOverflow";
+import usePwaDetection from "../hooks/usePwaDetection";
 import useDarkModeManager from "../hooks/useDarkModeManager";
+import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import { INTRO_TITLE, PAGE_TITLE } from "../constants/meta";
 import { EMAIL, LINKEDIN_URL, GITHUB_URL } from "../constants/meta";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -21,13 +25,17 @@ import MetaImage from "../../static/images/meta/metaImage.jpg";
 const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
 const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
 
-const Experience = () => {
+const Experience = ({ location }: { location: WindowLocation }) => {
+  const isPwa = usePwaDetection(location);
+  const isLandscape = useLandscapeDetection(isPwa);
   const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [transitionColor, setTransitionColor] = React.useState(
     Color.BACKGROUND_WHITE
   );
 
-  return (
+  return isLandscape ? (
+    <Landscape isPwa={isPwa} />
+  ) : (
     <Container
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

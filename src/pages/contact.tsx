@@ -14,6 +14,7 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
+import Landscape from "../components/global/landscape";
 import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import getResume from "../helper/getResume";
@@ -21,6 +22,7 @@ import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
+import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import { RESUME_CONTACT } from "../constants/googleTags";
 import { URL, PAGE_TITLE, CONTACT_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
@@ -34,6 +36,7 @@ const CIRCLE = "../../static/images/indexCircle/circle.png";
 const Contact = ({ location }: { location: WindowLocation }) => {
   const isPwa = usePwaDetection(location);
   const isIphoneX = useIphoneXDetection();
+  const isLandscape = useLandscapeDetection(isPwa);
   const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
@@ -41,17 +44,18 @@ const Contact = ({ location }: { location: WindowLocation }) => {
   );
 
   React.useEffect(() => {
-    const overflow = window.matchMedia("(min-height: 100vh)").matches
-      ? "hidden"
-      : "auto";
-    document.body.style.overflow = overflow;
+    const heightMatcher = "(min-height: 100vh)";
+    const ofl = window.matchMedia(heightMatcher).matches ? "hidden" : "auto";
+    document.body.style.overflow = ofl;
 
     return () => {
       document.body.style.overflow = "auto";
     };
   }, []);
 
-  return (
+  return isLandscape ? (
+    <Landscape isPwa={isPwa} />
+  ) : (
     <Container
       className="font-secondary-normal"
       initial={{ opacity: 0 }}

@@ -13,14 +13,16 @@ import { SITE_TITLE } from "../constants/meta";
 import useWindowSize from "../hooks/useWindowSize";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
+import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import gsapAnimationIndex from "../helper/gsapAnimationIndex";
+import Top from "../components/index/top";
 import Splash from "../components/seo/splash";
+import Bottom from "../components/index/bottom";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
 import MetaTags from "../components/seo/metaTags";
-import Top from "../components/index/top";
-import Bottom from "../components/index/bottom";
+import Landscape from "../components/global/landscape";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -30,17 +32,28 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
   // Hooks and Refs
   const isPwa = usePwaDetection(location);
   const isIphoneX = useIphoneXDetection();
+  const isLandscape = useLandscapeDetection(isPwa);
   const acknowledgementRef = React.useRef(null);
   const [hover, setHover] = React.useState(false);
+  const [isFirstLoad, setIsFirstLoad] = React.useState(true);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = Color.BACKGROUND_WHITE;
+    setIsFirstLoad(false);
+
+    if (!isLandscape) {
+      document.body.style.backgroundColor = Color.BACKGROUND_WHITE;
+      document
+        .querySelector('meta[name="theme-color"]')!
+        .setAttribute("content", Color.BACKGROUND_WHITE);
+      if (isPwa && !isFirstLoad) window.location.reload();
+    }
+
     document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, []);
+  }, [isLandscape]);
 
   // GSAP Animation
   React.useEffect(() => {
@@ -94,6 +107,7 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
         />
       </Container>
       <Loading />
+      {isLandscape && <Landscape isPwa={isPwa} />}
     </>
   );
 };

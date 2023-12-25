@@ -10,27 +10,33 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
+import Landscape from "../components/global/landscape";
 import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
+import usePwaDetection from "../hooks/usePwaDetection";
+import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import { ACKNOWLEDGEMENT_TITLE, PAGE_TITLE } from "../constants/meta";
 
 const CURRENT_PAGE_TITLE = `${ACKNOWLEDGEMENT_TITLE}${PAGE_TITLE}`;
 
 const Acknowledgement = ({ location }: { location: WindowLocation }) => {
+  const isPwa = usePwaDetection(location);
+  const isLandscape = useLandscapeDetection(isPwa);
   const [hover, setHover] = React.useState(false);
 
   React.useEffect(() => {
-    document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
     document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, []);
+  }, [isLandscape]);
 
-  return (
+  return isLandscape ? (
+    <Landscape isPwa={isPwa} />
+  ) : (
     <Container
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
