@@ -215,7 +215,7 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   }
 `;
 
-const Title = styled.p`
+const Title = styled.h1`
   font-size: 20px;
   user-select: none;
 
@@ -262,7 +262,7 @@ const Bottom = styled.div<{
   }
 `;
 
-const Cta = styled.div<{ $isDarkMode: boolean }>`
+const Cta = styled.h2<{ $isDarkMode: boolean }>`
   display: flex;
   user-select: none;
   color: ${({ $isDarkMode }) =>

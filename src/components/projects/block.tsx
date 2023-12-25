@@ -220,7 +220,7 @@ const Video = styled.video<{
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 `;
 
-const ProjectName = styled.p<{ $isDarkMode: boolean }>`
+const ProjectName = styled.h1<{ $isDarkMode: boolean }>`
   font-size: 22px;
   line-height: 30px;
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};

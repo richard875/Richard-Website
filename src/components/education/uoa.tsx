@@ -26,9 +26,9 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
       <UniversityText $isDarkMode={isDarkMode}>
         The University of Auckland
       </UniversityText>
-      <p className="mt-1 mb-9 text-lg xxxl:text-xl">
+      <h2 className="mt-1 mb-9 text-lg xxxl:text-xl">
         Bachelor of Science | Computer Science
-      </p>
+      </h2>
       <SummaryText>
         • Attained exemplary academic performance in Computer Science and
         Mathematics disciplines, excelling in coursework encompassing
@@ -143,7 +143,7 @@ const Logo = styled.img<{ $height: number }>`
   }
 `;
 
-const UniversityText = styled.p<{ $isDarkMode: boolean }>`
+const UniversityText = styled.h1<{ $isDarkMode: boolean }>`
   font-size: 22px;
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
@@ -152,7 +152,7 @@ const UniversityText = styled.p<{ $isDarkMode: boolean }>`
   }
 `;
 
-const SecondaryTitle = styled.p<{ $isDarkMode: boolean }>`
+const SecondaryTitle = styled.h2<{ $isDarkMode: boolean }>`
   font-size: 18px;
   line-height: 28px;
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};

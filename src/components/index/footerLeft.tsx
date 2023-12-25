@@ -20,14 +20,14 @@ const FooterLeft = ({
 
   return (
     <Container ref={acknowledgementRef}>
-      <div
+      <h2
         className="font-secondary-normal select-none"
         onClick={(e) => routeTo(e, Route.Acknowledgement)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
         Acknowledgement of Country
-      </div>
+      </h2>
     </Container>
   );
 };

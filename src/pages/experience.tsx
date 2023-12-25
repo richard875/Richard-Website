@@ -198,7 +198,7 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   }
 `;
 
-const Title = styled.p`
+const Title = styled.h1`
   font-size: 20px;
   user-select: none;
 

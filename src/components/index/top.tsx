@@ -39,7 +39,7 @@ const Top = ({
           {EMAIL}
         </a>
       </div>
-      <div
+      <h1
         ref={projectRef}
         className="font-secondary-normal select-none"
         onMouseEnter={() => setHover(true)}
@@ -47,7 +47,7 @@ const Top = ({
         onClick={(e) => routeTo(e, Route.Contact)}
       >
         CONTACT
-      </div>
+      </h1>
     </Container>
   );
 };

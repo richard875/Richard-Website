@@ -191,7 +191,7 @@ const Left = styled.div`
   }
 `;
 
-const LeftText = styled(motion.div)`
+const LeftText = styled(motion.p)`
   font-size: 6vw;
   line-height: 1.65;
   color: ${Color.WHITE};

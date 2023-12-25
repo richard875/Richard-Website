@@ -163,7 +163,7 @@ const Logo = styled.img<{ $height: number }>`
   }
 `;
 
-const JobTitle = styled.p<{ $isDarkMode: boolean }>`
+const JobTitle = styled.h1<{ $isDarkMode: boolean }>`
   font-size: 22px;
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 
@@ -172,7 +172,7 @@ const JobTitle = styled.p<{ $isDarkMode: boolean }>`
   }
 `;
 
-const Company = styled.p`
+const Company = styled.h2`
   font-size: 22px;
 
   @media ${layout.up.xxxl} {
@@ -180,7 +180,7 @@ const Company = styled.p`
   }
 `;
 
-const Secondary = styled.p`
+const Secondary = styled.h3`
   font-size: 16px;
 
   @media ${layout.up.xxxl} {

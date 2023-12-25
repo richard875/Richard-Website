@@ -72,12 +72,12 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
           </Wrapper>
           <div ref={acknowledgementRef} className="sm:hidden">
             {isIphoneX && isPwa && (
-              <div
+              <h2
                 className="font-secondary-normal mt-2 ml-1 select-none"
                 onClick={(e) => routeTo(e, Route.Acknowledgement)}
               >
                 Acknowledgement of Country
-              </div>
+              </h2>
             )}
           </div>
           <Footer>

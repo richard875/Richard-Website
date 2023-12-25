@@ -48,12 +48,12 @@ const CallToAction = ({
           className="mt-0.5"
         />
       )}
-      <div
+      <h2
         onClick={(e) => routeTo(e, route, isDarkMode)}
         className={`${styleGenerator()} transition-all ease-in-out underline select-none`}
       >
         {name}
-      </div>
+      </h2>
       {forward && (
         <FontAwesomeIcon
           icon={faCircleChevronRight}

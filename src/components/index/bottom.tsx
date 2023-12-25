@@ -42,32 +42,32 @@ const Bottom = ({
   return (
     <Container>
       <SmallText>
-        <div ref={topGreetingRef} className="font-primary-normal mt-4 mb-6">
+        <h3 ref={topGreetingRef} className="font-primary-normal mt-4 mb-6">
           From Australia with Love
-        </div>
+        </h3>
       </SmallText>
       <Name className="font-primary-bold">
-        <div ref={nameRef}>RICHARD LEE</div>
+        <h1 ref={nameRef}>RICHARD LEE</h1>
       </Name>
       <SmallText className="font-primary-normal mt-5 sm:mt-8">
-        <div ref={sub1Ref}>Software Engineer &amp; Creative Designer</div>
+        <h2 ref={sub1Ref}>Software Engineer &amp; Creative Designer</h2>
       </SmallText>
       <SmallText className="font-primary-normal mt-1/2 sm:mt-1">
-        <div ref={sub2Ref}>Sydney, Australia</div>
+        <h2 ref={sub2Ref}>Sydney, Australia</h2>
       </SmallText>
       <Button>
         <div
           ref={contactRef}
           className="flex items-center font-secondary-normal"
         >
-          <div
+          <h1
             onClick={(e) => routeTo(e, Route.Intro)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
           >
             My experience
-          </div>
+          </h1>
           <FontAwesomeIcon
             icon={faCircleChevronRight}
             size={"sm"}
@@ -76,7 +76,7 @@ const Bottom = ({
         </div>
       </Button>
       <Country>
-        <div
+        <h2
           ref={countryRef}
           className="font-primary-normal select-none"
           onClick={(e) => routeTo(e, Route.Acknowledgement)}
@@ -84,7 +84,7 @@ const Bottom = ({
           onMouseLeave={() => setHover(false)}
         >
           {!isIphoneXPwa && "Acknowledgement of Country"}
-        </div>
+        </h2>
       </Country>
       <CircleContainer
         $isIphoneXPwa={isIphoneXPwa}

@@ -26,9 +26,9 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
       <UniversityText $isDarkMode={isDarkMode}>
         The University of Sydney
       </UniversityText>
-      <p className="mt-1 mb-9 text-lg xxxl:text-xl">
+      <h2 className="mt-1 mb-9 text-lg xxxl:text-xl">
         Bachelor of Science (Honours) | Computer Science
-      </p>
+      </h2>
       <SummaryText>
         • I conducted extensive research and authored an
         <Highlight $isDarkMode={isDarkMode}>
@@ -126,7 +126,7 @@ const Logo = styled.img<{ $height: number }>`
   }
 `;
 
-const UniversityText = styled.p<{ $isDarkMode: boolean }>`
+const UniversityText = styled.h1<{ $isDarkMode: boolean }>`
   font-size: 22px;
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 

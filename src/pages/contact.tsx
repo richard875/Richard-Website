@@ -164,8 +164,8 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 }}
               />
             </div>
-            <p className="mb-2 text-lg">{URL}</p>
-            <p>
+            <h2 className="mb-2 text-lg">{URL}</h2>
+            <h2>
               <span
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
@@ -174,8 +174,8 @@ const Contact = ({ location }: { location: WindowLocation }) => {
               >
                 Home
               </span>
-            </p>
-            <p>
+            </h2>
+            <h2>
               <span
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
@@ -187,8 +187,8 @@ const Contact = ({ location }: { location: WindowLocation }) => {
               >
                 Intro
               </span>
-            </p>
-            <p>
+            </h2>
+            <h2>
               <span
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
@@ -204,8 +204,8 @@ const Contact = ({ location }: { location: WindowLocation }) => {
               >
                 Experience
               </span>
-            </p>
-            <p>
+            </h2>
+            <h2>
               <span
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
@@ -221,8 +221,8 @@ const Contact = ({ location }: { location: WindowLocation }) => {
               >
                 Projects
               </span>
-            </p>
-            <p>
+            </h2>
+            <h2>
               <span
                 className="mt-0.5 hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
@@ -238,7 +238,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
               >
                 Education
               </span>
-            </p>
+            </h2>
           </motion.div>
         </Right>
       </Box>
@@ -302,7 +302,7 @@ const Top = styled.div`
   }
 `;
 
-const Title = styled.p`
+const Title = styled.h1`
   font-size: 20px;
   user-select: none;
 
@@ -363,7 +363,7 @@ const Right = styled.div<{ $isIphoneXPwa: boolean }>`
   }
 `;
 
-const ContactText = styled.p`
+const ContactText = styled.h1`
   font-size: 12.5vw;
   line-height: 15vw;
 
@@ -373,7 +373,7 @@ const ContactText = styled.p`
   }
 `;
 
-const ContactEmail = styled.p`
+const ContactEmail = styled.h2`
   font-size: 19px;
 
   @media ${layout.up.sm} {
