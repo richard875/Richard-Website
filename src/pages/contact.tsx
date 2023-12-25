@@ -21,6 +21,7 @@ import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
+import { RESUME_CONTACT } from "../constants/googleTags";
 import { URL, PAGE_TITLE, CONTACT_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import { EMAIL, LINKEDIN_URL, GITHUB_URL, COPYRIGHT } from "../constants/meta";
@@ -97,6 +98,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
           </div>
           <p className="hidden md:block mt-5 md:mt-0">{COPYRIGHT}</p>
           <CircleContainer
+            id={RESUME_CONTACT}
             onClick={(e) => getResume(e)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}

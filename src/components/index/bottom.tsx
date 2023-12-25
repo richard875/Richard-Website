@@ -10,6 +10,7 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import getResume from "../../helper/getResume";
+import { RESUME_INDEX } from "../../constants/googleTags";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";
@@ -87,6 +88,7 @@ const Bottom = ({
         </h2>
       </Country>
       <CircleContainer
+        id={RESUME_INDEX}
         $isIphoneXPwa={isIphoneXPwa}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
