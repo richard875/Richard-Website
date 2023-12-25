@@ -89,9 +89,6 @@ const MetaTags = ({
       <meta property="twitter:keywords" content={SITE_KEYWORDS} />
       <meta property="twitter:image" content={`https://${URL}${MetaImage}`} />
 
-      {/* Favicons */}
-      <link rel="mask-icon" href={favicon} color={Color.BACKGROUND_WHITE} />
-
       {/* Google Rich Results */}
       <script type="application/ld+json">
         {`

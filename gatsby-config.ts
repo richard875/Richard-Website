@@ -70,6 +70,9 @@ const config: GatsbyConfig = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         icon: `static/images/favicon.png`,
+        icon_options: {
+          purpose: `any maskable`,
+        },
       },
     },
     {
@@ -77,6 +80,7 @@ const config: GatsbyConfig = {
       options: {
         name: SITE_TITLE,
         short_name: NAME,
+        lang: "en",
         start_url: `/?${MODE}=${STANDALONE}`,
         background_color: `#BAE6C3`,
         theme_color: Color.BACKGROUND_WHITE,
@@ -84,6 +88,10 @@ const config: GatsbyConfig = {
         icon: `static/images/pwas/pwa-1024.png`,
         include_favicon: false,
         theme_color_in_head: false,
+        cache_busting_mode: "query",
+        icon_options: {
+          purpose: `any maskable`,
+        },
       },
     },
     {
