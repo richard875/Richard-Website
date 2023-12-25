@@ -44,7 +44,6 @@
     "framer-motion": "^10.16.16",
     "gatsby": "^5.12.12",
     "gatsby-plugin-brotli": "^2.1.0",
-    "gatsby-plugin-google-gtag": "^5.12.3",
     "gatsby-plugin-google-tagmanager": "^5.13.0",
     "gatsby-plugin-image": "^3.12.3",
     "gatsby-plugin-manifest": "^5.12.3",

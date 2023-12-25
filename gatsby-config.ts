@@ -53,21 +53,6 @@ const config: GatsbyConfig = {
         id: `${process.env.TAG_ID}`,
       },
     },
-    {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        trackingIds: [process.env.STREAM_ID, process.env.GA_ID],
-        gtagConfig: {
-          anonymize_ip: true,
-          cookie_expires: 0,
-        },
-        pluginConfig: {
-          head: true,
-          respectDNT: false,
-          delayOnRouteUpdate: 0,
-        },
-      },
-    },
     `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
