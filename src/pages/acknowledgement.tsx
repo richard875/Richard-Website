@@ -3,16 +3,14 @@ import { HeadFC } from "gatsby";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { WindowLocation } from "@reach/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import Route from "../routes/route";
-import routeTo from "../routes/routeTo";
 import Color from "../enums/color";
+import Route from "../routes/route";
 import layout from "../styles/layout";
 import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
+import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -58,16 +56,13 @@ const Acknowledgement = ({ location }: { location: WindowLocation }) => {
           animate={{ opacity: 1 }}
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
-          <h1 className="pr-2 hover:pr-3 transition-all ease-in-out underline underline-offset-4">
-            <span
-              onClick={(e) => routeTo(e, Route.Home)}
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-            >
-              Back
-            </span>
-          </h1>
-          <FontAwesomeIcon icon={faCircleChevronRight} className="mt-0.5" />
+          <CallToAction
+            name="Back"
+            forward={true}
+            setHover={setHover}
+            route={Route.Home}
+            fromIntro={true}
+          />
         </Cta>
       </Wrapper>
       <Cursor
