@@ -7,9 +7,9 @@ import layout from "../../styles/layout";
 const Landscape = ({ isPwa }: { isPwa: boolean }) => {
   React.useEffect(() => {
     document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
-    document
-      .querySelector('meta[name="theme-color"]')!
-      .setAttribute("content", Color.BACKGROUND_BLACK);
+
+    const themeTag = document.querySelector('meta[name="theme-color"]');
+    if (themeTag) themeTag.setAttribute("content", Color.BACKGROUND_BLACK);
   }, []);
 
   return (

@@ -42,9 +42,10 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
 
     if (!isLandscape) {
       document.body.style.backgroundColor = Color.BACKGROUND_WHITE;
-      document
-        .querySelector('meta[name="theme-color"]')!
-        .setAttribute("content", Color.BACKGROUND_WHITE);
+
+      const themeTag = document.querySelector('meta[name="theme-color"]');
+      if (themeTag) themeTag.setAttribute("content", Color.BACKGROUND_WHITE);
+
       if (isPwa && !isFirstLoad) window.location.reload();
     }
 
