@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 
 const useLandscapeDetection = (isPwa: boolean) => {
   const [isLandscape, setIsLandscape] = React.useState(false);
@@ -9,7 +10,7 @@ const useLandscapeDetection = (isPwa: boolean) => {
       const orientation = window.orientation;
       if (orientation === undefined) return;
 
-      setIsLandscape(orientation === 90 || orientation === -90);
+      setIsLandscape(isMobile && (orientation === 90 || orientation === -90));
     };
 
     handleOrientationChange();
