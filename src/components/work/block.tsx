@@ -163,7 +163,7 @@ const Logo = styled.img<{ $height: number }>`
   }
 `;
 
-const JobTitle = styled.h1<{ $isDarkMode: boolean }>`
+const JobTitle = styled.h2<{ $isDarkMode: boolean }>`
   font-size: 22px;
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.BLUE : Color.RED)};
 

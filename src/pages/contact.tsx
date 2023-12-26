@@ -64,9 +64,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
     >
       <InitialTransition color={transitionColor} />
       <Top>
-        <Title className="font-secondary-normal">
-          {CONTACT_TITLE}&nbsp;&nbsp;&nbsp;&nbsp;
-        </Title>
+        <Title className="font-secondary-normal">{CONTACT_TITLE}</Title>
         <CallToAction
           name="Home"
           forward={true}
@@ -311,7 +309,7 @@ const Top = styled.div`
   }
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   font-size: 20px;
   user-select: none;
 

@@ -154,7 +154,7 @@ const Logo = styled.img<{ $height: number }>`
   }
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   font-size: 23px;
 
   @media ${layout.up.xxxl} {
@@ -180,7 +180,7 @@ const SkillsTextWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-const SkillsText = styled.h2<{ $isTitle: boolean }>`
+const SkillsText = styled.h3<{ $isTitle: boolean }>`
   font-size: ${({ $isTitle }) => ($isTitle ? "22px" : "18px")};
 
   @media ${layout.up.xxxl} {
@@ -267,7 +267,7 @@ const SecondarySkillsItem = styled.div<{ $isDarkMode: boolean }>`
   }
 `;
 
-const SecondarySkillsText = styled.h2`
+const SecondarySkillsText = styled.h3`
   font-size: 16px;
   padding-top: 4px;
   margin-right: 4px;

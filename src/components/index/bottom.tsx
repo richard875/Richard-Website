@@ -61,14 +61,14 @@ const Bottom = ({
           ref={contactRef}
           className="flex items-center font-secondary-normal"
         >
-          <h1
+          <h2
             onClick={(e) => routeTo(e, Route.Intro)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
           >
             My experience
-          </h1>
+          </h2>
           <FontAwesomeIcon
             icon={faCircleChevronRight}
             size={"sm"}
