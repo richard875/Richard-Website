@@ -18,7 +18,7 @@ export const OCCUPATION = "Software Engineer";
 export const PAGE_TITLE = ` | ${NAME} | ${OCCUPATION}`;
 export const SITE_TITLE = `${NAME} | ${OCCUPATION} | ${REGION}`;
 export const SITE_KEYWORDS =
-  "Richard, Lee, University, Sydney, Software, Engineering, React, Angular, postgresql, AWS, Amazon Web Services, SQL, Database, HTML, CSS, JavaScript, Programming, coding, api, Oracle, Agile, Student, Problem solving, Collaboration, Communication, C#, .NET, ASP, Microsoft, Google, Apple, Computer Science, Science, Australia, Motivated, Linkedin, New South Wales";
+  "RICHARD LEE, Software Engineer, Creative Designer, Sydney, Australia, Qantas, NZ, Government, Agency, Richard, Lee, University, Software, Engineering, React, Angular, postgresql, AWS, Amazon Web Services, SQL, Database, HTML, CSS, JavaScript, Programming, coding, api, Oracle, Agile, Student, Problem solving, Collaboration, Communication, C#, .NET, ASP, Microsoft, Google, Apple, Computer Science, Science, Motivated, Linkedin, New South Wales";
 
 // Page Titles
 export const INTRO_TITLE = "G'day";
