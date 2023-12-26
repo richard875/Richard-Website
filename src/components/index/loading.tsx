@@ -7,7 +7,7 @@ const Loading = () => (
   <Container
     initial={{ opacity: 1 }}
     animate={{ opacity: 0 }}
-    transition={{ delay: 0.7 }}
+    transition={{ delay: 0.9 }}
   ></Container>
 );
 

@@ -101,7 +101,7 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
         </Box>
         <Cursor
           hover={hover}
-          delay={0.5}
+          delay={0.8}
           isBlack={true}
           isIndexPage={true}
           position={location.state! as MousePosition}
