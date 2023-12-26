@@ -31,6 +31,7 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
   const [hover, setHover] = React.useState(false);
 
   React.useEffect(() => {
+    document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
     document.body.style.overflow = "hidden";
 
     return () => {
