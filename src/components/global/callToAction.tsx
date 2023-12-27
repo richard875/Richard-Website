@@ -11,6 +11,8 @@ import routeTo from "../../routes/routeTo";
 
 const CallToAction = ({
   name,
+  tagId,
+  tagIdStartNum,
   forward,
   setHover,
   route,
@@ -18,6 +20,8 @@ const CallToAction = ({
   fromIntro = false,
 }: {
   name: string;
+  tagId: string;
+  tagIdStartNum: number;
   forward: boolean;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   route: Route;
@@ -35,6 +39,7 @@ const CallToAction = ({
 
   return (
     <Cta
+      id={`${tagId}_${tagIdStartNum}`}
       $forward={forward}
       $isDarkMode={fromIntro ? true : isDarkMode}
       className="font-secondary-normal"
@@ -43,12 +48,14 @@ const CallToAction = ({
     >
       {!forward && (
         <FontAwesomeIcon
+          id={`${tagId}_${tagIdStartNum + 1}`}
           icon={faCircleChevronLeft}
           size={fromIntro ? ("" as any) : "sm"}
           className="mt-0.5"
         />
       )}
       <h2
+        id={`${tagId}_${tagIdStartNum + 2}`}
         onClick={(e) => routeTo(e, route, isDarkMode)}
         className={`${styleGenerator()} transition-all ease-in-out underline select-none`}
       >
@@ -56,6 +63,7 @@ const CallToAction = ({
       </h2>
       {forward && (
         <FontAwesomeIcon
+          id={`${tagId}_${tagIdStartNum + 3}`}
           icon={faCircleChevronRight}
           size={fromIntro ? ("" as any) : "sm"}
           className="mt-0.5"

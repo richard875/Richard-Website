@@ -28,6 +28,10 @@ import {
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
 } from "../constants/margin";
+import {
+  EXPERIENCE_TO_INTRO,
+  EXPERIENCE_TO_PROJECTS,
+} from "../constants/googleTags";
 import { EXPERIENCE_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import workData from "../../static/data/work.json";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -101,9 +105,11 @@ const Work = ({ location }: { location: WindowLocation }) => {
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EXPERIENCE_TITLE}</Title>
         <div className="flex items-center">
-          <div className="hidden sm:block">
+          <div id={`${EXPERIENCE_TO_INTRO}_0`} className="hidden sm:block">
             <CallToAction
               name="Back"
+              tagId={EXPERIENCE_TO_INTRO}
+              tagIdStartNum={1}
               forward={false}
               setHover={setHover}
               route={Route.Intro}
@@ -112,6 +118,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
           </div>
           <span className="hidden sm:block">&nbsp;&nbsp;</span>
           <div
+            id={`${EXPERIENCE_TO_PROJECTS}_0`}
             onClick={() =>
               setTransitionColor(
                 isDarkMode
@@ -122,6 +129,8 @@ const Work = ({ location }: { location: WindowLocation }) => {
           >
             <CallToAction
               name="Projects"
+              tagId={EXPERIENCE_TO_PROJECTS}
+              tagIdStartNum={1}
               forward={true}
               setHover={setHover}
               route={Route.Projects}

@@ -76,6 +76,8 @@ const Block = ({
                   <TextSection
                     key={index}
                     isFirst={index == 0}
+                    isExperience={true}
+                    exproName={experience.company}
                     clickableRef={clickableRef}
                     setHover={setHover}
                     setDisplayMedia={setDisplayMedia}

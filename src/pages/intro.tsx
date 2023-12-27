@@ -18,6 +18,15 @@ import setOverflow from "../helper/setOverflow";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
+import {
+  INTRO_SOH,
+  INTRO_EMAIL,
+  INTRO_GITHUB,
+  INTRO_LINKEDIN,
+  INTRO_AUSTRALIA,
+  INTRO_TO_INDEX,
+  INTRO_TO_EXPERIENCE,
+} from "../constants/googleTags";
 import { INTRO_TITLE, PAGE_TITLE } from "../constants/meta";
 import { EMAIL, LINKEDIN_URL, GITHUB_URL } from "../constants/meta";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -43,8 +52,12 @@ const Experience = ({ location }: { location: WindowLocation }) => {
     >
       <InitialTransition color={transitionColor} />
       <Left>
-        <div className="hidden sm:flex w-full items-center justify-between sm:mb-[4vw] lg:mb-[2vw]">
+        <div
+          id={`${INTRO_TO_INDEX}_0`}
+          className="hidden sm:flex w-full items-center justify-between sm:mb-[4vw] lg:mb-[2vw]"
+        >
           <Cta
+            id={`${INTRO_TO_INDEX}_1`}
             className="font-secondary-normal !text-base"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -52,6 +65,8 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           >
             <CallToAction
               name="Home"
+              tagId={INTRO_TO_INDEX}
+              tagIdStartNum={2}
               forward={false}
               setHover={() => {}}
               route={Route.Home}
@@ -69,6 +84,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           G'day, I'm Richard. I'm a Software Engineer and Creative Designer from
           <Sydney>&nbsp;Sydney</Sydney>,
           <Australia
+            id={`${INTRO_AUSTRALIA}_0`}
             onClick={(e) => {
               e.preventDefault();
               window.open(AUSTRALIA, "_blank");
@@ -78,20 +94,31 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           </Australia>
           . On this corner of the internet, you'll find information about me.
           You can connect with me on&nbsp;
-          <LinkedIn>
-            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
+          <LinkedIn id={`${INTRO_LINKEDIN}_0`}>
+            <a
+              id={`${INTRO_LINKEDIN}_1`}
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               LinkedIn
             </a>
           </LinkedIn>
           , check out my repositories on&nbsp;
-          <Github>
-            <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+          <Github id={`${INTRO_GITHUB}_0`}>
+            <a
+              id={`${INTRO_GITHUB}_1`}
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               GitHub
             </a>
           </Github>
           , or reach out to me via&nbsp;
-          <Email>
+          <Email id={`${INTRO_EMAIL}_0`}>
             <a
+              id={`${INTRO_EMAIL}_1`}
               href={`mailto:${EMAIL}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -105,6 +132,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           <Logos />
         </div>
         <Cta
+          id={`${INTRO_TO_EXPERIENCE}_0`}
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -119,6 +147,8 @@ const Experience = ({ location }: { location: WindowLocation }) => {
         >
           <CallToAction
             name="Work Experience & Projects"
+            tagId={INTRO_TO_EXPERIENCE}
+            tagIdStartNum={1}
             forward={true}
             setHover={() => {}}
             route={Route.Experience}
@@ -131,10 +161,12 @@ const Experience = ({ location }: { location: WindowLocation }) => {
         </div>
       </Left>
       <Right
+        id={`${INTRO_SOH}_0`}
         onTouchStart={(e) => setOverflow(e, true)}
         onTouchEnd={(e) => setOverflow(e, false)}
       >
         <motion.div
+          id={`${INTRO_SOH}_1`}
           className="w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

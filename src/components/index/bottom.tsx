@@ -10,7 +10,11 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import getResume from "../../helper/getResume";
-import { INDEX_RESUME } from "../../constants/googleTags";
+import {
+  INDEX_RESUME,
+  INDEX_TO_INTRO,
+  INDEX_TO_ACKNOWLEDGEMENT_MOBILE,
+} from "../../constants/googleTags";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";
@@ -56,33 +60,37 @@ const Bottom = ({
       <SmallText className="font-primary-normal mt-1/2 sm:mt-1">
         <h2 ref={sub2Ref}>Sydney, Australia</h2>
       </SmallText>
-      <Button>
+      <Button id={`${INDEX_TO_INTRO}_0`}>
         <div
           ref={contactRef}
+          id={`${INDEX_TO_INTRO}_1`}
           className="flex items-center font-secondary-normal"
         >
           <h2
+            id={`${INDEX_TO_INTRO}_2`}
+            className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
             onClick={(e) => routeTo(e, Route.Intro)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
           >
             My experience
           </h2>
           <FontAwesomeIcon
+            id={`${INDEX_TO_INTRO}_3`}
             icon={faCircleChevronRight}
-            size={"sm"}
             className="mt-1"
+            size={"sm"}
           />
         </div>
       </Button>
-      <Country>
+      <Country id={`${INDEX_TO_ACKNOWLEDGEMENT_MOBILE}_0`}>
         <h2
           ref={countryRef}
+          id={`${INDEX_TO_ACKNOWLEDGEMENT_MOBILE}_1`}
           className="font-primary-normal select-none"
-          onClick={(e) => routeTo(e, Route.Acknowledgement)}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
+          onClick={(e) => routeTo(e, Route.Acknowledgement)}
         >
           {!isIphoneXPwa && "Acknowledgement of Country"}
         </h2>

@@ -7,6 +7,15 @@ import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import useDarkModeManager from "../../hooks/useDarkModeManager";
 import { URL, LINKEDIN_URL, GITHUB_URL } from "../../constants/meta";
+import {
+  CONTACT_GITHUB,
+  CONTACT_LINKEDIN,
+  CONTACT_TO_INTRO,
+  CONTACT_TO_PROJECTS,
+  CONTACT_TO_EDUCATION,
+  CONTACT_TO_EXPERIENCE,
+  CONTACT_TO_INDEX_BOTTOM,
+} from "../../constants/googleTags";
 
 const Links = ({
   setHover,
@@ -25,6 +34,7 @@ const Links = ({
     >
       <div className="flex mb-4">
         <FontAwesomeIcon
+          id={`${CONTACT_LINKEDIN}_0`}
           size={"2x"}
           icon={faLinkedin}
           className="mr-5"
@@ -36,6 +46,7 @@ const Links = ({
           }}
         />
         <FontAwesomeIcon
+          id={`${CONTACT_GITHUB}_0`}
           size={"2x"}
           icon={faGithub}
           onMouseEnter={() => setHover(true)}
@@ -47,8 +58,9 @@ const Links = ({
         />
       </div>
       <h2 className="mb-2 text-lg">{URL}</h2>
-      <h2>
+      <h2 id={`${CONTACT_TO_INDEX_BOTTOM}_0`}>
         <span
+          id={`${CONTACT_TO_INDEX_BOTTOM}_1`}
           className="mt-0.5 hover:text-gray-400 transition-all"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -57,8 +69,9 @@ const Links = ({
           Home
         </span>
       </h2>
-      <h2>
+      <h2 id={`${CONTACT_TO_INTRO}_0`}>
         <span
+          id={`${CONTACT_TO_INTRO}_1`}
           className="mt-0.5 hover:text-gray-400 transition-all"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -70,8 +83,9 @@ const Links = ({
           Intro
         </span>
       </h2>
-      <h2>
+      <h2 id={`${CONTACT_TO_EXPERIENCE}_0`}>
         <span
+          id={`${CONTACT_TO_EXPERIENCE}_1`}
           className="mt-0.5 hover:text-gray-400 transition-all"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -87,8 +101,9 @@ const Links = ({
           Experience
         </span>
       </h2>
-      <h2>
+      <h2 id={`${CONTACT_TO_PROJECTS}_0`}>
         <span
+          id={`${CONTACT_TO_PROJECTS}_1`}
           className="mt-0.5 hover:text-gray-400 transition-all"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -104,8 +119,9 @@ const Links = ({
           Projects
         </span>
       </h2>
-      <h2>
+      <h2 id={`${CONTACT_TO_EDUCATION}_0`}>
         <span
+          id={`${CONTACT_TO_EDUCATION}_1`}
           className="mt-0.5 hover:text-gray-400 transition-all"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}

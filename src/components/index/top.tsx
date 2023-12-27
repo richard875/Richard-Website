@@ -6,7 +6,7 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import { EMAIL } from "../../constants/meta";
-import { INDEX_EMAIL } from "../../constants/googleTags";
+import { INDEX_EMAIL, INDEX_TO_CONTACT } from "../../constants/googleTags";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const Top = ({
@@ -34,8 +34,8 @@ const Top = ({
       >
         <a
           id={`${INDEX_EMAIL}_1`}
-          className="cursor-none"
           href={`mailto:${EMAIL}`}
+          className="cursor-none"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -44,6 +44,7 @@ const Top = ({
       </div>
       <h2
         ref={projectRef}
+        id={`${INDEX_TO_CONTACT}_0`}
         className="font-secondary-normal select-none"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}

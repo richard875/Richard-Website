@@ -71,6 +71,8 @@ const Block = ({
                     <TextSection
                       key={index}
                       isFirst={index == 0}
+                      isExperience={false}
+                      exproName={project.image}
                       clickableRef={clickableRef}
                       setHover={setHover}
                       setDisplayMedia={setDisplayMedia}

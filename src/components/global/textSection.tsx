@@ -2,9 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
+import { EXPERIENCE_LINK, PROJECTS_LINK } from "../../constants/googleTags";
 
 const TextSection = ({
   isFirst,
+  isExperience,
+  exproName,
   content, // In type JobDescription
   textHighlight, // In type JobDescription
   url, // In type JobDescription
@@ -14,6 +17,8 @@ const TextSection = ({
   isDarkMode,
 }: {
   isFirst: boolean;
+  isExperience: boolean;
+  exproName: string;
   content: string;
   textHighlight?: boolean;
   url?: string;
@@ -39,6 +44,7 @@ const TextSection = ({
       {!!url ? (
         <Link
           ref={clickableRef}
+          id={`${isExperience ? EXPERIENCE_LINK : PROJECTS_LINK}_${exproName}`}
           href={url}
           $isDarkMode={isDarkMode}
           target="_blank"

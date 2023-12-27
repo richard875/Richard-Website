@@ -10,6 +10,7 @@ import Route from "../routes/route";
 import routeTo from "../routes/routeTo";
 import MousePosition from "../types/mousePosition";
 import { SITE_TITLE } from "../constants/meta";
+import { INDEX_TO_ACKNOWLEDGEMENT_IPHONEXPWA } from "../constants/googleTags";
 import useWindowSize from "../hooks/useWindowSize";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
@@ -84,9 +85,14 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
             <Top setHover={setHover} />
             <Bottom setHover={setHover} isIphoneXPwa={isIphoneX && isPwa} />
           </Wrapper>
-          <div ref={acknowledgementRef} className="sm:hidden">
+          <div
+            ref={acknowledgementRef}
+            id={`${INDEX_TO_ACKNOWLEDGEMENT_IPHONEXPWA}_0`}
+            className="sm:hidden"
+          >
             {isIphoneX && isPwa && (
               <h2
+                id={`${INDEX_TO_ACKNOWLEDGEMENT_IPHONEXPWA}_1`}
                 className="font-secondary-normal mt-2 ml-1 select-none"
                 onClick={(e) => routeTo(e, Route.Acknowledgement)}
               >

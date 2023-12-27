@@ -13,14 +13,16 @@ import { Resolution, KernelSize, BlendFunction } from "postprocessing";
 import Mesh from "./mesh";
 import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
+import { INTRO_SOH } from "../../constants/googleTags";
 import { VERTEX_SHADER, FRAGMENT_SHADER } from "./shader";
 
 const SydneyOperaHouse = React.memo(() => (
   <Canvas
+    id={`${INTRO_SOH}_2`}
+    className="canvas"
     shadows
     legacy={true}
     camera={{ position: [0, 2.6, 5], fov: 65 }}
-    className="canvas"
   >
     <Model />
   </Canvas>

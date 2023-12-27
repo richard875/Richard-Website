@@ -5,6 +5,7 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
+import { INDEX_TO_ACKNOWLEDGEMENT_DESKTOP } from "../../constants/googleTags";
 
 const FooterLeft = ({
   setHover,
@@ -19,8 +20,12 @@ const FooterLeft = ({
   }, []);
 
   return (
-    <Container ref={acknowledgementRef}>
+    <Container
+      ref={acknowledgementRef}
+      id={`${INDEX_TO_ACKNOWLEDGEMENT_DESKTOP}_0`}
+    >
       <h2
+        id={`${INDEX_TO_ACKNOWLEDGEMENT_DESKTOP}_1`}
         className="font-secondary-normal select-none"
         onClick={(e) => routeTo(e, Route.Acknowledgement)}
         onMouseEnter={() => setHover(true)}

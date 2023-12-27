@@ -28,6 +28,11 @@ import {
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
 } from "../constants/margin";
+import {
+  PROJECTS_TO_CONTACT,
+  PROJECTS_TO_EDUCATION,
+  PROJECTS_TO_EXPERIENCE,
+} from "../constants/googleTags";
 import { PROJECTS_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import projectsData from "../../static/data/projects.json";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -101,6 +106,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
         <Title className="font-secondary-normal">{PROJECTS_TITLE}</Title>
         <div className="flex items-center">
           <div
+            id={`${PROJECTS_TO_EXPERIENCE}_0`}
             className="hidden sm:block"
             onClick={() =>
               setTransitionColor(
@@ -112,6 +118,8 @@ const Projects = ({ location }: { location: WindowLocation }) => {
           >
             <CallToAction
               name="Back"
+              tagId={PROJECTS_TO_EXPERIENCE}
+              tagIdStartNum={1}
               forward={false}
               setHover={setHover}
               route={Route.Experience}
@@ -120,6 +128,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
           </div>
           <span className="hidden sm:block">&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <Cta
+            id={`${PROJECTS_TO_EDUCATION}_0`}
             className="font-secondary-normal underline underline-offset-2"
             $isDarkMode={isDarkMode}
             onMouseEnter={() => setHover(true)}
@@ -136,9 +145,14 @@ const Projects = ({ location }: { location: WindowLocation }) => {
             Education
           </Cta>
           <span>&nbsp;&nbsp;</span>
-          <div onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}>
+          <div
+            id={`${PROJECTS_TO_CONTACT}_0`}
+            onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
+          >
             <CallToAction
               name="Contact"
+              tagId={PROJECTS_TO_CONTACT}
+              tagIdStartNum={1}
               forward={true}
               setHover={setHover}
               route={Route.Contact}

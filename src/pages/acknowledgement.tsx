@@ -17,6 +17,7 @@ import MousePosition from "../types/mousePosition";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
+import { ACKNOWLEDGEMENT_TO_INDEX } from "../constants/googleTags";
 import { ACKNOWLEDGEMENT_TITLE, PAGE_TITLE } from "../constants/meta";
 
 const CURRENT_PAGE_TITLE = `${ACKNOWLEDGEMENT_TITLE}${PAGE_TITLE}`;
@@ -58,6 +59,7 @@ const Acknowledgement = ({ location }: { location: WindowLocation }) => {
           this land.
         </AcknowledgementText>
         <Cta
+          id={`${ACKNOWLEDGEMENT_TO_INDEX}_0`}
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -65,6 +67,8 @@ const Acknowledgement = ({ location }: { location: WindowLocation }) => {
         >
           <CallToAction
             name="Back"
+            tagId={ACKNOWLEDGEMENT_TO_INDEX}
+            tagIdStartNum={1}
             forward={true}
             setHover={setHover}
             route={Route.Home}

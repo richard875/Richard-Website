@@ -20,6 +20,7 @@ import usePwaDetection from "../hooks/usePwaDetection";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
+import { CONTACT_EMAIL, CONTACT_TO_INDEX_TOP } from "../constants/googleTags";
 import { PAGE_TITLE, CONTACT_TITLE, EMAIL, COPYRIGHT } from "../constants/meta";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
@@ -58,6 +59,8 @@ const Contact = ({ location }: { location: WindowLocation }) => {
         <Title className="font-secondary-normal">{CONTACT_TITLE}</Title>
         <CallToAction
           name="Home"
+          tagId={CONTACT_TO_INDEX_TOP}
+          tagIdStartNum={0}
           forward={true}
           setHover={setHover}
           route={Route.Home}
@@ -74,11 +77,13 @@ const Contact = ({ location }: { location: WindowLocation }) => {
             <ContactEmail className="pt-3 md:pt-12">
               Email me at:&nbsp;
               <span
+                id={`${CONTACT_EMAIL}_0`}
                 className="underline decoration-dotted hover:text-gray-400 transition-all"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
               >
                 <a
+                  id={`${CONTACT_EMAIL}_1`}
                   href={`mailto:${EMAIL}`}
                   target="_blank"
                   className="cursor-none"

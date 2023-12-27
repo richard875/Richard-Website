@@ -20,6 +20,10 @@ import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
+import {
+  EDUCATION_TO_CONTACT,
+  EDUCATION_TO_PROJECTS,
+} from "../constants/googleTags";
 import { EDUCATION_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -49,6 +53,7 @@ const Education = ({ location }: { location: WindowLocation }) => {
         <Title className="font-secondary-normal">{EDUCATION_TITLE}</Title>
         <div className="flex items-center">
           <div
+            id={`${EDUCATION_TO_PROJECTS}_0`}
             className="hidden sm:block"
             onClick={() =>
               setTransitionColor(
@@ -60,6 +65,8 @@ const Education = ({ location }: { location: WindowLocation }) => {
           >
             <CallToAction
               name="Back"
+              tagId={EDUCATION_TO_PROJECTS}
+              tagIdStartNum={1}
               forward={false}
               setHover={setHover}
               route={Route.Projects}
@@ -69,6 +76,8 @@ const Education = ({ location }: { location: WindowLocation }) => {
           <span className="hidden sm:block">&nbsp;&nbsp;</span>
           <CallToAction
             name="Contact"
+            tagId={EDUCATION_TO_CONTACT}
+            tagIdStartNum={0}
             forward={true}
             setHover={setHover}
             route={Route.Contact}
