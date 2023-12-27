@@ -10,7 +10,7 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import getResume from "../../helper/getResume";
-import { RESUME_INDEX } from "../../constants/googleTags";
+import { INDEX_RESUME } from "../../constants/googleTags";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";
@@ -88,19 +88,21 @@ const Bottom = ({
         </h2>
       </Country>
       <CircleContainer
-        id={RESUME_INDEX}
+        id={`${INDEX_RESUME}_0`}
         $isIphoneXPwa={isIphoneXPwa}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => getResume(e)}
       >
         <motion.div
+          id={`${INDEX_RESUME}_1`}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 2, delay: 1.5, ease: [0, 0.71, 0.2, 1.01] }}
         >
-          <Circle>
+          <Circle id={`${INDEX_RESUME}_2`}>
             <StaticImage
+              id={`${INDEX_RESUME}_3`}
               alt="Resume Circle"
               src={CIRCLE}
               className="relative h-5/6 w-5/6"
@@ -108,6 +110,7 @@ const Bottom = ({
             />
           </Circle>
           <StaticImage
+            id={`${INDEX_RESUME}_4`}
             alt="Resume Circle"
             src={ARROW}
             className="!absolute !left-[42.5px] !bottom-[56px] sm:!left-[50px] sm:!bottom-[65px] lg:!left-[55px] lg:!bottom-[72px] w-[45px] sm:w-[50px] lg:w-[60px]"
