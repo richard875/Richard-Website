@@ -88,6 +88,7 @@ const Block = ({
         {!!project.linkUrl && (
           <ProjectLink
             url={project.linkUrl!}
+            name={project.image}
             setHover={setHover}
             isDarkMode={isDarkMode}
           />
