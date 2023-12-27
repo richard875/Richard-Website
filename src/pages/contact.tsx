@@ -23,7 +23,7 @@ import usePwaDetection from "../hooks/usePwaDetection";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
-import { RESUME_CONTACT } from "../constants/googleTags";
+import { CONTACT_RESUME } from "../constants/googleTags";
 import { URL, PAGE_TITLE, CONTACT_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import { EMAIL, LINKEDIN_URL, GITHUB_URL, COPYRIGHT } from "../constants/meta";
@@ -100,13 +100,13 @@ const Contact = ({ location }: { location: WindowLocation }) => {
           </div>
           <p className="hidden md:block mt-5 md:mt-0">{COPYRIGHT}</p>
           <CircleContainer
-            id={`${RESUME_CONTACT}_0`}
+            id={`${CONTACT_RESUME}_0`}
             onClick={(e) => getResume(e)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
             <motion.div
-              id={`${RESUME_CONTACT}_1`}
+              id={`${CONTACT_RESUME}_1`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
@@ -115,9 +115,9 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 ease: [0, 0.71, 0.2, 1.01],
               }}
             >
-              <Circle id={`${RESUME_CONTACT}_2`}>
+              <Circle id={`${CONTACT_RESUME}_2`}>
                 <StaticImage
-                  id={`${RESUME_CONTACT}_3`}
+                  id={`${CONTACT_RESUME}_3`}
                   alt="Resume Circle"
                   src={CIRCLE}
                   className="relative h-5/6 w-5/6"
@@ -125,7 +125,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 />
               </Circle>
               <StaticImage
-                id={`${RESUME_CONTACT}_4`}
+                id={`${CONTACT_RESUME}_4`}
                 alt="Resume Circle"
                 src={ARROW}
                 className="!relative md:!absolute !w-[60px] md:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] md:!left-[64px] md:!bottom-[84.5px] lg:!left-[85px] lg:!bottom-[108px]"
