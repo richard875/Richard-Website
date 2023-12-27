@@ -3,41 +3,32 @@ import { HeadFC } from "gatsby";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { WindowLocation } from "@reach/router";
-import { StaticImage } from "gatsby-plugin-image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
-import Route from "../routes/route";
-import routeTo from "../routes/routeTo";
 import Color from "../enums/color";
+import Route from "../routes/route";
 import layout from "../styles/layout";
 import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
+import Links from "../components/contact/links";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import CallToAction from "../components/global/callToAction";
+import ResumeCircle from "../components/contact/resumeCircle";
 import InitialTransition from "../components/transition/InitialTransition";
-import getResume from "../helper/getResume";
 import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
-import useDarkModeManager from "../hooks/useDarkModeManager";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
-import { CONTACT_RESUME } from "../constants/googleTags";
-import { URL, PAGE_TITLE, CONTACT_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
-import { EMAIL, LINKEDIN_URL, GITHUB_URL, COPYRIGHT } from "../constants/meta";
+import { PAGE_TITLE, CONTACT_TITLE, EMAIL, COPYRIGHT } from "../constants/meta";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const CURRENT_PAGE_TITLE = `${CONTACT_TITLE}${PAGE_TITLE}`;
-const ARROW = "../../static/images/indexCircle/arrow.svg";
-const CIRCLE = "../../static/images/indexCircle/circle.png";
 
 const Contact = ({ location }: { location: WindowLocation }) => {
   const isPwa = usePwaDetection(location);
   const isIphoneX = useIphoneXDetection();
   const isLandscape = useLandscapeDetection(isPwa);
-  const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
     Color.BACKGROUND_WHITE
@@ -98,43 +89,16 @@ const Contact = ({ location }: { location: WindowLocation }) => {
               </span>
             </ContactEmail>
           </div>
-          <p className="hidden md:block mt-5 md:mt-0">{COPYRIGHT}</p>
-          <CircleContainer
-            id={`${CONTACT_RESUME}_0`}
-            onClick={(e) => getResume(e)}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            <motion.div
-              id={`${CONTACT_RESUME}_1`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                duration: 0.4,
-                delay: 0.3,
-                ease: [0, 0.71, 0.2, 1.01],
-              }}
-            >
-              <Circle id={`${CONTACT_RESUME}_2`}>
-                <StaticImage
-                  id={`${CONTACT_RESUME}_3`}
-                  alt="Resume Circle"
-                  src={CIRCLE}
-                  className="relative h-5/6 w-5/6"
-                  placeholder="none"
-                />
-              </Circle>
-              <StaticImage
-                id={`${CONTACT_RESUME}_4`}
-                alt="Resume Circle"
-                src={ARROW}
-                className="!relative md:!absolute !w-[60px] md:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] md:!left-[64px] md:!bottom-[84.5px] lg:!left-[85px] lg:!bottom-[108px]"
-                placeholder="none"
-              />
-            </motion.div>
-          </CircleContainer>
+          <p className="hidden md:block">{COPYRIGHT}</p>
+          <div className="md:hidden">
+            <ResumeCircle setHover={setHover} />
+          </div>
         </Left>
         <Right $isIphoneXPwa={isIphoneX && isPwa}>
+          <div className="hidden md:block">
+            <ResumeCircle setHover={setHover} />
+          </div>
+          <Links setHover={setHover} setTransitionColor={setTransitionColor} />
           <motion.div
             className="md:hidden"
             initial={{ opacity: 0 }}
@@ -142,110 +106,6 @@ const Contact = ({ location }: { location: WindowLocation }) => {
             transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
           >
             <p className="mt-5 md:mt-0">{COPYRIGHT}</p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
-          >
-            <div className="flex mb-4">
-              <FontAwesomeIcon
-                size={"2x"}
-                icon={faLinkedin}
-                className="mr-5"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(LINKEDIN_URL, "_blank");
-                }}
-              />
-              <FontAwesomeIcon
-                size={"2x"}
-                icon={faGithub}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(GITHUB_URL, "_blank");
-                }}
-              />
-            </div>
-            <h2 className="mb-2 text-lg">{URL}</h2>
-            <h2>
-              <span
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => routeTo(e, Route.Home)}
-              >
-                Home
-              </span>
-            </h2>
-            <h2>
-              <span
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => {
-                  setTransitionColor(Color.BACKGROUND_BLACK);
-                  routeTo(e, Route.Intro);
-                }}
-              >
-                Intro
-              </span>
-            </h2>
-            <h2>
-              <span
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => {
-                  setTransitionColor(
-                    isDarkMode
-                      ? Color.BACKGROUND_BLACK
-                      : Color.BACKGROUND_WHITE_SECONDARY
-                  );
-                  routeTo(e, Route.Experience, isDarkMode);
-                }}
-              >
-                Experience
-              </span>
-            </h2>
-            <h2>
-              <span
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => {
-                  setTransitionColor(
-                    isDarkMode
-                      ? Color.BACKGROUND_BLACK
-                      : Color.BACKGROUND_WHITE_SECONDARY
-                  );
-                  routeTo(e, Route.Projects, isDarkMode);
-                }}
-              >
-                Projects
-              </span>
-            </h2>
-            <h2>
-              <span
-                className="mt-0.5 hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={(e) => {
-                  setTransitionColor(
-                    isDarkMode
-                      ? Color.BACKGROUND_BLACK
-                      : Color.BACKGROUND_WHITE_SECONDARY
-                  );
-                  routeTo(e, Route.Education, isDarkMode);
-                }}
-              >
-                Education
-              </span>
-            </h2>
           </motion.div>
         </Right>
       </Box>
@@ -279,12 +139,6 @@ const Container = styled(motion.div)`
   color: ${Color.WHITE};
   background-color: ${Color.BACKGROUND_BLACK};
   cursor: none;
-
-  @media ${layout.down.md} {
-    @media screen and (max-height: 100vh) {
-      padding-bottom: 20px;
-    }
-  }
 `;
 
 const Top = styled.div`
@@ -324,10 +178,11 @@ const Box = styled.div`
   padding-right: 20px;
 
   @media ${layout.down.md} {
-    display: flex;
-    flex-direction: column;
     @media screen and (min-height: 100vh) {
       height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
   }
 
@@ -347,26 +202,27 @@ const Box = styled.div`
 `;
 
 const Left = styled(motion.div)`
-  flex: 0.65;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @media ${layout.up.md} {
+    flex: 0.65;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 `;
 
 const Right = styled.div<{ $isIphoneXPwa: boolean }>`
-  flex: 0.35;
-  display: flex;
-  flex-direction: column-reverse;
+  padding-top: 30px;
 
   @media ${layout.up.md} {
+    flex: 0.35;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
   }
 
   @media ${layout.down.md} {
-    flex: 1;
-    align-items: flex-start;
-    margin-top: 30px;
-    padding-bottom: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "30px" : "20px")};
+    padding-bottom: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "30px" : "10px")};
   }
 `;
 
@@ -397,64 +253,5 @@ const ContactEmail = styled.h2`
 
   @media ${layout.up.xxxl} {
     font-size: 30px;
-  }
-`;
-
-const Circle = styled.div`
-  width: 170px;
-  height: 170px;
-  border-radius: 199px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid ${Color.BLACK};
-  background: ${Color.BRIGHT_GREEN};
-  animation: rotation 12s infinite linear;
-
-  @keyframes rotation {
-    100% {
-      transform: rotate(-360deg);
-    }
-  }
-
-  @media ${layout.up.md} {
-    width: 200px;
-    height: 200px;
-  }
-
-  @media ${layout.up.lg} {
-    width: 250px;
-    height: 250px;
-  }
-`;
-
-const CircleContainer = styled.div`
-  width: 170px;
-  height: 170px;
-  user-select: none;
-  border-radius: 99px;
-  transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
-
-  &:hover {
-    transform: rotate(-170deg) scale(1.07);
-  }
-
-  @media ${layout.down.md} {
-    margin-top: 30px;
-  }
-
-  @media ${layout.up.md} {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    bottom: 45vh;
-    right: 15vw;
-  }
-
-  @media ${layout.up.lg} {
-    width: 250px;
-    height: 250px;
-    bottom: 50vh;
-    right: 15vw;
   }
 `;
