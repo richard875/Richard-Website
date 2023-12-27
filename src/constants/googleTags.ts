@@ -25,11 +25,12 @@ export const INTRO_TO_INDEX = "intro_to_index";
 export const INTRO_TO_EXPERIENCE = "intro_to_experience";
 
 // Experience Page
-export const EXPERIENCE_LINK = "experience_link";
+export const EXPERIENCE_MEDIA = "experience_media";
 export const EXPERIENCE_TO_INTRO = "experience_to_intro";
 export const EXPERIENCE_TO_PROJECTS = "experience_to_projects";
 
 // Projects Page
+export const PROJECTS_MEDIA = "projects_media";
 export const PROJECTS_LINK = "projects_link";
 export const PROJECTS_TO_EXPERIENCE = "projects_to_experience";
 export const PROJECTS_TO_EDUCATION = "projects_to_education";

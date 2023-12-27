@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { EXPERIENCE_LINK, PROJECTS_LINK } from "../../constants/googleTags";
+import { EXPERIENCE_MEDIA, PROJECTS_MEDIA } from "../../constants/googleTags";
 
 const TextSection = ({
   isFirst,
@@ -44,7 +44,9 @@ const TextSection = ({
       {!!url ? (
         <Link
           ref={clickableRef}
-          id={`${isExperience ? EXPERIENCE_LINK : PROJECTS_LINK}_${exproName}`}
+          id={`${
+            isExperience ? EXPERIENCE_MEDIA : PROJECTS_MEDIA
+          }_${exproName}_0`}
           href={url}
           $isDarkMode={isDarkMode}
           target="_blank"
