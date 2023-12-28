@@ -1,24 +1,18 @@
 import React from "react";
 import gsap from "gsap";
-import { motion } from "framer-motion";
 import styled from "styled-components";
-import { StaticImage } from "gatsby-plugin-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import getResume from "../../helper/getResume";
+import ResumeCircle from "../global/resumeCircle";
 import {
-  INDEX_RESUME,
   INDEX_TO_INTRO,
   INDEX_TO_ACKNOWLEDGEMENT_MOBILE,
 } from "../../constants/googleTags";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
-
-const ARROW = "../../../static/images/indexCircle/arrow.svg";
-const CIRCLE = "../../../static/images/indexCircle/circle.png";
 
 const Bottom = ({
   setHover,
@@ -95,37 +89,7 @@ const Bottom = ({
           {!isIphoneXPwa && "Acknowledgement of Country"}
         </h2>
       </Country>
-      <CircleContainer
-        id={`${INDEX_RESUME}_0`}
-        $isIphoneXPwa={isIphoneXPwa}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        onClick={(e) => getResume(e)}
-      >
-        <motion.div
-          id={`${INDEX_RESUME}_1`}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 2, delay: 1.5, ease: [0, 0.71, 0.2, 1.01] }}
-        >
-          <Circle id={`${INDEX_RESUME}_2`}>
-            <StaticImage
-              id={`${INDEX_RESUME}_3`}
-              alt="Resume Circle"
-              src={CIRCLE}
-              className="relative h-5/6 w-5/6"
-              placeholder="none"
-            />
-          </Circle>
-          <StaticImage
-            id={`${INDEX_RESUME}_4`}
-            alt="Resume Circle"
-            src={ARROW}
-            className="!absolute !left-[42.5px] !bottom-[56px] sm:!left-[50px] sm:!bottom-[65px] lg:!left-[55px] lg:!bottom-[72px] w-[45px] sm:w-[50px] lg:w-[60px]"
-            placeholder="none"
-          />
-        </motion.div>
-      </CircleContainer>
+      <ResumeCircle isHome={true} setHover={setHover} />
     </Container>
   );
 };
@@ -215,61 +179,5 @@ const Country = styled.div`
 
   @media ${layout.up.lg} {
     display: none;
-  }
-`;
-
-const Circle = styled.div`
-  width: 130px;
-  height: 130px;
-  border-radius: 99px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid ${Color.BLACK};
-  background: ${Color.BRIGHT_GREEN};
-  animation: rotation 12s infinite linear;
-
-  @keyframes rotation {
-    100% {
-      transform: rotate(-360deg);
-    }
-  }
-
-  @media ${layout.up.sm} {
-    width: 150px;
-    height: 150px;
-  }
-
-  @media ${layout.up.lg} {
-    width: 170px;
-    height: 170px;
-  }
-`;
-
-const CircleContainer = styled.span<{ $isIphoneXPwa: boolean }>`
-  position: absolute;
-  border-radius: 99px;
-  bottom: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "5vh" : "10vh")};
-  right: ${({ $isIphoneXPwa }) => ($isIphoneXPwa ? "35px" : "45px")};
-  transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
-  user-select: none;
-
-  &:hover {
-    transform: rotate(-170deg) scale(1.07);
-  }
-
-  @media ${layout.up.sm} {
-    bottom: 10vh;
-    right: 75px;
-  }
-
-  @media ${layout.up.lg} {
-    bottom: 12vh;
-    right: 115px;
-  }
-
-  @media ${layout.up.xxl} {
-    bottom: 15vh;
-    right: 15vh;
   }
 `;

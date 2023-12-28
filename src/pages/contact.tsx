@@ -96,12 +96,12 @@ const Contact = ({ location }: { location: WindowLocation }) => {
           </div>
           <p className="hidden md:block">{COPYRIGHT}</p>
           <div className="md:hidden">
-            <ResumeCircle setHover={setHover} />
+            <ResumeCircle isHome={false} setHover={setHover} />
           </div>
         </Left>
         <Right $isIphoneXPwa={isIphoneX && isPwa}>
           <div className="hidden md:block">
-            <ResumeCircle setHover={setHover} />
+            <ResumeCircle isHome={false} setHover={setHover} />
           </div>
           <Links setHover={setHover} setTransitionColor={setTransitionColor} />
           <motion.div
