@@ -42,9 +42,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
     Color.BACKGROUND_WHITE
   );
 
-  return isLandscape ? (
-    <Landscape isPwa={isPwa} />
-  ) : (
+  return (
     <Container
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
