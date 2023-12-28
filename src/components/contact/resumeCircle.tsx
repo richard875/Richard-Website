@@ -5,31 +5,42 @@ import { StaticImage } from "gatsby-plugin-image";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import getResume from "../../helper/getResume";
-import { CONTACT_RESUME } from "../../constants/googleTags";
+import { INDEX_RESUME, CONTACT_RESUME } from "../../constants/googleTags";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";
 const CIRCLE = "../../../static/images/indexCircle/circle.png";
 
 const ResumeCircle = ({
+  isHome,
   setHover,
 }: {
+  isHome: boolean;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
-}) => (
-  <CircleContainer
-    id={`${CONTACT_RESUME}_0`}
-    onClick={(e) => getResume(e)}
-    onMouseEnter={() => setHover(true)}
-    onMouseLeave={() => setHover(false)}
-  >
-    <motion.div
-      id={`${CONTACT_RESUME}_1`}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4, delay: 0.3, ease: [0, 0.71, 0.2, 1.01] }}
+}) => {
+  const googleTag = isHome ? INDEX_RESUME : CONTACT_RESUME;
+  const motionInitial = isHome ? { opacity: 0, scale: 0.5 } : { opacity: 0 };
+  const motionAnimate = isHome ? { opacity: 1, scale: 1 } : { opacity: 1 };
+  const motionTransition = isHome
+    ? { duration: 2, delay: 1.5, ease: [0, 0.71, 0.2, 1.01] }
+    : { duration: 0.4, delay: 0.3, ease: [0, 0.71, 0.2, 1.01] };
+  const arrowClass = isHome
+    ? "!relative !w-[45px] sm:!w-[50px] lg:!w-[60px] !left-[42px] !bottom-[75px] sm:!left-[50px] sm:!bottom-[86px] lg:!left-[55px] lg:!bottom-[98px]"
+    : "!relative !w-[60px] md:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] md:!left-[64px] md:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]";
+
+  return (
+    <CircleContainer
+      id={`${googleTag}_0`}
+      $isHome={isHome}
+      initial={motionInitial}
+      animate={motionAnimate}
+      transition={motionTransition}
+      onClick={(e) => getResume(e)}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
-      <Circle id={`${CONTACT_RESUME}_2`}>
+      <Circle id={`${googleTag}_1`}>
         <StaticImage
-          id={`${CONTACT_RESUME}_3`}
+          id={`${googleTag}_2`}
           alt="Resume Circle"
           src={CIRCLE}
           className="relative h-5/6 w-5/6"
@@ -37,47 +48,43 @@ const ResumeCircle = ({
         />
       </Circle>
       <StaticImage
-        id={`${CONTACT_RESUME}_4`}
+        id={`${googleTag}_3`}
         alt="Resume Circle"
         src={ARROW}
-        className="!relative !w-[60px] md:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] md:!left-[64px] md:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]"
+        className={arrowClass}
         placeholder="none"
       />
-    </motion.div>
-  </CircleContainer>
-);
+    </CircleContainer>
+  );
+};
 
 export default ResumeCircle;
 
-const CircleContainer = styled.div`
-  width: 170px;
-  height: 170px;
+const CircleContainer = styled(motion.div)<{ $isHome: boolean }>`
+  width: ${({ $isHome }) => ($isHome ? "130px" : "170px")};
+  height: ${({ $isHome }) => ($isHome ? "130px" : "170px")};
   user-select: none;
   border-radius: 99px;
   transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
 
   &:hover {
-    transform: rotate(-170deg) scale(1.07);
-  }
-
-  @media ${layout.down.md} {
-    margin-top: 30px;
+    transform: rotate(-170deg) scale(1.07) !important;
   }
 
   @media ${layout.up.md} {
-    width: 200px;
-    height: 200px;
+    width: ${({ $isHome }) => ($isHome ? "150px" : "200px")};
+    height: ${({ $isHome }) => ($isHome ? "150px" : "200px")};
   }
 
   @media ${layout.up.lg} {
-    width: 250px;
-    height: 250px;
+    width: ${({ $isHome }) => ($isHome ? "170px" : "250px")};
+    height: ${({ $isHome }) => ($isHome ? "170px" : "250px")};
   }
 `;
 
 const Circle = styled.div`
-  width: 170px;
-  height: 170px;
+  width: 100%;
+  height: 100%;
   border-radius: 199px;
   display: flex;
   align-items: center;
@@ -90,15 +97,5 @@ const Circle = styled.div`
     100% {
       transform: rotate(-360deg);
     }
-  }
-
-  @media ${layout.up.md} {
-    width: 200px;
-    height: 200px;
-  }
-
-  @media ${layout.up.lg} {
-    width: 250px;
-    height: 250px;
   }
 `;
