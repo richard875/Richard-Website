@@ -51,3 +51,6 @@ export const CONTACT_TO_EDUCATION = "contact_to_education";
 export const CONTACT_TO_INDEX_TOP = "contact_to_index_top";
 export const CONTACT_TO_EXPERIENCE = "contact_to_experience";
 export const CONTACT_TO_INDEX_BOTTOM = "contact_to_index_bottom";
+
+// Not Found Page
+export const NOT_FOUND_TO_INDEX = "not_found_to_index";

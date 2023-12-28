@@ -22,6 +22,7 @@ import {
   NOT_FOUND_TITLE,
   DESCRIPTION_NOT_FOUND,
 } from "../constants/meta";
+import { NOT_FOUND_TO_INDEX } from "../constants/googleTags";
 
 const CURRENT_PAGE_TITLE = `${NOT_FOUND_TITLE}${PAGE_TITLE}`;
 
@@ -58,6 +59,7 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
           {DESCRIPTION_NOT_FOUND}
         </NotFoundText>
         <Cta
+          id={`${NOT_FOUND_TO_INDEX}_0`}
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -65,6 +67,8 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
         >
           <CallToAction
             name="Home"
+            tagId={NOT_FOUND_TO_INDEX}
+            tagIdStartNum={1}
             forward={true}
             setHover={setHover}
             route={Route.Home}
