@@ -108,7 +108,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 15px 12px;
+  padding: 15px 12px 5px 12px;
   background: linear-gradient(90deg, #f55591 0%, #f9c41a 100%);
 
   @media ${layout.up.sm} {
