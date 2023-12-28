@@ -13,7 +13,7 @@ import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import CallToAction from "../components/global/callToAction";
-import ResumeCircle from "../components/contact/resumeCircle";
+import ResumeCircle from "../components/global/resumeCircle";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
