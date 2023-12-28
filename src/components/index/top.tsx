@@ -81,7 +81,7 @@ const Container = styled.div`
   }
 
   @media ${layout.up.xxl} {
-    height: 9vh;
+    height: 85px;
     font-size: 30px;
   }
 `;
