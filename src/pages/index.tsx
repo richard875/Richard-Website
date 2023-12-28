@@ -144,7 +144,9 @@ const Container = styled(motion.div)`
 
 const Box = styled.div<{ $isIphoneXPwa: boolean }>`
   width: calc(100vw - 30px);
-  height: calc(100dvh - 30px);
+  height: calc(100dvh - 85px);
+  height: ${({ $isIphoneXPwa }) =>
+    `calc(100dvh - ${($isIphoneXPwa ? 85 : 30) + "px"})`};
 
   @media ${layout.down.sm} {
     margin-top: 15px;
