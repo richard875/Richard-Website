@@ -35,18 +35,13 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
   const isLandscape = useLandscapeDetection(isPwa);
   const acknowledgementRef = React.useRef(null);
   const [hover, setHover] = React.useState(false);
-  const [isFirstLoad, setIsFirstLoad] = React.useState(true);
 
   React.useEffect(() => {
-    setIsFirstLoad(false);
-
     if (!isLandscape) {
       document.body.style.backgroundColor = Color.BACKGROUND_WHITE;
 
       const themeTag = document.querySelector('meta[name="theme-color"]');
       if (themeTag) themeTag.setAttribute("content", Color.BACKGROUND_WHITE);
-
-      if (isPwa && !isFirstLoad) window.location.reload();
     }
 
     document.body.style.overflow = "hidden";
