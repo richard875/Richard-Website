@@ -24,7 +24,7 @@ const Inspector = ({ children }: { children: React.JSX.Element }) => {
   useFrame(() => api.start({ rot: [0, rot.get()[1] - 0.02, 0] }));
 
   return (
-    <a.mesh {...bind()} rotation={rot} scale={scale}>
+    <a.mesh {...(bind() as any)} rotation={rot} scale={scale}>
       {children}
     </a.mesh>
   );
