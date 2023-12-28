@@ -95,7 +95,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
             </ContactEmail>
           </div>
           <p className="hidden md:block">{COPYRIGHT}</p>
-          <div className="md:hidden">
+          <div className="mt-8 md:hidden">
             <ResumeCircle isHome={false} setHover={setHover} />
           </div>
         </Left>
