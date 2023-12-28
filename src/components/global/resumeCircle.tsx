@@ -25,7 +25,7 @@ const ResumeCircle = ({
     : { duration: 0.4, delay: 0.3, ease: [0, 0.71, 0.2, 1.01] };
   const arrowClass = isHome
     ? "!relative !w-[45px] sm:!w-[50px] lg:!w-[60px] !left-[42px] !bottom-[75px] sm:!left-[50px] sm:!bottom-[86px] lg:!left-[55px] lg:!bottom-[98px]"
-    : "!relative !w-[60px] md:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] md:!left-[64px] md:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]";
+    : "!relative !w-[60px] sm:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] sm:!left-[64px] sm:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]";
 
   return (
     <CircleContainer
@@ -71,7 +71,7 @@ const CircleContainer = styled(motion.div)<{ $isHome: boolean }>`
     transform: rotate(-170deg) scale(1.07) !important;
   }
 
-  @media ${layout.up.md} {
+  @media ${layout.up.sm} {
     width: ${({ $isHome }) => ($isHome ? "150px" : "200px")};
     height: ${({ $isHome }) => ($isHome ? "150px" : "200px")};
   }
