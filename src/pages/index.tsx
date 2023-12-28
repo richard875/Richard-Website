@@ -11,7 +11,6 @@ import routeTo from "../routes/routeTo";
 import MousePosition from "../types/mousePosition";
 import { SITE_TITLE } from "../constants/meta";
 import { INDEX_TO_ACKNOWLEDGEMENT_IPHONEXPWA } from "../constants/googleTags";
-import useWindowSize from "../hooks/useWindowSize";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
@@ -132,7 +131,7 @@ export const Head: HeadFC = () => (
 
 const Container = styled(motion.div)`
   width: 100vw;
-  height: ${() => useWindowSize().height! + "px"};
+  height: 100dvh;
   display: flex;
   justify-content: center;
   background-color: ${Color.BACKGROUND_WHITE};
@@ -145,22 +144,20 @@ const Container = styled(motion.div)`
 
 const Box = styled.div<{ $isIphoneXPwa: boolean }>`
   width: calc(100vw - 30px);
-  height: ${({ $isIphoneXPwa }) =>
-    useWindowSize().height! - ($isIphoneXPwa ? 85 : 30) + "px"};
+  height: calc(100dvh - 30px);
 
   @media ${layout.down.sm} {
     margin-top: 15px;
-    position: relative;
   }
 
   @media ${layout.up.sm} {
     width: calc(100vw - 70px);
-    height: ${() => useWindowSize().height! - 70 + "px"};
+    height: calc(100dvh - 70px);
   }
 
   @media ${layout.up.lg} {
     width: calc(100vw - 135px);
-    height: ${() => useWindowSize().height! - 120 + "px"};
+    height: calc(100dvh - 120px);
   }
 `;
 

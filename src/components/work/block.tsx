@@ -7,7 +7,6 @@ import layout from "../../styles/layout";
 import TextSection from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
-import useWindowSize from "../../hooks/useWindowSize";
 import WorkExperience from "../../types/workExperience";
 import SentenceDescription from "../../types/sentenceDescription";
 import {
@@ -211,7 +210,7 @@ const Media = styled.div<{ $top: number }>`
   display: none;
   position: absolute;
   z-index: 99999 !important;
-  bottom: ${({ $top }) => useWindowSize().height! - $top + 20 + "px"};
+  bottom: ${({ $top }) => `calc(100dvh - ${$top}px + 20px)`};
 
   @media ${layout.up.md} {
     display: block;
