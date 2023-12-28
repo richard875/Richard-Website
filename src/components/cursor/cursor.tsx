@@ -31,8 +31,10 @@ const Cursor = ({
   }, []);
 
   React.useEffect(() => {
-    gsap.to(ringRef.current!, { css: { left: x!, top: y! } });
-    gsap.to(dotRef.current!, { css: { left: x!, top: y! } });
+    if (ringRef.current)
+      gsap.to(ringRef.current!, { css: { left: x!, top: y! } });
+    if (dotRef.current)
+      gsap.to(dotRef.current!, { css: { left: x!, top: y! } });
   }, [x, y]);
 
   return (
