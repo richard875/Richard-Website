@@ -79,10 +79,7 @@ const Bottom = ({
           </div>
         </Button>
       </div>
-      {Array.from({ length: 6 }, (_, i) => (
-        <div key={i}></div>
-      ))}
-      <div className="flex justify-end mr-[7vw] mb-3 sm:mr-0 sm:mb-0 lg:mr-5 lg:mb-5">
+      <div className="absolute right-7 bottom-16 sm:right-10 sm:bottom-20 lg:right-14 lg:bottom-14">
         <ResumeCircle isHome={true} setHover={setHover} />
       </div>
       <Country id={`${INDEX_TO_ACKNOWLEDGEMENT_MOBILE}_0`}>
@@ -108,6 +105,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
+  position: relative;
   padding: 15px 12px 5px 12px;
   background: linear-gradient(90deg, #f55591 0%, #f9c41a 100%);
 
