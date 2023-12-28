@@ -156,6 +156,7 @@ const Top = styled.div`
   margin-right: ${BLOCK_PADDING + "px"};
   background-color: ${Color.BACKGROUND_BLACK};
   border-bottom: 0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY};
+  z-index: 99999 !important;
 
   @media ${layout.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});

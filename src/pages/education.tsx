@@ -156,7 +156,7 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   @media ${layout.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});
     position: fixed;
-    z-index: 9999;
+    z-index: 99999 !important;
   }
 
   @media ${layout.up.md} {
