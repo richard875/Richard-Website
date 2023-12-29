@@ -13,7 +13,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 const SITE_URL = `https://${process.env.GATSBY_SITE_URL}`;
 
 const config: GatsbyConfig = {
-  trailingSlash: `always`,
+  trailingSlash: "never",
   siteMetadata: {
     title: SITE_TITLE,
     description: DESCRIPTION_INDEX,
