@@ -58,5 +58,5 @@ exports.onPostBuild = async () => {
   // console.log("----------------Yandex Response----------------");
   // console.log(`${yandexResponse.status} ${yandexResponse.statusText}`);
 
-  console.log(table(indexNowDoc));
+  console.info(table(indexNowDoc));
 };
