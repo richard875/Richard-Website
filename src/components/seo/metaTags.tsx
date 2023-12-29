@@ -1,6 +1,4 @@
 import React from "react";
-import Color from "../../enums/color";
-import favicon from "../../../static/images/favicon.png";
 import {
   NAME,
   URL,
