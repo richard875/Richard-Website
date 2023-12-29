@@ -15,7 +15,7 @@ const SEZNAM_URL = "https://search.seznam.cz/indexnow";
 const YANDEX_URL = "https://yandex.com/indexnow";
 
 // Post Build
-exports.onPostBuild = async ({ reporter }) => {
+exports.onPostBuild = async () => {
   // Variables
   const indexNowKey = process.env.INDEXNOW_KEY!;
   const SITE_URL = process.env.GATSBY_SITE_URL!;
@@ -47,16 +47,16 @@ exports.onPostBuild = async ({ reporter }) => {
   const yandexResponse = await axios.request(axioIdxNow(YANDEX_URL, data));
 
   // Log Response
-  reporter.info("----------------IndexNow Response----------------");
-  reporter.info(`${indexNowResponse.status} ${indexNowResponse.statusText}`);
-  reporter.info("----------------Bing Response----------------");
-  reporter.info(`${bingResponse.status} ${bingResponse.statusText}`);
-  reporter.info("----------------Naver Response----------------");
-  reporter.info(`${naverResponse.status} ${naverResponse.statusText}`);
-  reporter.info("----------------Seznam Response----------------");
-  reporter.info(`${seznamResponse.status} ${seznamResponse.statusText}`);
-  reporter.info("----------------Yandex Response----------------");
-  reporter.info(`${yandexResponse.status} ${yandexResponse.statusText}`);
+  console.log("----------------IndexNow Response----------------");
+  console.log(`${indexNowResponse.status} ${indexNowResponse.statusText}`);
+  console.log("----------------Bing Response----------------");
+  console.log(`${bingResponse.status} ${bingResponse.statusText}`);
+  console.log("----------------Naver Response----------------");
+  console.log(`${naverResponse.status} ${naverResponse.statusText}`);
+  console.log("----------------Seznam Response----------------");
+  console.log(`${seznamResponse.status} ${seznamResponse.statusText}`);
+  console.log("----------------Yandex Response----------------");
+  console.log(`${yandexResponse.status} ${yandexResponse.statusText}`);
 
-  reporter.info(table(indexNowDoc));
+  console.log(table(indexNowDoc));
 };

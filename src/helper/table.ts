@@ -11,7 +11,7 @@ const table = (input) => {
   const logger = new Console({ stdout: ts });
   logger.table(input);
   const table = (ts.read() || "").toString();
-  let result = "\r\n";
+  let result = "";
   for (let row of table.split(/[\r\n]+/)) {
     let r = row.replace(/[^┬]*┬/, "┌");
     r = r.replace(/^├─*┼/, "├");
