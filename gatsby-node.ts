@@ -15,9 +15,7 @@ const SEZNAM_URL = "https://search.seznam.cz/indexnow";
 const YANDEX_URL = "https://yandex.com/indexnow";
 
 // Post Build
-exports.onPostBuild = async (gatsbyNodeHelpers) => {
-  const { reporter } = gatsbyNodeHelpers;
-
+exports.onPostBuild = async ({ reporter }) => {
   // Variables
   const indexNowKey = process.env.INDEXNOW_KEY!;
   const SITE_URL = process.env.GATSBY_SITE_URL!;
@@ -60,5 +58,6 @@ exports.onPostBuild = async (gatsbyNodeHelpers) => {
   // console.log("----------------Yandex Response----------------");
   // console.log(`${yandexResponse.status} ${yandexResponse.statusText}`);
 
+  reporter.info("Test 2");
   reporter.info(table(indexNowDoc));
 };
