@@ -69,7 +69,7 @@ const config: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: SITE_TITLE,
+        name: NAME,
         short_name: NAME,
         lang: "en",
         start_url: `/?${MODE}=${STANDALONE}`,
