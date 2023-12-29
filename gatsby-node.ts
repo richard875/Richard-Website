@@ -39,24 +39,24 @@ exports.onPostBuild = async () => {
     urlList: urlList,
   };
 
-  // Request
-  const indexNowResponse = await axios.request(axioIdxNow(INDEXNOW_URL, data));
-  const bingResponse = await axios.request(axioIdxNow(BING_URL, data));
-  const naverResponse = await axios.request(axioIdxNow(NAVER_URL, data));
-  const seznamResponse = await axios.request(axioIdxNow(SEZNAM_URL, data));
-  const yandexResponse = await axios.request(axioIdxNow(YANDEX_URL, data));
+  // // Request
+  // const indexNowResponse = await axios.request(axioIdxNow(INDEXNOW_URL, data));
+  // const bingResponse = await axios.request(axioIdxNow(BING_URL, data));
+  // const naverResponse = await axios.request(axioIdxNow(NAVER_URL, data));
+  // const seznamResponse = await axios.request(axioIdxNow(SEZNAM_URL, data));
+  // const yandexResponse = await axios.request(axioIdxNow(YANDEX_URL, data));
 
-  // Log Response
-  console.log("----------------IndexNow Response----------------");
-  console.log(`${indexNowResponse.status} ${indexNowResponse.statusText}`);
-  console.log("----------------Bing Response----------------");
-  console.log(`${bingResponse.status} ${bingResponse.statusText}`);
-  console.log("----------------Naver Response----------------");
-  console.log(`${naverResponse.status} ${naverResponse.statusText}`);
-  console.log("----------------Seznam Response----------------");
-  console.log(`${seznamResponse.status} ${seznamResponse.statusText}`);
-  console.log("----------------Yandex Response----------------");
-  console.log(`${yandexResponse.status} ${yandexResponse.statusText}`);
+  // // Log Response
+  // console.log("----------------IndexNow Response----------------");
+  // console.log(`${indexNowResponse.status} ${indexNowResponse.statusText}`);
+  // console.log("----------------Bing Response----------------");
+  // console.log(`${bingResponse.status} ${bingResponse.statusText}`);
+  // console.log("----------------Naver Response----------------");
+  // console.log(`${naverResponse.status} ${naverResponse.statusText}`);
+  // console.log("----------------Seznam Response----------------");
+  // console.log(`${seznamResponse.status} ${seznamResponse.statusText}`);
+  // console.log("----------------Yandex Response----------------");
+  // console.log(`${yandexResponse.status} ${yandexResponse.statusText}`);
 
   console.log(table(indexNowDoc));
 };
