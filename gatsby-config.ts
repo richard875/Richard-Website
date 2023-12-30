@@ -104,7 +104,7 @@ const config: GatsbyConfig = {
       resolve: "gatsby-plugin-robots-txt",
       options: {
         host: SITE_URL,
-        sitemap: `${SITE_URL}/sitemap/sitemap-index.xml`,
+        sitemap: `${SITE_URL}/sitemap-index.xml`,
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },
