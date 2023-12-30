@@ -9,11 +9,11 @@ import table from "./src/helper/table";
 import axioIdxNow from "./src/helper/axioConfigIndexNow";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
-const INDEXNOW_URL = "https://api.indexnow.org/indexnow";
-const BING_URL = "https://www.bing.com/indexnow";
-const NAVER_URL = "https://searchadvisor.naver.com/indexnow";
-const SEZNAM_URL = "https://search.seznam.cz/indexnow";
-const YANDEX_URL = "https://yandex.com/indexnow";
+const INDEXNOW_URL = "api.indexnow.org";
+const BING_URL = "www.bing.com";
+const NAVER_URL = "searchadvisor.naver.com";
+const SEZNAM_URL = "search.seznam.cz";
+const YANDEX_URL = "yandex.com";
 
 // Post Build
 exports.onPostBuild = async ({ reporter }) => {
@@ -23,7 +23,7 @@ exports.onPostBuild = async ({ reporter }) => {
   const SITE_URL_HTTPS = `${HTTPS}${process.env.GATSBY_SITE_URL!}`;
 
   // Write File to Public Folder
-  const fileName = `.${indexNowKey}.txt`;
+  const fileName = `${indexNowKey}.txt`;
   const filePath = `./public/${fileName}`;
   fs.writeFileSync(filePath, indexNowKey);
 
