@@ -1,11 +1,11 @@
 import fs from "fs";
 import axios from "axios";
 import { Reporter } from "gatsby";
-import Route from "../routes/route";
 import IndexNow from "../types/indexNow";
 import { HTTPS } from "../constants/meta";
 import indexNowDoc from "../constants/indexNowDoc";
 import table from "../helper/table";
+import urlList from "../helper/siteUrlList";
 import axioIdxNow from "../helper/axioConfigIndexNow";
 
 const INDEXNOW_URL = "api.indexnow.org";
@@ -24,11 +24,6 @@ const indexNowPostBuild = async (reporter: Reporter) => {
   const fileName = `${indexNowKey}.txt`;
   const filePath = `./public/${fileName}`;
   fs.writeFileSync(filePath, indexNowKey);
-
-  // Construct URL List excluding 404 page
-  const urlList = Object.values(Route)
-    .filter((route) => route !== Route.NotFound)
-    .map((route) => `${SITE_URL_HTTPS}${route}`);
 
   // Construct Data
   const data: IndexNow = {
