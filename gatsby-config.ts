@@ -3,14 +3,15 @@ import type { GatsbyConfig } from "gatsby";
 import Color from "./src/enums/color";
 import {
   NAME,
-  SITE_TITLE,
-  DESCRIPTION_INDEX,
   MODE,
+  HTTPS,
+  SITE_TITLE,
   STANDALONE,
+  DESCRIPTION_INDEX,
 } from "./src/constants/meta";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
-const SITE_URL = `https://${process.env.GATSBY_SITE_URL}`;
+const SITE_URL = `${HTTPS}${process.env.GATSBY_SITE_URL}`;
 
 const config: GatsbyConfig = {
   trailingSlash: "never",

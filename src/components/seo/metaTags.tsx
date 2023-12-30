@@ -1,6 +1,7 @@
 import React from "react";
 import {
   NAME,
+  HTTPS,
   URL,
   GITHUB_URL,
   LINKEDIN_URL,
@@ -59,45 +60,45 @@ const MetaTags = ({
       <meta name="description" content={description()} />
       <meta name="keywords" content={SITE_KEYWORDS} />
       <meta name="author" content={NAME} />
-      <meta property="image" content={`https://${URL}${MetaImage}`} />
+      <meta property="image" content={`${HTTPS}${URL}${MetaImage}`} />
       <meta property="article:published_time" content={dateString} />
 
       {/* Google / Search Engine Tags */}
       <meta itemProp="name" content={name} />
       <meta itemProp="description" content={description()} />
       <meta itemProp="keywords" content={SITE_KEYWORDS} />
-      <meta itemProp="image" content={`https://${URL}${MetaImage}`} />
+      <meta itemProp="image" content={`${HTTPS}${URL}${MetaImage}`} />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={`https://${URL}${path}`} />
+      <meta property="og:url" content={`${HTTPS}${URL}${path}`} />
       <meta property="og:title" content={name} />
       <meta property="og:description" content={description()} />
       <meta property="og:keywords" content={SITE_KEYWORDS} />
-      <meta property="og:image" content={`https://${URL}${MetaImage}`} />
+      <meta property="og:image" content={`${HTTPS}${URL}${MetaImage}`} />
       <meta property="og:image:alt" content={NAME} />
       <meta property="og:published_time" content={dateString} />
 
       {/* Twitter */}
       <meta name="twitter:widgets:theme" content="light" />
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={`https://${URL}${path}`} />
+      <meta property="twitter:url" content={`${HTTPS}${URL}${path}`} />
       <meta property="twitter:title" content={name} />
       <meta property="twitter:description" content={description()} />
       <meta property="twitter:keywords" content={SITE_KEYWORDS} />
-      <meta property="twitter:image" content={`https://${URL}${MetaImage}`} />
+      <meta property="twitter:image" content={`${HTTPS}${URL}${MetaImage}`} />
 
       {/* Google Rich Results */}
       <script type="application/ld+json">
         {`
             {
-                "@context": "https://schema.org/",
+                "@context": "${HTTPS}schema.org/",
                 "@type": "Person",
                 "name": "${NAME}",
-                "url": "https://${URL}${path}",
-                "image": "https://${URL}${MetaImage}",
+                "url": "${HTTPS}${URL}${path}",
+                "image": "${HTTPS}${URL}${MetaImage}",
                 "sameAs": [
-                    "https://${URL}${path}",
+                    "${HTTPS}${URL}${path}",
                     "${LINKEDIN_URL}",
                     "${GITHUB_URL}"
                 ],

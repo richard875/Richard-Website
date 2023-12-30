@@ -3,6 +3,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import Route from "./src/routes/route";
 import IndexNow from "./src/types/indexNow";
+import { HTTPS } from "./src/constants/meta";
 import indexNowDoc from "./src/constants/indexNowDoc";
 import table from "./src/helper/table";
 import axioIdxNow from "./src/helper/axioConfigIndexNow";
@@ -19,7 +20,7 @@ exports.onPostBuild = async ({ reporter }) => {
   // Variables
   const indexNowKey = process.env.INDEXNOW_KEY!;
   const SITE_URL = process.env.GATSBY_SITE_URL!;
-  const SITE_URL_HTTPS = `https://${process.env.GATSBY_SITE_URL!}`;
+  const SITE_URL_HTTPS = `${HTTPS}${process.env.GATSBY_SITE_URL!}`;
 
   // Write File to Public Folder
   const fileName = `.${indexNowKey}.txt`;

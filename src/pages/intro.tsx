@@ -14,7 +14,6 @@ import CallToAction from "../components/global/callToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import InitialTransition from "../components/transition/InitialTransition";
 import setOverflow from "../helper/setOverflow";
-import usePwaDetection from "../hooks/usePwaDetection";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import {
   INTRO_SOH,
@@ -25,15 +24,14 @@ import {
   INTRO_TO_INDEX,
   INTRO_TO_EXPERIENCE,
 } from "../constants/googleTags";
-import { INTRO_TITLE, PAGE_TITLE } from "../constants/meta";
+import { HTTPS, INTRO_TITLE, PAGE_TITLE } from "../constants/meta";
 import { EMAIL, LINKEDIN_URL, GITHUB_URL } from "../constants/meta";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
-const AUSTRALIA = "https://www.youtube.com/watch?v=rMdbVHPmCW0";
+const AUSTRALIA = `${HTTPS}www.youtube.com/watch?v=rMdbVHPmCW0`;
 
 const Experience = ({ location }: { location: WindowLocation }) => {
-  const isPwa = usePwaDetection(location);
   const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [transitionColor, setTransitionColor] = React.useState(
     Color.BACKGROUND_WHITE

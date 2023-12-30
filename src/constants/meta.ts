@@ -1,9 +1,12 @@
+// Site URL
+export const HTTPS = "https://";
+
 // Site Meta
 export const NAME = "Richard Lee";
 export const URL = process.env.GATSBY_SITE_URL;
 export const EMAIL = `hello@${URL}`;
-export const GITHUB_URL = "https://github.com/richard875";
-export const LINKEDIN_URL = "https://www.linkedin.com/in/richard875";
+export const GITHUB_URL = `${HTTPS}github.com/richard875`;
+export const LINKEDIN_URL = `${HTTPS}www.linkedin.com/in/richard875`;
 
 // Site Config
 export const MODE = "mode";
