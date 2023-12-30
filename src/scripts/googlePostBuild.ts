@@ -7,10 +7,8 @@ import axioConfigGoogle from "../helper/axioConfigGoogle";
 
 const googlePostBuild = async (reporter: Reporter) => {
   // Variables
-  reporter.info("here 1");
   const client_email = process.env.GOOGLE_CLIENT_EMAIL!;
   const private_key = process.env.GOOGLE_PRIVATE_KEY!;
-  reporter.info("here 2");
 
   const jwtClient = new google.auth.JWT(
     client_email,
@@ -48,6 +46,10 @@ const googlePostBuild = async (reporter: Reporter) => {
       );
     }
   }
+
+  reporter.info(
+    "For Google indexing errors, please visit: https://developers.google.com/search/apis/indexing-api/v3/core-errors"
+  );
 };
 
 export default googlePostBuild;

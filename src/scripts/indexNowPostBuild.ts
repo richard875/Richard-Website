@@ -41,17 +41,18 @@ const indexNowPostBuild = async (reporter: Reporter) => {
   const yandexResponse = await axios.request(axioIdxNow(YANDEX_URL, data));
 
   // Log Response
-  reporter.info("----------------IndexNow Response----------------");
+  reporter.info("------------------IndexNow Response------------------");
   reporter.info(`${indexNowResponse.status} ${indexNowResponse.statusText}`);
-  reporter.info("----------------Bing Response----------------");
+  reporter.info("--------------------Bing Response--------------------");
   reporter.info(`${bingResponse.status} ${bingResponse.statusText}`);
-  reporter.info("----------------Naver Response----------------");
+  reporter.info("--------------------Naver Response-------------------");
   reporter.info(`${naverResponse.status} ${naverResponse.statusText}`);
-  reporter.info("----------------Seznam Response----------------");
+  reporter.info("-------------------Seznam Response-------------------");
   reporter.info(`${seznamResponse.status} ${seznamResponse.statusText}`);
-  reporter.info("----------------Yandex Response----------------");
+  reporter.info("-------------------Yandex Response-------------------");
   reporter.info(`${yandexResponse.status} ${yandexResponse.statusText}`);
 
+  reporter.info("----------------IndexNow Status Chart----------------");
   reporter.info(table(indexNowDoc));
 };
 
