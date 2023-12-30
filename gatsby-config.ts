@@ -29,7 +29,7 @@ const config: GatsbyConfig = {
   },
   headers: [
     {
-      source: "*",
+      source: "/richard-lee-resume.pdf",
       headers: [
         {
           key: "Link",
