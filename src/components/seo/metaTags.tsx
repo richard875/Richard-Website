@@ -88,6 +88,9 @@ const MetaTags = ({
       <meta property="twitter:keywords" content={SITE_KEYWORDS} />
       <meta property="twitter:image" content={`${HTTPS}${URL}${MetaImage}`} />
 
+      {/* Canonical URL */}
+      <link rel="canonical" href={`${HTTPS}${URL}${path}`} />
+
       {/* Google Rich Results */}
       <script type="application/ld+json">
         {`
