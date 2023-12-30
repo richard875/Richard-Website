@@ -30,6 +30,7 @@ const MetaTags = ({
   const today = new Date();
   const fiveDaysAgo = new Date(today.setDate(today.getDate() - 5));
   const dateString = fiveDaysAgo.toISOString().slice(0, 10);
+  const linkPath = path === Route.Home ? "" : path;
 
   const description = () => {
     switch (path) {
@@ -71,7 +72,7 @@ const MetaTags = ({
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={`${HTTPS}${URL}${path}`} />
+      <meta property="og:url" content={`${HTTPS}${URL}${linkPath}`} />
       <meta property="og:title" content={name} />
       <meta property="og:description" content={description()} />
       <meta property="og:keywords" content={SITE_KEYWORDS} />
@@ -82,14 +83,14 @@ const MetaTags = ({
       {/* Twitter */}
       <meta name="twitter:widgets:theme" content="light" />
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={`${HTTPS}${URL}${path}`} />
+      <meta property="twitter:url" content={`${HTTPS}${URL}${linkPath}`} />
       <meta property="twitter:title" content={name} />
       <meta property="twitter:description" content={description()} />
       <meta property="twitter:keywords" content={SITE_KEYWORDS} />
       <meta property="twitter:image" content={`${HTTPS}${URL}${MetaImage}`} />
 
       {/* Canonical URL */}
-      <link rel="canonical" href={`${HTTPS}${URL}${path}`} />
+      <link rel="canonical" href={`${HTTPS}${URL}${linkPath}`} />
 
       {/* Google Rich Results */}
       <script type="application/ld+json">
@@ -98,10 +99,10 @@ const MetaTags = ({
                 "@context": "${HTTPS}schema.org/",
                 "@type": "Person",
                 "name": "${NAME}",
-                "url": "${HTTPS}${URL}${path}",
+                "url": "${HTTPS}${URL}${linkPath}",
                 "image": "${HTTPS}${URL}${MetaImage}",
                 "sameAs": [
-                    "${HTTPS}${URL}${path}",
+                    "${HTTPS}${URL}${linkPath}",
                     "${LINKEDIN_URL}",
                     "${GITHUB_URL}"
                 ],
