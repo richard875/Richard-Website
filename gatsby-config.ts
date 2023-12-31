@@ -83,7 +83,6 @@ const config: GatsbyConfig = {
     "gatsby-plugin-sharp",
     "gatsby-plugin-netlify",
     "gatsby-plugin-postcss",
-    "gatsby-plugin-offline",
     "gatsby-transformer-sharp",
     "babel-plugin-styled-components",
     "gatsby-plugin-styled-components",
@@ -115,8 +114,16 @@ const config: GatsbyConfig = {
         icon: "static/images/pwas/pwa-1024.png",
         include_favicon: false,
         theme_color_in_head: false,
-        cache_busting_mode: "query",
+        cache_busting_mode: "none",
         icon_options: { purpose: "any maskable" },
+      },
+    },
+    {
+      resolve: "gatsby-plugin-offline",
+      options: {
+        workboxConfig: {
+          globPatterns: ["static/images/pwas/pwa-1024.png"],
+        },
       },
     },
     {
