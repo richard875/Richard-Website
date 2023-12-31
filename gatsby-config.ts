@@ -11,14 +11,15 @@ import {
 } from "./src/constants/meta";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
-const SITE_URL = `${HTTPS}${process.env.GATSBY_SITE_URL}`;
+const SITE_DOMAIN = process.env.GATSBY_SITE_URL;
+const SITE_URL = `${HTTPS}${SITE_DOMAIN}`;
 
 const config: GatsbyConfig = {
   trailingSlash: "never",
   siteMetadata: {
     title: SITE_TITLE,
     description: DESCRIPTION_INDEX,
-    image: `static/images/splash/apple-splash-2224-1668.jpg`,
+    image: "static/images/splash/apple-splash-2224-1668.jpg",
     siteUrl: SITE_URL,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
@@ -77,66 +78,58 @@ const config: GatsbyConfig = {
     },
   ],
   plugins: [
-    `gatsby-plugin-postcss`,
+    "gatsby-plugin-sass",
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    "gatsby-plugin-netlify",
+    "gatsby-plugin-postcss",
+    "gatsby-plugin-offline",
+    "gatsby-transformer-sharp",
+    "babel-plugin-styled-components",
+    "gatsby-plugin-styled-components",
     {
-      resolve: `gatsby-plugin-sitemap`,
+      resolve: "gatsby-plugin-sitemap",
       options: { resolveSiteUrl: () => SITE_URL },
     },
-    `gatsby-plugin-netlify`,
-    "babel-plugin-styled-components",
-    `gatsby-plugin-styled-components`,
     {
       resolve: "gatsby-plugin-google-tagmanager",
-      options: {
-        id: `${process.env.TAG_ID}`,
-      },
+      options: { id: process.env.TAG_ID },
     },
-    `gatsby-plugin-sass`,
-    `gatsby-plugin-image`,
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: "gatsby-plugin-manifest",
       options: {
-        icon: `static/images/favicon.png`,
-        icon_options: {
-          purpose: `any maskable`,
-        },
+        icon: "static/images/favicon.png",
+        icon_options: { purpose: "any maskable" },
       },
     },
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: "gatsby-plugin-manifest",
       options: {
         name: NAME,
         short_name: NAME,
         lang: "en",
         start_url: `/?${MODE}=${STANDALONE}`,
-        background_color: `#BAE6C3`,
+        background_color: "#BAE6C3",
         theme_color: Color.BACKGROUND_WHITE,
         display: STANDALONE,
-        icon: `static/images/pwas/pwa-1024.png`,
+        icon: "static/images/pwas/pwa-1024.png",
         include_favicon: false,
         theme_color_in_head: false,
         cache_busting_mode: "query",
-        icon_options: {
-          purpose: `any maskable`,
-        },
+        icon_options: { purpose: "any maskable" },
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: `images`,
-        path: `./static/images/`,
+        name: "images",
+        path: "./static/images/",
       },
-      __key: `images`,
+      __key: "images",
     },
-    `gatsby-plugin-offline`,
     {
       resolve: "gatsby-plugin-brotli",
-      options: {
-        extensions: ["css", "html", "js", "svg", "json"],
-      },
+      options: { extensions: ["css", "html", "js", "svg", "json"] },
     },
     {
       resolve: "gatsby-plugin-robots-txt",
@@ -144,6 +137,33 @@ const config: GatsbyConfig = {
         host: SITE_URL,
         sitemap: `${SITE_URL}/sitemap-index.xml`,
         policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
+    {
+      resolve: "gatsby-plugin-csp",
+      options: {
+        disableOnDev: true,
+        reportOnly: false,
+        mergeScriptHashes: false,
+        mergeStyleHashes: false,
+        mergeDefaultDirectives: false,
+        directives: {
+          "script-src":
+            "'self' 'unsafe-inline' 'unsafe-eval' www.googletagmanager.com www.clarity.ms",
+          "style-src": "'self' 'unsafe-inline'",
+          "img-src":
+            "'self' data: c.clarity.ms c.bing.com www.google.com.au/ads/ga-audiences",
+          "connect-src": "'self' analytics.google.com e.clarity.ms",
+          "font-src": "'self'",
+          "object-src": "'none'",
+          "media-src": "'self'",
+          "frame-src": "'self'",
+          "base-uri": "'self'",
+          "worker-src": "'self'",
+          "manifest-src": "'self'",
+          "upgrade-insecure-requests": " ",
+          "block-all-mixed-content": " ",
+        },
       },
     },
   ],
