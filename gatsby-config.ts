@@ -153,7 +153,8 @@ const config: GatsbyConfig = {
           "style-src": "'self' 'unsafe-inline'",
           "img-src":
             "'self' data: c.clarity.ms c.bing.com www.google.com.au/ads/ga-audiences",
-          "connect-src": "'self' analytics.google.com e.clarity.ms",
+          "connect-src":
+            "'self' analytics.google.com e.clarity.ms stats.g.doubleclick.net",
           "font-src": "'self'",
           "object-src": "'none'",
           "media-src": "'self'",
