@@ -38,6 +38,43 @@ const config: GatsbyConfig = {
         },
       ],
     },
+    {
+      source: "*",
+      headers: [
+        {
+          key: "Strict-Transport-Security",
+          value: "max-age=31536000; includeSubdomains",
+        },
+        {
+          key: "X-Frame-Options",
+          value: "DENY",
+        },
+        {
+          key: "X-Content-Type-Options",
+          value: "nosniff",
+        },
+        {
+          key: "X-XSS-Protection",
+          value: "1; mode=block",
+        },
+        {
+          key: "Referrer-Policy",
+          value: "same-origin",
+        },
+        {
+          key: "Permissions-Policy",
+          value: "camera=(), microphone=(), geolocation=()",
+        },
+        {
+          key: "Access-Control-Allow-Origin",
+          value: SITE_URL,
+        },
+        {
+          key: "Vary",
+          value: "Origin",
+        },
+      ],
+    },
   ],
   plugins: [
     `gatsby-plugin-postcss`,
