@@ -24,8 +24,15 @@ import {
   INTRO_TO_INDEX,
   INTRO_TO_EXPERIENCE,
 } from "../constants/googleTags";
-import { HTTPS, INTRO_TITLE, PAGE_TITLE } from "../constants/meta";
-import { EMAIL, LINKEDIN_URL, GITHUB_URL } from "../constants/meta";
+import {
+  HTTPS,
+  EMAIL,
+  FIRST_NAME,
+  PAGE_TITLE,
+  INTRO_TITLE,
+  GITHUB_URL,
+  LINKEDIN_URL,
+} from "../constants/meta";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
@@ -74,8 +81,8 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           animate={{ opacity: 1 }}
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
-          G'day, I'm Richard. I'm a Software Engineer and Creative Designer from
-          <Sydney>&nbsp;Sydney</Sydney>,
+          G'day, I'm {FIRST_NAME}. I'm a Software Engineer and Creative Designer
+          from<Sydney>&nbsp;Sydney</Sydney>,
           <Australia
             id={`${INTRO_AUSTRALIA}_0`}
             onClick={(e) => {

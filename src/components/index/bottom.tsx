@@ -12,6 +12,7 @@ import {
   INDEX_TO_INTRO,
   INDEX_TO_ACKNOWLEDGEMENT_MOBILE,
 } from "../../constants/googleTags";
+import { NAME } from "../../constants/meta";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 
 const Bottom = ({
@@ -47,7 +48,7 @@ const Bottom = ({
           </h3>
         </SmallText>
         <Name className="font-primary-bold">
-          <h1 ref={nameRef}>RICHARD LEE</h1>
+          <h1 ref={nameRef}>{NAME.toUpperCase()}</h1>
         </Name>
         <SmallText className="font-primary-normal mt-5 sm:mt-8">
           <h2 ref={sub1Ref}>Software Engineer &amp; Creative Designer</h2>
