@@ -13,6 +13,7 @@ import {
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 const SITE_DOMAIN = process.env.GATSBY_SITE_URL;
 const SITE_URL = `${HTTPS}${SITE_DOMAIN}`;
+const RESUME_FILE = "richard-lee-resume.pdf";
 
 const config: GatsbyConfig = {
   trailingSlash: "never",
@@ -31,11 +32,11 @@ const config: GatsbyConfig = {
   },
   headers: [
     {
-      source: "/richard-lee-resume.pdf",
+      source: `/${RESUME_FILE}`,
       headers: [
         {
           key: "Link",
-          value: `<${SITE_URL}/richard-lee-resume.pdf>; rel="canonical"`,
+          value: `<${SITE_URL}/${RESUME_FILE}>; rel="canonical"`,
         },
       ],
     },
@@ -165,7 +166,7 @@ const config: GatsbyConfig = {
           "font-src": "'self'",
           "object-src": "'none'",
           "media-src": "'self'",
-          "frame-src": "'self'",
+          "frame-src": "'self' td.doubleclick.net",
           "base-uri": "'self'",
           "worker-src": "'self'",
           "manifest-src": "'self'",
