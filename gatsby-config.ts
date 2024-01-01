@@ -121,11 +121,7 @@ const config: GatsbyConfig = {
     },
     {
       resolve: "gatsby-plugin-offline",
-      options: {
-        workboxConfig: {
-          globPatterns: ["static/images/pwas/pwa-1024.png"],
-        },
-      },
+      options: { workboxConfig: { globPatterns: ["**/pwas/*.png"] } },
     },
     {
       resolve: "gatsby-source-filesystem",
