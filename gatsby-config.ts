@@ -171,6 +171,9 @@ const config: GatsbyConfig = {
         },
       },
     },
+    {
+      resolve: "gatsby-plugin-no-sourcemaps",
+    },
   ],
 };
 
