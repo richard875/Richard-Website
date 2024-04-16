@@ -34,7 +34,7 @@ const Model = React.memo(() => {
 
   // Hooks
   const [ambientLightIntensity, setAmbientLightIntensity] = React.useState(0.2);
-  const [hemiLightIntensity, setHemiLightIntensity] = React.useState(0.6);
+  const [hemiLightIntensity, setHemiLightIntensity] = React.useState(0.75);
   const [hemiLightColorX, setHemiLightColorX] = React.useState(0.62);
   const [hemiLightColorY, setHemiLightColorY] = React.useState(1);
   const [hemiLightColorZ, setHemiLightColorZ] = React.useState(0.6);
@@ -44,26 +44,26 @@ const Model = React.memo(() => {
   const [hemiPositionX, setHemiPositionX] = React.useState(0);
   const [hemiPositionY, setHemiPositionY] = React.useState(20);
   const [hemiPositionZ, setHemiPositionZ] = React.useState(0);
-  const [dirLightIntensity, setDirLightIntensity] = React.useState(0.8);
+  const [dirLightIntensity, setDirLightIntensity] = React.useState(0.75);
   const [dirLightColorX, setDirLightColorX] = React.useState(0.1);
   const [dirLightColorY, setDirLightColorY] = React.useState(1);
   const [dirLightColorZ, setDirLightColorZ] = React.useState(0.95);
-  const [dirPositionX, setDirPositionX] = React.useState(-2);
-  const [dirPositionY, setDirPositionY] = React.useState(1.3);
+  const [dirPositionX, setDirPositionX] = React.useState(1.3);
+  const [dirPositionY, setDirPositionY] = React.useState(1);
   const [dirPositionZ, setDirPositionZ] = React.useState(2);
   const [groundColorX, setGroundColorX] = React.useState(0.095);
   const [groundColorY, setGroundColorY] = React.useState(1);
   const [groundColorZ, setGroundColorZ] = React.useState(0.75);
   const [skyOffset, setSkyOffset] = React.useState(43);
   const [skyExponent, setSkyExponent] = React.useState(0.6);
-  const [skySphereGeometryX, setSkySphereGeometryX] = React.useState(200);
+  const [skySphereGeometryX, setSkySphereGeometryX] = React.useState(215);
   const [skySphereGeometryY, setSkySphereGeometryY] = React.useState(32);
   const [skySphereGeometryZ, setSkySphereGeometryZ] = React.useState(15);
   const [bloomIntensity, setBloomIntensity] = React.useState(10.0);
   const [luminanceThreshold, setLuminanceThreshold] = React.useState(1);
   const [luminanceSmoothing, setLuminanceSmoothing] = React.useState(0.5);
   const [brightness, setBrightness] = React.useState(0.04);
-  const [contrast, setContrast] = React.useState(0.15);
+  const [contrast, setContrast] = React.useState(-0.2);
   const [hue, setHue] = React.useState(6);
   const [saturation, setSaturation] = React.useState(0.45);
 
