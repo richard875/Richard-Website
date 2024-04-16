@@ -17,6 +17,39 @@
     "description": [
       [
         {
+          "content": "Spearheaded the implementation of a Customer Service Centre Application harnessing"
+        },
+        {
+          "content": "Next.js",
+          "textHighlight": true
+        },
+        {
+          "content": ","
+        },
+        {
+          "content": "Akamai",
+          "textHighlight": true
+        },
+        {
+          "content": ", and"
+        },
+        {
+          "content": "Jest",
+          "textHighlight": true
+        },
+        {
+          "content": ". The project streamlined operations, and enhanced user experience for a user base of"
+        },
+        {
+          "content": "1500+ DAU",
+          "textHighlight": true
+        },
+        {
+          "content": "."
+        }
+      ],
+      [
+        {
           "content": "In a team of"
         },
         {
@@ -64,32 +97,6 @@
       ],
       [
         {
-          "content": "Implemented a new deployment pattern collaborating with DevOps Team utilising"
-        },
-        {
-          "content": "Akamai",
-          "textHighlight": true
-        },
-        {
-          "content": ","
-        },
-        {
-          "content": "AWS Lambda",
-          "textHighlight": true
-        },
-        {
-          "content": ", and"
-        },
-        {
-          "content": "Elastic Load Balancer",
-          "textHighlight": true
-        },
-        {
-          "content": "."
-        }
-      ],
-      [
-        {
           "content": "Reduced organisational AWS expenditure by over"
         },
         {
@@ -102,6 +109,7 @@
       ]
     ],
     "techStack": [
+      "Next.js",
       "Preact",
       "Express.js",
       "AWS Lambda",

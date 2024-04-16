@@ -2,12 +2,12 @@
   "primary": [
     {
       "name": "typescript",
-      "displayName": "JavaScript / TypeScript",
+      "displayName": "JavaScript / TypeScript / Node.js",
       "skill": 80
     },
     {
       "name": "react",
-      "displayName": "React / Gatsby",
+      "displayName": "React / Next.js",
       "skill": 80
     },
     {
