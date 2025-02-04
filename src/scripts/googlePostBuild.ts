@@ -8,7 +8,9 @@ import axioConfigGoogle from "../helper/axioConfigGoogle";
 const googlePostBuild = async (reporter: Reporter) => {
   // Variables
   const client_email = process.env.GOOGLE_CLIENT_EMAIL!;
-  const private_key = process.env.GOOGLE_PRIVATE_KEY!;
+  const private_key = process.env
+    .GOOGLE_PRIVATE_KEY!.split(String.raw`\n`)
+    .join("\n");
 
   const jwtClient = new google.auth.JWT(
     client_email,
