@@ -29,9 +29,10 @@
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit"
   },
+  "packageManager": "yarn@1.22.22",
   "engines": {
     "yarn": ">=1.22.22",
-    "node": ">=18.20.4"
+    "node": ">=18.17.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
