@@ -35,9 +35,11 @@ const googlePostBuild = async (reporter: Reporter) => {
     } else {
       reporter.info(
         `Success: ${
-          response.data.urlNotificationMetadata.latestUpdate.type
+          response.data.urlNotificationMetadata?.latestUpdate?.type ||
+          "URL Updated"
         } at ${new Date(
-          response.data.urlNotificationMetadata.latestUpdate.notifyTime
+          response.data.urlNotificationMetadata?.latestUpdate?.notifyTime ||
+            new Date()
         ).toLocaleTimeString("en-AU", {
           hour: "2-digit",
           minute: "2-digit",
