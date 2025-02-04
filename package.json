@@ -21,12 +21,17 @@
     "postprocessing"
   ],
   "scripts": {
+    "preinstall": "node enforce-yarn.js",
     "dev": "NODE_ENV=development gatsby develop -H 0.0.0.0",
     "build": "NODE_ENV=production gatsby build",
     "serve": "gatsby serve -H 0.0.0.0",
     "deliver": "NODE_ENV=production gatsby clean && gatsby build && gatsby serve -H 0.0.0.0",
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "yarn": ">=1.22.22",
+    "node": ">=18.20.4"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
