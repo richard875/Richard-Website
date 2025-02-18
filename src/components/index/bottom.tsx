@@ -3,6 +3,7 @@ import gsap from "gsap";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
@@ -10,10 +11,12 @@ import routeTo from "../../routes/routeTo";
 import ResumeCircle from "../global/resumeCircle";
 import {
   INDEX_TO_INTRO,
+  CONTACT_GITHUB,
+  CONTACT_LINKEDIN,
   INDEX_TO_ACKNOWLEDGEMENT_MOBILE,
 } from "../../constants/googleTags";
-import { NAME } from "../../constants/meta";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
+import { NAME, GITHUB_URL, LINKEDIN_URL } from "../../constants/meta";
 
 const Bottom = ({
   setHover,
@@ -28,6 +31,8 @@ const Bottom = ({
   const sub2Ref = React.useRef(null);
   const contactRef = React.useRef(null);
   const countryRef = React.useRef(null);
+  const linkedinRef = React.useRef(null);
+  const githubRef = React.useRef(null);
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out", duration: 1 });
@@ -37,6 +42,8 @@ const Bottom = ({
     gsap.from(sub2Ref.current, gsapAnimationIndex(350, 1.4, 0));
     gsap.from(contactRef.current, gsapAnimationIndex(350, 1.5, 0));
     gsap.from(countryRef.current, gsapAnimationIndex(350, 1.6, 0));
+    gsap.from(linkedinRef.current, gsapAnimationIndex(350, 1.7, 0));
+    gsap.from(githubRef.current, gsapAnimationIndex(350, 1.7, 0));
   }, []);
 
   return (
@@ -79,6 +86,32 @@ const Bottom = ({
             />
           </div>
         </Button>
+        <Social>
+          <FontAwesomeIcon
+            ref={linkedinRef}
+            id={`${CONTACT_LINKEDIN}_0`}
+            size={"2x"}
+            icon={faLinkedin}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(LINKEDIN_URL, "_blank");
+            }}
+          />
+          <FontAwesomeIcon
+            ref={githubRef}
+            id={`${CONTACT_GITHUB}_0`}
+            size={"2x"}
+            icon={faGithub}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(GITHUB_URL, "_blank");
+            }}
+          />
+        </Social>
       </div>
       <div className="absolute right-7 bottom-16 sm:right-10 sm:bottom-20 lg:right-14 lg:bottom-14">
         <ResumeCircle isHome={true} setHover={setHover} />
@@ -173,6 +206,14 @@ const Button = styled.div`
   @media ${layout.up.xxl} {
     font-size: 20px;
   }
+`;
+
+const Social = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 35px;
+  overflow: hidden;
+  color: ${Color.WHITE};
 `;
 
 const Country = styled.div`

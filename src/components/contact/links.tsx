@@ -34,7 +34,7 @@ const Links = ({
     >
       <div className="flex mb-4">
         <FontAwesomeIcon
-          id={`${CONTACT_LINKEDIN}_0`}
+          id={`${CONTACT_LINKEDIN}_1`}
           size={"2x"}
           icon={faLinkedin}
           className="mr-5"
@@ -46,7 +46,7 @@ const Links = ({
           }}
         />
         <FontAwesomeIcon
-          id={`${CONTACT_GITHUB}_0`}
+          id={`${CONTACT_GITHUB}_1`}
           size={"2x"}
           icon={faGithub}
           onMouseEnter={() => setHover(true)}
