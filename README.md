@@ -1,6 +1,6 @@
-![Richard-Website](https://socialify.git.ci/richard875/Richard-Website/image?description=1&descriptionEditable=Richard-Lee.com%202023%20Redesign&language=1&name=1&pattern=Plus&theme=Dark)
+![Richard-Website](https://socialify.git.ci/richard875/Richard-Website/image?description=1&descriptionEditable=richardeverley.com%202023%20Redesign&language=1&name=1&pattern=Plus&theme=Dark)
 
-[![Website](https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://richard-lee.com/?utm_source=github&utm_medium=web)&nbsp;
+[![Website](https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://richardeverley.com/?utm_source=github&utm_medium=web)&nbsp;
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/richard875)
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
@@ -10,7 +10,7 @@
 
 ## Overview
 
-This repository contains the codebase for the redesign of my personal website, [richard-lee.com](https://richard-lee.com/?utm_source=github&utm_medium=web). The website has undergone a significant overhaul to enhance user experience, incorporate modern design elements, and improve performance.
+This repository contains the codebase for the redesign of my personal website, [richardeverley.com](https://richardeverley.com/?utm_source=github&utm_medium=web). The website has undergone a significant overhaul to enhance user experience, incorporate modern design elements, and improve performance.
 
 ## Features
 
@@ -48,7 +48,7 @@ Contributions are welcome! If you'd like to contribute:
 
 ## Feedback
 
-Your feedback is highly appreciated! Feel free to [reach out](mailto:hello@richard-lee.com) with suggestions, bug reports, or any other comments.
+Your feedback is highly appreciated! Feel free to [reach out](mailto:hello@richardeverley.com) with suggestions, bug reports, or any other comments.
 
 ## License
 
