@@ -13,7 +13,7 @@ import {
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 const SITE_DOMAIN = process.env.GATSBY_SITE_URL;
 const SITE_URL = `${HTTPS}${SITE_DOMAIN}`;
-const RESUME_FILE = "richard-lee-resume.pdf";
+const RESUME_FILE = "richard-resume.pdf";
 
 const config: GatsbyConfig = {
   trailingSlash: "never",

@@ -1,4 +1,4 @@
-const PDF_PATH = "/richard-lee-resume.pdf";
+const PDF_PATH = "/richard-resume.pdf";
 
 const getResume = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
   e.preventDefault();
