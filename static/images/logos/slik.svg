@@ -26,20 +26,20 @@
   </defs>
   <g clip-path="url(#a)" transform="translate(-20 -20)">
     <g clip-path="url(#b)" transform="translate(20 52.893)">
-      <path fill="#ffffff" d="M0 0h14.875v16.874H0V0z"></path>
+      <path fill="#00ff00" d="M0 0h14.875v16.874H0V0z"></path>
     </g>
     <g clip-path="url(#c)" transform="translate(34.894 38.72)">
-      <path fill="#ffffff" d="M0 0h20.572v31.28H0V0z"></path>
+      <path fill="#00ff00" d="M0 0h20.572v31.28H0V0z"></path>
     </g>
     <g clip-path="url(#d)" transform="translate(40.59 20.233)">
-      <path fill="#ffffff" d="M0 0h14.875v16.874H0V0z"></path>
+      <path fill="#00ff00" d="M0 0h14.875v16.874H0V0z"></path>
     </g>
     <g clip-path="url(#e)" transform="translate(20 20)">
-      <path fill="#ffffff" d="M0 0h20.572v31.28H0V0z"></path>
+      <path fill="#00ff00" d="M0 0h20.572v31.28H0V0z"></path>
     </g>
     <g clip-path="url(#f)" transform="translate(53.205 20)">
       <g clip-path="url(#g)">
-        <path fill="#ffffff" d="M0 0h4.795v4.853H0V0z"></path>
+        <path fill="#00ff00" d="M0 0h4.795v4.853H0V0z"></path>
       </g>
     </g>
   </g>
