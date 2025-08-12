@@ -4,6 +4,8 @@ import canary from "../../static/images/logos/canary.svg";
 import canaryBlack from "../../static/images/logos/canary-black.svg";
 import chancery from "../../static/images/logos/chancery.png";
 import cie from "../../static/images/logos/cie.png";
+import coates from "../../static/images/logos/coates.svg";
+import coatesBlack from "../../static/images/logos/coates-black.svg";
 import nasdaq from "../../static/images/logos/nasdaq.svg";
 import nasdaqBlack from "../../static/images/logos/nasdaq-black.svg";
 import maily from "../../static/images/logos/maily.svg";
@@ -12,8 +14,6 @@ import slik from "../../static/images/logos/slik.svg";
 import slikBlack from "../../static/images/logos/slik-black.svg";
 import nzGovt from "../../static/images/logos/nzgovt.png";
 import nzGovtBlack from "../../static/images/logos/nzgovt-black.png";
-import panopto from "../../static/images/logos/panopto.svg";
-import panoptoBlack from "../../static/images/logos/panopto-black.svg";
 import piston from "../../static/images/logos/piston.png";
 import qantas from "../../static/images/logos/qantas.svg";
 import qantasBlack from "../../static/images/logos/qantas-black.svg";
@@ -52,6 +52,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return chancery;
     case Icon.Cie:
       return cie;
+    case Icon.Coates:
+      return isDark ? coates : coatesBlack;
     case Icon.Nasdaq:
       return isDark ? nasdaq : nasdaqBlack;
     case Icon.Maily:
@@ -62,8 +64,6 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return isDark ? slik : slikBlack;
     case Icon.NzGovt:
       return isDark ? nzGovt : nzGovtBlack;
-    case Icon.Panopto:
-      return isDark ? panopto : panoptoBlack;
     case Icon.Piston:
       return piston;
     case Icon.Qantas:
