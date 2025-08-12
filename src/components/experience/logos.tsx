@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import uoa from "../../../static/images/logos/uoa.png";
 import usyd from "../../../static/images/logos/usyd.svg";
 import qantas from "../../../static/images/logos/qantas.svg";
+import coates from "../../../static/images/logos/coates.svg";
 import nzgovt from "../../../static/images/logos/nzgovt.png";
 
 const Logos = () => (
@@ -17,15 +17,15 @@ const Logos = () => (
     <QantasLogo>
       <img src={qantas} alt="Qantas" />
     </QantasLogo>
+    <CoatesLogo>
+      <img src={coates} alt="Coates Group" />
+    </CoatesLogo>
     <NzGovtLogo>
       <img src={nzgovt} alt="New Zealand Government" />
     </NzGovtLogo>
     <UsydLogo>
       <img src={usyd} alt="University of Sydney" />
     </UsydLogo>
-    <UoaLogo>
-      <img src={uoa} alt="University of Auckland" />
-    </UoaLogo>
   </Container>
 );
 
@@ -92,6 +92,27 @@ const QantasLogo = styled(Logo)`
   }
 `;
 
+const CoatesLogo = styled(Logo)`
+  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
+
+  @media ${layout.up.sm} {
+    border-bottom: 0;
+    border-right: 0.5px solid ${Color.BORDER_WHITE};
+  }
+
+  img {
+    height: 8vw;
+
+    @media ${layout.up.sm} {
+      height: 3.5vw;
+    }
+
+    @media ${layout.up.lg} {
+      height: 1.8vw;
+    }
+  }
+`;
+
 const NzGovtLogo = styled(Logo)`
   border-bottom: 0.5px solid ${Color.BORDER_WHITE};
 
@@ -114,13 +135,6 @@ const NzGovtLogo = styled(Logo)`
 `;
 
 const UsydLogo = styled(Logo)`
-  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
-
-  @media ${layout.up.sm} {
-    border-bottom: 0;
-    border-right: 0.5px solid ${Color.BORDER_WHITE};
-  }
-
   img {
     height: 11vw;
 
@@ -130,20 +144,6 @@ const UsydLogo = styled(Logo)`
 
     @media ${layout.up.lg} {
       height: 2.5vw;
-    }
-  }
-`;
-
-const UoaLogo = styled(Logo)`
-  img {
-    height: 13vw;
-
-    @media ${layout.up.sm} {
-      height: 5vw;
-    }
-
-    @media ${layout.up.lg} {
-      height: 2.6vw;
     }
   }
 `;
