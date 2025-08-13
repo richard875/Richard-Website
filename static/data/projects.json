@@ -161,12 +161,12 @@
     ],
     "techStack": [
       "TypeScript",
+      "Persistent Data Storage",
+      "Caching",
       "Vue 3",
       "Nuxt 3",
       "Tailwind CSS",
-      "IBM Carbon Design System",
-      "Caching",
-      "Persistent Data Storage"
+      "IBM Carbon Design System"
     ]
   },
   {
