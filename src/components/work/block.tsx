@@ -53,7 +53,9 @@ const Block = ({
         <JobTitle $isDarkMode={isDarkMode}>{experience.jobTitle}</JobTitle>
         <Company>{experience.companyTitle}</Company>
         <Secondary className="mt-6 xxxl:mt-9">
-          {experience.start.desktop} — {experience.end.desktop}
+          {experience.start.desktop === experience.end.desktop
+            ? experience.start.desktop
+            : `${experience.start.desktop} — ${experience.end.desktop}`}
         </Secondary>
         <Secondary>
           {experience.city}, {experience.country}
