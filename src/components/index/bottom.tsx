@@ -1,8 +1,9 @@
 import React from "react";
 import gsap from "gsap";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
@@ -15,6 +16,7 @@ import {
   CONTACT_LINKEDIN,
   INDEX_TO_ACKNOWLEDGEMENT_MOBILE,
 } from "../../constants/googleTags";
+import { myExpButtonEffect } from "../../helper/framerConfig";
 import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import { NAME, GITHUB_URL, LINKEDIN_URL } from "../../constants/meta";
 
@@ -63,28 +65,25 @@ const Bottom = ({
         <SmallText className="font-primary-normal mt-1/2 sm:mt-1">
           <h2 ref={sub2Ref}>Sydney, Australia</h2>
         </SmallText>
-        <Button id={`${INDEX_TO_INTRO}_0`}>
-          <div
+        <Button id={`${INDEX_TO_INTRO}_0`} whileHover={myExpButtonEffect}>
+          <ButtonContainer
             ref={contactRef}
             id={`${INDEX_TO_INTRO}_1`}
-            className="flex items-center font-secondary-normal"
+            className="font-secondary-normal"
+            onClick={(e) => routeTo(e, Route.Intro)}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           >
-            <h2
-              id={`${INDEX_TO_INTRO}_2`}
-              className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
-              onClick={(e) => routeTo(e, Route.Intro)}
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-            >
-              My experience
+            <h2 id={`${INDEX_TO_INTRO}_2`} className="text-black">
+              My Experience
             </h2>
             <FontAwesomeIcon
               id={`${INDEX_TO_INTRO}_3`}
-              icon={faCircleChevronRight}
-              className="mt-1"
-              size={"sm"}
+              icon={faChevronRight}
+              className="text-black ml-2"
+              size="sm"
             />
-          </div>
+          </ButtonContainer>
         </Button>
         <Social>
           <FontAwesomeIcon
@@ -191,12 +190,13 @@ const Name = styled.div`
   }
 `;
 
-const Button = styled.div`
+const Button = styled(motion.div)`
   font-size: 16px;
   margin-top: 20px;
   overflow: hidden;
   user-select: none;
   color: ${Color.WHITE};
+  width: fit-content;
 
   @media ${layout.up.sm} {
     font-size: 18px;
@@ -208,10 +208,20 @@ const Button = styled.div`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background-color: ${Color.WHITE};
+  border: 2.5px solid ${Color.BLACK};
+`;
+
 const Social = styled.div`
   display: flex;
   gap: 20px;
-  margin-top: 35px;
+  margin-top: 50px;
   overflow: hidden;
   color: ${Color.WHITE};
 `;
