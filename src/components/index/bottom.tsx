@@ -212,8 +212,8 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   width: fit-content;
-  padding: 6px 14px;
-  border-radius: 6px;
+  padding: 7px 15px;
+  border-radius: 7px;
   background-color: ${Color.WHITE};
   border: 2.5px solid ${Color.BLACK};
 `;
