@@ -24,7 +24,7 @@ export const resumeCircleButtonEffect: WhileHoverType = {
 };
 
 export const ctaEffect = (forward: boolean): WhileHoverType => ({
-  x: forward ? 5 : -5,
+  x: forward ? 7 : -7,
   transition: {
     type: "spring",
     stiffness: 500,
