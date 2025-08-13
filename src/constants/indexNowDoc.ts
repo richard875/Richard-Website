@@ -3,7 +3,7 @@ const indexNowDoc = [
   {
     "HTTP Code": 202,
     Response: "Accepted",
-    Reasons: "URL received. IndexNow key validation pending.",
+    Reasons: "URL received. IndexNow key validation pending",
   },
   { "HTTP Code": 400, Response: "Bad request", Reasons: "Invalid format" },
   {
@@ -22,6 +22,12 @@ const indexNowDoc = [
     "HTTP Code": 429,
     Response: "Too Many Requests",
     Reasons: "Too Many Requests (potential Spam)",
+  },
+  {
+    "HTTP Code": 800,
+    Response: "API Endpoint Failed",
+    Reasons:
+      "Axios API call failed. This is most likely due to an issue with the API endpoint itself",
   },
 ];
 
