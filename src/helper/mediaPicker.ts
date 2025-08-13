@@ -1,6 +1,5 @@
 import Media from "../enums/media";
 import canary from "../../static/videos/canary.mp4";
-import cie from "../../static/videos/cie.mp4";
 import maily from "../../static/videos/maily.mp4";
 import neetcode from "../../static/videos/neetcode.mp4";
 import piston from "../../static/videos/piston.mp4";
@@ -10,8 +9,6 @@ const mediaPicker = (media: string) => {
   switch (media) {
     case Media.Canary:
       return canary;
-    case Media.Cie:
-      return cie;
     case Media.Maily:
       return maily;
     case Media.Neetcode:
