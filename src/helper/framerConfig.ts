@@ -3,12 +3,12 @@ import { VariantLabels, TargetAndTransition } from "framer-motion";
 type WhileHoverType = VariantLabels | TargetAndTransition;
 
 export const myExpButtonEffect: WhileHoverType = {
-  rotate: -10,
+  rotate: -12,
   transition: {
     type: "spring",
     stiffness: 400,
-    damping: 20,
-    mass: 1.5,
+    damping: 12,
+    mass: 0.7,
   },
 };
 
