@@ -29,7 +29,7 @@ const ResumeCircle = ({
     : "!relative !w-[60px] sm:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] sm:!left-[64px] sm:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]";
 
   return (
-    <motion.div whileHover={resumeCircleButtonEffect}>
+    <motion.div whileHover={resumeCircleButtonEffect} className="w-fit">
       <CircleContainer
         id={`${googleTag}_0`}
         $isHome={isHome}
