@@ -73,7 +73,7 @@ const Education = ({ location }: { location: WindowLocation }) => {
               isDarkMode={isDarkMode}
             />
           </div>
-          <span className="hidden sm:block">&nbsp;&nbsp;</span>
+          <span className="hidden select-none sm:block">&nbsp;&nbsp;</span>
           <CallToAction
             name="Contact"
             tagId={EDUCATION_TO_CONTACT}

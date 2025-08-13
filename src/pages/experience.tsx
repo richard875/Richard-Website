@@ -116,7 +116,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
               isDarkMode={isDarkMode}
             />
           </div>
-          <span className="hidden sm:block">&nbsp;&nbsp;</span>
+          <span className="hidden select-none sm:block">&nbsp;&nbsp;</span>
           <div
             id={`${EXPERIENCE_TO_PROJECTS}_0`}
             onClick={() =>

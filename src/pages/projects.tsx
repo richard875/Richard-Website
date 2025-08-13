@@ -126,7 +126,9 @@ const Projects = ({ location }: { location: WindowLocation }) => {
               isDarkMode={isDarkMode}
             />
           </div>
-          <span className="hidden sm:block">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span className="hidden select-none sm:block">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
           <Cta
             id={`${PROJECTS_TO_EDUCATION}_0`}
             className="font-secondary-normal underline underline-offset-2"
@@ -144,7 +146,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
           >
             Education
           </Cta>
-          <span>&nbsp;&nbsp;</span>
+          <span className="select-none">&nbsp;&nbsp;</span>
           <div
             id={`${PROJECTS_TO_CONTACT}_0`}
             onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
