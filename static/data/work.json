@@ -1,16 +1,97 @@
 [
   {
+    "company": "coates",
+    "imageHeight": 45,
+    "jobTitle": "Lead Software Engineer",
+    "companyTitle": "Coates Group",
+    "start": {
+      "mobile": "2024",
+      "desktop": "2024"
+    },
+    "end": {
+      "mobile": "Current",
+      "desktop": "Current"
+    },
+    "city": "Sydney",
+    "country": "Australia",
+    "description": [
+      [
+        {
+          "content": "Leading a team of"
+        },
+        {
+          "content": "5 engineers",
+          "textHighlight": true
+        },
+        {
+          "content": "within a feature team of"
+        },
+        {
+          "content": "12",
+          "textHighlight": true
+        },
+        {
+          "content": ", overseeing daily tasks, mentoring junior engineers, and guiding strategic decisions, with a primary focus on high-level architectural planning."
+        }
+      ],
+      [
+        {
+          "content": "Orchestrated architectural decisions for"
+        },
+        {
+          "content": "McDonald's Digital Menu Board CMS software",
+          "textHighlight": true
+        },
+        {
+          "content": ", collaborating with senior leadership to design a full-stack solution that improved frontend efficiency by"
+        },
+        {
+          "content": "40%",
+          "textHighlight": true
+        },
+        {
+          "content": ". The platform is now deployed across"
+        },
+        {
+          "content": "15,000",
+          "textHighlight": true
+        },
+        {
+          "content": "McDonald's locations in the"
+        },
+        {
+          "content": "United States and Europe",
+          "textHighlight": true
+        },
+        {
+          "content": "."
+        }
+      ]
+    ],
+    "techStack": [
+      "React",
+      "Express.js",
+      "MySQL",
+      "AWS Lambda",
+      "AWS DynamoDB",
+      "Jest",
+      "Micro-frontend architecture",
+      "GitLab",
+      "Custom ORM"
+    ]
+  },
+  {
     "company": "qantas",
     "imageHeight": 45,
     "jobTitle": "Senior Software Engineer",
     "companyTitle": "Qantas Airways",
     "start": {
-      "mobile": "Dec 2022",
-      "desktop": "December 2022"
+      "mobile": "2022",
+      "desktop": "2022"
     },
     "end": {
-      "mobile": "Current",
-      "desktop": "Current"
+      "mobile": "2024",
+      "desktop": "2024"
     },
     "city": "Sydney",
     "country": "Australia",
@@ -110,32 +191,32 @@
     ],
     "techStack": [
       "Next.js",
-      "Preact",
       "Express.js",
+      "Jest",
+      "Mocha Test",
       "AWS Lambda",
       "AWS RDS",
       "AWS Redshift",
-      "Jenkins",
       "Terraform",
       "Ansible",
+      "Jenkins",
       "Splunk",
-      "Jest",
-      "Mocha Test"
+      "Preact"
     ]
   },
   {
     "company": "slik",
     "media": "smh",
     "imageHeight": 50,
-    "jobTitle": "Creative Software Engineer",
+    "jobTitle": "Software Engineer",
     "companyTitle": "SLIK Creative Agency",
     "start": {
-      "mobile": "Jun 2022",
-      "desktop": "June 2022"
+      "mobile": "2022",
+      "desktop": "2022"
     },
     "end": {
-      "mobile": "Dec 2022",
-      "desktop": "December 2022"
+      "mobile": "2022",
+      "desktop": "2022"
     },
     "city": "Sydney",
     "country": "Australia",
@@ -220,16 +301,18 @@
       ]
     ],
     "techStack": [
-      "React/Gatsby",
-      "Node.js/Nest.js",
+      "React",
+      "Gatsby",
+      "Node.js",
+      "Nest.js",
       "MongoDB",
-      "Contentful",
       "AWS S3",
+      "Contentful",
+      "Netlify",
+      "Heroku",
       "Three.js",
       "GSAP",
-      "Blender",
-      "Netlify",
-      "Heroku"
+      "Blender"
     ]
   },
   {
@@ -238,12 +321,12 @@
     "jobTitle": "Software Engineer",
     "companyTitle": "Government of New Zealand, Health NZ",
     "start": {
-      "mobile": "Aug 2021",
-      "desktop": "August 2021"
+      "mobile": "2021",
+      "desktop": "2021"
     },
     "end": {
-      "mobile": "Feb 2022",
-      "desktop": "February 2022"
+      "mobile": "2022",
+      "desktop": "2022"
     },
     "city": "Auckland",
     "country": "New Zealand",
@@ -300,14 +383,14 @@
       ]
     ],
     "techStack": [
-      "Angular",
-      ".NET",
-      "C#",
       "TypeScript",
+      "Angular / NgRx",
       "Redis",
       "Oracle SQL Database",
       "Jira",
-      "Azure DevOps"
+      "Azure DevOps",
+      "C#",
+      ".NET"
     ]
   },
   {
@@ -317,12 +400,12 @@
     "jobTitle": "Software Engineer",
     "companyTitle": "Canary Data Solutions Ltd.",
     "start": {
-      "mobile": "Sep 2020",
-      "desktop": "September 2020"
+      "mobile": "2020",
+      "desktop": "2020"
     },
     "end": {
-      "mobile": "Aug 2021",
-      "desktop": "August 2021"
+      "mobile": "2021",
+      "desktop": "2021"
     },
     "city": "Auckland",
     "country": "New Zealand",
@@ -379,93 +462,30 @@
       ]
     ],
     "techStack": [
-      "Vue",
-      "ASP.NET",
-      "C#/VB",
       "TypeScript",
+      "Vue",
       "Microsoft SQL Server",
       "Jenkins",
-      "Knockout.js",
       "TeamCity",
-      "Octopus Deploy"
-    ]
-  },
-  {
-    "company": "chancery",
-    "imageHeight": 50,
-    "jobTitle": "Software Engineer",
-    "companyTitle": "Chancery Investment (Startup)",
-    "start": {
-      "mobile": "Sep 2020",
-      "desktop": "September 2020"
-    },
-    "end": {
-      "mobile": "Mar 2021",
-      "desktop": "March 2021"
-    },
-    "city": "Berkeley",
-    "country": "California",
-    "description": [
-      [
-        {
-          "content": "Enhanced frontend fetch logic by adding efficient helper functions, significantly improving"
-        },
-        {
-          "content": "data retrieval and processing speed",
-          "textHighlight": true
-        },
-        {
-          "content": "."
-        }
-      ],
-      [
-        {
-          "content": "Optimised the mobile browsing experience by incorporating a comprehensive redesign of the mobile layout, resulting in a more intuitive and responsive interface that boosted"
-        },
-        {
-          "content": "user engagement and satisfaction",
-          "textHighlight": true
-        },
-        {
-          "content": "."
-        }
-      ],
-      [
-        {
-          "content": "Conducted the end-to-end development of frontend UI and logic for the feedback button, integrating user-friendly design elements and robust functionality, enhancing"
-        },
-        {
-          "content": "user interaction and feedback collection",
-          "textHighlight": true
-        },
-        {
-          "content": "mechanisms."
-        }
-      ]
-    ],
-    "techStack": [
-      "React",
-      "Node.js",
-      "MongoDB",
-      "jQuery",
-      "Bootstrap",
-      "Jira",
-      "Trello",
-      "Heroku"
+      "Octopus Deploy",
+      "Knockout.js",
+      "ASP.NET",
+      "C#",
+      "VB"
     ]
   },
   {
     "company": "yourcar",
     "imageHeight": 35,
-    "jobTitle": "Intern Software Developer",
+    "jobTitle": "Software Engineer",
     "companyTitle": "Yourcar (Startup)",
     "start": {
-      "mobile": "Dec 2019",
-      "desktop": "December 2019"
+      "mobile": "2019",
+      "desktop": "2019"
     },
     "end": {
-      "mobile": "Sep 2020",
-      "desktop": "September 2020"
+      "mobile": "2020",
+      "desktop": "2020"
     },
     "city": "Auckland",
     "country": "New Zealand",
@@ -522,7 +542,8 @@
       ]
     ],
     "techStack": [
-      "React/Next.js",
+      "React",
+      "Next.js",
       "PostgreSQL",
       "GraphQL",
       "Postman API Testing",
@@ -533,49 +554,27 @@
     ]
   },
   {
-    "company": "uoa",
-    "media": "cie",
-    "imageHeight": 55,
-    "jobTitle": "Frontend Software Developer",
-    "companyTitle": "The University of Auckland",
+    "company": "chancery",
+    "imageHeight": 50,
+    "jobTitle": "Junior Software Engineer",
+    "companyTitle": "Chancery Investment (Startup)",
     "start": {
-      "mobile": "Jan 2020",
-      "desktop": "January 2020"
+      "mobile": "2017",
+      "desktop": "2017"
     },
     "end": {
-      "mobile": "Nov 2020",
-      "desktop": "November 2020"
+      "mobile": "2019",
+      "desktop": "2019"
     },
-    "city": "Auckland",
-    "country": "New Zealand",
+    "city": "Berkeley",
+    "country": "California",
     "description": [
       [
         {
-          "content": "Working in a team of"
+          "content": "Enhanced frontend fetch logic by adding efficient helper functions, significantly improving"
         },
         {
-          "content": "Four",
-          "textHighlight": true
-        },
-        {
-          "content": ", I implemented innovative upgrades to the website for the University's startup incubator"
-        },
-        {
-          "content": "Velocity",
-          "url": "https://www.velocity.auckland.ac.nz/"
-        },
-        {
-          "content": ", utilising"
-        },
-        {
-          "content": "JavaScript",
-          "textHighlight": true
-        },
-        {
-          "content": "and"
-        },
-        {
-          "content": "WordPress",
+          "content": "data retrieval and processing speed",
           "textHighlight": true
         },
         {
@@ -584,17 +583,10 @@
       ],
       [
         {
-          "content": "Collaborated closely with University senior management to strategise and execute seamless"
+          "content": "Optimised the mobile browsing experience by incorporating a comprehensive redesign of the mobile layout, resulting in a more intuitive and responsive interface that boosted"
         },
         {
-          "content": "communication plans",
-          "textHighlight": true
-        },
-        {
-          "content": ", ensuring a coordinated and effective website"
-        },
-        {
-          "content": "deployment",
+          "content": "user engagement and satisfaction",
           "textHighlight": true
         },
         {
@@ -603,32 +595,26 @@
       ],
       [
         {
-          "content": "Orchestrated ongoing"
+          "content": "Conducted the end-to-end development of frontend UI and logic for the feedback button, integrating user-friendly design elements and robust functionality, enhancing"
         },
         {
-          "content": "maintenance",
+          "content": "user interaction and feedback collection",
           "textHighlight": true
         },
         {
-          "content": "and"
-        },
-        {
-          "content": "enhancements",
-          "textHighlight": true
-        },
-        {
-          "content": "for the Velocity Website to ensure seamless functionality and user experience."
+          "content": "mechanisms."
         }
       ]
     ],
     "techStack": [
-      "Communication Skills",
-      "Project Management",
-      "WordPress",
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "Git"
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Heroku",
+      "Bootstrap",
+      "Jira",
+      "Trello",
+      "jQuery"
     ]
   }
 ]
