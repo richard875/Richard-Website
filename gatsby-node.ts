@@ -14,6 +14,6 @@ exports.onPostBuild = async ({ reporter }: { reporter: Reporter }) => {
 
   // Post Build Script Index Now (Bing, Naver, Seznam, Yandex)
   reporter.info("------------------IndexNow Indexing------------------");
-  await indexNowPostBuild(reporter);
+  // await indexNowPostBuild(reporter);
   reporter.info("-----------------------------------------------------");
 };
