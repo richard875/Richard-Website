@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import {
   faCircleChevronLeft,
   faCircleChevronRight,
@@ -8,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Color from "../../enums/color";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
+import { ctaEffect } from "../../helper/framerConfig";
 
 const CallToAction = ({
   name,
@@ -28,14 +30,17 @@ const CallToAction = ({
   isDarkMode?: boolean;
   fromIntro?: boolean;
 }) => {
-  const styleGenerator = () =>
-    fromIntro
-      ? forward
-        ? "pr-2 hover:pr-3 underline-offset-4"
-        : "pl-2 hover:pl-3 underline-offset-4"
-      : forward
-      ? "pr-1.5 hover:pr-3 pl-1.5 hover:pl-0 underline-offset-2"
-      : "pl-1.5 hover:pl-3 underline-offset-2";
+  const [ctaHover, setCtaHover] = React.useState(false);
+
+  const handleMouseEnter = () => {
+    setHover(true);
+    setCtaHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(false);
+    setCtaHover(false);
+  };
 
   return (
     <Cta
@@ -43,31 +48,37 @@ const CallToAction = ({
       $forward={forward}
       $isDarkMode={fromIntro ? true : isDarkMode}
       className="font-secondary-normal"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {!forward && (
-        <FontAwesomeIcon
-          id={`${tagId}_${tagIdStartNum + 1}`}
-          icon={faCircleChevronLeft}
-          size={fromIntro ? ("" as any) : "sm"}
-          className="mt-0.5"
-        />
+        <motion.div animate={ctaHover ? ctaEffect(forward) : {}}>
+          <FontAwesomeIcon
+            id={`${tagId}_${tagIdStartNum + 1}`}
+            icon={faCircleChevronLeft}
+            size={fromIntro ? ("" as any) : "sm"}
+            className={`mt-1.5 ${fromIntro ? "mr-2" : "mr-1.5"}`}
+          />
+        </motion.div>
       )}
       <h2
         id={`${tagId}_${tagIdStartNum + 2}`}
         onClick={(e) => routeTo(e, route, isDarkMode)}
-        className={`${styleGenerator()} transition-all ease-in-out underline select-none`}
+        className={`${
+          fromIntro ? "underline-offset-4" : "underline-offset-2"
+        } transition-all ease-in-out underline select-none`}
       >
         {name}
       </h2>
       {forward && (
-        <FontAwesomeIcon
-          id={`${tagId}_${tagIdStartNum + 3}`}
-          icon={faCircleChevronRight}
-          size={fromIntro ? ("" as any) : "sm"}
-          className="mt-0.5"
-        />
+        <motion.div animate={ctaHover ? ctaEffect(forward) : {}}>
+          <FontAwesomeIcon
+            id={`${tagId}_${tagIdStartNum + 3}`}
+            icon={faCircleChevronRight}
+            size={fromIntro ? ("" as any) : "sm"}
+            className={`mt-2 ${fromIntro ? "ml-2" : "ml-1.5"} `}
+          />
+        </motion.div>
       )}
     </Cta>
   );

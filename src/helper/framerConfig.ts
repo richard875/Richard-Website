@@ -23,3 +23,13 @@ export const resumeCircleButtonEffect: WhileHoverType = {
     delay: 0,
   },
 };
+
+export const ctaEffect = (forward: boolean): WhileHoverType => ({
+  x: forward ? 5 : -5,
+  transition: {
+    type: "spring",
+    stiffness: 500,
+    damping: 10,
+    mass: 1,
+  },
+});
