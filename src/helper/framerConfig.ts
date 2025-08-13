@@ -13,14 +13,13 @@ export const myExpButtonEffect: WhileHoverType = {
 };
 
 export const resumeCircleButtonEffect: WhileHoverType = {
-  rotate: -170,
+  rotate: -175,
   scale: 1.07,
   transition: {
     type: "spring",
-    stiffness: 450,
-    damping: 60,
-    mass: 5.5,
-    delay: 0,
+    stiffness: 400,
+    damping: 20,
+    mass: 2,
   },
 };
 
