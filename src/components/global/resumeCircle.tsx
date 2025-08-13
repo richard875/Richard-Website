@@ -5,6 +5,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import getResume from "../../helper/getResume";
+import { resumeCircleButtonEffect } from "../../helper/framerConfig";
 import { INDEX_RESUME, CONTACT_RESUME } from "../../constants/googleTags";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";
@@ -28,33 +29,35 @@ const ResumeCircle = ({
     : "!relative !w-[60px] sm:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] sm:!left-[64px] sm:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]";
 
   return (
-    <CircleContainer
-      id={`${googleTag}_0`}
-      $isHome={isHome}
-      initial={motionInitial}
-      animate={motionAnimate}
-      transition={motionTransition}
-      onClick={(e) => getResume(e)}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <Circle id={`${googleTag}_1`}>
+    <motion.div whileHover={resumeCircleButtonEffect}>
+      <CircleContainer
+        id={`${googleTag}_0`}
+        $isHome={isHome}
+        initial={motionInitial}
+        animate={motionAnimate}
+        transition={motionTransition}
+        onClick={(e) => getResume(e)}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        <Circle id={`${googleTag}_1`}>
+          <StaticImage
+            id={`${googleTag}_2`}
+            alt="Resume Circle"
+            src={CIRCLE}
+            className="relative h-5/6 w-5/6"
+            placeholder="none"
+          />
+        </Circle>
         <StaticImage
-          id={`${googleTag}_2`}
+          id={`${googleTag}_3`}
           alt="Resume Circle"
-          src={CIRCLE}
-          className="relative h-5/6 w-5/6"
+          src={ARROW}
+          className={arrowClass}
           placeholder="none"
         />
-      </Circle>
-      <StaticImage
-        id={`${googleTag}_3`}
-        alt="Resume Circle"
-        src={ARROW}
-        className={arrowClass}
-        placeholder="none"
-      />
-    </CircleContainer>
+      </CircleContainer>
+    </motion.div>
   );
 };
 
@@ -65,11 +68,6 @@ const CircleContainer = styled(motion.div)<{ $isHome: boolean }>`
   height: ${({ $isHome }) => ($isHome ? "130px" : "170px")};
   user-select: none;
   border-radius: 99px;
-  transition: 0.5s all cubic-bezier(0.045, 0.32, 0.265, 1);
-
-  &:hover {
-    transform: rotate(-170deg) scale(1.07) !important;
-  }
 
   @media ${layout.up.sm} {
     width: ${({ $isHome }) => ($isHome ? "150px" : "200px")};
@@ -89,7 +87,7 @@ const Circle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid ${Color.BLACK};
+  border: 2.5px solid ${Color.BLACK};
   background: ${Color.BRIGHT_GREEN};
   animation: rotation 12s infinite linear;
 
