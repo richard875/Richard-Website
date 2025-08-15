@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
+import { ctaEffect } from "../../helper/framerConfig";
 import { PROJECTS_LINK } from "../../constants/googleTags";
 
 const ProjectLink = ({
@@ -17,34 +19,34 @@ const ProjectLink = ({
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
 }) => {
+  const [ctaHover, setCtaHover] = React.useState(false);
+  React.useEffect(() => setHover(ctaHover), [ctaHover]);
+
   return (
     <Cta
       id={`${PROJECTS_LINK}_${name}_0`}
-      className="font-secondary-normal"
+      className="font-secondary-normal underline underline-offset-2"
       $isDarkMode={isDarkMode}
+      onMouseEnter={() => setCtaHover(true)}
+      onMouseLeave={() => setCtaHover(false)}
     >
-      <span
+      <a
         id={`${PROJECTS_LINK}_${name}_1`}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        className="pr-1.5 hover:pr-3 transition-all ease-in-out underline underline-offset-2"
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="cursor-none"
       >
-        <a
+        View Project
+      </a>
+      <motion.div animate={ctaHover ? ctaEffect(true) : {}}>
+        <FontAwesomeIcon
           id={`${PROJECTS_LINK}_${name}_2`}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cursor-none"
-        >
-          View Project
-        </a>
-      </span>
-      <FontAwesomeIcon
-        id={`${PROJECTS_LINK}_${name}_3`}
-        icon={faCircleChevronRight}
-        size={"sm"}
-        className="mt-1"
-      />
+          icon={faCircleChevronRight}
+          size="sm"
+          className="mt-1.5 ml-1.5"
+        />
+      </motion.div>
     </Cta>
   );
 };
