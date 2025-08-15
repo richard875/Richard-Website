@@ -31,25 +31,17 @@ const CallToAction = ({
   fromIntro?: boolean;
 }) => {
   const [ctaHover, setCtaHover] = React.useState(false);
-
-  const handleMouseEnter = () => {
-    setHover(true);
-    setCtaHover(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(false);
-    setCtaHover(false);
-  };
+  React.useEffect(() => setHover(ctaHover), [ctaHover]);
 
   return (
     <Cta
       id={`${tagId}_${tagIdStartNum}`}
       $forward={forward}
+      $fromIntro={fromIntro}
       $isDarkMode={fromIntro ? true : isDarkMode}
-      className="font-secondary-normal"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className="font-secondary-normal select-none underline"
+      onMouseEnter={() => setCtaHover(true)}
+      onMouseLeave={() => setCtaHover(false)}
     >
       {!forward && (
         <motion.div animate={ctaHover ? ctaEffect(forward) : {}}>
@@ -64,9 +56,6 @@ const CallToAction = ({
       <h2
         id={`${tagId}_${tagIdStartNum + 2}`}
         onClick={(e) => routeTo(e, route, isDarkMode)}
-        className={`${
-          fromIntro ? "underline-offset-4" : "underline-offset-2"
-        } transition-all ease-in-out underline select-none`}
       >
         {name}
       </h2>
@@ -86,9 +75,14 @@ const CallToAction = ({
 
 export default CallToAction;
 
-const Cta = styled.div<{ $forward: boolean; $isDarkMode: boolean }>`
+const Cta = styled.div<{
+  $forward: boolean;
+  $isDarkMode: boolean;
+  $fromIntro: boolean;
+}>`
   display: flex;
   align-items: center;
+  text-underline-offset: ${({ $fromIntro }) => ($fromIntro ? "4px" : "2px")};
   color: ${({ $forward, $isDarkMode }) =>
     $forward
       ? $isDarkMode
