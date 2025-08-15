@@ -141,7 +141,20 @@ const Container = styled.div`
   overflow: hidden;
   position: relative;
   padding: 15px 12px 5px 12px;
-  background: linear-gradient(90deg, #f55591 0%, #f9c41a 100%);
+  background: linear-gradient(
+    -45deg,
+    #f9c41a,
+    #f4b942,
+    #ff8a50,
+    #ff6b9d,
+    #f55591,
+    #ff6b9d,
+    #ff8a50,
+    #f4b942,
+    #f9c41a
+  );
+  background-size: 180% 180%;
+  animation: gradient-animation 15s ease-in-out infinite;
 
   @media ${layout.up.sm} {
     padding: 3vh 5vw;
@@ -149,6 +162,18 @@ const Container = styled.div`
 
   @media ${layout.up.lg} {
     padding: 3vh 3vw 3vw 3vw;
+  }
+
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 `;
 
