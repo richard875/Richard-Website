@@ -12,13 +12,11 @@ const googlePostBuild = async (reporter: Reporter) => {
     .GOOGLE_PRIVATE_KEY!.split(String.raw`\n`)
     .join("\n");
 
-  const jwtClient = new google.auth.JWT(
-    client_email,
-    null as any,
-    private_key,
-    [`${HTTPS}www.googleapis.com/auth/indexing`],
-    null as any
-  );
+  const jwtClient = new google.auth.JWT({
+    email: client_email,
+    key: private_key,
+    scopes: [`${HTTPS}www.googleapis.com/auth/indexing`],
+  });
 
   const token = await jwtClient.authorize();
   for (const url of urlList) {
