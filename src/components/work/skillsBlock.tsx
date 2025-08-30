@@ -60,7 +60,14 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
           <SkillsTextWrapper>
             <SkillsText $isTitle={false}>
               <span className="md:hidden"> - </span>
-              {skill.displayName}
+              {skill.displayNameMobile ? (
+                <>
+                  <span className="hidden md:block">{skill.displayName}</span>
+                  <span className="md:hidden">{skill.displayNameMobile}</span>
+                </>
+              ) : (
+                <span>{skill.displayName}</span>
+              )}
             </SkillsText>
             <SkillsImage
               src={iconPicker(skill.name, isDarkMode)}
