@@ -4,14 +4,8 @@
     "imageHeight": 45,
     "jobTitle": "Lead Software Engineer",
     "companyTitle": "Coates Group",
-    "start": {
-      "mobile": "2024",
-      "desktop": "2024"
-    },
-    "end": {
-      "mobile": "Current",
-      "desktop": "Current"
-    },
+    "start": "2024",
+    "end": "Current",
     "city": "Sydney",
     "country": "Australia",
     "description": [
@@ -85,14 +79,8 @@
     "imageHeight": 45,
     "jobTitle": "Senior Software Engineer",
     "companyTitle": "Qantas Airways",
-    "start": {
-      "mobile": "2022",
-      "desktop": "2022"
-    },
-    "end": {
-      "mobile": "2024",
-      "desktop": "2024"
-    },
+    "start": "2022",
+    "end": "2024",
     "city": "Sydney",
     "country": "Australia",
     "description": [
@@ -210,14 +198,8 @@
     "imageHeight": 50,
     "jobTitle": "Software Engineer",
     "companyTitle": "SLIK Creative Agency",
-    "start": {
-      "mobile": "2022",
-      "desktop": "2022"
-    },
-    "end": {
-      "mobile": "2022",
-      "desktop": "2022"
-    },
+    "start": "2022",
+    "end": "2022",
     "city": "Sydney",
     "country": "Australia",
     "description": [
@@ -320,14 +302,8 @@
     "imageHeight": 55,
     "jobTitle": "Software Engineer",
     "companyTitle": "Government of New Zealand, Health NZ",
-    "start": {
-      "mobile": "2021",
-      "desktop": "2021"
-    },
-    "end": {
-      "mobile": "2022",
-      "desktop": "2022"
-    },
+    "start": "2021",
+    "end": "2022",
     "city": "Auckland",
     "country": "New Zealand",
     "description": [
@@ -399,14 +375,8 @@
     "imageHeight": 45,
     "jobTitle": "Software Engineer",
     "companyTitle": "Canary Data Solutions Ltd.",
-    "start": {
-      "mobile": "2020",
-      "desktop": "2020"
-    },
-    "end": {
-      "mobile": "2021",
-      "desktop": "2021"
-    },
+    "start": "2020",
+    "end": "2021",
     "city": "Auckland",
     "country": "New Zealand",
     "description": [
@@ -479,14 +449,8 @@
     "imageHeight": 35,
     "jobTitle": "Software Engineer",
     "companyTitle": "Yourcar (Startup)",
-    "start": {
-      "mobile": "2019",
-      "desktop": "2019"
-    },
-    "end": {
-      "mobile": "2020",
-      "desktop": "2020"
-    },
+    "start": "2019",
+    "end": "2020",
     "city": "Auckland",
     "country": "New Zealand",
     "description": [
@@ -558,14 +522,8 @@
     "imageHeight": 50,
     "jobTitle": "Junior Software Engineer",
     "companyTitle": "Chancery Investment (Startup)",
-    "start": {
-      "mobile": "2017",
-      "desktop": "2017"
-    },
-    "end": {
-      "mobile": "2019",
-      "desktop": "2019"
-    },
+    "start": "2017",
+    "end": "2019",
     "city": "Berkeley",
     "country": "California",
     "description": [
