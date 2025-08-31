@@ -2,8 +2,8 @@ import Icon from "../enums/icons";
 
 import canary from "../../static/images/logos/canary.svg";
 import canaryBlack from "../../static/images/logos/canary-black.svg";
-import chancery from "../../static/images/logos/chancery.png";
-import cie from "../../static/images/logos/cie.png";
+import chancery from "../../static/images/logos/chancery.svg";
+import cie from "../../static/images/logos/cie.svg";
 import coates from "../../static/images/logos/coates.svg";
 import coatesBlack from "../../static/images/logos/coates-black.svg";
 import nasdaq from "../../static/images/logos/nasdaq.svg";
@@ -22,8 +22,8 @@ import uoa from "../../static/images/logos/uoa.png";
 import usyd from "../../static/images/logos/usyd.svg";
 import usydBlack from "../../static/images/logos/usyd-black.svg";
 import yourcar from "../../static/images/logos/yourcar.svg";
-import youtube from "../../static/images/logos/youtube.png";
-import youtubeBlack from "../../static/images/logos/youtube-black.png";
+import youtube from "../../static/images/logos/youtube.svg";
+import youtubeBlack from "../../static/images/logos/youtube-black.svg";
 
 import angular from "../../static/images/skills/angular.svg";
 import aws from "../../static/images/skills/aws.svg";

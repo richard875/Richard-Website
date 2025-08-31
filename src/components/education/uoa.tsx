@@ -26,7 +26,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
       <UniversityText $isDarkMode={isDarkMode}>
         The University of Auckland
       </UniversityText>
-      <h3 className="mt-1 mb-9 text-lg xxxl:text-xl">
+      <h3 className="mt-1 md:mb-9 text-lg xxxl:text-xl">
         Bachelor of Science | Computer Science
       </h3>
       <SummaryText>
@@ -63,7 +63,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
         skills.
       </SummaryText>
       <img
-        className="mt-8 mb-2 h-4 w-auto select-none"
+        className="mt-5 md:mt-8 mb-2 h-4 w-auto select-none"
         src={iconPicker(Icon.Redbull, isDarkMode)}
         alt="Red Bull"
       />

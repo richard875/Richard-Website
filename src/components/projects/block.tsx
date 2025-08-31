@@ -136,7 +136,7 @@ const Container = styled.div<{
   $isLast: boolean;
   $isDarkMode: boolean;
 }>`
-  margin-top: ${({ $isFirst }) => ($isFirst ? "0" : "30px")};
+  margin-top: ${({ $isFirst }) => ($isFirst ? "20px" : "25px")};
   padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
   padding-right: ${BLOCK_PADDING + "px"};
@@ -163,8 +163,6 @@ const Container = styled.div<{
 const Logo = styled.img<{ $height: number }>`
   height: ${({ $height }) => $height + "px"};
   width: auto;
-  margin-top: ${({ $height }) =>
-    15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   margin-bottom: ${({ $height }) =>
     15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
   user-select: none;

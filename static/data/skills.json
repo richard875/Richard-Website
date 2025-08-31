@@ -18,6 +18,7 @@
     {
       "name": "postgresql",
       "displayName": "MySQL / PostgreSQL / Microsoft SQL Server",
+      "displayNameMobile": "MySQL / PostgreSQL",
       "skill": 85
     },
     {

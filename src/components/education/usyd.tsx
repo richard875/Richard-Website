@@ -26,7 +26,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
       <UniversityText $isDarkMode={isDarkMode}>
         The University of Sydney
       </UniversityText>
-      <h3 className="mt-1 mb-9 text-lg xxxl:text-xl">
+      <h3 className="mt-1 md:mb-9 text-lg xxxl:text-xl">
         Bachelor of Science (Honours) | Computer Science
       </h3>
       <SummaryText>
@@ -57,7 +57,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
       </SummaryText>
       <h3
         style={{ color: isDarkMode ? Color.BLUE : Color.RED }}
-        className="mt-8 text-lg xxxl:text-xl"
+        className="mt-5 md:mt-8 text-lg xxxl:text-xl"
       >
         Academic Experience
       </h3>

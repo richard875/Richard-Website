@@ -56,7 +56,7 @@ export default ProjectLink;
 const Cta = styled.div<{ $isDarkMode: boolean }>`
   display: flex;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-left: 5px;
   font-size: 16px;
   user-select: none;
@@ -65,6 +65,7 @@ const Cta = styled.div<{ $isDarkMode: boolean }>`
 
   @media ${layout.up.md} {
     margin-left: 0;
+    margin-top: 20px;
   }
 
   @media ${layout.up.xxxl} {
