@@ -115,7 +115,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
 export default SkillsBlock;
 
 const Container = styled.div<{ $isDarkMode: boolean }>`
-  padding-top: 10px;
+  padding-top: 12px;
   padding-bottom: 10px;
   padding-left: ${BLOCK_PADDING + "px"};
   padding-right: ${BLOCK_PADDING + "px"};
