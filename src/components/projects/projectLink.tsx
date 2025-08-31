@@ -65,6 +65,7 @@ const Cta = styled.div<{ $isDarkMode: boolean }>`
 
   @media ${layout.up.md} {
     margin-left: 0;
+    margin-top: 20px;
   }
 
   @media ${layout.up.xxxl} {
