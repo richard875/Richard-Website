@@ -75,7 +75,9 @@ const Contact = ({ location }: { location: WindowLocation }) => {
           <div>
             <ContactText>Get in touch with me!</ContactText>
             <ContactEmail className="pt-3 md:pt-12">
-              Email me at:&nbsp;
+              Email me at:
+              <span className="hidden md:inline">&nbsp;</span>
+              <br className="md:hidden" />
               <span
                 id={`${CONTACT_EMAIL}_0`}
                 className="underline decoration-dotted hover:text-gray-400 transition-all"
