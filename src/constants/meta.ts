@@ -16,7 +16,7 @@ export const STANDALONE = "standalone";
 export const RESUME_FILE = "richard-resume.pdf";
 export const STANDALONE_URL = `?${MODE}=${STANDALONE}`;
 export const ORGANIZATION = process.env.GATSBY_ORGANIZATION;
-export const COPYRIGHT = `© ${new Date().getFullYear()} ${NAME}`;
+export const COPYRIGHT = `© ${new Date().getFullYear()} ${NAME} | All rights reserved.`;
 
 // Site Title and Description
 export const REGION = "Sydney, Australia";
