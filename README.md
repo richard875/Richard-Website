@@ -10,45 +10,66 @@
 
 ## Overview
 
-This repository contains the codebase for the redesign of my personal website, [richardeverley.com](https://richardeverley.com/?utm_source=github&utm_medium=web). The website has undergone a significant overhaul to enhance user experience, incorporate modern design elements, and improve performance.
+This repository contains the source code for the 2023 redesign of my personal website, [richardeverley.com](https://richardeverley.com/?utm_source=github&utm_medium=web). The site has been comprehensively reimagined to deliver an enhanced user experience, modern aesthetics, and superior performance.
 
-## Features
+## Key Features
 
-- **Fresh Design**: A modern, clean, and intuitive design that aims to provide a seamless browsing experience.
-- **Responsive Layout**: Ensures compatibility across various devices and screen sizes for optimal viewing.
-- **Improved Performance**: Optimised code and assets to enhance site speed and overall performance.
-- **Enhanced Content**: Updated content, portfolio, and page sections to reflect recent projects and experiences.
-- **Accessibility**: Implemented accessibility features to ensure inclusivity for all users.
-- **Tech Stack**: Built using TypeScript, React, Gatsby, Tailwind CSS, Three.js, and more.
+- **Modern Design**: Clean, intuitive, and visually appealing interface for a seamless browsing experience.
+- **Fully Responsive**: Optimized for all devices and screen sizes, ensuring consistent usability everywhere.
+- **Performance Optimized**: Streamlined code and assets for fast load times and smooth navigation.
+- **Updated Content**: Showcases recent projects, experiences, and an up-to-date portfolio.
+- **Accessibility Focused**: Inclusive design practices to ensure the site is usable by everyone.
+- **Advanced Tech Stack**: Developed with TypeScript, React, Gatsby, Tailwind CSS, Three.js, and more.
 
-## Installation
+## Getting Started
 
-To run this project locally, follow these steps:
+To set up and run the project locally:
 
-1. Clone this repository: `git clone git@github.com:richard875/Richard-Website.git`
-2. Navigate to the project folder
-3. Install dependencies: `npm install`
-4. Start the development server: `npm start`
-5. Open your browser and visit: `http://localhost:8000` to view the website.
+1. **Clone the repository:**
+   ```sh
+   git clone git@github.com:richard875/Richard-Website.git
+   ```
+2. **Navigate to the project directory:**
+   ```sh
+   cd Richard-Website
+   ```
+3. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+4. **Start the development server:**
+   ```sh
+   npm start
+   ```
+5. **Open your browser and visit:** [http://localhost:8000](http://localhost:8000)
 
 ## Usage
 
-- Explore the website by navigating through different sections.
-- Provide feedback, report issues, or contribute to the project by creating pull requests.
+- Browse the website to explore various sections, including projects, experience, and contact information.
+- Feedback, bug reports, and contributions are highly encouraged via pull requests.
 
-## Contributions
+## Contributing
 
-Contributions are welcome! If you'd like to contribute:
+Contributions are welcome! To contribute:
 
-1. Fork the repository.
-2. Create your feature branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Open a pull request detailing the changes proposed.
+1. **Fork** the repository.
+2. **Create a feature branch:**
+   ```sh
+   git checkout -b feature/your-feature
+   ```
+3. **Commit your changes:**
+   ```sh
+   git commit -m 'Add some feature'
+   ```
+4. **Push to your branch:**
+   ```sh
+   git push origin feature/your-feature
+   ```
+5. **Open a pull request** with a clear description of your changes.
 
 ## Feedback
 
-Your feedback is highly appreciated! Feel free to [reach out](mailto:hello@richardeverley.com) with suggestions, bug reports, or any other comments.
+Your feedback is greatly appreciated! Please feel free to [contact me](mailto:hello@richardeverley.com) with suggestions, bug reports, or general comments.
 
 ## License
 
