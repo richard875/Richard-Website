@@ -21,7 +21,12 @@ import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import { CONTACT_EMAIL, CONTACT_TO_INDEX_TOP } from "../constants/googleTags";
-import { PAGE_TITLE, CONTACT_TITLE, EMAIL, COPYRIGHT } from "../constants/meta";
+import {
+  PAGE_TITLE,
+  CONTACT_TITLE,
+  EMAIL,
+  COPYRIGHT_LONG,
+} from "../constants/meta";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const CURRENT_PAGE_TITLE = `${CONTACT_TITLE}${PAGE_TITLE}`;
@@ -96,7 +101,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
               </span>
             </ContactEmail>
           </div>
-          <p className="hidden md:block">{COPYRIGHT}</p>
+          <p className="hidden md:block">{COPYRIGHT_LONG}</p>
           <div className="mt-8 md:hidden">
             <ResumeCircle isHome={false} setHover={setHover} />
           </div>
@@ -112,7 +117,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
             animate={{ opacity: 1 }}
             transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
           >
-            <p className="mt-5 md:mt-0">{COPYRIGHT}</p>
+            <p className="mt-5 md:mt-0">{COPYRIGHT_LONG}</p>
           </motion.div>
         </Right>
       </Box>
