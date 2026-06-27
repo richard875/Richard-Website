@@ -84,7 +84,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
     >
       <InitialTransition color={transitionColor} />
       <Horizontal ref={slider} $entryLength={projectsData.length}>
-        {projectsData.map((project: MyProjects, index: number) => (
+        {(projectsData as MyProjects[]).map((project: MyProjects, index: number) => (
           <Block
             key={index}
             index={index}

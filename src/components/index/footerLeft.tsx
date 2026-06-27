@@ -16,7 +16,10 @@ const FooterLeft = ({
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out" });
-    gsap.from(acknowledgementRef.current, 1, gsapAnimationIndex(150, 1, 20));
+    gsap.from(acknowledgementRef.current, {
+      duration: 1,
+      ...gsapAnimationIndex(150, 1, 20),
+    });
   }, []);
 
   return (

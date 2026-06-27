@@ -84,7 +84,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={transitionColor} />
       <Horizontal ref={slider} $entryLength={workData.length + 1}>
         <SkillsBlock isDarkMode={isDarkMode} />
-        {workData.map((experience: WorkExperience, index: number) => (
+        {(workData as WorkExperience[]).map((experience: WorkExperience, index: number) => (
           <Block
             key={index}
             index={index}

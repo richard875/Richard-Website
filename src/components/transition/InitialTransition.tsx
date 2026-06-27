@@ -12,7 +12,10 @@ const InitialTransition = ({ color }: { color: string }) => {
       color={color}
       initial={{ bottom: 0, height: "0px" }}
       exit={{ height: "100vh" }}
-      transition={{ duration: 0.8, ease: [0.87, 0, 0.13, 1] }}
+      transition={{
+        duration: 0.8,
+        ease: [0.87, 0, 0.13, 1] as [number, number, number, number],
+      }}
     ></Transition>
   );
 };

@@ -22,7 +22,7 @@ const TextSection = ({
   content: string;
   textHighlight?: boolean;
   url?: string;
-  clickableRef: React.RefObject<HTMLAnchorElement>;
+  clickableRef: React.RefObject<HTMLAnchorElement | null>;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplayMedia: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;

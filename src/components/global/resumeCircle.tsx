@@ -21,9 +21,10 @@ const ResumeCircle = ({
   const googleTag = isHome ? INDEX_RESUME : CONTACT_RESUME;
   const motionInitial = isHome ? { opacity: 0, scale: 0.5 } : { opacity: 0 };
   const motionAnimate = isHome ? { opacity: 1, scale: 1 } : { opacity: 1 };
+  const ease: [number, number, number, number] = [0, 0.71, 0.2, 1.01];
   const motionTransition = isHome
-    ? { duration: 2, delay: 1.5, ease: [0, 0.71, 0.2, 1.01] }
-    : { duration: 0.4, delay: 0.3, ease: [0, 0.71, 0.2, 1.01] };
+    ? { duration: 2, delay: 1.5, ease }
+    : { duration: 0.4, delay: 0.3, ease };
   const arrowClass = isHome
     ? "!relative !w-[45px] sm:!w-[50px] lg:!w-[60px] !left-[42px] !bottom-[75px] sm:!left-[50px] sm:!bottom-[86px] lg:!left-[55px] lg:!bottom-[98px]"
     : "!relative !w-[60px] sm:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] sm:!left-[64px] sm:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]";
