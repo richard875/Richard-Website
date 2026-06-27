@@ -1,3 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Custom breakpoints (migrated from the Tailwind 3 `theme.screens` config).
+   `--breakpoint-*: initial` clears Tailwind 4's defaults so only these remain,
+   matching the v3 behaviour and the breakpoints used in src/styles/layout.ts. */
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1450px;
+  --breakpoint-xxxl: 1600px;
+}
+
+/* Tailwind 4 auto-detects sources from the project root, but Gatsby's CSS lives
+   outside the default scan path, so declare the component/page sources explicitly. */
+@source "../pages";
+@source "../components";
