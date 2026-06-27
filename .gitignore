@@ -13,3 +13,6 @@ yarn.lock
 .env
 .env.development
 .env.production
+
+# Claude Code (machine-local settings)
+.claude/settings.local.json
