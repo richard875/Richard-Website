@@ -45,6 +45,6 @@ export const DESCRIPTION_INTRO =
   "You can connect with me on LinkedIn, check out my repositories on GitHub, or reach out to me via email. I hope you find my page enjoyable and have a great day!";
 export const DESCRIPTION_PROJECTS = `${FIRST_NAME}'s versatile skills showcase a range of technologies and applications, demonstrating proficiency in frontend, backend, database, and mobile development.`;
 export const DESCRIPTION_INDEX = `G'day, I'm ${FIRST_NAME}. I'm a ${OCCUPATION} and Creative Designer from ${REGION}. On this corner of the internet, you'll find information about me.`;
-export const DESCRIPTION_EXPERIENCE = `${NAME} is a Senior Software Engineer at Coates Group, mastering JavaScript, React, AWS, and .NET, steering teams and innovating tech solutions.`;
+export const DESCRIPTION_EXPERIENCE = `${NAME} is a Lead Software Engineer at Coates Group, mastering JavaScript, React, AWS, and .NET, steering teams and innovating tech solutions.`;
 export const DESCRIPTION_EDUCATION =
   "Research-driven Honours graduate from the University of Sydney in Computer Science. Explored WebAssembly, edge computing, and led academic modules while excelling at Auckland in diverse disciplines, leadership, and innovation.";
