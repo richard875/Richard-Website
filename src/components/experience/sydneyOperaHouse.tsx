@@ -33,8 +33,15 @@ const Model = React.memo(() => {
   const { scene } = useThree();
 
   // Hooks
-  const [ambientLightIntensity, setAmbientLightIntensity] = React.useState(0.2);
-  const [hemiLightIntensity, setHemiLightIntensity] = React.useState(0.8);
+  // three r155 removed `useLegacyLights`; light intensities are now physically
+  // scaled and render dimmer. Multiply the original (three 0.154) values by PI
+  // to restore the pre-r155 brightness the scene was tuned for.
+  const [ambientLightIntensity, setAmbientLightIntensity] = React.useState(
+    0.2 * Math.PI
+  );
+  const [hemiLightIntensity, setHemiLightIntensity] = React.useState(
+    0.8 * Math.PI
+  );
   const [hemiLightColorX, setHemiLightColorX] = React.useState(0.62);
   const [hemiLightColorY, setHemiLightColorY] = React.useState(1);
   const [hemiLightColorZ, setHemiLightColorZ] = React.useState(0.6);
@@ -44,7 +51,9 @@ const Model = React.memo(() => {
   const [hemiPositionX, setHemiPositionX] = React.useState(0);
   const [hemiPositionY, setHemiPositionY] = React.useState(20);
   const [hemiPositionZ, setHemiPositionZ] = React.useState(0);
-  const [dirLightIntensity, setDirLightIntensity] = React.useState(0.5);
+  const [dirLightIntensity, setDirLightIntensity] = React.useState(
+    0.5 * Math.PI
+  );
   const [dirLightColorX, setDirLightColorX] = React.useState(0.1);
   const [dirLightColorY, setDirLightColorY] = React.useState(1);
   const [dirLightColorZ, setDirLightColorZ] = React.useState(0.95);
