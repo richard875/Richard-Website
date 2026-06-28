@@ -94,13 +94,22 @@ void main() {
   float foam = smoothstep(0.32, 0.42, vWaveHeight);
 
   vec3 color = mix(uColor, uHighlight, shimmer);
-  vec3 blueTint = vec3(0.18, 0.42, 0.92);
-  color = mix(color, blueTint, 0.45);
-  color = mix(color, uHighlight, fresnel * 0.5);
+
+  // Dusky indigo-teal instead of a saturated electric blue, so the water
+  // doesn't fight the warm pink/gold sky it's supposed to be reflecting.
+  vec3 blueTint = vec3(0.3, 0.2, 0.58);
+  color = mix(color, blueTint, 0.4);
+
+  // At grazing angles water mostly reflects the sky, so blend toward the
+  // warm horizon colour rather than a cold icy highlight.
+  vec3 horizonGlow = vec3(0.97, 0.78, 0.66);
+  vec3 grazingColor = mix(uHighlight, horizonGlow, 0.55);
+  color = mix(color, grazingColor, fresnel * 0.5);
   color = mix(color, uHighlight, foam * 0.6);
   color = mix(color, sunHalo, glow);
   color += specular * sunCore;
+  color *= 1.2;
 
-  float alpha = clamp(mix(0.45, 0.8, fresnel + foam * 0.3), 0.0, 1.0);
+  float alpha = clamp(mix(0.6, 0.92, fresnel + foam * 0.3), 0.0, 1.0);
   gl_FragColor = vec4(color, alpha);
 }`;
