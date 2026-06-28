@@ -18,7 +18,7 @@ import Mesh from "./mesh";
 import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
-import { VERTEX_SHADER, FRAGMENT_SHADER } from "./shader";
+import { GLOBAL_VERTEX_SHADER, GLOBAL_FRAGMENT_SHADER } from "./shader";
 
 const SydneyOperaHouse = React.memo(() => (
   <Canvas
@@ -432,8 +432,8 @@ const Model = React.memo(() => {
           args={[skySphereGeometryX, skySphereGeometryY, skySphereGeometryZ]}
         />
         <shaderMaterial
-          vertexShader={VERTEX_SHADER}
-          fragmentShader={FRAGMENT_SHADER}
+          vertexShader={GLOBAL_VERTEX_SHADER}
+          fragmentShader={GLOBAL_FRAGMENT_SHADER}
           uniforms={uniforms}
           side={THREE.BackSide}
         />

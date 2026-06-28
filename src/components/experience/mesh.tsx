@@ -1,11 +1,42 @@
 import React from "react";
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { WATER_VERTEX_SHADER, WATER_FRAGMENT_SHADER } from "./shader";
 import AnimatedBoat from "./AnimatedBoat";
 
 const MODEL_PATH = "/models/sydneyOperaHouse/sydneyOperaHouse.gltf";
+
+const useAnimatedWaterMaterial = (
+  sourceMaterial: THREE.Material | undefined,
+) => {
+  const waterMaterial = React.useMemo(() => {
+    const baseColor =
+      (
+        sourceMaterial as THREE.MeshStandardMaterial | undefined
+      )?.color?.clone() ?? new THREE.Color("#6dc8e0");
+
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: baseColor },
+        uHighlight: { value: new THREE.Color("#b8e5f7") },
+      },
+      transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+      vertexShader: WATER_VERTEX_SHADER,
+      fragmentShader: WATER_FRAGMENT_SHADER,
+    });
+  }, [sourceMaterial]);
+
+  useFrame(({ clock }) => {
+    waterMaterial.uniforms.uTime.value = clock.getElapsedTime();
+  });
+
+  return waterMaterial;
+};
 
 const Mesh = () => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
@@ -24,6 +55,8 @@ const Mesh = () => {
       }),
     [materials.Glass],
   );
+
+  const animatedWaterMaterial = useAnimatedWaterMaterial(materials.water_foam);
 
   const boat1Position = React.useMemo(
     () =>
@@ -626,7 +659,7 @@ const Mesh = () => {
                 geometry={
                   (nodes.Building_1_water_foam_0 as THREE.Mesh).geometry
                 }
-                material={materials.water_foam}
+                material={animatedWaterMaterial}
               />
             </group>
             <group
@@ -651,7 +684,7 @@ const Mesh = () => {
                 geometry={
                   (nodes.Building_1_2_water_foam_0 as THREE.Mesh).geometry
                 }
-                material={materials.water_foam}
+                material={animatedWaterMaterial}
               />
             </group>
             <group
@@ -668,7 +701,7 @@ const Mesh = () => {
               />
               <mesh
                 geometry={(nodes.Building_water_foam_0 as THREE.Mesh).geometry}
-                material={materials.water_foam}
+                material={animatedWaterMaterial}
               />
             </group>
             <group
@@ -693,7 +726,7 @@ const Mesh = () => {
                 geometry={
                   (nodes.Building_2_water_foam_0 as THREE.Mesh).geometry
                 }
-                material={materials.water_foam}
+                material={animatedWaterMaterial}
               />
             </group>
             <group
@@ -718,7 +751,7 @@ const Mesh = () => {
                 geometry={
                   (nodes.Building_2_2_water_foam_0 as THREE.Mesh).geometry
                 }
-                material={materials.water_foam}
+                material={animatedWaterMaterial}
               />
             </group>
           </group>
@@ -844,7 +877,7 @@ const Mesh = () => {
               castShadow
               receiveShadow
               geometry={(nodes.Water_2_water_foam_0 as THREE.Mesh).geometry}
-              material={materials.water_foam}
+              material={animatedWaterMaterial}
               position={[-94.09, -222.05, 49.23]}
               rotation={[0, Math.PI / 2, 0]}
             />
