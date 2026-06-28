@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import AnimatedBoat from "./AnimatedBoat";
 
 const MODEL_PATH = "/models/sydneyOperaHouse/sydneyOperaHouse.gltf";
 
@@ -21,7 +22,7 @@ const Mesh = () => {
         ior: 1.5,
         metalness: 0,
       }),
-    [materials.Glass]
+    [materials.Glass],
   );
 
   return (
