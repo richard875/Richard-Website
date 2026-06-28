@@ -593,7 +593,7 @@ const Model = React.memo(() => {
           </Clouds>
         </group>
         <Inspector>
-          <Mesh />
+          <Mesh sunDirection={dirPosition} />
         </Inspector>
       </Float>
       {/* Effects */}

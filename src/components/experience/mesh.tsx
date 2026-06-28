@@ -8,8 +8,16 @@ import AnimatedBoat from "./AnimatedBoat";
 
 const MODEL_PATH = "/models/sydneyOperaHouse/sydneyOperaHouse.gltf";
 
+// Fallback used only if no scene sun direction is supplied.
+const DEFAULT_SUN_DIRECTION = new THREE.Vector3(0.6, 0.2, 0.4);
+
+type MeshProps = {
+  sunDirection?: THREE.Vector3;
+};
+
 const useAnimatedWaterMaterial = (
   sourceMaterial: THREE.Material | undefined,
+  sunDirection: THREE.Vector3,
 ) => {
   const waterMaterial = React.useMemo(() => {
     const baseColor =
@@ -22,6 +30,7 @@ const useAnimatedWaterMaterial = (
         uTime: { value: 0 },
         uColor: { value: baseColor },
         uHighlight: { value: new THREE.Color("#b8e5f7") },
+        uSunDirection: { value: sunDirection.clone() },
       },
       transparent: true,
       depthWrite: false,
@@ -33,12 +42,15 @@ const useAnimatedWaterMaterial = (
 
   useFrame(({ clock }) => {
     waterMaterial.uniforms.uTime.value = clock.getElapsedTime();
+    // Track the scene's actual directional light so the water's sun glint
+    // lines up with the shadows/highlights on the rest of the model.
+    waterMaterial.uniforms.uSunDirection.value.copy(sunDirection);
   });
 
   return waterMaterial;
 };
 
-const Mesh = () => {
+const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
 
   // The GLTF "Glass" material is fully opaque (no real transmission); swap in a
@@ -56,7 +68,10 @@ const Mesh = () => {
     [materials.Glass],
   );
 
-  const animatedWaterMaterial = useAnimatedWaterMaterial(materials.water_foam);
+  const animatedWaterMaterial = useAnimatedWaterMaterial(
+    materials.water_foam,
+    sunDirection,
+  );
 
   const boat1Position = React.useMemo(
     () =>
