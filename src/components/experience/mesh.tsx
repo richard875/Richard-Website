@@ -9,8 +9,23 @@ const MODEL_PATH = "/models/sydneyOperaHouse/sydneyOperaHouse.gltf";
 const Mesh = () => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
 
+  // The GLTF "Glass" material is fully opaque (no real transmission); swap in a
+  // physically-based transmissive material so windows/glass actually refract.
+  const glassMaterial = React.useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: (materials.Glass as THREE.MeshStandardMaterial).color,
+        transmission: 1,
+        thickness: 0.4,
+        roughness: 0.08,
+        ior: 1.5,
+        metalness: 0,
+      }),
+    [materials.Glass]
+  );
+
   return (
-    <group position={[0, 0.25, 0]} dispose={null}>
+    <group position={[0, 0.6, 0]} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.0003}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group position={[588.78, 396.08, 2376.67]}>
@@ -29,7 +44,7 @@ const Mesh = () => {
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_Glass_0 as THREE.Mesh).geometry
                   }
-                  material={materials.Glass}
+                  material={glassMaterial}
                 />
                 <mesh
                   geometry={
@@ -89,7 +104,7 @@ const Mesh = () => {
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_2_Glass_0 as THREE.Mesh).geometry
                   }
-                  material={materials.Glass}
+                  material={glassMaterial}
                 />
                 <mesh
                   geometry={
@@ -516,7 +531,7 @@ const Mesh = () => {
                 castShadow
                 receiveShadow
                 geometry={(nodes.Sidney_Glass_0 as THREE.Mesh).geometry}
-                material={materials.Glass}
+                material={glassMaterial}
               />
               <mesh
                 castShadow
@@ -681,7 +696,7 @@ const Mesh = () => {
               />
               <mesh
                 geometry={(nodes.Yacht_Glass_0 as THREE.Mesh).geometry}
-                material={materials.Glass}
+                material={glassMaterial}
               />
             </group>
             <group
@@ -696,7 +711,7 @@ const Mesh = () => {
               />
               <mesh
                 geometry={(nodes.Yacht_4_Glass_0 as THREE.Mesh).geometry}
-                material={materials.Glass}
+                material={glassMaterial}
               />
             </group>
             <group
@@ -717,7 +732,7 @@ const Mesh = () => {
               />
               <mesh
                 geometry={(nodes.Yacht_1_Glass_0 as THREE.Mesh).geometry}
-                material={materials.Glass}
+                material={glassMaterial}
               />
             </group>
           </group>
