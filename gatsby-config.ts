@@ -143,12 +143,12 @@ const config: GatsbyConfig = {
         mergeDefaultDirectives: false,
         directives: {
           "script-src":
-            "'self' 'unsafe-inline' 'unsafe-eval' www.googletagmanager.com www.clarity.ms",
+            "'self' 'unsafe-inline' 'unsafe-eval' www.googletagmanager.com www.clarity.ms static.cloudflareinsights.com",
           "style-src": "'self' 'unsafe-inline'",
           "img-src":
             "'self' data: c.clarity.ms c.bing.com www.google.com.au/ads/ga-audiences",
           "connect-src":
-            "'self' analytics.google.com e.clarity.ms stats.g.doubleclick.net",
+            "'self' analytics.google.com e.clarity.ms stats.g.doubleclick.net cloudflareinsights.com",
           "font-src": "'self'",
           "object-src": "'none'",
           "media-src": "'self'",
