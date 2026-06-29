@@ -19,6 +19,7 @@ import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
 import { GLOBAL_VERTEX_SHADER, GLOBAL_FRAGMENT_SHADER } from "./shader";
+import cloudTexture from "../../../static/models/sydneyOperaHouse/cloud.png";
 
 const SydneyOperaHouse = React.memo(() => (
   <Canvas
@@ -458,7 +459,11 @@ const Model = React.memo(() => {
           {/* Atmosphere */}
           {/* Unlit material so the haze reads as the fog/horizon colour itself,
               rather than being tinted by the hemisphere light's blue/orange mix. */}
-          <Clouds material={THREE.MeshBasicMaterial} limit={400}>
+          <Clouds
+            material={THREE.MeshBasicMaterial}
+            limit={400}
+            texture={cloudTexture}
+          >
             <Cloud
               seed={1}
               bounds={[4.5, 0.6, 3.5]}
