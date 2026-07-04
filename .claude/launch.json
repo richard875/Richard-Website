@@ -6,6 +6,12 @@
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["dev"],
       "port": 8000
+    },
+    {
+      "name": "gatsby-serve",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["serve"],
+      "port": 9000
     }
   ]
 }

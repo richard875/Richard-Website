@@ -13,12 +13,16 @@ const Cursor = ({
   position,
   isBlack,
   isIndexPage = false,
+  blend = false,
 }: {
   hover: boolean;
   delay: number;
   position: MousePosition;
   isBlack: boolean;
   isIndexPage?: boolean;
+  // difference-blend the cursor so it stays visible over both the paper
+  // and ink sections of the editorial home page
+  blend?: boolean;
 }) => {
   const isDesktop = useIsDesktop();
   const { x, y } = useMousePosition(position);
@@ -49,12 +53,14 @@ const Cursor = ({
           $hover={hover}
           $black={isBlack}
           $isIndexPage={isIndexPage}
+          $blend={blend}
         ></Ring>
         <Dot
           ref={dotRef}
           $hover={hover}
           $black={isBlack}
           $isIndexPage={isIndexPage}
+          $blend={blend}
         ></Dot>
       </motion.span>
     )
@@ -67,7 +73,14 @@ const Ring = styled.div<{
   $black: boolean;
   $isIndexPage: boolean;
   $hover: boolean;
+  $blend?: boolean;
 }>`
+  ${({ $blend }) =>
+    $blend &&
+    css`
+      mix-blend-mode: difference;
+      border-color: #f5ede3 !important;
+    `};
   position: fixed;
   top: 0;
   left: 0;
@@ -103,7 +116,14 @@ const Dot = styled.div<{
   $black: boolean;
   $isIndexPage: boolean;
   $hover: boolean;
+  $blend?: boolean;
 }>`
+  ${({ $blend }) =>
+    $blend &&
+    css`
+      mix-blend-mode: difference;
+      background-color: #f5ede3 !important;
+    `};
   position: fixed;
   top: 50%;
   left: 50%;

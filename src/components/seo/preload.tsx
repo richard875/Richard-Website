@@ -2,6 +2,9 @@ import React from "react";
 import fontPrimaryNormal from "../../../static/fonts/SansSerifFLF-Demibold.woff";
 import fontPrimaryBold from "../../../static/fonts/SansSerifBldFLF.woff";
 import fontSecondaryNormal from "../../../static/fonts/BwGradual-Medium.ttf";
+import fontDisplay from "../../../static/fonts/Archivo-Variable.woff2";
+import fontAccent from "../../../static/fonts/Fraunces-Italic-Variable.woff2";
+import fontTextRegular from "../../../static/fonts/BwGradual-Regular.ttf";
 import canary from "../../../static/videos/canary.mp4";
 import maily from "../../../static/videos/maily.mp4";
 import neetcode from "../../../static/videos/neetcode.mp4";
@@ -28,6 +31,27 @@ const Preload = () => (
     <link
       rel="preload"
       href={fontSecondaryNormal}
+      as="font"
+      type="font/ttf"
+      crossOrigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href={fontDisplay}
+      as="font"
+      type="font/woff2"
+      crossOrigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href={fontAccent}
+      as="font"
+      type="font/woff2"
+      crossOrigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href={fontTextRegular}
       as="font"
       type="font/ttf"
       crossOrigin="anonymous"

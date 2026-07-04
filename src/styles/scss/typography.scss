@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------------------
+// Legacy faces (still used by /intro, /experience, /projects, /contact, …)
+// ---------------------------------------------------------------------------
+
 @font-face {
   font-family: "font-primary-normal";
   src: url("/fonts/SansSerifFLF-Demibold.woff");
@@ -13,6 +17,42 @@
   src: url("/fonts/BwGradual-Medium.ttf");
 }
 
+// ---------------------------------------------------------------------------
+// Editorial system — Archivo Variable (display / labels) + Fraunces Italic
+// (serif accent) + Bw Gradual (running text). See DESIGN.md.
+// ---------------------------------------------------------------------------
+
+@font-face {
+  font-family: "Archivo Variable";
+  src: url("/fonts/Archivo-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Fraunces Italic";
+  src: url("/fonts/Fraunces-Italic-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bw Gradual";
+  src: url("/fonts/BwGradual-Regular.ttf");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bw Gradual";
+  src: url("/fonts/BwGradual-Medium.ttf");
+  font-weight: 500;
+  font-display: swap;
+}
+
 .font-primary-normal {
   font-family: "font-primary-normal", sans-serif;
 }
@@ -23,4 +63,37 @@
 
 .font-secondary-normal {
   font-family: "font-secondary-normal", sans-serif;
+}
+
+// Display voice — heavy expanded grotesk, always uppercase
+.font-display {
+  font-family: "Archivo Variable", "Archivo", Impact, sans-serif;
+  font-variation-settings: "wght" 860, "wdth" 118;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+}
+
+// Editorial serif accent — single italic words inside display settings
+.font-accent {
+  font-family: "Fraunces Italic", Georgia, serif;
+  font-style: italic;
+  font-variation-settings: "wght" 380, "opsz" 100, "SOFT" 60, "WONK" 1;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+// Micro-labels — the `01 — SELECTED WORK` grammar
+.font-label {
+  font-family: "Archivo Variable", "Archivo", sans-serif;
+  font-variation-settings: "wght" 560, "wdth" 100;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 11px;
+  line-height: 1;
+}
+
+// Running text
+.font-text {
+  font-family: "Bw Gradual", "font-secondary-normal", sans-serif;
+  font-weight: 400;
 }

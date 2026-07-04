@@ -21,19 +21,31 @@ import { INTRO_SOH } from "../../constants/googleTags";
 import { GLOBAL_VERTEX_SHADER, GLOBAL_FRAGMENT_SHADER } from "./shader";
 import cloudTexture from "../../../static/models/sydneyOperaHouse/cloud.png";
 
-const SydneyOperaHouse = React.memo(() => (
-  <Canvas
-    id={`${INTRO_SOH}_2`}
-    className="canvas"
-    shadows
-    legacy={true}
-    camera={{ position: [0, 2.6, 5], fov: 65 }}
-  >
-    <Model />
-  </Canvas>
-));
+type SceneProps = {
+  // 0→1 progress of the section through the viewport; drives a gentle
+  // camera dolly so scrolling feels connected to the diorama
+  progressRef?: React.RefObject<number>;
+  // Pause the render loop entirely while the plate is off-screen
+  active?: boolean;
+};
 
-const Model = React.memo(() => {
+const SydneyOperaHouse = React.memo(
+  ({ progressRef, active = true }: SceneProps) => (
+    <Canvas
+      id={`${INTRO_SOH}_2`}
+      className="canvas"
+      shadows
+      legacy={true}
+      dpr={[1, 1.75]}
+      frameloop={active ? "always" : "never"}
+      camera={{ position: [0, 2.6, 5], fov: 65 }}
+    >
+      <Model progressRef={progressRef} />
+    </Canvas>
+  )
+);
+
+const Model = React.memo(({ progressRef }: SceneProps) => {
   const cameraDirection = 50;
   const { scene, camera } = useThree();
 
@@ -123,7 +135,9 @@ const Model = React.memo(() => {
   const uniforms = React.useMemo(
     () => ({
       topColor: { value: hemiLightColor },
-      bottomColor: { value: new THREE.Color(0xfad6a5) },
+      // Horizon warmed toward the site's paper stock (#F5EDE3) so the
+      // diorama melts into the page instead of reading as a boxed viewer
+      bottomColor: { value: new THREE.Color(0xf6e4c8) },
       offset: { value: skyOffset },
       exponent: { value: skyExponent },
     }),
@@ -131,7 +145,7 @@ const Model = React.memo(() => {
   );
 
   React.useEffect(() => {
-    scene.background = new THREE.Color().setHSL(0.6, 0, 1);
+    scene.background = new THREE.Color(0xf5ede3);
     scene.fog = new THREE.Fog(scene.background, 1, 25);
     scene.fog.color.copy(uniforms["bottomColor"].value);
 
@@ -139,10 +153,14 @@ const Model = React.memo(() => {
     if (IS_DEV) createPanel();
   }, []);
 
-  // Subtle camera parallax that drifts toward the pointer for a sense of depth.
+  // Subtle camera parallax that drifts toward the pointer for a sense of
+  // depth, plus a scroll-linked dolly when the page supplies progress.
   useFrame((state, delta) => {
     const targetX = state.pointer.x * parallaxStrength;
     const targetY = 2.8 + state.pointer.y * parallaxStrength * 0.4;
+    // progress 0 (entering) → 1 (leaving): ease from 5.6 in to 4.6
+    const progress = progressRef?.current ?? 0.5;
+    const targetZ = progressRef ? 5.6 - progress : 5;
     camera.position.x = THREE.MathUtils.damp(
       camera.position.x,
       targetX,
@@ -153,6 +171,12 @@ const Model = React.memo(() => {
       camera.position.y,
       targetY,
       10,
+      delta,
+    );
+    camera.position.z = THREE.MathUtils.damp(
+      camera.position.z,
+      targetZ,
+      6,
       delta,
     );
     camera.lookAt(0, 0.5, 0);
