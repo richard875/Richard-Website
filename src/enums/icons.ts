@@ -4,6 +4,7 @@ enum Icon {
   Chancery = "chancery",
   Cie = "cie",
   Coates = "coates",
+  FdjUnited = "fdjunited",
   Nasdaq = "nasdaq",
   Maily = "maily",
   Neetcode = "neetcode",

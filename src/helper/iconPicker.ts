@@ -6,6 +6,8 @@ import chancery from "../../static/images/logos/chancery.svg";
 import cie from "../../static/images/logos/cie.svg";
 import coates from "../../static/images/logos/coates.svg";
 import coatesBlack from "../../static/images/logos/coates-black.svg";
+import fdjUnited from "../../static/images/logos/fdjunited.svg";
+import fdjUnitedBlack from "../../static/images/logos/fdjunited-black.svg";
 import nasdaq from "../../static/images/logos/nasdaq.svg";
 import nasdaqBlack from "../../static/images/logos/nasdaq-black.svg";
 import maily from "../../static/images/logos/maily.svg";
@@ -55,6 +57,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return cie;
     case Icon.Coates:
       return isDark ? coates : coatesBlack;
+    case Icon.FdjUnited:
+      return isDark ? fdjUnited : fdjUnitedBlack;
     case Icon.Nasdaq:
       return isDark ? nasdaq : nasdaqBlack;
     case Icon.Maily:
