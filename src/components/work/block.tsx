@@ -18,6 +18,10 @@ import {
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
 
+// How much later each successive block's title starts revealing relative to
+// the previous one (on top of its own internal char-by-char stagger).
+const TITLE_STAGGER = 0.15;
+
 const Block = ({
   index,
   dataLength,
@@ -56,12 +60,12 @@ const Block = ({
           alt={experience.companyTitle}
         />
         <JobTitle $isDarkMode={isDarkMode}>
-          <SplitText as="span" delay={0.1 * (index + 2) + 0.15}>
+          <SplitText as="span" delay={0.12 + TITLE_STAGGER * index}>
             {experience.jobTitle}
           </SplitText>
         </JobTitle>
         <Company>
-          <SplitText as="span" delay={0.1 * (index + 2) + 0.2}>
+          <SplitText as="span" delay={0.2 + TITLE_STAGGER * index}>
             {experience.companyTitle}
           </SplitText>
         </Company>

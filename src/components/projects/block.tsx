@@ -19,6 +19,10 @@ import {
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
 
+// How much later each successive block's title starts revealing relative to
+// the previous one (on top of its own internal char-by-char stagger).
+const TITLE_STAGGER = 0.15;
+
 const Block = ({
   project,
   dataLength,
@@ -58,7 +62,7 @@ const Block = ({
           alt={project.imageAlt}
         />
         <ProjectName $isDarkMode={isDarkMode}>
-          <SplitText as="span" delay={0.15 * (index + 3) + 0.05}>
+          <SplitText as="span" delay={0.2 + TITLE_STAGGER * index}>
             {project.name}
           </SplitText>
         </ProjectName>
