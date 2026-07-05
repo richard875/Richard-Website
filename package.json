@@ -71,6 +71,7 @@
     "react-dom": "^19.2.0",
     "react-transition-group": "^4.4.5",
     "sass": "^1.90.0",
+    "splitting": "^1.1.0",
     "styled-components": "^6.1.19",
     "three": "~0.184.0"
   },
@@ -81,6 +82,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@types/react-transition-group": "^4.4.12",
+    "@types/splitting": "^1.0.6",
     "@types/three": "~0.184.0",
     "babel-preset-gatsby": "^3.14.0",
     "gatsby-plugin-postcss": "^6.14.0",
