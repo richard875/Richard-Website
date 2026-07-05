@@ -10,6 +10,7 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import Links from "../components/contact/links";
 import Cursor from "../components/cursor/cursor";
+import SplitText from "../components/motion/SplitText";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import CallToAction from "../components/global/callToAction";
@@ -37,7 +38,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
   const isLandscape = useLandscapeDetection(isPwa);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_WHITE
+    Color.BACKGROUND_WHITE,
   );
 
   React.useEffect(() => {
@@ -78,30 +79,43 @@ const Contact = ({ location }: { location: WindowLocation }) => {
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
           <div>
-            <ContactText>Get in touch with me!</ContactText>
+            <ContactText>
+              <SplitText as="span" delay={0.3}>
+                Get in touch with me!
+              </SplitText>
+            </ContactText>
             <ContactEmail className="pt-3 md:pt-12">
-              Email me at:
-              <span className="hidden md:inline">&nbsp;</span>
-              <br className="md:hidden" />
-              <span
-                id={`${CONTACT_EMAIL}_0`}
-                className="underline decoration-dotted hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-              >
-                <a
-                  id={`${CONTACT_EMAIL}_1`}
-                  href={`mailto:${EMAIL}`}
-                  target="_blank"
-                  className="cursor-none"
-                  rel="noopener noreferrer"
+              <SplitText as="span" delay={0.45}>
+                Email me at:
+                <span className="hidden md:inline">&nbsp;</span>
+                <br className="md:hidden" />
+                <span
+                  id={`${CONTACT_EMAIL}_0`}
+                  className="underline decoration-dotted hover:text-gray-400 transition-all"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
                 >
-                  {EMAIL}
-                </a>
-              </span>
+                  <a
+                    id={`${CONTACT_EMAIL}_1`}
+                    href={`mailto:${EMAIL}`}
+                    target="_blank"
+                    className="cursor-none"
+                    rel="noopener noreferrer"
+                  >
+                    {EMAIL}
+                  </a>
+                </span>
+              </SplitText>
             </ContactEmail>
           </div>
-          <p className="hidden md:block">{COPYRIGHT_LONG}</p>
+          <motion.div
+            className="hidden md:block"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
+          >
+            <p>{COPYRIGHT_LONG}</p>
+          </motion.div>
           <div className="mt-8 md:hidden">
             <ResumeCircle isHome={false} setHover={setHover} />
           </div>
@@ -115,7 +129,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
             className="md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
+            transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
           >
             <p className="mt-5 md:mt-0">{COPYRIGHT_LONG}</p>
           </motion.div>
