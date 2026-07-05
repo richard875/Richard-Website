@@ -6,7 +6,7 @@ import Color from "../../enums/color";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import useDarkModeManager from "../../hooks/useDarkModeManager";
-import { URL, LINKEDIN_URL, GITHUB_URL, FULL_NAME } from "../../constants/meta";
+import { NAME, URL, LINKEDIN_URL, GITHUB_URL } from "../../constants/meta";
 import {
   CONTACT_GITHUB,
   CONTACT_LINKEDIN,
@@ -38,7 +38,7 @@ const Links = ({
           href={LINKEDIN_URL}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`${FULL_NAME} on LinkedIn`}
+          aria-label={`${NAME} on LinkedIn`}
           className="mr-3 cursor-none"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -56,7 +56,7 @@ const Links = ({
           href={GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`${FULL_NAME} on GitHub`}
+          aria-label={`${NAME} on GitHub`}
           className="cursor-none"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
