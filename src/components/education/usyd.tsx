@@ -25,7 +25,9 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
         alt="University of Sydney"
       />
       <UniversityText $isDarkMode={isDarkMode}>
-        <SplitText as="span">The University of Sydney</SplitText>
+        <SplitText as="span" delay={0.35}>
+          The University of Sydney
+        </SplitText>
       </UniversityText>
       <h3 className="mt-1 md:mb-9 text-lg xxxl:text-xl">
         Bachelor of Science (Honours) | Computer Science
