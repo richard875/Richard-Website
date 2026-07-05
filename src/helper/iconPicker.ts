@@ -8,9 +8,9 @@ import coates from "../../static/images/logos/coates.svg";
 import coatesBlack from "../../static/images/logos/coates-black.svg";
 import fdjUnited from "../../static/images/logos/fdjunited.svg";
 import fdjUnitedBlack from "../../static/images/logos/fdjunited-black.svg";
+import maily from "../../static/images/logos/maily.svg";
 import nasdaq from "../../static/images/logos/nasdaq.svg";
 import nasdaqBlack from "../../static/images/logos/nasdaq-black.svg";
-import maily from "../../static/images/logos/maily.svg";
 import neetcode from "../../static/images/logos/neetcode.svg";
 import slik from "../../static/images/logos/slik.svg";
 import slikBlack from "../../static/images/logos/slik-black.svg";
@@ -59,10 +59,10 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return isDark ? coates : coatesBlack;
     case Icon.FdjUnited:
       return isDark ? fdjUnited : fdjUnitedBlack;
-    case Icon.Nasdaq:
-      return isDark ? nasdaq : nasdaqBlack;
     case Icon.Maily:
       return maily;
+    case Icon.Nasdaq:
+      return isDark ? nasdaq : nasdaqBlack;
     case Icon.Neetcode:
       return neetcode;
     case Icon.Slik:
