@@ -1,60 +1,55 @@
 import React from "react";
-import gsap from "gsap";
 import styled from "styled-components";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
+import SplitText from "../motion/SplitText";
 import { EMAIL } from "../../constants/meta";
 import { INDEX_EMAIL, INDEX_TO_CONTACT } from "../../constants/googleTags";
-import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
+
+const ENTRANCE_DELAY = 0.9;
 
 const Top = ({
   setHover,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
-}) => {
-  const emailRef = React.useRef(null);
-  const projectRef = React.useRef(null);
-
-  React.useEffect(() => {
-    gsap.defaults({ ease: "power4.out", duration: 1 });
-    gsap.from(emailRef.current, gsapAnimationIndex(150, 1, 20));
-    gsap.from(projectRef.current, gsapAnimationIndex(150, 1, 20));
-  }, []);
-
-  return (
-    <Container>
-      <div
-        ref={emailRef}
-        id={`${INDEX_EMAIL}_0`}
-        className="font-secondary-normal overflow-hidden"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+}) => (
+  <Container>
+    <div
+      id={`${INDEX_EMAIL}_0`}
+      className="font-secondary-normal overflow-hidden"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      <a
+        id={`${INDEX_EMAIL}_1`}
+        href={`mailto:${EMAIL}`}
+        className="cursor-none"
       >
-        <a
-          id={`${INDEX_EMAIL}_1`}
-          href={`mailto:${EMAIL}`}
-          className="cursor-none"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <SplitText as="span" delay={ENTRANCE_DELAY}>
           {EMAIL}
-        </a>
-      </div>
-      <h2
-        ref={projectRef}
-        id={`${INDEX_TO_CONTACT}_0`}
-        className="font-secondary-normal select-none"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+        </SplitText>
+      </a>
+    </div>
+    <h2
+      id={`${INDEX_TO_CONTACT}_0`}
+      className="font-secondary-normal select-none"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      <a
+        href={Route.Contact}
+        className="cursor-none"
         onClick={(e) => routeTo(e, Route.Contact)}
       >
-        CONTACT
-      </h2>
-    </Container>
-  );
-};
+        <SplitText as="span" delay={ENTRANCE_DELAY}>
+          CONTACT
+        </SplitText>
+      </a>
+    </h2>
+  </Container>
+);
 
 export default Top;
 
