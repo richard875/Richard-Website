@@ -4,6 +4,7 @@ export const HTTPS = "https://";
 // Site Meta
 export const FIRST_NAME = "Richard";
 export const LAST_NAME = "Everley";
+export const FULL_NAME = `${FIRST_NAME} ${LAST_NAME}`;
 export const NAME = `${FIRST_NAME} ${LAST_NAME}`;
 export const URL = process.env.GATSBY_SITE_URL;
 export const EMAIL = `hello@${URL}`;
