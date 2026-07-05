@@ -51,7 +51,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_BLACK
+    Color.BACKGROUND_BLACK,
   );
 
   React.useEffect(() => {
@@ -84,16 +84,18 @@ const Work = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={transitionColor} />
       <Horizontal ref={slider} $entryLength={workData.length + 1}>
         <SkillsBlock isDarkMode={isDarkMode} />
-        {(workData as WorkExperience[]).map((experience: WorkExperience, index: number) => (
-          <Block
-            key={index}
-            index={index}
-            setHover={setHover}
-            experience={experience}
-            isDarkMode={isDarkMode}
-            dataLength={workData.length}
-          />
-        ))}
+        {(workData as WorkExperience[]).map(
+          (experience: WorkExperience, index: number) => (
+            <Block
+              key={index}
+              index={index}
+              setHover={setHover}
+              experience={experience}
+              isDarkMode={isDarkMode}
+              dataLength={workData.length}
+            />
+          ),
+        )}
         <Bottom
           className="font-secondary-normal"
           $isDarkMode={isDarkMode}
@@ -123,7 +125,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
               setTransitionColor(
                 isDarkMode
                   ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY
+                  : Color.BACKGROUND_WHITE_SECONDARY,
               )
             }
           >
@@ -164,7 +166,7 @@ export const Head: HeadFC = () => (
       content={Color.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
-    <Preload />
+    <Preload videos="experience" />
     <MetaTags
       path={Route.Experience}
       MetaImage={MetaImage}
