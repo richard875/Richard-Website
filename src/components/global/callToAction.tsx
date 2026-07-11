@@ -56,7 +56,7 @@ const CallToAction = ({
       <h2 id={`${tagId}_${tagIdStartNum + 2}`}>
         <a
           href={route}
-          className="cursor-none"
+          className={fromIntro ? "cursor-pointer" : "cursor-none"}
           onClick={(e) => routeTo(e, route, isDarkMode)}
         >
           {name}
