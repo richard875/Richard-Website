@@ -10,6 +10,7 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
+import SplitText from "../components/motion/SplitText";
 import CallToAction from "../components/global/callToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -44,6 +45,63 @@ const Experience = ({ location }: { location: WindowLocation }) => {
     Color.BACKGROUND_WHITE
   );
 
+  // Memoised so its identity is stable across re-renders — SplitText splits
+  // this into characters once and a parent re-render must not rebuild the
+  // nodes underneath it.
+  const introBody = React.useMemo(
+    () => (
+      <>
+        G'day, I'm {FIRST_NAME}. I'm a Software Engineer and Creative Designer
+        from<Sydney>&nbsp;Sydney</Sydney>,
+        <Australia
+          id={`${INTRO_AUSTRALIA}_0`}
+          onClick={(e) => {
+            e.preventDefault();
+            window.open(AUSTRALIA, "_blank");
+          }}
+        >
+          &nbsp;Australia
+        </Australia>
+        . On this corner of the internet, you'll find information about me. You
+        can connect with me on&nbsp;
+        <LinkedIn id={`${INTRO_LINKEDIN}_0`}>
+          <a
+            id={`${INTRO_LINKEDIN}_1`}
+            href={LINKEDIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+        </LinkedIn>
+        , check out my repositories on&nbsp;
+        <Github id={`${INTRO_GITHUB}_0`}>
+          <a
+            id={`${INTRO_GITHUB}_1`}
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </Github>
+        , or reach out to me via&nbsp;
+        <Email id={`${INTRO_EMAIL}_0`}>
+          <a
+            id={`${INTRO_EMAIL}_1`}
+            href={`mailto:${EMAIL}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            email
+          </a>
+        </Email>
+        . I hope you find my page enjoyable and have a great day!
+      </>
+    ),
+    []
+  );
+
   return (
     <Container
       initial={{ opacity: 0 }}
@@ -75,58 +133,10 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             />
           </Cta>
         </div>
-        <LeftText
-          className="font-secondary-normal"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-        >
-          G'day, I'm {FIRST_NAME}. I'm a Software Engineer and Creative Designer
-          from<Sydney>&nbsp;Sydney</Sydney>,
-          <Australia
-            id={`${INTRO_AUSTRALIA}_0`}
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(AUSTRALIA, "_blank");
-            }}
-          >
-            &nbsp;Australia
-          </Australia>
-          . On this corner of the internet, you'll find information about me.
-          You can connect with me on&nbsp;
-          <LinkedIn id={`${INTRO_LINKEDIN}_0`}>
-            <a
-              id={`${INTRO_LINKEDIN}_1`}
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-          </LinkedIn>
-          , check out my repositories on&nbsp;
-          <Github id={`${INTRO_GITHUB}_0`}>
-            <a
-              id={`${INTRO_GITHUB}_1`}
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          </Github>
-          , or reach out to me via&nbsp;
-          <Email id={`${INTRO_EMAIL}_0`}>
-            <a
-              id={`${INTRO_EMAIL}_1`}
-              href={`mailto:${EMAIL}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              email
-            </a>
-          </Email>
-          . I hope you find my page enjoyable and have a great day!
+        <LeftText className="font-secondary-normal">
+          <SplitText as="span" delay={0.45} amount={0.1}>
+            {introBody}
+          </SplitText>
         </LeftText>
         <div className="hidden sm:block">
           <Logos />
