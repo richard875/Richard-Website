@@ -39,6 +39,18 @@ import MetaImage from "../../static/images/meta/metaImage.jpg";
 const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
 const AUSTRALIA = `${HTTPS}www.youtube.com/watch?v=rMdbVHPmCW0`;
 
+// Entrance choreography: text reveals first, then the logos, then the
+// back/forward nav buttons, then the Sydney Opera House scene — each stage
+// starts as the previous one finishes. TEXT_DELAY + the SplitText's own
+// reveal (~0.55s for the intro bio at its "split-fast" timing) lands just
+// under LOGOS_DELAY; each later stage is spaced by STAGE_DURATION, the
+// fade length the following stage animates over.
+const TEXT_DELAY = 0.2;
+const STAGE_DURATION = 0.3;
+const LOGOS_DELAY = 0.75;
+const NAV_DELAY = 1.05;
+const SOH_DELAY = 1.35;
+
 const Experience = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [transitionColor, setTransitionColor] = React.useState(
@@ -119,7 +131,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             className="font-secondary-normal !text-base"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+            transition={{ stiffness: 0, duration: STAGE_DURATION, delay: NAV_DELAY }}
           >
             <CallToAction
               name="Home"
@@ -134,19 +146,24 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           </Cta>
         </div>
         <LeftText className="font-secondary-normal">
-          <SplitText as="span" delay={0.45} amount={0.1}>
+          <SplitText
+            as="span"
+            className="split-fast"
+            delay={TEXT_DELAY}
+            amount={0.1}
+          >
             {introBody}
           </SplitText>
         </LeftText>
         <div className="hidden sm:block">
-          <Logos />
+          <Logos delay={LOGOS_DELAY} />
         </div>
         <Cta
           id={`${INTRO_TO_EXPERIENCE}_0`}
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+          transition={{ stiffness: 0, duration: STAGE_DURATION, delay: NAV_DELAY }}
           onClick={() =>
             setTransitionColor(
               isDarkMode
@@ -167,7 +184,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           />
         </Cta>
         <div className="sm:hidden">
-          <Logos />
+          <Logos delay={LOGOS_DELAY} />
         </div>
       </Left>
       <Right
@@ -180,14 +197,14 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           className="w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
+          transition={{ stiffness: 0, duration: STAGE_DURATION, delay: SOH_DELAY }}
         >
           <SydneyOperaHouse />
         </motion.div>
         <SydneyOperaHouseInfoText
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
+          transition={{ stiffness: 0, duration: STAGE_DURATION, delay: SOH_DELAY }}
         >
           <span className="font-secondary-normal">Sydney Opera House</span>
         </SydneyOperaHouseInfoText>

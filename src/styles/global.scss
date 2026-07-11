@@ -106,6 +106,16 @@ p {
   --split-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+// Long-form-text variant: stagger is per character, so it compounds over a
+// full paragraph (e.g. the intro bio runs ~260 chars) — the shared default
+// would take seconds to finish revealing. Tightening the stagger plus a
+// shorter per-character run gets the whole block on screen fast.
+.split-fast {
+  --split-stagger: 1.5ms;
+  --split-duration: 0.16s;
+  --split-fade: 0.14s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

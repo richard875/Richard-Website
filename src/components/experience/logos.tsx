@@ -8,11 +8,11 @@ import qantas from "../../../static/images/logos/qantas.svg";
 import coates from "../../../static/images/logos/coates.svg";
 import nzgovt from "../../../static/images/logos/nzgovt.png";
 
-const Logos = () => (
+const Logos = ({ delay = 0.2 }: { delay?: number }) => (
   <Container
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+    transition={{ stiffness: 0, duration: 0.3, delay }}
   >
     <QantasLogo>
       <img src={qantas} alt="Qantas" />
