@@ -55,7 +55,7 @@ p {
 // DOM in that same tick.
 @keyframes split-char-rise {
   from {
-    transform: translateY(var(--split-rise, 0.1em));
+    transform: translateY(var(--split-rise, 0.22em));
   }
   to {
     transform: translateY(0);
@@ -77,13 +77,13 @@ p {
 
 .split-fade-in.split-ready .char {
   animation-name: split-char-rise, split-char-fade;
-  animation-duration: var(--split-duration, 0.1s), var(--split-fade, 0.2s);
+  animation-duration: var(--split-duration, 0.22s), var(--split-fade, 0.2s);
   animation-timing-function:
-    var(--split-ease, cubic-bezier(0.3, 0, 0.3, 1)), linear;
+    var(--split-ease, cubic-bezier(0.22, 1, 0.36, 1)), linear;
   animation-fill-mode: both;
   animation-play-state: paused;
   animation-delay: calc(
-    var(--split-delay, 0ms) + var(--split-stagger, 5ms) * var(--char-index)
+    var(--split-delay, 0ms) + var(--split-stagger, 8ms) * var(--char-index)
   );
 }
 
