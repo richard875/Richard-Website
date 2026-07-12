@@ -12,6 +12,7 @@ import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
 import SplitText from "../components/motion/SplitText";
 import CallToAction from "../components/global/callToAction";
+import PillCallToAction from "../components/global/pillCallToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import InitialTransition from "../components/transition/InitialTransition";
 import setOverflow from "../helper/setOverflow";
@@ -215,7 +216,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             )
           }
         >
-          <CallToAction
+          <PillCallToAction
             name="Work Experience & Projects"
             tagId={INTRO_TO_EXPERIENCE}
             tagIdStartNum={1}
@@ -223,7 +224,6 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             setHover={() => {}}
             route={Route.Experience}
             isDarkMode={isDarkMode}
-            fromIntroAndPlain={true}
             manualCursor={true}
           />
         </Cta>

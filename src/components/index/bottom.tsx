@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
@@ -10,13 +9,13 @@ import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
 import ResumeCircle from "../global/resumeCircle";
+import PillCallToAction from "../global/pillCallToAction";
 import {
   INDEX_TO_INTRO,
   CONTACT_GITHUB,
   CONTACT_LINKEDIN,
   INDEX_TO_ACKNOWLEDGEMENT_MOBILE,
 } from "../../constants/googleTags";
-import { myExpButtonEffect } from "../../helper/framerConfig";
 import { NAME, GITHUB_URL, LINKEDIN_URL } from "../../constants/meta";
 
 const ENTRANCE_DELAY = 0.9;
@@ -68,35 +67,14 @@ const Bottom = ({
           </SplitText>
         </SmallText>
         <Button id={`${INDEX_TO_INTRO}_0`} {...fade(ENTRANCE_DELAY + 0.36)}>
-          <ButtonContainer
-            id={`${INDEX_TO_INTRO}_1`}
-            className="font-secondary-normal"
-            // Fallback transition for whatever whileHover/whileTap leave
-            // behind when a gesture ends (e.g. rotate settling back to 0) —
-            // without this, Framer Motion's own default is an underdamped
-            // spring that overshoots/wobbles, most noticeable on the chevron
-            // since it sweeps the widest arc off-centre. A tween (vs. spring)
-            // guarantees no overshoot at all.
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            whileHover={myExpButtonEffect}
-            whileTap={{
-              scale: 0.94,
-              transition: { type: "spring", stiffness: 400, damping: 17 },
-            }}
-            onClick={(e) => routeTo(e, Route.Intro)}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            <h2 id={`${INDEX_TO_INTRO}_2`} className="text-black">
-              My Experience
-            </h2>
-            <FontAwesomeIcon
-              id={`${INDEX_TO_INTRO}_3`}
-              icon={faChevronRight}
-              className="text-black ml-2"
-              size="sm"
-            />
-          </ButtonContainer>
+          <PillCallToAction
+            name="My Experience"
+            tagId={INDEX_TO_INTRO}
+            tagIdStartNum={1}
+            forward={true}
+            route={Route.Intro}
+            setHover={setHover}
+          />
         </Button>
         <Social {...fade(ENTRANCE_DELAY + 0.46)}>
           <a
@@ -249,31 +227,12 @@ const Name = styled.div`
 `;
 
 const Button = styled(motion.div)`
-  font-size: 16px;
   margin-top: 20px;
-  user-select: none;
-  color: ${Color.WHITE};
   width: fit-content;
 
   @media ${layout.up.sm} {
-    font-size: 18px;
     margin-top: 50px;
   }
-
-  @media ${layout.up.xxl} {
-    font-size: 20px;
-  }
-`;
-
-const ButtonContainer = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  padding: 7px 15px;
-  border-radius: 7px;
-  background-color: ${Color.WHITE};
-  border: 2.5px solid ${Color.BLACK};
-  will-change: transform;
 `;
 
 const Social = styled(motion.div)`

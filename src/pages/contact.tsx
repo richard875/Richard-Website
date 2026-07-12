@@ -13,8 +13,8 @@ import Cursor from "../components/cursor/cursor";
 import SplitText from "../components/motion/SplitText";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
-import CallToAction from "../components/global/callToAction";
 import ResumeCircle from "../components/global/resumeCircle";
+import PillCallToAction from "../components/global/pillCallToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
@@ -69,14 +69,6 @@ const Contact = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={transitionColor} />
       <Top>
         <Title className="font-secondary-normal">{CONTACT_TITLE}</Title>
-        <CallToAction
-          name="Home"
-          tagId={CONTACT_TO_INDEX_TOP}
-          tagIdStartNum={0}
-          forward={true}
-          setHover={setHover}
-          route={Route.Home}
-        />
       </Top>
       <Box>
         <Left
@@ -90,7 +82,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 Get in touch with me!
               </SplitText>
             </ContactText>
-            <ContactEmail className="pt-3 md:pt-12">
+            <ContactEmail className="pt-3 md:pt-10">
               <SplitText as="span" delay={0.45}>
                 Email me at:
                 <span className="hidden md:inline">&nbsp;</span>
@@ -133,6 +125,21 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 </span>
               </SplitText>
             </ContactEmail>
+            <motion.div
+              className="pt-6 md:pt-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ stiffness: 0, duration: 0.4, delay: 0.8 }}
+            >
+              <PillCallToAction
+                name="Home"
+                tagId={CONTACT_TO_INDEX_TOP}
+                tagIdStartNum={0}
+                forward={true}
+                setHover={setHover}
+                route={Route.Home}
+              />
+            </motion.div>
           </div>
           <motion.div
             className="hidden md:block"
