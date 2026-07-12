@@ -29,9 +29,13 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
           The University of Auckland
         </SplitText>
       </UniversityText>
-      <h3 className="mt-1 md:mb-9 text-lg xxxl:text-xl">
+      <SplitText
+        as="h3"
+        className="mt-1 md:mb-9 text-lg xxxl:text-xl"
+        delay={0.65}
+      >
         Bachelor of Science | Computer Science
-      </h3>
+      </SplitText>
       <SummaryText>
         • Attained exemplary academic performance in Computer Science and
         Mathematics disciplines, excelling in coursework encompassing
