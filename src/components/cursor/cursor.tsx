@@ -102,7 +102,7 @@ const Ring = styled.div<{
     opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
     border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.15s;
   user-select: none;
-  z-index: 999;
+  z-index: 999999;
   pointer-events: none;
 
   ${({ $hover }) =>
@@ -131,7 +131,7 @@ const Dot = styled.div<{
   transition: transform 0.22s cubic-bezier(0.75, -1.27, 0.3, 2.33) 0.12s,
     opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33);
   user-select: none;
-  z-index: 999;
+  z-index: 999999;
   pointer-events: none;
 
   ${({ $hover }) =>
