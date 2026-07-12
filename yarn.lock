@@ -2532,6 +2532,11 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.7.1.tgz#3ce3af1a5524ef327d2da9e4fd8b6d95c8d70528"
   integrity sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==
 
+"@types/splitting@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/splitting/-/splitting-1.0.6.tgz#05c5d1d46b714b05b7274b3545a285a0130b1243"
+  integrity sha512-sa2UEbnCEP4n9QHxyRDB5VgaSq2J5swWhePA38WRKIHg+yLKQLMWYSS4utEhv/qQ+5o9w6cS69/Y8oPolJxF+w==
+
 "@types/stats.js@*":
   version "0.17.4"
   resolved "https://registry.yarnpkg.com/@types/stats.js/-/stats.js-0.17.4.tgz#1933e5ff153a23c7664487833198d685c22e791e"
@@ -10488,6 +10493,11 @@ split-on-first@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/split-on-first/-/split-on-first-1.1.0.tgz#f610afeee3b12bce1d0c30425e76398b78249a5f"
   integrity sha512-43ZssAJaMusuKWL8sKUBQXHWOpq8d6CfN/u1p4gUzfJkM05C8rxTmYrkIPTXapZpORA6LkkzcUulJ8FqA7Uudw==
+
+splitting@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/splitting/-/splitting-1.1.0.tgz#e89102aa21f4f459d62e9fc027164dfb4fb8298d"
+  integrity sha512-6Tj+4mvlSti4DUu1yl0PnkHIIoLchFYJHqz2DnwYkvEehXbjrR2epa4ds/xdto6ZdZsC+NP5IOOehi9VGjNlMQ==
 
 sponge-case@^1.0.1:
   version "1.0.1"

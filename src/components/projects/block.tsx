@@ -5,6 +5,7 @@ import { CSSTransition } from "react-transition-group";
 import Color from "../../enums/color";
 import ProjectLink from "./projectLink";
 import layout from "../../styles/layout";
+import SplitText from "../motion/SplitText";
 import TextSection from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
@@ -17,6 +18,10 @@ import {
   BLOCK_WIDTH_DESKTOP,
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
+
+// How much later each successive block's title starts revealing relative to
+// the previous one (on top of its own internal char-by-char stagger).
+const TITLE_STAGGER = 0.15;
 
 const Block = ({
   project,
@@ -43,23 +48,31 @@ const Block = ({
       $isDarkMode={isDarkMode}
     >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * (index + 3) }}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.5,
+          delay: 0.1 * (index + 3),
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
         <Logo
           $height={project.imageHeight}
           src={iconPicker(project.image, isDarkMode)}
           alt={project.imageAlt}
         />
-        <ProjectName $isDarkMode={isDarkMode}>{project.name}</ProjectName>
+        <ProjectName $isDarkMode={isDarkMode}>
+          <SplitText as="span" delay={0.2 + TITLE_STAGGER * index}>
+            {project.name}
+          </SplitText>
+        </ProjectName>
         <DescriptionText $isFirst={false}>
           <span style={{ color: isDarkMode ? Color.BLUE : Color.RED }}>
             Utilised:
           </span>
           {project.techStack.map(
             (tech: string, index: number) =>
-              `${index == 0 ? " " : " • "}${tech}`
+              `${index == 0 ? " " : " • "}${tech}`,
           )}
         </DescriptionText>
         {project.description.map(
@@ -79,11 +92,11 @@ const Block = ({
                       isDarkMode={isDarkMode}
                       {...sentence} // content and url
                     />
-                  )
+                  ),
                 )}
               </DescriptionText>
             );
-          }
+          },
         )}
         {!!project.linkUrl && (
           <ProjectLink
@@ -213,12 +226,14 @@ const Video = styled.video<{
   z-index: 99999 !important;
   background-color: ${({ $isDarkMode }) =>
     $isDarkMode ? Color.BACKGROUND_WHITE_SECONDARY : Color.BACKGROUND_BLACK};
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+  --tw-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored:
+    0 10px 15px -3px var(--tw-shadow-color),
     0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
 `;
 
 const ProjectName = styled.h2<{ $isDarkMode: boolean }>`

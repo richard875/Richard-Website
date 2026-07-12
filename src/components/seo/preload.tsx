@@ -8,7 +8,14 @@ import neetcode from "../../../static/videos/neetcode.mp4";
 import piston from "../../../static/videos/piston.mp4";
 import smh from "../../../static/videos/smh.mp4";
 
-const Preload = () => (
+// Hover-preview videos only play on these pages (desktop), so they are
+// only preloaded there — every other page loads fonts alone.
+const VIDEOS: Record<string, string[]> = {
+  experience: [smh, canary],
+  projects: [maily, neetcode, piston],
+};
+
+const Preload = ({ videos }: { videos?: "experience" | "projects" }) => (
   <>
     {/* Preload Fonts */}
     <link
@@ -34,11 +41,16 @@ const Preload = () => (
     />
 
     {/* Preload Content */}
-    <link rel="preload" href={canary} as="video" type="video/mp4" />
-    <link rel="preload" href={maily} as="video" type="video/mp4" />
-    <link rel="preload" href={neetcode} as="video" type="video/mp4" />
-    <link rel="preload" href={piston} as="video" type="video/mp4" />
-    <link rel="preload" href={smh} as="video" type="video/mp4" />
+    {!!videos &&
+      VIDEOS[videos].map((video) => (
+        <link
+          key={video}
+          rel="preload"
+          href={video}
+          as="video"
+          type="video/mp4"
+        />
+      ))}
   </>
 );
 

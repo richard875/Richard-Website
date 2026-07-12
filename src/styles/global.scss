@@ -5,6 +5,126 @@ body {
   margin: 0;
   font-weight: normal;
   font-family: "BwGradual", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background-color: #cdff50;
+  color: #040300;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+// Per-character text reveal (Splitting.js). Each char fades + rises a touch,
+// staggered by its index, the moment it scrolls into view. `--split-delay`
+// shifts the whole run later so entrances can ride the page choreography.
+//
+// The hidden state lives on the JS-added `.split-ready` class, not the base
+// class, so text stays visible without JS (crawlers / no-script).
+//
+// This uses `@keyframes` + `animation-play-state`, not `transition` + a class
+// toggle. A `transition` only animates if the browser paints the "before"
+// style before the "after" style is applied; on pages that pin this element
+// under GSAP ScrollTrigger (the horizontal-scroll work/project pages), GSAP's
+// own DOM restructuring can land in the same tick as the reveal toggle on a
+// fast (cached-import) client-side navigation, so no paint happens in
+// between and the transition gets silently skipped — the char just appears
+// in its end state. A paused `animation` doesn't have this failure mode: the
+// browser tracks its timeline internally, so flipping `animation-play-state`
+// to `running` always plays it from the top, no matter what else mutates the
+// DOM in that same tick.
+@keyframes split-char-rise {
+  from {
+    transform: translateY(var(--split-rise, 0.22em));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes split-char-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.split-fade-in.split-ready {
+  opacity: 0;
+}
+
+.split-fade-in.split-ready .char {
+  animation-name: split-char-rise, split-char-fade;
+  animation-duration: var(--split-duration, 0.22s), var(--split-fade, 0.2s);
+  animation-timing-function:
+    var(--split-ease, cubic-bezier(0.22, 1, 0.36, 1)), linear;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+  animation-delay: calc(
+    var(--split-delay, 0ms) + var(--split-stagger, 8ms) * var(--char-index)
+  );
+}
+
+.split-fade-in.is-inview {
+  opacity: 1;
+}
+
+.split-fade-in.is-inview .char {
+  animation-play-state: running, running;
+}
+
+// Display-scale variant: the home hero name. Chars rise from behind the
+// line mask with a longer, springier run — the one place the reveal is
+// meant to be felt, not just noticed.
+.split-hero {
+  --split-rise: 0.55em;
+  --split-stagger: 26ms;
+  --split-duration: 0.6s;
+  --split-fade: 0.35s;
+  --split-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+// Long-form-text variant: stagger is per character, so it compounds over a
+// full paragraph (e.g. the intro bio runs ~260 chars) — the shared default
+// would take seconds to finish revealing. Tightening the stagger plus a
+// shorter per-character run gets the whole block on screen fast.
+.split-fast {
+  --split-stagger: 1.5ms;
+  --split-duration: 0.16s;
+  --split-fade: 0.14s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 // Animation

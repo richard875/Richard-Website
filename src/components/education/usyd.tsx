@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Icon from "../../enums/icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
+import SplitText from "../motion/SplitText";
 import iconPicker from "../../helper/iconPicker";
 import {
   BLOCK_PADDING,
@@ -14,9 +15,9 @@ import {
 const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
   <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * 2 }}
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.1 * 2, ease: [0.22, 1, 0.36, 1] }}
     >
       <Logo
         $height={50}
@@ -24,7 +25,9 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
         alt="University of Sydney"
       />
       <UniversityText $isDarkMode={isDarkMode}>
-        The University of Sydney
+        <SplitText as="span" delay={0.35}>
+          The University of Sydney
+        </SplitText>
       </UniversityText>
       <h3 className="mt-1 md:mb-9 text-lg xxxl:text-xl">
         Bachelor of Science (Honours) | Computer Science

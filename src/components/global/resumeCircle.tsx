@@ -5,6 +5,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import getResume from "../../helper/getResume";
+import Magnetic from "../motion/Magnetic";
 import { resumeCircleButtonEffect } from "../../helper/framerConfig";
 import { INDEX_RESUME, CONTACT_RESUME } from "../../constants/googleTags";
 
@@ -30,35 +31,41 @@ const ResumeCircle = ({
     : "!relative !w-[60px] sm:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] sm:!left-[64px] sm:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]";
 
   return (
-    <motion.div whileHover={resumeCircleButtonEffect} className="w-fit">
-      <CircleContainer
-        id={`${googleTag}_0`}
-        $isHome={isHome}
-        initial={motionInitial}
-        animate={motionAnimate}
-        transition={motionTransition}
-        onClick={(e) => getResume(e)}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+    <Magnetic strength={0.4}>
+      <motion.div
+        whileHover={resumeCircleButtonEffect}
+        whileTap={{ scale: 0.93 }}
+        className="w-fit"
       >
-        <Circle id={`${googleTag}_1`}>
+        <CircleContainer
+          id={`${googleTag}_0`}
+          $isHome={isHome}
+          initial={motionInitial}
+          animate={motionAnimate}
+          transition={motionTransition}
+          onClick={(e) => getResume(e)}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          <Circle id={`${googleTag}_1`}>
+            <StaticImage
+              id={`${googleTag}_2`}
+              alt="Resume Circle"
+              src={CIRCLE}
+              className="relative h-5/6 w-5/6"
+              placeholder="none"
+            />
+          </Circle>
           <StaticImage
-            id={`${googleTag}_2`}
+            id={`${googleTag}_3`}
             alt="Resume Circle"
-            src={CIRCLE}
-            className="relative h-5/6 w-5/6"
+            src={ARROW}
+            className={arrowClass}
             placeholder="none"
           />
-        </Circle>
-        <StaticImage
-          id={`${googleTag}_3`}
-          alt="Resume Circle"
-          src={ARROW}
-          className={arrowClass}
-          placeholder="none"
-        />
-      </CircleContainer>
-    </motion.div>
+        </CircleContainer>
+      </motion.div>
+    </Magnetic>
   );
 };
 

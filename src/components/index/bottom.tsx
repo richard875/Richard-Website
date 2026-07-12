@@ -1,5 +1,4 @@
 import React from "react";
-import gsap from "gsap";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +8,7 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
+import SplitText from "../motion/SplitText";
 import ResumeCircle from "../global/resumeCircle";
 import {
   INDEX_TO_INTRO,
@@ -17,8 +17,9 @@ import {
   INDEX_TO_ACKNOWLEDGEMENT_MOBILE,
 } from "../../constants/googleTags";
 import { myExpButtonEffect } from "../../helper/framerConfig";
-import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import { NAME, GITHUB_URL, LINKEDIN_URL } from "../../constants/meta";
+
+const ENTRANCE_DELAY = 0.9;
 
 const Bottom = ({
   setHover,
@@ -27,49 +28,61 @@ const Bottom = ({
   setHover: (value: React.SetStateAction<boolean>) => void;
   isIphoneXPwa: boolean;
 }) => {
-  const topGreetingRef = React.useRef(null);
-  const nameRef = React.useRef(null);
-  const sub1Ref = React.useRef(null);
-  const sub2Ref = React.useRef(null);
-  const contactRef = React.useRef(null);
-  const countryRef = React.useRef(null);
-  const linkedinRef = React.useRef(null);
-  const githubRef = React.useRef(null);
-
-  React.useEffect(() => {
-    gsap.defaults({ ease: "power4.out", duration: 1 });
-    gsap.from(topGreetingRef.current, gsapAnimationIndex(450, 1, 0));
-    gsap.from(nameRef.current, gsapAnimationIndex(350, 1.2, 0));
-    gsap.from(sub1Ref.current, gsapAnimationIndex(350, 1.3, 0));
-    gsap.from(sub2Ref.current, gsapAnimationIndex(350, 1.4, 0));
-    gsap.from(contactRef.current, gsapAnimationIndex(350, 1.5, 0));
-    gsap.from(countryRef.current, gsapAnimationIndex(350, 1.6, 0));
-    gsap.from(linkedinRef.current, gsapAnimationIndex(350, 1.7, 0));
-    gsap.from(githubRef.current, gsapAnimationIndex(350, 1.7, 0));
-  }, []);
+  // Non-text elements (button, social) fade up on the shared entrance
+  // beat; the text lines get the per-character split reveal.
+  const fade = (delay: number) => ({
+    initial: { opacity: 0, y: 8 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
+  });
 
   return (
     <Container>
       <div>
         <SmallText>
-          <h3 ref={topGreetingRef} className="font-primary-normal mt-4 mb-6">
+          <SplitText
+            as="h3"
+            className="font-primary-normal mt-4 mb-6"
+            delay={ENTRANCE_DELAY + 0.07}
+          >
             From Australia with Love
-          </h3>
+          </SplitText>
         </SmallText>
         <Name className="font-primary-bold">
-          <h1 ref={nameRef}>{NAME.toUpperCase()}</h1>
+          <SplitText
+            as="h1"
+            className="split-hero"
+            delay={ENTRANCE_DELAY + 0.12}
+          >
+            {NAME.toUpperCase()}
+          </SplitText>
         </Name>
         <SmallText className="font-primary-normal mt-5 sm:mt-8">
-          <h2 ref={sub1Ref}>Software Engineer &amp; Creative Designer</h2>
+          <SplitText as="h2" delay={ENTRANCE_DELAY + 0.18}>
+            Software Engineer &amp; Creative Designer
+          </SplitText>
         </SmallText>
         <SmallText className="font-primary-normal mt-1/2 sm:mt-1">
-          <h2 ref={sub2Ref}>Sydney, Australia</h2>
+          <SplitText as="h2" delay={ENTRANCE_DELAY + 0.26}>
+            Sydney, Australia
+          </SplitText>
         </SmallText>
-        <Button id={`${INDEX_TO_INTRO}_0`} whileHover={myExpButtonEffect}>
+        <Button id={`${INDEX_TO_INTRO}_0`} {...fade(ENTRANCE_DELAY + 0.36)}>
           <ButtonContainer
-            ref={contactRef}
             id={`${INDEX_TO_INTRO}_1`}
             className="font-secondary-normal"
+            // Fallback transition for whatever whileHover/whileTap leave
+            // behind when a gesture ends (e.g. rotate settling back to 0) —
+            // without this, Framer Motion's own default is an underdamped
+            // spring that overshoots/wobbles, most noticeable on the chevron
+            // since it sweeps the widest arc off-centre. A tween (vs. spring)
+            // guarantees no overshoot at all.
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            whileHover={myExpButtonEffect}
+            whileTap={{
+              scale: 0.94,
+              transition: { type: "spring", stiffness: 400, damping: 17 },
+            }}
             onClick={(e) => routeTo(e, Route.Intro)}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
@@ -85,31 +98,43 @@ const Bottom = ({
             />
           </ButtonContainer>
         </Button>
-        <Social>
-          <FontAwesomeIcon
-            ref={linkedinRef}
+        <Social {...fade(ENTRANCE_DELAY + 0.46)}>
+          <a
             id={`${CONTACT_LINKEDIN}_0`}
-            size={"2x"}
-            icon={faLinkedin}
+            href={LINKEDIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Richard Everley on LinkedIn"
+            className="cursor-none"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(LINKEDIN_URL, "_blank");
-            }}
-          />
-          <FontAwesomeIcon
-            ref={githubRef}
+          >
+            <motion.span
+              className="inline-block"
+              whileTap={{ scale: 0.92 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <FontAwesomeIcon size={"2x"} icon={faLinkedin} />
+            </motion.span>
+          </a>
+          <a
             id={`${CONTACT_GITHUB}_0`}
-            size={"2x"}
-            icon={faGithub}
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Richard Everley on GitHub"
+            className="cursor-none"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(GITHUB_URL, "_blank");
-            }}
-          />
+          >
+            <motion.span
+              className="inline-block"
+              whileTap={{ scale: 0.92 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <FontAwesomeIcon size={"2x"} icon={faGithub} />
+            </motion.span>
+          </a>
         </Social>
       </div>
       <div className="absolute right-7 bottom-16 sm:right-10 sm:bottom-20 lg:right-14 lg:bottom-14">
@@ -117,14 +142,22 @@ const Bottom = ({
       </div>
       <Country id={`${INDEX_TO_ACKNOWLEDGEMENT_MOBILE}_0`}>
         <h2
-          ref={countryRef}
           id={`${INDEX_TO_ACKNOWLEDGEMENT_MOBILE}_1`}
           className="font-primary-normal select-none"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
-          onClick={(e) => routeTo(e, Route.Acknowledgement)}
         >
-          {!isIphoneXPwa && "Acknowledgement of Country"}
+          {!isIphoneXPwa && (
+            <a
+              href={Route.Acknowledgement}
+              className="cursor-none"
+              onClick={(e) => routeTo(e, Route.Acknowledgement)}
+            >
+              <SplitText as="span" delay={ENTRANCE_DELAY + 0.5}>
+                Acknowledgement of Country
+              </SplitText>
+            </a>
+          )}
         </h2>
       </Country>
     </Container>
@@ -218,7 +251,6 @@ const Name = styled.div`
 const Button = styled(motion.div)`
   font-size: 16px;
   margin-top: 20px;
-  overflow: hidden;
   user-select: none;
   color: ${Color.WHITE};
   width: fit-content;
@@ -233,7 +265,7 @@ const Button = styled(motion.div)`
   }
 `;
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled(motion.div)`
   display: flex;
   align-items: center;
   width: fit-content;
@@ -241,9 +273,10 @@ const ButtonContainer = styled.div`
   border-radius: 7px;
   background-color: ${Color.WHITE};
   border: 2.5px solid ${Color.BLACK};
+  will-change: transform;
 `;
 
-const Social = styled.div`
+const Social = styled(motion.div)`
   display: flex;
   gap: 20px;
   margin-top: 50px;

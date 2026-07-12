@@ -53,11 +53,14 @@ const CallToAction = ({
           />
         </motion.div>
       )}
-      <h2
-        id={`${tagId}_${tagIdStartNum + 2}`}
-        onClick={(e) => routeTo(e, route, isDarkMode)}
-      >
-        {name}
+      <h2 id={`${tagId}_${tagIdStartNum + 2}`}>
+        <a
+          href={route}
+          className={fromIntro ? "cursor-pointer" : "cursor-none"}
+          onClick={(e) => routeTo(e, route, isDarkMode)}
+        >
+          {name}
+        </a>
       </h2>
       {forward && (
         <motion.div animate={ctaHover ? ctaEffect(forward) : {}}>
@@ -89,6 +92,6 @@ const Cta = styled.div<{
         ? Color.BRIGHT_GREEN
         : Color.DIM_GREEN
       : $isDarkMode
-      ? Color.WHITE
-      : Color.BLACK};
+        ? Color.WHITE
+        : Color.BLACK};
 `;

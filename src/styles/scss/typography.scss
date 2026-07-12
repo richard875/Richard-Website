@@ -1,16 +1,19 @@
 @font-face {
   font-family: "font-primary-normal";
-  src: url("/fonts/SansSerifFLF-Demibold.woff");
+  src: url("/fonts/SansSerifFLF-Demibold.woff") format("woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "font-primary-bold";
-  src: url("/fonts/SansSerifBldFLF.woff");
+  src: url("/fonts/SansSerifBldFLF.woff") format("woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "font-secondary-normal";
-  src: url("/fonts/BwGradual-Medium.ttf");
+  src: url("/fonts/BwGradual-Medium.ttf") format("truetype");
+  font-display: swap;
 }
 
 .font-primary-normal {

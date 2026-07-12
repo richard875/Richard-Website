@@ -6,9 +6,11 @@ import chancery from "../../static/images/logos/chancery.svg";
 import cie from "../../static/images/logos/cie.svg";
 import coates from "../../static/images/logos/coates.svg";
 import coatesBlack from "../../static/images/logos/coates-black.svg";
+import fdjUnited from "../../static/images/logos/fdjunited.svg";
+import fdjUnitedBlack from "../../static/images/logos/fdjunited-black.svg";
+import maily from "../../static/images/logos/maily.svg";
 import nasdaq from "../../static/images/logos/nasdaq.svg";
 import nasdaqBlack from "../../static/images/logos/nasdaq-black.svg";
-import maily from "../../static/images/logos/maily.svg";
 import neetcode from "../../static/images/logos/neetcode.svg";
 import slik from "../../static/images/logos/slik.svg";
 import slikBlack from "../../static/images/logos/slik-black.svg";
@@ -18,7 +20,8 @@ import piston from "../../static/images/logos/piston.png";
 import qantas from "../../static/images/logos/qantas.svg";
 import qantasBlack from "../../static/images/logos/qantas-black.svg";
 import redbull from "../../static/images/logos/redbull.svg";
-import uoa from "../../static/images/logos/uoa.png";
+import uoa from "../../static/images/logos/uoa.svg";
+import uoaBlack from "../../static/images/logos/uoa-black.svg";
 import usyd from "../../static/images/logos/usyd.svg";
 import usydBlack from "../../static/images/logos/usyd-black.svg";
 import yourcar from "../../static/images/logos/yourcar.svg";
@@ -54,10 +57,12 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return cie;
     case Icon.Coates:
       return isDark ? coates : coatesBlack;
-    case Icon.Nasdaq:
-      return isDark ? nasdaq : nasdaqBlack;
+    case Icon.FdjUnited:
+      return isDark ? fdjUnited : fdjUnitedBlack;
     case Icon.Maily:
       return maily;
+    case Icon.Nasdaq:
+      return isDark ? nasdaq : nasdaqBlack;
     case Icon.Neetcode:
       return neetcode;
     case Icon.Slik:
@@ -71,7 +76,7 @@ const iconPicker = (logo: string, isDark: boolean) => {
     case Icon.Redbull:
       return redbull;
     case Icon.UoA:
-      return uoa;
+      return isDark ? uoa : uoaBlack;
     case Icon.USYD:
       return isDark ? usyd : usydBlack;
     case Icon.Yourcar:

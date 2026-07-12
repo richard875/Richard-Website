@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { CSSTransition } from "react-transition-group";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
+import SplitText from "../motion/SplitText";
 import TextSection from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
@@ -16,6 +17,10 @@ import {
   BLOCK_WIDTH_DESKTOP,
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
+
+// How much later each successive block's title starts revealing relative to
+// the previous one (on top of its own internal char-by-char stagger).
+const TITLE_STAGGER = 0.15;
 
 const Block = ({
   index,
@@ -41,17 +46,29 @@ const Block = ({
       $isDarkMode={isDarkMode}
     >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * (index + 2) }}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.5,
+          delay: 0.1 * (index + 2),
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
         <Logo
           $height={experience.imageHeight}
           src={iconPicker(experience.company, isDarkMode)}
           alt={experience.companyTitle}
         />
-        <JobTitle $isDarkMode={isDarkMode}>{experience.jobTitle}</JobTitle>
-        <Company>{experience.companyTitle}</Company>
+        <JobTitle $isDarkMode={isDarkMode}>
+          <SplitText as="span" delay={0.12 + TITLE_STAGGER * index}>
+            {experience.jobTitle}
+          </SplitText>
+        </JobTitle>
+        <Company>
+          <SplitText as="span" delay={0.2 + TITLE_STAGGER * index}>
+            {experience.companyTitle}
+          </SplitText>
+        </Company>
         <Secondary className="mt-6 xxxl:mt-9">
           {experience.start === experience.end
             ? experience.start
@@ -66,7 +83,7 @@ const Block = ({
           </span>
           {experience.techStack.map(
             (tech: string, index: number) =>
-              `${index == 0 ? " " : " • "}${tech}`
+              `${index == 0 ? " " : " • "}${tech}`,
           )}
         </DescriptionText>
         {experience.description.map(
@@ -85,10 +102,10 @@ const Block = ({
                     isDarkMode={isDarkMode}
                     {...sentence} // content and url
                   />
-                )
+                ),
               )}
             </DescriptionText>
-          )
+          ),
         )}
         {!!experience.media && (
           <CSSTransition
@@ -229,10 +246,12 @@ const Video = styled.video<{ $isDarkMode: boolean }>`
   z-index: 99999 !important;
   background-color: ${({ $isDarkMode }) =>
     $isDarkMode ? Color.BACKGROUND_WHITE_SECONDARY : Color.BACKGROUND_BLACK};
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+  --tw-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored:
+    0 10px 15px -3px var(--tw-shadow-color),
     0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
 `;

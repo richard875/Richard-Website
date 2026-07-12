@@ -52,7 +52,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_BLACK
+    Color.BACKGROUND_BLACK,
   );
 
   React.useEffect(() => {
@@ -84,16 +84,18 @@ const Projects = ({ location }: { location: WindowLocation }) => {
     >
       <InitialTransition color={transitionColor} />
       <Horizontal ref={slider} $entryLength={projectsData.length}>
-        {(projectsData as MyProjects[]).map((project: MyProjects, index: number) => (
-          <Block
-            key={index}
-            index={index}
-            project={project}
-            setHover={setHover}
-            isDarkMode={isDarkMode}
-            dataLength={projectsData.length}
-          />
-        ))}
+        {(projectsData as MyProjects[]).map(
+          (project: MyProjects, index: number) => (
+            <Block
+              key={index}
+              index={index}
+              project={project}
+              setHover={setHover}
+              isDarkMode={isDarkMode}
+              dataLength={projectsData.length}
+            />
+          ),
+        )}
         <Bottom
           className="font-secondary-normal"
           $isDarkMode={isDarkMode}
@@ -112,7 +114,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
               setTransitionColor(
                 isDarkMode
                   ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY
+                  : Color.BACKGROUND_WHITE_SECONDARY,
               )
             }
           >
@@ -139,7 +141,7 @@ const Projects = ({ location }: { location: WindowLocation }) => {
               setTransitionColor(
                 isDarkMode
                   ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY
+                  : Color.BACKGROUND_WHITE_SECONDARY,
               );
               routeTo(e, Route.Education, isDarkMode);
             }}
@@ -188,7 +190,7 @@ export const Head: HeadFC = () => (
       content={Color.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
-    <Preload />
+    <Preload videos="projects" />
     <MetaTags
       path={Route.Projects}
       MetaImage={MetaImage}

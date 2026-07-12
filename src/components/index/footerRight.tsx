@@ -20,11 +20,12 @@ const FooterRight = () => {
     gsap.defaults({ ease: "power4.out" });
     gsap.from(timeRef.current, {
       duration: 1,
-      ...gsapAnimationIndex(150, 1, 20),
+      ...gsapAnimationIndex(150, 1.5, 20),
     });
   }, []);
 
   React.useEffect(() => {
+    setTime(getTimeInSydney()); // show the real time immediately, not "00:00"
     const interval = setInterval(() => setTime(getTimeInSydney()), 1000);
     return () => clearInterval(interval);
   }, []);
@@ -56,17 +57,17 @@ const Indicator = styled.div`
   margin-right: 7px;
   border-radius: 99px;
   background: ${Color.DIM_GREEN};
-  animation: blink 3s ease-out infinite;
+  animation: pulse 2.4s ease-out infinite;
 
-  @keyframes blink {
+  @keyframes pulse {
     0% {
-      opacity: 1;
+      box-shadow: 0 0 0 0 rgba(53, 190, 39, 0.45);
     }
-    10% {
-      opacity: 0;
+    70% {
+      box-shadow: 0 0 0 6px rgba(53, 190, 39, 0);
     }
     100% {
-      opacity: 1;
+      box-shadow: 0 0 0 0 rgba(53, 190, 39, 0);
     }
   }
 `;
