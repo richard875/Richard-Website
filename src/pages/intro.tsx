@@ -51,10 +51,17 @@ const LOGOS_DELAY = 0.75;
 const NAV_DELAY = 1.05;
 const SOH_DELAY = 1.35;
 
+// The LinkedIn/GitHub/email underlines wait until every other entrance stage
+// above has settled, then sweep in left-to-right — kept separate from the
+// SplitText char reveal on purpose, since a per-character reveal and a fading
+// underline fight each other visually if they run at once.
+const UNDERLINE_DELAY = SOH_DELAY + STAGE_DURATION - 0.25;
+const UNDERLINE_STAGGER = 0.05;
+
 const Experience = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_WHITE
+    Color.BACKGROUND_WHITE,
   );
 
   // Memoised so its identity is stable across re-renders — SplitText splits
@@ -85,6 +92,15 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           >
             LinkedIn
           </a>
+          <Underline
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+              delay: UNDERLINE_DELAY,
+            }}
+          />
         </LinkedIn>
         , check out my repositories on&nbsp;
         <Github id={`${INTRO_GITHUB}_0`}>
@@ -96,6 +112,15 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           >
             GitHub
           </a>
+          <Underline
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+              delay: UNDERLINE_DELAY + UNDERLINE_STAGGER,
+            }}
+          />
         </Github>
         , or reach out to me via&nbsp;
         <Email id={`${INTRO_EMAIL}_0`}>
@@ -107,11 +132,20 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           >
             email
           </a>
+          <Underline
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+              delay: UNDERLINE_DELAY + UNDERLINE_STAGGER * 2,
+            }}
+          />
         </Email>
         . I hope you find my page enjoyable and have a great day!
       </>
     ),
-    []
+    [],
   );
 
   return (
@@ -131,7 +165,11 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             className="font-secondary-normal !text-base"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ stiffness: 0, duration: STAGE_DURATION, delay: NAV_DELAY }}
+            transition={{
+              stiffness: 0,
+              duration: STAGE_DURATION,
+              delay: NAV_DELAY,
+            }}
           >
             <CallToAction
               name="Home"
@@ -163,12 +201,16 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: STAGE_DURATION, delay: NAV_DELAY }}
+          transition={{
+            stiffness: 0,
+            duration: STAGE_DURATION,
+            delay: NAV_DELAY,
+          }}
           onClick={() =>
             setTransitionColor(
               isDarkMode
                 ? Color.BACKGROUND_BLACK
-                : Color.BACKGROUND_WHITE_SECONDARY
+                : Color.BACKGROUND_WHITE_SECONDARY,
             )
           }
         >
@@ -197,14 +239,22 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           className="w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: STAGE_DURATION, delay: SOH_DELAY }}
+          transition={{
+            stiffness: 0,
+            duration: STAGE_DURATION,
+            delay: SOH_DELAY,
+          }}
         >
           <SydneyOperaHouse />
         </motion.div>
         <SydneyOperaHouseInfoText
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: STAGE_DURATION, delay: SOH_DELAY }}
+          transition={{
+            stiffness: 0,
+            duration: STAGE_DURATION,
+            delay: SOH_DELAY,
+          }}
         >
           <span className="font-secondary-normal">Sydney Opera House</span>
         </SydneyOperaHouseInfoText>
@@ -278,10 +328,29 @@ const HoverableText = styled.span`
   cursor: pointer;
 `;
 
+// position: relative so the Underline bar below can position itself against
+// this (unsplit) span rather than some distant ancestor.
 const HoverableTextUnderline = styled(HoverableText)`
-  padding-bottom: 8px;
-  text-underline-offset: 4px;
-  text-decoration-line: underline;
+  position: relative;
+`;
+
+// A real text-decoration underline can't be used here: this text sits inside
+// a per-character SplitText reveal, which wraps each char in its own
+// `display: inline-block` span (splitting.css), and text-decoration can't
+// paint through those — each char ends up drawing its own tiny underline
+// segment instead of one continuous line. This bar sidesteps the problem by
+// living outside the split text entirely: it's a separate, absolutely
+// positioned element with its own `currentColor` background, so it always
+// renders as one unbroken line regardless of what SplitText does to the text
+// above it. Its opacity (not the bar itself) is what fades in via
+// framer-motion, on the usages below.
+const Underline = styled(motion.span)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 2.5px;
+  background-color: currentColor;
 `;
 
 const Sydney = styled.span`

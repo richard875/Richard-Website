@@ -32,6 +32,12 @@ import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const CURRENT_PAGE_TITLE = `${CONTACT_TITLE}${PAGE_TITLE}`;
 
+// The email's dotted underline fades in after the rest of the page's
+// entrance choreography has settled (Left's fade, the SplitText char
+// reveals, the Links/copyright fades all finish by ~1s) — kept as its own
+// later beat rather than tied to the char reveal, see the email span below.
+const UNDERLINE_DELAY = 1.2;
+
 const Contact = ({ location }: { location: WindowLocation }) => {
   const isPwa = usePwaDetection(location);
   const isIphoneX = useIphoneXDetection();
@@ -91,7 +97,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                 <br className="md:hidden" />
                 <span
                   id={`${CONTACT_EMAIL}_0`}
-                  className="underline decoration-dotted hover:text-gray-400 transition-all"
+                  className="relative hover:text-gray-400 transition-all"
                   onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)}
                 >
@@ -104,6 +110,26 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                   >
                     {EMAIL}
                   </a>
+                  {/* A radial-gradient dot pattern, not border-dotted: a native dotted
+                      border ties dot size to border-width, so it can't be both 2px
+                      thick and sparsely dotted — the gradient decouples thickness
+                      (height) from dot size/spacing (background-size). */}
+                  <motion.span
+                    className="absolute inset-x-0 -bottom-px h-2"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(circle, currentColor 1.5px, transparent 1.5px)",
+                      backgroundSize: "6px 8px",
+                      backgroundRepeat: "repeat-x",
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.22, 1, 0.36, 1],
+                      delay: UNDERLINE_DELAY,
+                    }}
+                  />
                 </span>
               </SplitText>
             </ContactEmail>
