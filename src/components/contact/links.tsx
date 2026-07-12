@@ -32,14 +32,14 @@ const Links = ({
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
     >
-      <div className="flex mb-4 -ml-1">
+      <div className="flex mb-3.5">
         <a
           id={`${CONTACT_LINKEDIN}_1`}
           href={LINKEDIN_URL}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${NAME} on LinkedIn`}
-          className="mr-3 cursor-none"
+          className="mr-5 cursor-none"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
