@@ -8,7 +8,6 @@ import { WindowLocation } from "@reach/router";
 import Color from "../enums/color";
 import layout from "../styles/layout";
 import Route from "../routes/route";
-import routeTo from "../routes/routeTo";
 import MyProjects from "../types/myProjects";
 import MousePosition from "../types/mousePosition";
 import useWindowSize from "../hooks/useWindowSize";
@@ -20,6 +19,7 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import Block from "../components/projects/block";
 import MetaTags from "../components/seo/metaTags";
+import NavCircle from "../components/global/navCircle";
 import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import {
@@ -36,6 +36,7 @@ import {
 import { PROJECTS_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import projectsData from "../../static/data/projects.json";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
+import ToContactCircle from "../../static/images/NavCircle/toContactCircle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,43 +129,42 @@ const Projects = ({ location }: { location: WindowLocation }) => {
               isDarkMode={isDarkMode}
             />
           </div>
-          <span className="hidden select-none sm:block">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-          <Cta
+          <span className="hidden select-none sm:block">&nbsp;&nbsp;</span>
+          <div
             id={`${PROJECTS_TO_EDUCATION}_0`}
-            className="font-secondary-normal underline underline-offset-2"
-            $isDarkMode={isDarkMode}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            onClick={(e) => {
+            onClick={() =>
               setTransitionColor(
                 isDarkMode
                   ? Color.BACKGROUND_BLACK
                   : Color.BACKGROUND_WHITE_SECONDARY,
-              );
-              routeTo(e, Route.Education, isDarkMode);
-            }}
-          >
-            Education
-          </Cta>
-          <span className="select-none">&nbsp;&nbsp;</span>
-          <div
-            id={`${PROJECTS_TO_CONTACT}_0`}
-            onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
+              )
+            }
           >
             <CallToAction
-              name="Contact"
-              tagId={PROJECTS_TO_CONTACT}
+              name="Education"
+              tagId={PROJECTS_TO_EDUCATION}
               tagIdStartNum={1}
               forward={true}
               setHover={setHover}
-              route={Route.Contact}
+              route={Route.Education}
               isDarkMode={isDarkMode}
             />
           </div>
         </div>
       </Top>
+      <div
+        id={`${PROJECTS_TO_CONTACT}_0`}
+        onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
+      >
+        <NavCircle
+          image={ToContactCircle}
+          alt="To Contact Page"
+          tagId={PROJECTS_TO_CONTACT}
+          route={Route.Contact}
+          setHover={setHover}
+          delay={0.7}
+        />
+      </div>
       <Cursor
         delay={0.5}
         hover={hover}
@@ -278,11 +278,4 @@ const Bottom = styled.div<{
   @media ${layout.up.md} {
     display: none;
   }
-`;
-
-const Cta = styled.h2<{ $isDarkMode: boolean }>`
-  display: flex;
-  user-select: none;
-  color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BRIGHT_GREEN : Color.DIM_GREEN};
 `;

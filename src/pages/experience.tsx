@@ -15,6 +15,7 @@ import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import SkillsBlock from "../components/work/skillsBlock";
 import CallToAction from "../components/global/callToAction";
+import NavCircle from "../components/global/navCircle";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import WorkExperience from "../types/workExperience";
@@ -35,6 +36,7 @@ import {
 import { EXPERIENCE_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import workData from "../../static/data/work.json";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
+import ToProjectsCircle from "../../static/images/NavCircle/toProjectsCircle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -106,41 +108,38 @@ const Work = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EXPERIENCE_TITLE}</Title>
-        <div className="flex items-center">
-          <div id={`${EXPERIENCE_TO_INTRO}_0`} className="hidden sm:block">
-            <CallToAction
-              name="Back"
-              tagId={EXPERIENCE_TO_INTRO}
-              tagIdStartNum={1}
-              forward={false}
-              setHover={setHover}
-              route={Route.Intro}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-          <span className="hidden select-none sm:block">&nbsp;&nbsp;</span>
-          <div
-            id={`${EXPERIENCE_TO_PROJECTS}_0`}
-            onClick={() =>
-              setTransitionColor(
-                isDarkMode
-                  ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY,
-              )
-            }
-          >
-            <CallToAction
-              name="Projects"
-              tagId={EXPERIENCE_TO_PROJECTS}
-              tagIdStartNum={1}
-              forward={true}
-              setHover={setHover}
-              route={Route.Projects}
-              isDarkMode={isDarkMode}
-            />
-          </div>
+        <div id={`${EXPERIENCE_TO_INTRO}_0`} className="hidden sm:block">
+          <CallToAction
+            name="Back"
+            tagId={EXPERIENCE_TO_INTRO}
+            tagIdStartNum={1}
+            forward={false}
+            setHover={setHover}
+            route={Route.Intro}
+            isDarkMode={isDarkMode}
+          />
         </div>
       </Top>
+      <div
+        id={`${EXPERIENCE_TO_PROJECTS}_0`}
+        onClick={() =>
+          setTransitionColor(
+            isDarkMode
+              ? Color.BACKGROUND_BLACK
+              : Color.BACKGROUND_WHITE_SECONDARY,
+          )
+        }
+      >
+        <NavCircle
+          image={ToProjectsCircle}
+          alt="To Projects Page"
+          tagId={EXPERIENCE_TO_PROJECTS}
+          route={Route.Projects}
+          isDarkMode={isDarkMode}
+          setHover={setHover}
+          delay={0.6}
+        />
+      </div>
       <Cursor
         delay={0.5}
         hover={hover}

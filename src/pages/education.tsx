@@ -18,6 +18,7 @@ import Usyd from "../components/education/usyd";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
+import NavCircle from "../components/global/navCircle";
 import CallToAction from "../components/global/callToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import {
@@ -27,6 +28,7 @@ import {
 import { EDUCATION_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
+import ToContactCircle from "../../static/images/NavCircle/toContactCircle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,7 +40,7 @@ const Education = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_BLACK
+    Color.BACKGROUND_BLACK,
   );
 
   return (
@@ -51,36 +53,24 @@ const Education = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={transitionColor} />
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EDUCATION_TITLE}</Title>
-        <div className="flex items-center">
-          <div
-            id={`${EDUCATION_TO_PROJECTS}_0`}
-            className="hidden sm:block"
-            onClick={() =>
-              setTransitionColor(
-                isDarkMode
-                  ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY
-              )
-            }
-          >
-            <CallToAction
-              name="Back"
-              tagId={EDUCATION_TO_PROJECTS}
-              tagIdStartNum={1}
-              forward={false}
-              setHover={setHover}
-              route={Route.Projects}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-          <span className="hidden select-none sm:block">&nbsp;&nbsp;</span>
+        <div
+          id={`${EDUCATION_TO_PROJECTS}_0`}
+          className="hidden sm:block"
+          onClick={() =>
+            setTransitionColor(
+              isDarkMode
+                ? Color.BACKGROUND_BLACK
+                : Color.BACKGROUND_WHITE_SECONDARY,
+            )
+          }
+        >
           <CallToAction
-            name="Contact"
-            tagId={EDUCATION_TO_CONTACT}
-            tagIdStartNum={0}
-            forward={true}
+            name="Back"
+            tagId={EDUCATION_TO_PROJECTS}
+            tagIdStartNum={1}
+            forward={false}
             setHover={setHover}
-            route={Route.Contact}
+            route={Route.Projects}
             isDarkMode={isDarkMode}
           />
         </div>
@@ -96,6 +86,14 @@ const Education = ({ location }: { location: WindowLocation }) => {
           <p className="my-2">{COPYRIGHT}</p>
         </Bottom>
       </Horizontal>
+      <NavCircle
+        image={ToContactCircle}
+        alt="To Contact Page"
+        tagId={EDUCATION_TO_CONTACT}
+        route={Route.Contact}
+        setHover={setHover}
+        delay={0.5}
+      />
       <Cursor
         delay={0.5}
         hover={hover}
