@@ -72,7 +72,7 @@ const Acknowledgement = ({ location }: { location: WindowLocation }) => {
             forward={true}
             setHover={setHover}
             route={Route.Home}
-            fromIntro={true}
+            fromIntroAndPlain={true}
           />
         </Cta>
       </Wrapper>

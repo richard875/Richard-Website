@@ -179,7 +179,8 @@ const Experience = ({ location }: { location: WindowLocation }) => {
               setHover={() => {}}
               route={Route.Home}
               isDarkMode={isDarkMode}
-              fromIntro={true}
+              fromIntroAndPlain={true}
+              manualCursor={true}
             />
           </Cta>
         </div>
@@ -222,7 +223,8 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             setHover={() => {}}
             route={Route.Experience}
             isDarkMode={isDarkMode}
-            fromIntro={true}
+            fromIntroAndPlain={true}
+            manualCursor={true}
           />
         </Cta>
         <div className="sm:hidden">
