@@ -10,6 +10,7 @@ import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
 import ResumeCircle from "../global/resumeCircle";
 import PillCallToAction from "../global/pillCallToAction";
+import BottomBackdrop from "./bottomBackdrop";
 import {
   INDEX_TO_INTRO,
   CONTACT_GITHUB,
@@ -37,6 +38,7 @@ const Bottom = ({
 
   return (
     <Container>
+      <BottomBackdrop />
       <div>
         <SmallText>
           <SplitText
@@ -151,6 +153,9 @@ const Container = styled.div`
   justify-content: space-between;
   overflow: hidden;
   position: relative;
+  /* Contain the backdrop's negative z-index so it can never slip
+     behind this element's own background. */
+  isolation: isolate;
   padding: 15px 12px 5px 12px;
   background: linear-gradient(
     -45deg,
@@ -164,8 +169,6 @@ const Container = styled.div`
     #f4b942,
     #f9c41a
   );
-  background-size: 180% 180%;
-  animation: gradient-animation 15s ease-in-out infinite;
 
   @media ${layout.up.sm} {
     padding: 3vh 5vw;
@@ -173,18 +176,6 @@ const Container = styled.div`
 
   @media ${layout.up.lg} {
     padding: 3vh 3vw 3vw 3vw;
-  }
-
-  @keyframes gradient-animation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
   }
 `;
 
