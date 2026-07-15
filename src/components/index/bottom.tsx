@@ -198,7 +198,7 @@ const Name = styled.div`
   line-height: 70px;
   overflow: hidden;
   color: ${Color.WHITE};
-  -webkit-text-stroke: 0.12rem ${Color.BLACK};
+  -webkit-text-stroke: 0.125rem ${Color.BLACK};
 
   @media ${layout.up.sm} {
     font-size: 80px;
