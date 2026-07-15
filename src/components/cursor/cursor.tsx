@@ -63,12 +63,7 @@ const Cursor = ({
           $black={isBlack}
           $isIndexPage={isIndexPage}
         ></Ring>
-        <Dot
-          ref={dotRef}
-          $hover={hover}
-          $black={isBlack}
-          $isIndexPage={isIndexPage}
-        ></Dot>
+        <Dot ref={dotRef} $hover={hover} $black={isBlack}></Dot>
       </motion.span>
     )
   );
@@ -116,7 +111,6 @@ const Ring = styled.div<{
 
 const Dot = styled.div<{
   $black: boolean;
-  $isIndexPage: boolean;
   $hover: boolean;
 }>`
   position: fixed;
@@ -124,8 +118,7 @@ const Dot = styled.div<{
   left: 50%;
   width: 8px;
   height: 8px;
-  background-color: ${({ $black, $isIndexPage }) =>
-    $black && $isIndexPage ? Color.BLACK : "transparent"};
+  background-color: ${({ $black }) => ($black ? Color.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%) scale(1);
   transition: transform 0.22s cubic-bezier(0.75, -1.27, 0.3, 2.33) 0.12s,
