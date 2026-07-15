@@ -1,49 +1,38 @@
 import React from "react";
-import gsap from "gsap";
 import styled, { keyframes } from "styled-components";
-import useIsDesktop from "../../hooks/useIsDesktop";
-import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion";
 
 /* Mesh-gradient backdrop, strictly two colors — pink (primary) and
    yellow/orange (secondary), matching the rest of the site's palette.
    Every field is enormous (far bigger than the container) and melts
    into the base wash with pure gradient falloff — no blur filters, no
-   banding, no third/white field diluting the palette. Pink breathes on
-   a slow transform-only keyframe loop, so the composition never sits
-   still but nothing ever darts. Two small SecondaryAccent fields carry
-   the yellow/orange elsewhere on the canvas too (echoing the original
-   pre-mesh design's five scattered warm clouds) — purely ambient, no
-   cursor tie, independent of everything below.
+   banding, no third/white field diluting the palette. Every field is
+   purely ambient: each one just wanders its own big, slow, uneven path
+   forever, with no connection to the cursor or to each other.
 
-   GoldField (parked hard against the right edge at rest) is the
-   cursor-reactive secondary layer, painted above everything else so
-   its migration always shows. Three nested elements split the work so
-   no property is owned twice: GoldAnchor holds the CSS home position
-   (percentages, so it tracks the container's true size even while the
-   hero entrance is still scaling it — measuring a px home at mount
-   reads the wrong rect) and takes GSAP's x/y/scale toward the pointer;
-   GoldWander underneath runs a big, loose ambient CSS roam that keeps
-   the field genuinely travelling when the pointer is idle, gone, or
-   the device has no pointer at all; GoldField is just the gradient.
-   While the pointer is over the component the whole region lazily
-   swims after it on a deliberately long, slack lead (following, not
-   tracking — see FOLLOW below for why the ease is sine, not a power
-   curve); when the pointer leaves the component, it does NOT snap or
-   ease back to any home position — GSAP simply stops steering it, and
-   it carries on from wherever it was on its own ambient roam, same as
-   if the pointer had never touched it. Pointer position feeds a
-   rAF-throttled window listener straight into GSAP quickTo — no React
-   state, so mouse moves never re-render (or re-run SplitText work in)
-   the rest of Bottom's tree. The listener is gated desktop + motion-ok,
-   matching the custom cursor's own gate.
+   Pink breathes on a slow drift-and-swell loop. Two small
+   SecondaryAccent fields carry the yellow/orange to other spots on the
+   canvas too (echoing the original pre-mesh design's five scattered
+   warm clouds). GoldField — parked toward the right — is the largest
+   and most active of the three secondary fields, so it still reads as
+   the "hero" one.
 
+   All three wander keyframes (accentDriftA/B, goldWander) set their OWN
+   animation-timing-function on every stop rather than relying on one
+   ease-in-out for the whole cycle — a single cycle-level ease only
+   shapes the very first and last legs, leaving every stop in between
+   interpolating at a near-constant rate, which reads as something
+   dragging the field along a fixed path. Per-stop easing decelerates
+   into and re-accelerates out of every waypoint individually, so it
+   reads as catching a gust, drifting, stalling, catching another — a
+   plastic bag on the wind, not a tow rope.
+
+   Every loop starts and ends on the same frame, so the global reduced-
+   motion kill-switch resolves this to a static two-color mesh.
    InitialVeil sits on top of all of it, opaque and primary-colored, so
    the very first ~2s read as pure pink with no yellow/orange anywhere,
-   then dissolves to reveal the full mesh already in motion underneath.
-   Every looping animation starts and ends on the same frame, so the
-   global reduced-motion kill-switch resolves this to a static
-   two-color mesh (the veil still delays a beat, then cuts straight to
-   it — see InitialVeil below). */
+   then dissolves to reveal the full mesh already in motion underneath
+   (the kill-switch compresses the fade itself to ~0ms but leaves the 2s
+   delay alone, so that case still waits, then cuts straight to it). */
 const Backdrop = styled.div`
   position: absolute;
   inset: 0;
@@ -59,8 +48,8 @@ const Field = styled.div`
   will-change: transform;
 `;
 
-/* Slow drift-and-breathe loops. Distances are small relative to the
-   fields' size — the zones lean and swell rather than travel. */
+/* Slow drift-and-breathe loop. Distances are small relative to the
+   field's size — it leans and swells rather than travels. */
 const pinkDrift = keyframes`
   0% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -90,27 +79,13 @@ const PinkField = styled(Field)`
   animation: ${pinkDrift} 34s ease-in-out infinite;
 `;
 
-/* Secondary color, but ambient and small — these don't chase the
-   cursor, they're just other places the palette's yellow/orange shows
-   up (the pre-mesh design had five separate warm clouds scattered
-   around; this brings that "multiple places" quality back without
-   touching any of GoldField's interactive behavior above). Same
-   yellow-to-orange formula as GoldField, no white. Each gets its own
-   big, uneven multi-stop wander (never a two-point back-and-forth) so
-   every secondary field is visibly adrift, like it's floating loose in
-   the sky, whether or not the cursor is anywhere near the component —
-   this motion has no tie to the pointer at all.
-
-   Each stop sets its OWN animation-timing-function (not just one
-   ease-in-out on the animation shorthand covering the whole cycle) —
-   a single cycle-level ease only shapes the very first and last legs;
-   every stop in between ends up interpolating at a near-constant rate,
-   which read as something dragging the field along a fixed path. Per-
-   stop easing makes it decelerate into every single waypoint and
-   re-accelerate out, so it reads as catching a gust, drifting, stalling,
-   catching another — a plastic bag on the wind, not a tow rope. Same
-   trick on GoldWander below. Amplitude sits a notch below GoldWander's
-   so the cursor-reactive field still reads as the most active one, and
+/* Secondary color, but small — these are just other places the
+   palette's yellow/orange shows up (the pre-mesh design had five
+   separate warm clouds scattered around; this brings that "multiple
+   places" quality back). Same yellow-to-orange formula as GoldField, no
+   white. See the header comment for why every stop sets its own
+   animation-timing-function. Amplitude sits a notch below GoldField's
+   own wander so it still reads as the most active field, and
    durations/delays are all mismatched on purpose so the three never
    fall into a synchronized rhythm. */
 const accentDriftA = keyframes`
@@ -199,25 +174,13 @@ const SecondaryAccentB = styled(Field)`
   animation: ${accentDriftB} 35s ease-in-out -13s infinite;
 `;
 
-/* Gold's CSS home — percentages, never a px measurement (see header
-   comment) — parked hard against the right edge. GSAP owns this
-   element's transform (x/y offset from home plus a hover swell); it is
-   a 0×0 point, so children center on it without touching the animated
-   property. */
-const GoldAnchor = styled.div`
-  position: absolute;
-  top: 78%;
-  left: 94%;
-  will-change: transform;
-`;
-
-/* A real roam, not a light sway — swings up to ~46vmax across six
-   uneven stops (not a symmetric back-and-forth) so the field genuinely
-   ranges across the canvas and the path never reads as a predictable
-   metronome. Per-stop animation-timing-function (see the accent drifts
-   above for why) so it decelerates into and re-accelerates out of every
-   waypoint — floats on the wind rather than getting towed along a
-   fixed loop. */
+/* The largest, most active secondary field, parked toward the right
+   edge. Core opacity is deliberately held below 1 (and the next stop
+   scaled down with it, so the falloff stays smooth) — at full opacity
+   the bright yellow center read as a blown-out sun/highlight instead of
+   a color field. Swings up to ~46vmax across six uneven stops (not a
+   symmetric back-and-forth) so it genuinely ranges across the canvas
+   rather than reading as a predictable metronome. */
 const goldWander = keyframes`
   0% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -248,28 +211,12 @@ const goldWander = keyframes`
   }
 `;
 
-/* The ambient roam lives on its own element between anchor and field,
-   so the CSS loop composes with (never fights) GSAP's transform on
-   the anchor above — the field keeps roaming even mid-follow, parked,
-   or on touch devices where the listener never attaches. */
-const GoldWander = styled.div`
-  position: absolute;
-  animation: ${goldWander} 37s ease-in-out infinite;
-`;
-
-/* The cursor-reactive secondary color: yellow core cooling to orange
-   at the rim, no white/pale stop, so it reads as one clear
-   yellow/orange field rather than a gold-and-white wash. Top of the
-   paint order so its travels always read against pink. Core opacity is
-   deliberately held below 1 (and the next stop scaled down with it, so
-   the falloff stays smooth) — at full opacity the bright yellow center
-   read as a blown-out sun/highlight instead of a color field. */
-const GoldField = styled.div`
-  position: absolute;
-  top: -75vmax;
-  left: -75vmax;
+const GoldField = styled(Field)`
+  top: 78%;
+  left: 94%;
   width: 150vmax;
   height: 150vmax;
+  margin: -75vmax 0 0 -75vmax;
   background: radial-gradient(
     circle,
     rgba(255, 214, 64, 0.78) 0%,
@@ -277,6 +224,7 @@ const GoldField = styled.div`
     rgba(255, 138, 46, 0.48) 50%,
     rgba(255, 138, 46, 0) 68%
   );
+  animation: ${goldWander} 37s ease-in-out infinite;
 `;
 
 /* Opaque primary-color curtain, painted last (topmost) so it fully
@@ -285,9 +233,7 @@ const GoldField = styled.div`
    Reuses hues already in the palette (base wash's pink end + the pink
    field's magenta) so the reveal doesn't jump to a different pink.
    `forwards` holds it at opacity 0 (i.e. gone) once the fade finishes
-   instead of resetting; the reduced-motion kill-switch compresses the
-   fade itself to ~0ms but leaves the 2s delay alone, so that case still
-   waits, then cuts straight to the full mesh instead of animating in. */
+   instead of resetting. */
 const veilFade = keyframes`
   from {
     opacity: 1;
@@ -304,106 +250,14 @@ const InitialVeil = styled.div`
   animation: ${veilFade} 0.9s ease-out 2s forwards;
 `;
 
-/* A lazy swim, not a cursor tracker: the field trails the pointer on a
-   long, slack lead. sine.out keeps the whole leg gentle rather than
-   power curves' punchier initial burst — with quickTo continuously
-   re-targeting on every mouse move, a "fast start" ease re-triggers on
-   every single move, which is exactly what read as "moves really fast"
-   during quick mouse motion even though any one retarget starts slow.
-   Longer duration on top of that caps the top speed further. */
-const FOLLOW = { duration: 6, ease: "sine.out" };
-const SWELL = { duration: 0.8, ease: "power2.out" };
-/* Fractions of the backdrop; must match GoldAnchor's CSS top/left,
-   since GSAP's x/y are offsets from that home. */
-const GOLD_HOME = { x: 0.94, y: 0.78 };
-const HOVER_SCALE = 1.15;
-
-const BottomBackdrop = () => {
-  const isDesktop = useIsDesktop();
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const backdropRef = React.useRef<HTMLDivElement>(null);
-  const anchorRef = React.useRef<HTMLDivElement>(null);
-
-  const reactToCursor = isDesktop && !prefersReducedMotion;
-
-  React.useEffect(() => {
-    if (!reactToCursor) return;
-
-    const backdrop = backdropRef.current;
-    const anchor = anchorRef.current;
-    if (!backdrop || !anchor) return;
-
-    const xTo = gsap.quickTo(anchor, "x", FOLLOW);
-    const yTo = gsap.quickTo(anchor, "y", FOLLOW);
-    const scaleTo = gsap.quickTo(anchor, "scale", SWELL);
-
-    let frame: number | null = null;
-    let clientX = 0;
-    let clientY = 0;
-    let wasInside = false;
-
-    const apply = () => {
-      frame = null;
-      const rect = backdrop.getBoundingClientRect();
-      const inside =
-        clientX >= rect.left &&
-        clientX <= rect.right &&
-        clientY >= rect.top &&
-        clientY <= rect.bottom;
-
-      if (inside) {
-        if (!wasInside) {
-          wasInside = true;
-          scaleTo(HOVER_SCALE);
-        }
-        xTo(clientX - rect.left - rect.width * GOLD_HOME.x);
-        yTo(clientY - rect.top - rect.height * GOLD_HOME.y);
-      } else {
-        // Deliberately no revert tween here: once the pointer leaves,
-        // GSAP just stops steering the field and it carries on from
-        // wherever it already was, on its own ambient roam — not a
-        // snap or ease back to a fixed home.
-        wasInside = false;
-      }
-    };
-
-    const handleMouseMove = (event: MouseEvent) => {
-      clientX = event.clientX;
-      clientY = event.clientY;
-      if (frame === null) frame = requestAnimationFrame(apply);
-    };
-
-    const handleMouseLeave = () => {
-      clientX = Number.NEGATIVE_INFINITY;
-      clientY = Number.NEGATIVE_INFINITY;
-      if (frame === null) frame = requestAnimationFrame(apply);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    document.documentElement.addEventListener("mouseleave", handleMouseLeave);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      document.documentElement.removeEventListener(
-        "mouseleave",
-        handleMouseLeave
-      );
-      if (frame !== null) cancelAnimationFrame(frame);
-    };
-  }, [reactToCursor]);
-
-  return (
-    <Backdrop aria-hidden="true" ref={backdropRef}>
-      <PinkField />
-      <SecondaryAccentA />
-      <SecondaryAccentB />
-      <GoldAnchor ref={anchorRef}>
-        <GoldWander>
-          <GoldField />
-        </GoldWander>
-      </GoldAnchor>
-      <InitialVeil />
-    </Backdrop>
-  );
-};
+const BottomBackdrop = () => (
+  <Backdrop aria-hidden="true">
+    <PinkField />
+    <SecondaryAccentA />
+    <SecondaryAccentB />
+    <GoldField />
+    <InitialVeil />
+  </Backdrop>
+);
 
 export default BottomBackdrop;
