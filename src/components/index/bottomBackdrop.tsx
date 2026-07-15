@@ -95,13 +95,48 @@ const PinkField = styled(Field)`
    up (the pre-mesh design had five separate warm clouds scattered
    around; this brings that "multiple places" quality back without
    touching any of GoldField's interactive behavior above). Same
-   yellow-to-orange formula as GoldField, no white. */
+   yellow-to-orange formula as GoldField, no white. Each gets its own
+   big, uneven multi-stop wander (never a two-point back-and-forth) so
+   every secondary field is visibly adrift, like it's floating loose in
+   the sky, whether or not the cursor is anywhere near the component —
+   this motion has no tie to the pointer at all.
+
+   Each stop sets its OWN animation-timing-function (not just one
+   ease-in-out on the animation shorthand covering the whole cycle) —
+   a single cycle-level ease only shapes the very first and last legs;
+   every stop in between ends up interpolating at a near-constant rate,
+   which read as something dragging the field along a fixed path. Per-
+   stop easing makes it decelerate into every single waypoint and
+   re-accelerate out, so it reads as catching a gust, drifting, stalling,
+   catching another — a plastic bag on the wind, not a tow rope. Same
+   trick on GoldWander below. Amplitude sits a notch below GoldWander's
+   so the cursor-reactive field still reads as the most active one, and
+   durations/delays are all mismatched on purpose so the three never
+   fall into a synchronized rhythm. */
 const accentDriftA = keyframes`
   0% {
     transform: translate3d(0, 0, 0) scale(1);
+    animation-timing-function: ease-in-out;
   }
-  50% {
-    transform: translate3d(-6vmax, 5vmax, 0) scale(1.1);
+  15% {
+    transform: translate3d(30vmax, -22vmax, 0) scale(1.18);
+    animation-timing-function: ease-in-out;
+  }
+  35% {
+    transform: translate3d(9vmax, -37vmax, 0) scale(0.84);
+    animation-timing-function: ease-in-out;
+  }
+  55% {
+    transform: translate3d(-27vmax, -15vmax, 0) scale(1.12);
+    animation-timing-function: ease-in-out;
+  }
+  75% {
+    transform: translate3d(-35vmax, 19vmax, 0) scale(0.82);
+    animation-timing-function: ease-in-out;
+  }
+  90% {
+    transform: translate3d(-8vmax, 31vmax, 0) scale(1.06);
+    animation-timing-function: ease-in-out;
   }
   100% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -120,15 +155,29 @@ const SecondaryAccentA = styled(Field)`
     rgba(255, 150, 40, 0.5) 42%,
     rgba(255, 150, 40, 0) 68%
   );
-  animation: ${accentDriftA} 30s ease-in-out infinite;
+  animation: ${accentDriftA} 40s ease-in-out infinite;
 `;
 
 const accentDriftB = keyframes`
   0% {
     transform: translate3d(0, 0, 0) scale(1);
+    animation-timing-function: ease-in-out;
   }
-  50% {
-    transform: translate3d(5vmax, -6vmax, 0) scale(0.92);
+  18% {
+    transform: translate3d(-29vmax, -21vmax, 0) scale(0.83);
+    animation-timing-function: ease-in-out;
+  }
+  40% {
+    transform: translate3d(-6vmax, -35vmax, 0) scale(1.2);
+    animation-timing-function: ease-in-out;
+  }
+  62% {
+    transform: translate3d(25vmax, -13vmax, 0) scale(0.86);
+    animation-timing-function: ease-in-out;
+  }
+  82% {
+    transform: translate3d(31vmax, 17vmax, 0) scale(1.14);
+    animation-timing-function: ease-in-out;
   }
   100% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -147,7 +196,7 @@ const SecondaryAccentB = styled(Field)`
     rgba(255, 150, 40, 0.45) 42%,
     rgba(255, 150, 40, 0) 68%
   );
-  animation: ${accentDriftB} 26s ease-in-out -8s infinite;
+  animation: ${accentDriftB} 35s ease-in-out -13s infinite;
 `;
 
 /* Gold's CSS home — percentages, never a px measurement (see header
@@ -162,28 +211,37 @@ const GoldAnchor = styled.div`
   will-change: transform;
 `;
 
-/* A real roam, not a light sway — swings up to ~38vmax across six
+/* A real roam, not a light sway — swings up to ~46vmax across six
    uneven stops (not a symmetric back-and-forth) so the field genuinely
    ranges across the canvas and the path never reads as a predictable
-   metronome. */
+   metronome. Per-stop animation-timing-function (see the accent drifts
+   above for why) so it decelerates into and re-accelerates out of every
+   waypoint — floats on the wind rather than getting towed along a
+   fixed loop. */
 const goldWander = keyframes`
   0% {
     transform: translate3d(0, 0, 0) scale(1);
+    animation-timing-function: ease-in-out;
   }
   16% {
-    transform: translate3d(-34vmax, -24vmax, 0) scale(1.2);
+    transform: translate3d(-41vmax, -29vmax, 0) scale(1.24);
+    animation-timing-function: ease-in-out;
   }
   33% {
-    transform: translate3d(20vmax, -32vmax, 0) scale(0.86);
+    transform: translate3d(24vmax, -39vmax, 0) scale(0.8);
+    animation-timing-function: ease-in-out;
   }
   50% {
-    transform: translate3d(36vmax, 14vmax, 0) scale(1.14);
+    transform: translate3d(45vmax, 17vmax, 0) scale(1.2);
+    animation-timing-function: ease-in-out;
   }
   66% {
-    transform: translate3d(-12vmax, 30vmax, 0) scale(0.84);
+    transform: translate3d(-15vmax, 37vmax, 0) scale(0.78);
+    animation-timing-function: ease-in-out;
   }
   83% {
-    transform: translate3d(-32vmax, 6vmax, 0) scale(1.06);
+    transform: translate3d(-39vmax, 8vmax, 0) scale(1.12);
+    animation-timing-function: ease-in-out;
   }
   100% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -196,7 +254,7 @@ const goldWander = keyframes`
    or on touch devices where the listener never attaches. */
 const GoldWander = styled.div`
   position: absolute;
-  animation: ${goldWander} 15s ease-in-out infinite;
+  animation: ${goldWander} 37s ease-in-out infinite;
 `;
 
 /* The cursor-reactive secondary color: yellow core cooling to orange
