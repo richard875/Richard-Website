@@ -1,7 +1,4 @@
 import React from "react";
-import fontPrimaryNormal from "../../../static/fonts/SansSerifFLF-Demibold.woff";
-import fontPrimaryBold from "../../../static/fonts/SansSerifBldFLF.woff";
-import fontSecondaryNormal from "../../../static/fonts/BwGradual-Medium.ttf";
 import canary from "../../../static/videos/canary.mp4";
 import maily from "../../../static/videos/maily.mp4";
 import neetcode from "../../../static/videos/neetcode.mp4";
@@ -18,23 +15,27 @@ const VIDEOS: Record<string, string[]> = {
 const Preload = ({ videos }: { videos?: "experience" | "projects" }) => (
   <>
     {/* Preload Fonts */}
+    {/* These hrefs must match the @font-face src urls in typography.scss
+        exactly (plain /fonts/... static paths, not webpack asset imports) —
+        otherwise the browser preloads one URL and @font-face requests a
+        different one, fetching each font twice. */}
     <link
       rel="preload"
-      href={fontPrimaryNormal}
+      href="/fonts/SansSerifFLF-Demibold.woff"
       as="font"
       type="font/woff"
       crossOrigin="anonymous"
     />
     <link
       rel="preload"
-      href={fontPrimaryBold}
+      href="/fonts/SansSerifBldFLF.woff"
       as="font"
       type="font/woff"
       crossOrigin="anonymous"
     />
     <link
       rel="preload"
-      href={fontSecondaryNormal}
+      href="/fonts/BwGradual-Medium.ttf"
       as="font"
       type="font/ttf"
       crossOrigin="anonymous"
