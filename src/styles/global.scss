@@ -124,6 +124,16 @@ p {
   --split-fade: 0.14s;
 }
 
+// Medium-length variant: for runs longer than a heading but shorter than a
+// full paragraph (e.g. a sentence-level description) — sits between the
+// shared default and .split-fast so the reveal neither drags on nor blurs
+// past too flat to notice.
+.split-medium {
+  --split-stagger: 4ms;
+  --split-duration: 0.19s;
+  --split-fade: 0.17s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

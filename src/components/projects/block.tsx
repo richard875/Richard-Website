@@ -62,7 +62,11 @@ const Block = ({
           alt={project.imageAlt}
         />
         <ProjectName $isDarkMode={isDarkMode}>
-          <SplitText as="span" delay={0.2 + TITLE_STAGGER * index}>
+          <SplitText
+            as="span"
+            className="split-medium"
+            delay={0.2 + TITLE_STAGGER * index}
+          >
             {project.name}
           </SplitText>
         </ProjectName>
