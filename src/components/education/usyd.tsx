@@ -25,14 +25,14 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
         alt="University of Sydney"
       />
       <UniversityText $isDarkMode={isDarkMode}>
-        <SplitText as="span" delay={0.35}>
+        <SplitText as="span" delay={0.25}>
           The University of Sydney
         </SplitText>
       </UniversityText>
       <SplitText
         as="h3"
-        className="mt-1 md:mb-9 text-lg xxxl:text-xl"
-        delay={0.55}
+        className="split-medium mt-1 md:mb-9 text-lg xxxl:text-xl"
+        delay={0.45}
       >
         Bachelor of Science (Honours) | Computer Science
       </SplitText>

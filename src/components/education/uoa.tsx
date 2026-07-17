@@ -25,14 +25,14 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
         alt="University of Auckland"
       />
       <UniversityText $isDarkMode={isDarkMode}>
-        <SplitText as="span" delay={0.45}>
+        <SplitText as="span" delay={0.5}>
           The University of Auckland
         </SplitText>
       </UniversityText>
       <SplitText
         as="h3"
-        className="mt-1 md:mb-9 text-lg xxxl:text-xl"
-        delay={0.65}
+        className="split-medium mt-1 md:mb-9 text-lg xxxl:text-xl"
+        delay={0.7}
       >
         Bachelor of Science | Computer Science
       </SplitText>
