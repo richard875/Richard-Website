@@ -40,12 +40,12 @@ const Bottom = ({
     <Container>
       <BottomBackdrop />
       <div>
-        <IntroBadge {...fade(ENTRANCE_DELAY + 0.07)}>
+        <IntroBadge {...fade(ENTRANCE_DELAY + 0.55)}>
           <BadgeText>
             <SplitText
               as="h3"
               className="font-secondary-normal"
-              delay={ENTRANCE_DELAY + 0.07}
+              delay={ENTRANCE_DELAY + 0.15}
             >
               From Australia with Love
             </SplitText>
@@ -61,16 +61,16 @@ const Bottom = ({
           </SplitText>
         </Name>
         <SmallText className="font-primary-normal mt-5 sm:mt-8">
-          <SplitText as="h2" delay={ENTRANCE_DELAY + 0.18}>
+          <SplitText as="h2" delay={ENTRANCE_DELAY + 0.35}>
             Software Engineer &amp; Creative Designer
           </SplitText>
         </SmallText>
         <SmallText className="font-primary-normal mt-1/2 sm:mt-1">
-          <SplitText as="h2" delay={ENTRANCE_DELAY + 0.26}>
+          <SplitText as="h2" delay={ENTRANCE_DELAY + 0.5}>
             Sydney, Australia
           </SplitText>
         </SmallText>
-        <Button id={`${INDEX_TO_INTRO}_0`} {...fade(ENTRANCE_DELAY + 0.36)}>
+        <Button id={`${INDEX_TO_INTRO}_0`} {...fade(ENTRANCE_DELAY + 0.75)}>
           <PillCallToAction
             name="My Experience"
             tagId={INDEX_TO_INTRO}
@@ -80,7 +80,7 @@ const Bottom = ({
             setHover={setHover}
           />
         </Button>
-        <Social {...fade(ENTRANCE_DELAY + 0.46)}>
+        <Social {...fade(ENTRANCE_DELAY + 0.95)}>
           <a
             id={`${CONTACT_LINKEDIN}_0`}
             href={LINKEDIN_URL}
