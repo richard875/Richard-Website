@@ -3,7 +3,7 @@ import gsap from "gsap";
 import styled from "styled-components";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
+import SplitText from "../motion/SplitText";
 
 const getTimeInSydney = () =>
   new Date().toLocaleTimeString("en-AU", {
@@ -12,15 +12,21 @@ const getTimeInSydney = () =>
     timeZone: "Australia/Sydney",
   });
 
+const INDICATOR_REVEAL_DELAY = 2.05;
+const INDICATOR_REVEAL_DURATION = 0.3;
+const SYDNEY_TEXT_REVEAL_DELAY = INDICATOR_REVEAL_DELAY - 0.4;
+const SYDNEY_TEXT_REVEAL_DONE = SYDNEY_TEXT_REVEAL_DELAY + 0.1;
+
 const FooterRight = () => {
-  const timeRef = React.useRef(null);
+  const indicatorRef = React.useRef(null);
   const [time, setTime] = React.useState("00:00");
 
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out" });
-    gsap.from(timeRef.current, {
-      duration: 1,
-      ...gsapAnimationIndex(150, 1.8, 20),
+    gsap.from(indicatorRef.current, {
+      duration: INDICATOR_REVEAL_DURATION,
+      delay: INDICATOR_REVEAL_DELAY,
+      opacity: 0,
     });
   }, []);
 
@@ -31,9 +37,15 @@ const FooterRight = () => {
   }, []);
 
   return (
-    <Container ref={timeRef}>
-      <Indicator></Indicator>
-      <p className="font-secondary-normal select-none">Sydney&nbsp;{time}</p>
+    <Container>
+      <Indicator ref={indicatorRef}></Indicator>
+      <p className="font-secondary-normal select-none">
+        <SplitText as="span" delay={SYDNEY_TEXT_REVEAL_DELAY}>
+          Sydney
+        </SplitText>
+        &nbsp;
+        <TimeValue>{time}</TimeValue>
+      </p>
     </Container>
   );
 };
@@ -48,6 +60,23 @@ const Container = styled.div`
 
   @media ${layout.up.xxl} {
     font-size: 18px;
+  }
+`;
+
+// The time ticks every second and can't go through SplitText's own
+// char-splitting reveal (it would get resplit into detached chars each
+// tick — see SplitText.tsx). Instead it mirrors "Sydney"'s reveal via this
+// sibling selector: hidden while "Sydney" is still split-ready-but-not-
+// in-view, then faded in on the same delay its own characters finish
+// appearing on (SYDNEY_TEXT_REVEAL_DONE), so the clock doesn't pop in next to
+// a blank gap while "Sydney" is still mid-reveal.
+const TimeValue = styled.span`
+  opacity: 1;
+  transition: opacity 0.2s ease ${SYDNEY_TEXT_REVEAL_DONE}s;
+
+  .split-fade-in.split-ready:not(.is-inview) + & {
+    opacity: 0;
+    transition: none;
   }
 `;
 

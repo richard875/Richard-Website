@@ -23,7 +23,7 @@ const FooterLeft = ({
         className="cursor-none"
         onClick={(e) => routeTo(e, Route.Acknowledgement)}
       >
-        <SplitText as="span" delay={1.35}>
+        <SplitText as="span" delay={1.4}>
           Acknowledgement of Country
         </SplitText>
       </a>
