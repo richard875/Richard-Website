@@ -68,18 +68,16 @@ const PillCallToAction = ({
         <FontAwesomeIcon
           id={`${tagId}_${tagIdStartNum + 2}`}
           icon={faChevronLeft}
-          className="text-black mr-2"
+          className="mr-2"
           size="sm"
         />
       )}
-      <h2 id={`${tagId}_${tagIdStartNum + 3}`} className="text-black">
-        {name}
-      </h2>
+      <h2 id={`${tagId}_${tagIdStartNum + 3}`}>{name}</h2>
       {forward && (
         <FontAwesomeIcon
           id={`${tagId}_${tagIdStartNum + 4}`}
           icon={faChevronRight}
-          className="text-black ml-2"
+          className="ml-2"
           size="sm"
         />
       )}
@@ -108,6 +106,7 @@ const Pill = styled(motion.div)<{ $border: boolean }>`
     align-items: center;
     padding: 7px 15px;
     border-radius: 7px;
+    color: ${Color.BLACK};
     background-color: ${Color.WHITE};
     border: ${({ $border }) =>
       $border ? `2.5px solid ${Color.BLACK}` : "none"};
