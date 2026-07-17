@@ -20,7 +20,7 @@ const FooterRight = () => {
     gsap.defaults({ ease: "power4.out" });
     gsap.from(timeRef.current, {
       duration: 1,
-      ...gsapAnimationIndex(150, 1.5, 20),
+      ...gsapAnimationIndex(150, 1.8, 20),
     });
   }, []);
 

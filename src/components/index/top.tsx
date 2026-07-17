@@ -8,7 +8,7 @@ import SplitText from "../motion/SplitText";
 import { EMAIL } from "../../constants/meta";
 import { INDEX_EMAIL, INDEX_TO_CONTACT } from "../../constants/googleTags";
 
-const ENTRANCE_DELAY = 0.9;
+const ENTRANCE_DELAY = 1.2;
 
 const Top = ({
   setHover,
@@ -43,7 +43,7 @@ const Top = ({
         className="cursor-none"
         onClick={(e) => routeTo(e, Route.Contact)}
       >
-        <SplitText as="span" delay={ENTRANCE_DELAY}>
+        <SplitText as="span" delay={ENTRANCE_DELAY + 0.2}>
           CONTACT
         </SplitText>
       </a>
