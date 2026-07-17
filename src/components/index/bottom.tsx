@@ -40,15 +40,17 @@ const Bottom = ({
     <Container>
       <BottomBackdrop />
       <div>
-        <SmallText>
-          <SplitText
-            as="h3"
-            className="font-primary-normal mt-4 mb-6"
-            delay={ENTRANCE_DELAY + 0.07}
-          >
-            From Australia with Love
-          </SplitText>
-        </SmallText>
+        <IntroBadge {...fade(ENTRANCE_DELAY + 0.07)}>
+          <BadgeText>
+            <SplitText
+              as="h3"
+              className="font-secondary-normal"
+              delay={ENTRANCE_DELAY + 0.07}
+            >
+              From Australia with Love
+            </SplitText>
+          </BadgeText>
+        </IntroBadge>
         <Name className="font-primary-bold">
           <SplitText
             as="h1"
@@ -190,6 +192,36 @@ const SmallText = styled.div`
 
   @media ${layout.up.xxl} {
     font-size: 25px;
+  }
+`;
+
+const IntroBadge = styled(motion.div)`
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background: ${Color.WHITE};
+  border: 2.5px solid ${Color.BLACK};
+  margin-top: 12px;
+  margin-bottom: 20px;
+
+  @media ${layout.up.sm} {
+    margin-bottom: 28px;
+  }
+`;
+
+const BadgeText = styled.div`
+  font-size: 16px;
+  overflow: hidden;
+  color: ${Color.BLACK};
+
+  @media ${layout.up.sm} {
+    font-size: 18px;
+  }
+
+  @media ${layout.up.xxl} {
+    font-size: 20px;
   }
 `;
 
