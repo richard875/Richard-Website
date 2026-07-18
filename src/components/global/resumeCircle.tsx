@@ -6,7 +6,7 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import getResume from "../../helper/getResume";
 import Magnetic from "../motion/Magnetic";
-import { resumeCircleButtonEffect } from "../../helper/framerConfig";
+import { mainCircleButtonEffect } from "../../helper/framerConfig";
 import { INDEX_RESUME, CONTACT_RESUME } from "../../constants/googleTags";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";
@@ -33,7 +33,7 @@ const ResumeCircle = ({
   return (
     <Magnetic strength={0.4}>
       <motion.div
-        whileHover={resumeCircleButtonEffect}
+        whileHover={mainCircleButtonEffect}
         whileTap={{ scale: 0.93 }}
         className="w-fit"
       >

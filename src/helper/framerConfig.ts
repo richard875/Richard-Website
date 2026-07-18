@@ -12,7 +12,7 @@ export const myExpButtonEffect: WhileHoverType = {
   },
 };
 
-export const resumeCircleButtonEffect: WhileHoverType = {
+export const mainCircleButtonEffect: WhileHoverType = {
   rotate: -175,
   scale: 1.07,
   transition: {
@@ -20,6 +20,27 @@ export const resumeCircleButtonEffect: WhileHoverType = {
     stiffness: 400,
     damping: 20,
     mass: 2,
+  },
+};
+
+export const backCircleButtonEffect: WhileHoverType = {
+  scale: 1.12,
+  rotate: -14,
+  transition: {
+    type: "spring",
+    stiffness: 400,
+    damping: 20,
+  },
+};
+
+// Shared press/tap feedback for NavCircle and BackCircle — kept identical
+// between the two so the pair reads as one connected control surface.
+export const circleTapEffect: WhileHoverType = {
+  scale: 0.9,
+  transition: {
+    type: "spring",
+    stiffness: 500,
+    damping: 15,
   },
 };
 
