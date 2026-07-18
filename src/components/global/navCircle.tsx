@@ -6,7 +6,10 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import Magnetic from "../motion/Magnetic";
-import { resumeCircleButtonEffect } from "../../helper/framerConfig";
+import {
+  mainCircleButtonEffect,
+  circleTapEffect,
+} from "../../helper/framerConfig";
 import ArrowSrc from "../../../static/images/indexCircle/arrow.svg";
 
 // Same rotating-circle construction as ResumeCircle (src/components/global/
@@ -21,7 +24,16 @@ import ArrowSrc from "../../../static/images/indexCircle/arrow.svg";
 //
 // Fixed to the bottom-right corner of the viewport at every breakpoint
 // (unlike ResumeCircle, which is positioned by its caller) since every
-// consumer of this component wants that same placement.
+// consumer of this component wants that same placement. z-index is above
+// BackCircle's (src/components/global/backCircle.tsx) — this circle always
+// wins visually/functionally where the two overlap, by user request.
+//
+// `partnerHover` drives this circle's half of a two-way "connected cluster"
+// bit shared with BackCircle: while BackCircle is hovered, this circle
+// nudges toward it — a playful reaction to a sibling's hover, not just its
+// own. `onPointerMove` is a separate channel: it just reports this circle's
+// live cursor position upward so BackCircle's chevron can lean toward it
+// even while the cursor is over NavCircle, not just over BackCircle itself.
 const NavCircle = ({
   image,
   alt,
@@ -30,6 +42,9 @@ const NavCircle = ({
   isDarkMode = true,
   setHover,
   delay = 0.5,
+  partnerHover = false,
+  onHoverChange,
+  onPointerMove,
 }: {
   image: string;
   alt: string;
@@ -38,22 +53,44 @@ const NavCircle = ({
   isDarkMode?: boolean;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   delay?: number;
+  // True while the paired BackCircle (src/components/global/backCircle.tsx)
+  // is hovered — nudges this circle toward it for a connected-cluster feel.
+  partnerHover?: boolean;
+  onHoverChange?: (hovering: boolean) => void;
+  onPointerMove?: (x: number, y: number) => void;
 }) => (
   <Wrapper>
     <Magnetic strength={0.4}>
       <motion.div
-        whileHover={resumeCircleButtonEffect}
-        whileTap={{ scale: 0.93 }}
+        whileHover={mainCircleButtonEffect}
+        whileTap={circleTapEffect}
         className="w-fit"
       >
         <CircleContainer
           id={`${tagId}_0`}
           initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, delay, ease: [0, 0.71, 0.2, 1.01] }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            x: partnerHover ? -6 : 0,
+            y: partnerHover ? -6 : 0,
+          }}
+          transition={{
+            opacity: { duration: 0.4, delay, ease: [0, 0.71, 0.2, 1.01] },
+            scale: { duration: 0.4, delay, ease: [0, 0.71, 0.2, 1.01] },
+            x: { type: "spring", stiffness: 300, damping: 22 },
+            y: { type: "spring", stiffness: 300, damping: 22 },
+          }}
           onClick={(e) => routeTo(e, route, isDarkMode)}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
+          onMouseMove={(e) => onPointerMove?.(e.clientX, e.clientY)}
+          onMouseEnter={() => {
+            setHover(true);
+            onHoverChange?.(true);
+          }}
+          onMouseLeave={() => {
+            setHover(false);
+            onHoverChange?.(false);
+          }}
         >
           <Circle id={`${tagId}_1`}>
             <img
