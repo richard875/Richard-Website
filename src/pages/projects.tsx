@@ -19,9 +19,9 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import Block from "../components/projects/block";
 import MetaTags from "../components/seo/metaTags";
-import NavCircle from "../components/global/navCircle";
-import CallToAction from "../components/global/callToAction";
+import NavCluster from "../components/global/navCluster";
 import InitialTransition from "../components/transition/InitialTransition";
+import getTransitionColor from "../helper/getTransitionColor";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -29,14 +29,13 @@ import {
   BLOCK_WIDTH_DESKTOP,
 } from "../constants/margin";
 import {
-  PROJECTS_TO_CONTACT,
   PROJECTS_TO_EDUCATION,
   PROJECTS_TO_EXPERIENCE,
 } from "../constants/googleTags";
 import { PROJECTS_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import projectsData from "../../static/data/projects.json";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
-import ToContactCircle from "../../static/images/NavCircle/toContactCircle.png";
+import ToEducationCircle from "../../static/images/NavCircle/toEducationCircle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -107,64 +106,22 @@ const Projects = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{PROJECTS_TITLE}</Title>
-        <div className="flex items-center">
-          <div
-            id={`${PROJECTS_TO_EXPERIENCE}_0`}
-            className="hidden sm:block"
-            onClick={() =>
-              setTransitionColor(
-                isDarkMode
-                  ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY,
-              )
-            }
-          >
-            <CallToAction
-              name="Back"
-              tagId={PROJECTS_TO_EXPERIENCE}
-              tagIdStartNum={1}
-              forward={false}
-              setHover={setHover}
-              route={Route.Experience}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-          <span className="hidden select-none sm:block">&nbsp;&nbsp;</span>
-          <div
-            id={`${PROJECTS_TO_EDUCATION}_0`}
-            onClick={() =>
-              setTransitionColor(
-                isDarkMode
-                  ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY,
-              )
-            }
-          >
-            <CallToAction
-              name="Education"
-              tagId={PROJECTS_TO_EDUCATION}
-              tagIdStartNum={1}
-              forward={true}
-              setHover={setHover}
-              route={Route.Education}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-        </div>
       </Top>
-      <div
-        id={`${PROJECTS_TO_CONTACT}_0`}
-        onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
-      >
-        <NavCircle
-          image={ToContactCircle}
-          alt="To Contact Page"
-          tagId={PROJECTS_TO_CONTACT}
-          route={Route.Contact}
-          setHover={setHover}
-          delay={0.7}
-        />
-      </div>
+      <NavCluster
+        isDarkMode={isDarkMode}
+        setHover={setHover}
+        delay={0.6}
+        backRoute={Route.Experience}
+        backTagId={PROJECTS_TO_EXPERIENCE}
+        onBackClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
+        forwardRoute={Route.Education}
+        forwardTagId={PROJECTS_TO_EDUCATION}
+        forwardImage={ToEducationCircle}
+        forwardAlt="To Education Page"
+        onForwardClick={() =>
+          setTransitionColor(getTransitionColor(isDarkMode))
+        }
+      />
       <Cursor
         delay={0.5}
         hover={hover}

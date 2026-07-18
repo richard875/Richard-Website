@@ -14,8 +14,7 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import SkillsBlock from "../components/work/skillsBlock";
-import CallToAction from "../components/global/callToAction";
-import NavCircle from "../components/global/navCircle";
+import NavCluster from "../components/global/navCluster";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import WorkExperience from "../types/workExperience";
@@ -23,6 +22,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
+import getTransitionColor from "../helper/getTransitionColor";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -108,38 +108,21 @@ const Work = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EXPERIENCE_TITLE}</Title>
-        <div id={`${EXPERIENCE_TO_INTRO}_0`} className="hidden sm:block">
-          <CallToAction
-            name="Back"
-            tagId={EXPERIENCE_TO_INTRO}
-            tagIdStartNum={1}
-            forward={false}
-            setHover={setHover}
-            route={Route.Intro}
-            isDarkMode={isDarkMode}
-          />
-        </div>
       </Top>
-      <div
-        id={`${EXPERIENCE_TO_PROJECTS}_0`}
-        onClick={() =>
-          setTransitionColor(
-            isDarkMode
-              ? Color.BACKGROUND_BLACK
-              : Color.BACKGROUND_WHITE_SECONDARY,
-          )
+      <NavCluster
+        isDarkMode={isDarkMode}
+        setHover={setHover}
+        delay={0.6}
+        backRoute={Route.Intro}
+        backTagId={EXPERIENCE_TO_INTRO}
+        forwardRoute={Route.Projects}
+        forwardTagId={EXPERIENCE_TO_PROJECTS}
+        forwardImage={ToProjectsCircle}
+        forwardAlt="To Projects Page"
+        onForwardClick={() =>
+          setTransitionColor(getTransitionColor(isDarkMode))
         }
-      >
-        <NavCircle
-          image={ToProjectsCircle}
-          alt="To Projects Page"
-          tagId={EXPERIENCE_TO_PROJECTS}
-          route={Route.Projects}
-          isDarkMode={isDarkMode}
-          setHover={setHover}
-          delay={0.6}
-        />
-      </div>
+      />
       <Cursor
         delay={0.5}
         hover={hover}

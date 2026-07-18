@@ -18,9 +18,9 @@ import Usyd from "../components/education/usyd";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
-import NavCircle from "../components/global/navCircle";
-import CallToAction from "../components/global/callToAction";
+import NavCluster from "../components/global/navCluster";
 import InitialTransition from "../components/transition/InitialTransition";
+import getTransitionColor from "../helper/getTransitionColor";
 import {
   EDUCATION_TO_CONTACT,
   EDUCATION_TO_PROJECTS,
@@ -53,27 +53,6 @@ const Education = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={transitionColor} />
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EDUCATION_TITLE}</Title>
-        <div
-          id={`${EDUCATION_TO_PROJECTS}_0`}
-          className="hidden sm:block"
-          onClick={() =>
-            setTransitionColor(
-              isDarkMode
-                ? Color.BACKGROUND_BLACK
-                : Color.BACKGROUND_WHITE_SECONDARY,
-            )
-          }
-        >
-          <CallToAction
-            name="Back"
-            tagId={EDUCATION_TO_PROJECTS}
-            tagIdStartNum={1}
-            forward={false}
-            setHover={setHover}
-            route={Route.Projects}
-            isDarkMode={isDarkMode}
-          />
-        </div>
       </Top>
       <Horizontal>
         <Usyd isDarkMode={isDarkMode} />
@@ -86,13 +65,17 @@ const Education = ({ location }: { location: WindowLocation }) => {
           <p className="my-2">{COPYRIGHT}</p>
         </Bottom>
       </Horizontal>
-      <NavCircle
-        image={ToContactCircle}
-        alt="To Contact Page"
-        tagId={EDUCATION_TO_CONTACT}
-        route={Route.Contact}
+      <NavCluster
+        isDarkMode={isDarkMode}
         setHover={setHover}
-        delay={0.5}
+        delay={0.6}
+        backRoute={Route.Projects}
+        backTagId={EDUCATION_TO_PROJECTS}
+        onBackClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
+        forwardRoute={Route.Contact}
+        forwardTagId={EDUCATION_TO_CONTACT}
+        forwardImage={ToContactCircle}
+        forwardAlt="To Contact Page"
       />
       <Cursor
         delay={0.5}
