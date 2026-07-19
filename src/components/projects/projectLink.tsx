@@ -7,7 +7,7 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import SplitText from "../motion/SplitText";
 import HoverRoll from "../motion/HoverRoll";
-import { badgeHoverEffect, circleTapEffect } from "../../helper/framerConfig";
+import { badgeHoverEffect, motionTapEffect } from "../../helper/framerConfig";
 import { PROJECTS_LINK } from "../../constants/googleTags";
 
 // Same badge treatment as CallToAction (src/components/global/
@@ -34,7 +34,7 @@ const ProjectLink = ({
       id={`${PROJECTS_LINK}_${name}_0`}
       $accentColor={accentColor}
       whileHover={badgeHoverEffect(Color.BRIGHT_GREEN, Color.BLACK)}
-      whileTap={circleTapEffect}
+      whileTap={motionTapEffect}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

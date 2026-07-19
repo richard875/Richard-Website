@@ -8,7 +8,7 @@ import routeTo from "../../routes/routeTo";
 import Magnetic from "../motion/Magnetic";
 import {
   mainCircleButtonEffect,
-  circleTapEffect,
+  motionTapEffect,
 } from "../../helper/framerConfig";
 import ArrowSrc from "../../../static/images/indexCircle/arrow.svg";
 
@@ -63,7 +63,7 @@ const NavCircle = ({
     <Magnetic strength={0.4}>
       <motion.div
         whileHover={mainCircleButtonEffect}
-        whileTap={circleTapEffect}
+        whileTap={motionTapEffect}
         className="w-fit"
       >
         <CircleContainer

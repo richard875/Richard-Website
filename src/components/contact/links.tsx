@@ -7,6 +7,7 @@ import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
 import HoverRoll from "../motion/HoverRoll";
+import { motionTapEffect } from "../../helper/framerConfig";
 import useDarkModeManager from "../../hooks/useDarkModeManager";
 import { NAME, URL, LINKEDIN_URL, GITHUB_URL } from "../../constants/meta";
 import {
@@ -55,7 +56,7 @@ const Links = ({
         >
           <motion.span
             className="inline-block"
-            whileTap={{ scale: 0.92 }}
+            whileTap={motionTapEffect}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <FontAwesomeIcon size={"2x"} icon={faLinkedin} />
@@ -73,7 +74,7 @@ const Links = ({
         >
           <motion.span
             className="inline-block"
-            whileTap={{ scale: 0.92 }}
+            whileTap={motionTapEffect}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <FontAwesomeIcon size={"2x"} icon={faGithub} />

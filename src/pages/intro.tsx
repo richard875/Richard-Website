@@ -13,7 +13,7 @@ import Logos from "../components/experience/logos";
 import SplitText from "../components/motion/SplitText";
 import HoverRoll from "../components/motion/HoverRoll";
 import CallToAction from "../components/global/callToAction";
-import PillCallToAction from "../components/global/pillCallToAction";
+import RoundedCallToAction from "../components/global/roundedCallToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import InitialTransition from "../components/transition/InitialTransition";
 import setOverflow from "../helper/setOverflow";
@@ -218,7 +218,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             )
           }
         >
-          <PillCallToAction
+          <RoundedCallToAction
             name="Work Experience & Projects"
             tagId={INTRO_TO_EXPERIENCE}
             tagIdStartNum={1}

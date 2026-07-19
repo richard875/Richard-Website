@@ -10,7 +10,10 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import { myExpButtonEffect, circleTapEffect } from "../../helper/framerConfig";
+import {
+  roundedCtaButtonEffect,
+  motionTapEffect,
+} from "../../helper/framerConfig";
 
 // Same pill treatment as the "My Experience" button on the home page
 // (src/components/index/bottom.tsx) — white pill, black border/text, a
@@ -22,13 +25,13 @@ import { myExpButtonEffect, circleTapEffect } from "../../helper/framerConfig";
 // for the flex row + responsive font-size) follows the same Badge/BadgeText
 // convention as CallToAction/ProjectLink (src/components/global/
 // callToAction.tsx, src/components/projects/projectLink.tsx). whileTap
-// reuses those components' shared circleTapEffect (also NavCircle's/
+// reuses those components' shared motionTapEffect (also NavCircle's/
 // BackCircle's) instead of a near-identical inline spring, so every pill/
 // circle CTA on the site presses the same way. whileHover keeps this
-// component's own myExpButtonEffect rotate — its established, proven
+// component's own roundedCtaButtonEffect rotate — its established, proven
 // hover — rather than picking up CallToAction's badgeHoverEffect, which
 // bakes in a colour invert this always-solid-white pill doesn't do.
-const PillCallToAction = ({
+const RoundedCallToAction = ({
   name,
   tagId,
   tagIdStartNum,
@@ -52,11 +55,11 @@ const PillCallToAction = ({
     className="font-secondary-normal"
     // Fallback tween for whatever whileHover/whileTap leave behind once a
     // gesture ends (e.g. rotate settling back to 0 after hover, scale back
-    // to 1 after tap) — myExpButtonEffect/circleTapEffect only define the
+    // to 1 after tap) — roundedCtaButtonEffect/motionTapEffect only define the
     // spring transition *into* their own gesture, not the reverse.
     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-    whileHover={myExpButtonEffect}
-    whileTap={circleTapEffect}
+    whileHover={roundedCtaButtonEffect}
+    whileTap={motionTapEffect}
     onMouseEnter={() => setHover(true)}
     onMouseLeave={() => setHover(false)}
   >
@@ -89,7 +92,7 @@ const PillCallToAction = ({
   </Pill>
 );
 
-export default PillCallToAction;
+export default RoundedCallToAction;
 
 const Pill = styled(motion.div)`
   width: fit-content;

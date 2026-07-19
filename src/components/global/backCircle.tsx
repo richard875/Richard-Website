@@ -10,7 +10,7 @@ import routeTo from "../../routes/routeTo";
 import Magnetic from "../motion/Magnetic";
 import {
   backCircleButtonEffect,
-  circleTapEffect,
+  motionTapEffect,
 } from "../../helper/framerConfig";
 
 // The "go back" counterpart to NavCircle's (src/components/global/
@@ -78,7 +78,7 @@ const BackCircle = ({
       <Magnetic strength={0.2}>
         <motion.div
           whileHover={backCircleButtonEffect}
-          whileTap={circleTapEffect}
+          whileTap={motionTapEffect}
           className="w-fit"
         >
           <Circle

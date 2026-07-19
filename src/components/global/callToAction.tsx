@@ -12,7 +12,7 @@ import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
 import HoverRoll from "../motion/HoverRoll";
-import { badgeHoverEffect, circleTapEffect } from "../../helper/framerConfig";
+import { badgeHoverEffect, motionTapEffect } from "../../helper/framerConfig";
 
 // Shape/sizing follow IntroBadge (src/components/index/bottom.tsx's "From
 // Australia with Love" tag) — the pill border/radius live on the outer
@@ -31,7 +31,7 @@ import { badgeHoverEffect, circleTapEffect } from "../../helper/framerConfig";
 // coordinated response — a slight grow that holds for the whole hover, a
 // tiny one-shot wiggle, and the outline -> solid-fill colour invert (border/
 // icon track `currentColor` so they invert for free). whileTap reuses
-// NavCircle/BackCircle's circleTapEffect for the press feedback. The label
+// NavCircle/BackCircle's motionTapEffect for the press feedback. The label
 // separately gets a SplitText + HoverRoll per-character hover roll.
 //
 // `invertOnly` strips all of that back down to just the colour invert — no
@@ -75,7 +75,7 @@ const CallToAction = ({
             }
           : badgeHoverEffect(accentColor, contrastColor)
       }
-      whileTap={invertOnly ? undefined : circleTapEffect}
+      whileTap={invertOnly ? undefined : motionTapEffect}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

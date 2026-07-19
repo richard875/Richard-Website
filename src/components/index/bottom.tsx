@@ -8,9 +8,10 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
-import ResumeCircle from "../global/resumeCircle";
-import PillCallToAction from "../global/pillCallToAction";
 import BottomBackdrop from "./bottomBackdrop";
+import ResumeCircle from "../global/resumeCircle";
+import RoundedCallToAction from "../global/roundedCallToAction";
+import { motionTapEffect } from "../../helper/framerConfig";
 import {
   INDEX_TO_INTRO,
   CONTACT_GITHUB,
@@ -71,7 +72,7 @@ const Bottom = ({
           </SplitText>
         </SmallText>
         <Button id={`${INDEX_TO_INTRO}_0`} {...fade(ENTRANCE_DELAY + 0.75)}>
-          <PillCallToAction
+          <RoundedCallToAction
             name="My Experience"
             tagId={INDEX_TO_INTRO}
             tagIdStartNum={1}
@@ -93,7 +94,7 @@ const Bottom = ({
           >
             <motion.span
               className="inline-block"
-              whileTap={{ scale: 0.92 }}
+              whileTap={motionTapEffect}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               <FontAwesomeIcon size={"2x"} icon={faLinkedin} />
@@ -111,7 +112,7 @@ const Bottom = ({
           >
             <motion.span
               className="inline-block"
-              whileTap={{ scale: 0.92 }}
+              whileTap={motionTapEffect}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               <FontAwesomeIcon size={"2x"} icon={faGithub} />

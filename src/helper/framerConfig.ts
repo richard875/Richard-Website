@@ -1,9 +1,10 @@
 import { VariantLabels, TargetAndTransition } from "framer-motion";
 
-type WhileHoverType = VariantLabels | TargetAndTransition;
+type HoverAndTapType = VariantLabels | TargetAndTransition;
 
-export const myExpButtonEffect: WhileHoverType = {
+export const roundedCtaButtonEffect: HoverAndTapType = {
   rotate: -12,
+  scale: 1.01,
   transition: {
     type: "spring",
     stiffness: 400,
@@ -12,7 +13,7 @@ export const myExpButtonEffect: WhileHoverType = {
   },
 };
 
-export const mainCircleButtonEffect: WhileHoverType = {
+export const mainCircleButtonEffect: HoverAndTapType = {
   rotate: -175,
   scale: 1.07,
   transition: {
@@ -23,7 +24,7 @@ export const mainCircleButtonEffect: WhileHoverType = {
   },
 };
 
-export const backCircleButtonEffect: WhileHoverType = {
+export const backCircleButtonEffect: HoverAndTapType = {
   scale: 1.12,
   rotate: -14,
   transition: {
@@ -35,7 +36,7 @@ export const backCircleButtonEffect: WhileHoverType = {
 
 // Shared press/tap feedback for NavCircle and BackCircle — kept identical
 // between the two so the pair reads as one connected control surface.
-export const circleTapEffect: WhileHoverType = {
+export const motionTapEffect: HoverAndTapType = {
   scale: 0.9,
   transition: {
     type: "spring",
@@ -48,12 +49,12 @@ export const circleTapEffect: WhileHoverType = {
 // grow that holds for the whole hover, a tiny one-shot wiggle that plays
 // through once and settles back at 0 (not a repeating shake), and the
 // outline -> solid-fill colour invert, all in one whileHover so they run as
-// a single coordinated hover response. `circleTapEffect` above is reused
+// a single coordinated hover response. `motionTapEffect` above is reused
 // for the matching tap/click feedback.
 export const badgeHoverEffect = (
   fillColor: string,
   textColor: string,
-): WhileHoverType => ({
+): HoverAndTapType => ({
   scale: 1.06,
   rotate: [0, -4, 4, -3, 3, 0],
   backgroundColor: fillColor,

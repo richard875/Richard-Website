@@ -15,7 +15,7 @@ import HoverRoll from "../components/motion/HoverRoll";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import ResumeCircle from "../components/global/resumeCircle";
-import PillCallToAction from "../components/global/pillCallToAction";
+import RoundedCallToAction from "../components/global/roundedCallToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
@@ -132,7 +132,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
               animate={{ opacity: 1 }}
               transition={{ stiffness: 0, duration: 0.4, delay: 0.8 }}
             >
-              <PillCallToAction
+              <RoundedCallToAction
                 name="Home"
                 tagId={CONTACT_TO_INDEX_TOP}
                 tagIdStartNum={0}
