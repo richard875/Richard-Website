@@ -11,6 +11,7 @@ import Preload from "../components/seo/preload";
 import Links from "../components/contact/links";
 import Cursor from "../components/cursor/cursor";
 import SplitText from "../components/motion/SplitText";
+import HoverRoll from "../components/motion/HoverRoll";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import ResumeCircle from "../components/global/resumeCircle";
@@ -100,7 +101,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                     className="cursor-none"
                     rel="noopener noreferrer"
                   >
-                    {EMAIL}
+                    <HoverRoll stagger={0.008}>{EMAIL}</HoverRoll>
                   </a>
                   {/* A radial-gradient dot pattern, not border-dotted: a native dotted
                       border ties dot size to border-width, so it can't be both 2px
@@ -147,7 +148,9 @@ const Contact = ({ location }: { location: WindowLocation }) => {
             animate={{ opacity: 1 }}
             transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
           >
-            <p>{COPYRIGHT_LONG}</p>
+            <SplitText as="p" delay={0.8}>
+              {COPYRIGHT_LONG}
+            </SplitText>
           </motion.div>
           <div className="mt-8 md:hidden">
             <ResumeCircle isHome={false} setHover={setHover} />

@@ -24,7 +24,7 @@ import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion";
  */
 type SplitTextProps = {
   /**
-   * Text to reveal. Plain strings are safest (stable identity → never
+   * Text to reveal. Plain strings are safest (stable identity -> never
    * re-renders). Rich nodes (inline links, coloured spans) also work —
    * Splitting.js splits the text inside them while preserving the elements —
    * but pass *stable* nodes (e.g. via `useMemo`) so a parent re-render can't

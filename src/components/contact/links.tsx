@@ -5,6 +5,8 @@ import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Color from "../../enums/color";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
+import SplitText from "../motion/SplitText";
+import HoverRoll from "../motion/HoverRoll";
 import useDarkModeManager from "../../hooks/useDarkModeManager";
 import { NAME, URL, LINKEDIN_URL, GITHUB_URL } from "../../constants/meta";
 import {
@@ -16,6 +18,14 @@ import {
   CONTACT_TO_EXPERIENCE,
   CONTACT_TO_INDEX_BOTTOM,
 } from "../../constants/googleTags";
+
+// This whole block fades in as one unit (opacity 0 -> 1, delay 0.5s, duration
+// 0.4s below) — the nav words' own SplitText entrance must start no earlier
+// than that finishes, or its per-character reveal plays out while the
+// block is still fully transparent and is never actually seen.
+const URL_REVEAL_DELAY = 1.2;
+const LINKS_REVEAL_DELAY = 1.4;
+const LINKS_REVEAL_STAGGER = 0.08;
 
 const Links = ({
   setHover,
@@ -30,7 +40,7 @@ const Links = ({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
+      transition={{ stiffness: 0, duration: 0.4, delay: 1.2 }}
     >
       <div className="flex mb-3.5">
         <a
@@ -70,7 +80,9 @@ const Links = ({
           </motion.span>
         </a>
       </div>
-      <h2 className="mb-2 text-lg">{URL}</h2>
+      <SplitText as="h2" className="mb-2 text-lg" delay={URL_REVEAL_DELAY}>
+        {URL}
+      </SplitText>
       <h2 id={`${CONTACT_TO_INDEX_BOTTOM}_0`}>
         <a
           id={`${CONTACT_TO_INDEX_BOTTOM}_1`}
@@ -80,7 +92,9 @@ const Links = ({
           onMouseLeave={() => setHover(false)}
           onClick={(e) => routeTo(e, Route.Home)}
         >
-          Home
+          <SplitText as="span" delay={LINKS_REVEAL_DELAY}>
+            <HoverRoll>Home</HoverRoll>
+          </SplitText>
         </a>
       </h2>
       <h2 id={`${CONTACT_TO_INTRO}_0`}>
@@ -95,7 +109,12 @@ const Links = ({
             routeTo(e, Route.Intro);
           }}
         >
-          Intro
+          <SplitText
+            as="span"
+            delay={LINKS_REVEAL_DELAY + LINKS_REVEAL_STAGGER}
+          >
+            <HoverRoll>Intro</HoverRoll>
+          </SplitText>
         </a>
       </h2>
       <h2 id={`${CONTACT_TO_EXPERIENCE}_0`}>
@@ -114,7 +133,12 @@ const Links = ({
             routeTo(e, Route.Experience, isDarkMode);
           }}
         >
-          Experience
+          <SplitText
+            as="span"
+            delay={LINKS_REVEAL_DELAY + LINKS_REVEAL_STAGGER * 2}
+          >
+            <HoverRoll>Experience</HoverRoll>
+          </SplitText>
         </a>
       </h2>
       <h2 id={`${CONTACT_TO_PROJECTS}_0`}>
@@ -133,7 +157,12 @@ const Links = ({
             routeTo(e, Route.Projects, isDarkMode);
           }}
         >
-          Projects
+          <SplitText
+            as="span"
+            delay={LINKS_REVEAL_DELAY + LINKS_REVEAL_STAGGER * 3}
+          >
+            <HoverRoll>Projects</HoverRoll>
+          </SplitText>
         </a>
       </h2>
       <h2 id={`${CONTACT_TO_EDUCATION}_0`}>
@@ -152,7 +181,12 @@ const Links = ({
             routeTo(e, Route.Education, isDarkMode);
           }}
         >
-          Education
+          <SplitText
+            as="span"
+            delay={LINKS_REVEAL_DELAY + LINKS_REVEAL_STAGGER * 4}
+          >
+            <HoverRoll>Education</HoverRoll>
+          </SplitText>
         </a>
       </h2>
     </motion.div>

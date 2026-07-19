@@ -5,6 +5,7 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
+import HoverRoll from "../motion/HoverRoll";
 import { EMAIL } from "../../constants/meta";
 import { INDEX_EMAIL, INDEX_TO_CONTACT } from "../../constants/googleTags";
 
@@ -28,7 +29,7 @@ const Top = ({
         className="cursor-none"
       >
         <SplitText as="span" delay={ENTRANCE_DELAY}>
-          {EMAIL}
+          <HoverRoll stagger={0.008}>{EMAIL}</HoverRoll>
         </SplitText>
       </a>
     </div>
@@ -44,7 +45,7 @@ const Top = ({
         onClick={(e) => routeTo(e, Route.Contact)}
       >
         <SplitText as="span" delay={ENTRANCE_DELAY + 0.2}>
-          CONTACT
+          <HoverRoll>CONTACT</HoverRoll>
         </SplitText>
       </a>
     </h2>

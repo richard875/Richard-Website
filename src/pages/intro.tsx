@@ -11,6 +11,7 @@ import Preload from "../components/seo/preload";
 import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
 import SplitText from "../components/motion/SplitText";
+import HoverRoll from "../components/motion/HoverRoll";
 import CallToAction from "../components/global/callToAction";
 import PillCallToAction from "../components/global/pillCallToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
@@ -68,9 +69,20 @@ const Experience = ({ location }: { location: WindowLocation }) => {
   // Memoised so its identity is stable across re-renders — SplitText splits
   // this into characters once and a parent re-render must not rebuild the
   // nodes underneath it.
+  //
+  // LinkedIn/GitHub/email are HoverRoll, not plain text: that adds the
+  // hover-roll interaction to the very `.char` spans this single SplitText
+  // produces for them, rather than giving them their own separate split and
+  // reveal — see HoverRoll' own doc comment for how it grafts onto
+  // SplitText's DOM instead of doing its own split.
   const introBody = React.useMemo(
     () => (
-      <>
+      <SplitText
+        as="span"
+        className="split-fast"
+        delay={TEXT_DELAY}
+        amount={0.1}
+      >
         G'day, I'm {FIRST_NAME}. I'm a Software Engineer and Creative Designer
         from<Sydney>&nbsp;Sydney</Sydney>,
         <Australia
@@ -91,7 +103,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            LinkedIn
+            <HoverRoll stagger={0.014}>LinkedIn</HoverRoll>
           </a>
           <Underline
             initial={{ opacity: 0 }}
@@ -111,7 +123,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            GitHub
+            <HoverRoll stagger={0.016}>GitHub</HoverRoll>
           </a>
           <Underline
             initial={{ opacity: 0 }}
@@ -131,7 +143,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            email
+            <HoverRoll>email</HoverRoll>
           </a>
           <Underline
             initial={{ opacity: 0 }}
@@ -144,7 +156,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           />
         </Email>
         . I hope you find my page enjoyable and have a great day!
-      </>
+      </SplitText>
     ),
     [],
   );
@@ -185,16 +197,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             />
           </Cta>
         </div>
-        <LeftText className="font-secondary-normal">
-          <SplitText
-            as="span"
-            className="split-fast"
-            delay={TEXT_DELAY}
-            amount={0.1}
-          >
-            {introBody}
-          </SplitText>
-        </LeftText>
+        <LeftText className="font-secondary-normal">{introBody}</LeftText>
         <div className="hidden sm:block">
           <Logos delay={LOGOS_DELAY} />
         </div>
