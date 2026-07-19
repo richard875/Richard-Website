@@ -53,3 +53,25 @@ export const ctaEffect = (forward: boolean): WhileHoverType => ({
     mass: 1,
   },
 });
+
+// The pill-badge CTAs' (CallToAction, ProjectLink) hover state: a slight
+// grow that holds for the whole hover, a tiny one-shot wiggle that plays
+// through once and settles back at 0 (not a repeating shake), and the
+// outline -> solid-fill colour invert, all in one whileHover so they run as
+// a single coordinated hover response. `circleTapEffect` above is reused
+// for the matching tap/click feedback.
+export const badgeHoverEffect = (
+  fillColor: string,
+  textColor: string,
+): WhileHoverType => ({
+  scale: 1.06,
+  rotate: [0, -4, 4, -3, 3, 0],
+  backgroundColor: fillColor,
+  color: textColor,
+  transition: {
+    scale: { type: "spring", stiffness: 400, damping: 12 },
+    rotate: { duration: 0.5, ease: "easeInOut" },
+    backgroundColor: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+    color: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  },
+});
