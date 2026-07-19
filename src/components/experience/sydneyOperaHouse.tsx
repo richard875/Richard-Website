@@ -84,13 +84,13 @@ const Model = React.memo(() => {
   const [contrast, setContrast] = React.useState(-0.2);
   const [hue, setHue] = React.useState(6);
   const [saturation, setSaturation] = React.useState(0.4);
-  const [sparklesOpacity, setSparklesOpacity] = React.useState(0.8);
+  const [sparklesOpacity, setSparklesOpacity] = React.useState(0.2);
   const [cloudOpacity, setCloudOpacity] = React.useState(0.95);
   const [floatIntensity, setFloatIntensity] = React.useState(2);
   const [parallaxStrength, setParallaxStrength] = React.useState(2);
   const [vignetteDarkness, setVignetteDarkness] = React.useState(0.65);
   const [noiseOpacity, setNoiseOpacity] = React.useState(0.025);
-  const [dofFocusRange, setDofFocusRange] = React.useState(4.5);
+  const [dofFocusRange, setDofFocusRange] = React.useState(8.5);
   const [dofBokehScale, setDofBokehScale] = React.useState(5);
   const [groundCloudGap, setGroundCloudGap] = React.useState(2.5);
 
