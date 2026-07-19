@@ -17,6 +17,7 @@ import RoundedCallToAction from "../components/global/roundedCallToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import InitialTransition from "../components/transition/InitialTransition";
 import setOverflow from "../helper/setOverflow";
+import getTransitionColor from "../helper/getTransitionColor";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import {
   INTRO_SOH,
@@ -210,13 +211,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             duration: STAGE_DURATION,
             delay: NAV_DELAY,
           }}
-          onClick={() =>
-            setTransitionColor(
-              isDarkMode
-                ? Color.BACKGROUND_BLACK
-                : Color.BACKGROUND_WHITE_SECONDARY,
-            )
-          }
+          onClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
         >
           <RoundedCallToAction
             name="Work Experience & Projects"

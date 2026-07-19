@@ -115,7 +115,7 @@ const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
   cursor: none;
   height: 100vh;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 `;
 
@@ -128,11 +128,9 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   margin-left: ${BLOCK_PADDING + "px"};
   margin-right: ${BLOCK_PADDING + "px"};
   border-bottom: ${({ $isDarkMode }) =>
-    $isDarkMode
-      ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-      : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+    `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
 
   @media ${layout.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});

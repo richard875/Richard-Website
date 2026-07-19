@@ -160,7 +160,7 @@ export const Head: HeadFC = () => (
 const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
   cursor: none;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 
   @media ${layout.up.md} {
@@ -179,11 +179,9 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   padding-top: 5px;
   padding-bottom: 3px;
   border-bottom: ${({ $isDarkMode }) =>
-    $isDarkMode
-      ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-      : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+    `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
 
   @media ${layout.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};

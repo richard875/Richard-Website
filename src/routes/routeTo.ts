@@ -4,11 +4,12 @@ import Route from "./route";
 import Color from "../enums/color";
 import { STANDALONE_URL } from "../constants/meta";
 import usePwaDetection from "../hooks/usePwaDetection";
+import getTransitionColor from "../helper/getTransitionColor";
 
 const routeTo = (
   event: React.MouseEvent<HTMLElement, MouseEvent>,
   route: Route,
-  isDarkMode: boolean = true
+  isDarkMode: boolean = true,
 ) => {
   event.preventDefault();
   const isPwa = usePwaDetection(location as WindowLocation);
@@ -25,19 +26,13 @@ const routeTo = (
       document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
       break;
     case Route.Experience:
-      document.body.style.backgroundColor = isDarkMode
-        ? Color.BACKGROUND_BLACK
-        : Color.BACKGROUND_WHITE_SECONDARY;
+      document.body.style.backgroundColor = getTransitionColor(isDarkMode);
       break;
     case Route.Projects:
-      document.body.style.backgroundColor = isDarkMode
-        ? Color.BACKGROUND_BLACK
-        : Color.BACKGROUND_WHITE_SECONDARY;
+      document.body.style.backgroundColor = getTransitionColor(isDarkMode);
       break;
     case Route.Education:
-      document.body.style.backgroundColor = isDarkMode
-        ? Color.BACKGROUND_BLACK
-        : Color.BACKGROUND_WHITE_SECONDARY;
+      document.body.style.backgroundColor = getTransitionColor(isDarkMode);
       break;
     case Route.Contact:
       document.body.style.backgroundColor = Color.BACKGROUND_BLACK;

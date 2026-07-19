@@ -8,6 +8,7 @@ import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
 import HoverRoll from "../motion/HoverRoll";
 import { motionTapEffect } from "../../helper/motionConfig";
+import getTransitionColor from "../../helper/getTransitionColor";
 import useDarkModeManager from "../../hooks/useDarkModeManager";
 import { NAME, URL, LINKEDIN_URL, GITHUB_URL } from "../../constants/meta";
 import {
@@ -126,11 +127,7 @@ const Links = ({
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onClick={(e) => {
-            setTransitionColor(
-              isDarkMode
-                ? Color.BACKGROUND_BLACK
-                : Color.BACKGROUND_WHITE_SECONDARY,
-            );
+            setTransitionColor(getTransitionColor(isDarkMode));
             routeTo(e, Route.Experience, isDarkMode);
           }}
         >
@@ -150,11 +147,7 @@ const Links = ({
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onClick={(e) => {
-            setTransitionColor(
-              isDarkMode
-                ? Color.BACKGROUND_BLACK
-                : Color.BACKGROUND_WHITE_SECONDARY,
-            );
+            setTransitionColor(getTransitionColor(isDarkMode));
             routeTo(e, Route.Projects, isDarkMode);
           }}
         >
@@ -174,11 +167,7 @@ const Links = ({
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onClick={(e) => {
-            setTransitionColor(
-              isDarkMode
-                ? Color.BACKGROUND_BLACK
-                : Color.BACKGROUND_WHITE_SECONDARY,
-            );
+            setTransitionColor(getTransitionColor(isDarkMode));
             routeTo(e, Route.Education, isDarkMode);
           }}
         >

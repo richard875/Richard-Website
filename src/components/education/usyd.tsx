@@ -6,6 +6,7 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import SplitText from "../motion/SplitText";
 import iconPicker from "../../helper/iconPicker";
+import getTransitionColor from "../../helper/getTransitionColor";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -110,9 +111,7 @@ const Container = styled.div<{ $isDarkMode: boolean }>`
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isDarkMode }) =>
-      $isDarkMode
-        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+      `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   }
 `;
 

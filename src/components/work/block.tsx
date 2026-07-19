@@ -8,6 +8,7 @@ import SplitText from "../motion/SplitText";
 import TextSection from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
+import getTransitionColor from "../../helper/getTransitionColor";
 import WorkExperience from "../../types/workExperience";
 import SentenceDescription from "../../types/sentenceDescription";
 import {
@@ -155,10 +156,7 @@ const Container = styled.div<{
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isLast, $isDarkMode }) =>
-      !$isLast &&
-      ($isDarkMode
-        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${Color.BACKGROUND_BLACK}`)};
+      !$isLast && `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   }
 
   @media ${layout.up.xxxl} {
@@ -245,7 +243,7 @@ const Video = styled.video<{ $isDarkMode: boolean }>`
   border-radius: 10px;
   z-index: 99999 !important;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_WHITE_SECONDARY : Color.BACKGROUND_BLACK};
+    `${getTransitionColor(!$isDarkMode)}`};
   --tw-shadow:
     0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored:

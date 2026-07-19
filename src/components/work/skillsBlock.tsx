@@ -5,6 +5,7 @@ import Icon from "../../enums/icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import iconPicker from "../../helper/iconPicker";
+import getTransitionColor from "../../helper/getTransitionColor";
 import skillsData from "../../../static/data/skills.json";
 import Skills, { Skill as SkillType } from "../../types/skills";
 import {
@@ -128,9 +129,7 @@ const Container = styled.div<{ $isDarkMode: boolean }>`
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isDarkMode }) =>
-      $isDarkMode
-        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+      `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   }
 
   @media ${layout.up.xxxl} {
