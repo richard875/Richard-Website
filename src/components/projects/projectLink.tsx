@@ -2,12 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import { ctaEffect } from "../../helper/framerConfig";
+import SplitText from "../motion/SplitText";
+import HoverRoll from "../motion/HoverRoll";
+import { badgeHoverEffect, circleTapEffect } from "../../helper/framerConfig";
 import { PROJECTS_LINK } from "../../constants/googleTags";
 
+// Same badge treatment as CallToAction (src/components/global/
+// callToAction.tsx) — see that file's comment for the Badge/BadgeText split,
+// the outline-to-fill invert, and why the label carries its own
+// SplitText + HoverRoll. Colour keeps this component's own green accent
+// (bright on dark backgrounds, dimmer on light) rather than IntroBadge's
+// fixed white/black.
 const ProjectLink = ({
   url,
   name,
@@ -19,16 +27,16 @@ const ProjectLink = ({
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
 }) => {
-  const [ctaHover, setCtaHover] = React.useState(false);
-  React.useEffect(() => setHover(ctaHover), [ctaHover]);
+  const accentColor = isDarkMode ? Color.BRIGHT_GREEN : Color.DIM_GREEN;
 
   return (
-    <Cta
+    <Badge
       id={`${PROJECTS_LINK}_${name}_0`}
-      className="font-secondary-normal underline underline-offset-2"
-      $isDarkMode={isDarkMode}
-      onMouseEnter={() => setCtaHover(true)}
-      onMouseLeave={() => setCtaHover(false)}
+      $accentColor={accentColor}
+      whileHover={badgeHoverEffect(Color.BRIGHT_GREEN, Color.BLACK)}
+      whileTap={circleTapEffect}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <a
         id={`${PROJECTS_LINK}_${name}_1`}
@@ -37,36 +45,44 @@ const ProjectLink = ({
         rel="noopener noreferrer"
         className="cursor-none"
       >
-        View Project
+        <BadgeText className="font-secondary-normal font-medium select-none">
+          <SplitText as="h3" className="split-fast">
+            <HoverRoll>View Project</HoverRoll>
+          </SplitText>
+          <FontAwesomeIcon
+            id={`${PROJECTS_LINK}_${name}_2`}
+            icon={faChevronRight}
+            size="sm"
+            className="ml-2"
+          />
+        </BadgeText>
       </a>
-      <motion.div animate={ctaHover ? ctaEffect(true) : {}}>
-        <FontAwesomeIcon
-          id={`${PROJECTS_LINK}_${name}_2`}
-          icon={faCircleChevronRight}
-          size="sm"
-          className="mt-1.5 ml-1.5"
-        />
-      </motion.div>
-    </Cta>
+    </Badge>
   );
 };
 
 export default ProjectLink;
 
-const Cta = styled.div<{ $isDarkMode: boolean }>`
-  display: flex;
-  align-items: center;
+const Badge = styled(motion.div)<{ $accentColor: Color }>`
+  width: fit-content;
   margin-top: 15px;
   margin-left: 5px;
-  font-size: 16px;
-  user-select: none;
-  color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BRIGHT_GREEN : Color.DIM_GREEN};
+  padding: 7px 15px;
+  border-radius: 999px;
+  background-color: transparent;
+  border: 2.5px solid currentColor;
+  color: ${({ $accentColor }) => $accentColor};
 
   @media ${layout.up.md} {
     margin-left: 0;
     margin-top: 20px;
   }
+`;
+
+const BadgeText = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 16px;
 
   @media ${layout.up.xxxl} {
     font-size: 18px;
