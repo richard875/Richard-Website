@@ -334,10 +334,17 @@ const HoverableText = styled.span`
   cursor: pointer;
 `;
 
-// position: relative so the Underline bar below can position itself against
-// this (unsplit) span rather than some distant ancestor.
+// position: relative + display: inline-block so the Underline bar below can
+// position itself against this (unsplit) span rather than some distant
+// ancestor. display: inline-block matters as much as position: relative
+// here: an absolutely positioned child of a plain `inline` box has a
+// browser-inconsistent containing block for `left`/`right`, so `left: 0;
+// right: 0` resolves against the wrong width and the bar drifts off to one
+// side. inline-block gives it a proper box to anchor to while still
+// wrapping like a word within the surrounding text.
 const HoverableTextUnderline = styled(HoverableText)`
   position: relative;
+  display: inline-block;
 `;
 
 // A real text-decoration underline can't be used here: this text sits inside
@@ -354,8 +361,8 @@ const Underline = styled(motion.span)`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 1px;
-  height: 2.5px;
+  bottom: 0.67vw;
+  height: 3px;
   background-color: currentColor;
 `;
 
