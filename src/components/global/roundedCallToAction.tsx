@@ -23,13 +23,13 @@ import {
 //
 // Shape/typography split (outer Pill for the pill itself, inner PillText
 // for the flex row + responsive font-size) follows the same Badge/BadgeText
-// convention as CallToAction/ProjectLink (src/components/global/
-// callToAction.tsx, src/components/projects/projectLink.tsx). whileTap
+// convention as PillCallToAction/ProjectLink (src/components/global/
+// pillCallToAction.tsx, src/components/projects/projectLink.tsx). whileTap
 // reuses those components' shared motionTapEffect (also NavCircle's/
 // BackCircle's) instead of a near-identical inline spring, so every pill/
 // circle CTA on the site presses the same way. whileHover keeps this
 // component's own roundedCtaButtonEffect rotate — its established, proven
-// hover — rather than picking up CallToAction's badgeHoverEffect, which
+// hover — rather than picking up PillCallToAction's badgeHoverEffect, which
 // bakes in a colour invert this always-solid-white pill doesn't do.
 const RoundedCallToAction = ({
   name,

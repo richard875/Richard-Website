@@ -12,7 +12,7 @@ import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
 import SplitText from "../components/motion/SplitText";
 import HoverRoll from "../components/motion/HoverRoll";
-import CallToAction from "../components/global/callToAction";
+import PillCallToAction from "../components/global/pillCallToAction";
 import RoundedCallToAction from "../components/global/roundedCallToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
 import InitialTransition from "../components/transition/InitialTransition";
@@ -184,7 +184,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
               delay: NAV_DELAY,
             }}
           >
-            <CallToAction
+            <PillCallToAction
               name="Home"
               tagId={INTRO_TO_INDEX}
               tagIdStartNum={2}

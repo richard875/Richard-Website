@@ -11,7 +11,7 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
-import CallToAction from "../components/global/callToAction";
+import PillCallToAction from "../components/global/pillCallToAction";
 import InitialTransition from "../components/transition/InitialTransition";
 import MousePosition from "../types/mousePosition";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
@@ -65,7 +65,7 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
           animate={{ opacity: 1 }}
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
-          <CallToAction
+          <PillCallToAction
             name="Home"
             tagId={NOT_FOUND_TO_INDEX}
             tagIdStartNum={1}

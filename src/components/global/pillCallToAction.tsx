@@ -38,7 +38,7 @@ import { badgeHoverEffect, motionTapEffect } from "../../helper/framerConfig";
 // grow, no wiggle, no tap scale, no SplitText/HoverRoll — for pages that
 // want the badge visually present but calmer (acknowledgement.tsx, by
 // explicit request: that page's tone doesn't suit the playful hover).
-const CallToAction = ({
+const PillCallToAction = ({
   name,
   tagId,
   tagIdStartNum,
@@ -117,7 +117,7 @@ const CallToAction = ({
   );
 };
 
-export default CallToAction;
+export default PillCallToAction;
 
 const Badge = styled(motion.div)<{ $accentColor: Color }>`
   width: fit-content;

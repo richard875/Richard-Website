@@ -10,8 +10,8 @@ import HoverRoll from "../motion/HoverRoll";
 import { badgeHoverEffect, motionTapEffect } from "../../helper/framerConfig";
 import { PROJECTS_LINK } from "../../constants/googleTags";
 
-// Same badge treatment as CallToAction (src/components/global/
-// callToAction.tsx) — see that file's comment for the Badge/BadgeText split,
+// Same badge treatment as PillCallToAction (src/components/global/
+// pillCallToAction.tsx) — see that file's comment for the Badge/BadgeText split,
 // the outline-to-fill invert, and why the label carries its own
 // SplitText + HoverRoll. Colour keeps this component's own green accent
 // (bright on dark backgrounds, dimmer on light) rather than IntroBadge's

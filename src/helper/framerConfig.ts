@@ -45,7 +45,7 @@ export const motionTapEffect: HoverAndTapType = {
   },
 };
 
-// The pill-badge CTAs' (CallToAction, ProjectLink) hover state: a slight
+// The pill-badge CTAs' (PillCallToAction, ProjectLink) hover state: a slight
 // grow that holds for the whole hover, a tiny one-shot wiggle that plays
 // through once and settles back at 0 (not a repeating shake), and the
 // outline -> solid-fill colour invert, all in one whileHover so they run as
