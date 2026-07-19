@@ -416,17 +416,6 @@ const Model = React.memo(() => {
         shadow-camera-far={3500}
         shadow-bias={-0.0001}
       />
-      {/* Ground */}
-      <group position={[0, -groundCloudGap, 0]}>
-        <mesh
-          receiveShadow={true}
-          position={[0, -0.5, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-        >
-          <planeGeometry args={[50, 25]} />
-          <meshLambertMaterial color={groundColor} />
-        </mesh>
-      </group>
       {/* Sky */}
       <mesh>
         <sphereGeometry
