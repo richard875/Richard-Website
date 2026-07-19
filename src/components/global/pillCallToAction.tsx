@@ -26,7 +26,6 @@ const PillCallToAction = ({
   setHover,
   isDarkMode = true,
   manualCursor = false,
-  border = true,
 }: {
   name: string;
   tagId: string;
@@ -36,16 +35,10 @@ const PillCallToAction = ({
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode?: boolean;
   manualCursor?: boolean;
-  // The black outline reads great on the light/gradient backgrounds this
-  // pill was designed for, but goes muddy against the near-black page
-  // backgrounds (intro/contact) — there the white fill alone has plenty of
-  // contrast, so the border is dropped rather than recoloured.
-  border?: boolean;
 }) => (
   <Pill
     id={`${tagId}_${tagIdStartNum}`}
     className="font-secondary-normal"
-    $border={border}
     // Fallback transition for whatever whileHover/whileTap leave behind when
     // a gesture ends (e.g. rotate settling back to 0) — see the matching
     // comment on ButtonContainer in bottom.tsx for why this must be a tween.
@@ -87,7 +80,7 @@ const PillCallToAction = ({
 
 export default PillCallToAction;
 
-const Pill = styled(motion.div)<{ $border: boolean }>`
+const Pill = styled(motion.div)`
   font-size: 16px;
   user-select: none;
   width: fit-content;
@@ -108,7 +101,6 @@ const Pill = styled(motion.div)<{ $border: boolean }>`
     border-radius: 7px;
     color: ${Color.BLACK};
     background-color: ${Color.WHITE};
-    border: ${({ $border }) =>
-      $border ? `2.5px solid ${Color.BLACK}` : "none"};
+    border: 2.5px solid ${Color.BLACK};
   }
 `;

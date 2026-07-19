@@ -228,7 +228,6 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             route={Route.Experience}
             isDarkMode={isDarkMode}
             manualCursor={true}
-            border={false}
           />
         </Cta>
         <div className="sm:hidden">
