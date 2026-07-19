@@ -1,11 +1,12 @@
 import React from "react";
 import * as THREE from "three";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, useHelper } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { mergeVertices } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { WATER_VERTEX_SHADER, WATER_FRAGMENT_SHADER } from "./shader";
 import AnimatedBoat from "./AnimatedBoat";
+import { IS_DEV } from "../../constants/environment";
 
 const MODEL_PATH = "/models/sydneyOperaHouse/sydneyOperaHouse.gltf";
 
@@ -108,13 +109,306 @@ const smoothSailGeometry = (
   return merged;
 };
 
+// The "Streetlight_s" mesh bakes every lamp post along the promenade into
+// one geometry rather than separate nodes. These (x, z) pairs are every real
+// lamp head cluster found by grouping that mesh's vertices by position - 14
+// distinct posts. (The clustering that found these used a crude 300-unit
+// rounding grid, which split a few single lamp posts across two adjacent
+// buckets - those duplicate pairs showed up as two overlapping glow balls on
+// the same post and have been merged back into one entry each here.)
+const STREETLAMP_LOCAL_POSITIONS: [number, number, number][] = [
+  [534, 90, 903],
+  [-1773, 90, -2410],
+  [-278, 90, -1724],
+  [1808, 90, -1107],
+  [1235, 90, 1013],
+  [635, 90, -1578],
+  [1710, 90, 241],
+  [-1180, 90, -2042],
+  [-1743, 90, 525],
+  [-2206, 90, 490],
+  [1996, 90, -705],
+  [-621, 90, 707],
+  [1909, 90, -199],
+  [1312, 90, -1483],
+];
+
+// SpotLight color/cone for the streetlamps - tuned to pool tightly on the
+// pavement directly under each post rather than spill across the plaza.
+const STREETLAMP_SPOT_COLOR = "#ffb066";
+const STREETLAMP_SPOT_ANGLE = 0.8;
+const STREETLAMP_SPOT_PENUMBRA = 0.65;
+// `distance`/`intensity` are literal world-space numbers - three.js does
+// NOT rescale them by the parent group's transform the way it does a
+// light's position, so these look nothing like the STREETLAMP_LOCAL_POSITIONS
+// coordinates even though the light sits in that same local hierarchy.
+const STREETLAMP_SPOT_DISTANCE = 0.45;
+const STREETLAMP_SPOT_INTENSITY = 0.3;
+// How far straight down (in the SAME local, pre-scale units as
+// STREETLAMP_LOCAL_POSITIONS) from each lamp head the aim target sits. This
+// is local-space, so it DOES get carried through the parent's transform
+// along with the light's own position - that's what actually points the
+// cone down at the ground instead of off in some arbitrary direction.
+const STREETLAMP_TARGET_DROP = 85;
+// Horizontal nudge (same local units) applied to the target alongside the
+// vertical drop, so the cone rakes forward off the post instead of landing
+// in a perfect circle directly underneath it - like a real lamp head
+// cantilevered out over the path on an arm.
+const STREETLAMP_TARGET_FORWARD_OFFSET = 70;
+// The Sydney Opera House's origin (the Sidney_Stone group's position),
+// expressed in this same streetlamp-group local coordinate space. The two
+// groups are siblings under the same parent in the JSX below, so this was
+// found by inverting the streetlamp group's own position/rotation/scale
+// ([-50.42, 58.02, -1712.52], rotation [Math.PI, 1.5, -Math.PI], scale 2)
+// and applying it to the opera house group's local position
+// ([-574.21, 4.03, -2224.25]) - the shared parent's transform cancels out
+// since both groups sit under it. Used below to bias every lamp's target
+// horizontally toward the opera house instead of one arbitrary shared axis.
+const OPERA_HOUSE_LOCAL_XZ: [number, number] = [273.75, -243.14];
+
+// Bounding-box centers (local space, inside each building's own group) of the
+// building facades, used to fake a lit window since none of these buildings
+// actually have separate window/glass geometry in the model.
+const BUILDING_WINDOW_LIGHT_POSITIONS: [number, number, number][] = [
+  [-349, -10, -247], // Building_1
+  [371, -20, 121], // Building_1_2
+  [-318, -15, -16], // Building
+  [200, -5, 111], // Building_2
+  [200, -5, 155], // Building_2_2
+];
+
 type MeshProps = {
   sunDirection?: THREE.Vector3;
+  isNight?: boolean;
+  sailFloodlights?: SailFloodlightConfig[];
+};
+
+// A dot standing in for a distant bulb - purely visual (no real light), so
+// Bloom can pick it out without it ever illuminating anything nearby. An
+// earlier version paired this with a real pointLight, but any point light
+// sitting close to a glossy surface (the boat/opera-house glass) catches a
+// tight specular hotspot that sweeps in and out of Bloom's threshold every
+// frame as the model bobs via Float - a persistent flicker that no amount of
+// intensity tuning fully removed. Dropping the light removes the flicker
+// source entirely; the dot's own steady, tone-mapped brightness is enough to
+// read as "there's a light there" once bloomed.
+const NightGlow = ({
+  position,
+  color,
+  radius,
+  brightness = 1.8,
+}: {
+  position: [number, number, number];
+  color: string;
+  radius: number;
+  brightness?: number;
+}) => {
+  // Pushed past 1.0 by default - these are meant to be the dominant "there's
+  // a light here" cue, and Bloom is what sells them as lit windows/lamps, so
+  // they need to clear its threshold with room to spare. Individual call
+  // sites can dial this down where full brightness reads as too intense.
+  const dotColor = React.useMemo(
+    () => new THREE.Color(color).multiplyScalar(brightness),
+    [color, brightness],
+  );
+
+  return (
+    <mesh position={position}>
+      <sphereGeometry args={[radius, 12, 12]} />
+      <meshBasicMaterial color={dotColor} />
+    </mesh>
+  );
+};
+
+// The actual downward-facing cone of light for a streetlamp, paired with
+// the NightGlow bulb dot above. A THREE.SpotLight aims from its position at
+// its `.target`'s position - unlike the light itself, `.target` is only
+// transformed by its parent hierarchy if it's genuinely parented in the
+// scene graph (not just handed a position via a prop), so it's rendered
+// here as a real <object3D> sibling of the light and wired up imperatively
+// once both refs exist. Kept tight-angle, short-range and shadowless (the
+// scene already has one big shadow-casting directional light; adding real
+// shadow maps to all 14 of these would be expensive for very little payoff
+// at this scale).
+const StreetlampSpot = ({
+  position,
+}: {
+  position: [number, number, number];
+}) => {
+  const lightRef = React.useRef<THREE.SpotLight>(null);
+  const targetRef = React.useRef<THREE.Object3D>(null);
+
+  React.useEffect(() => {
+    if (lightRef.current && targetRef.current) {
+      lightRef.current.target = targetRef.current;
+    }
+  }, []);
+
+  const targetPosition = React.useMemo<[number, number, number]>(() => {
+    const dx = OPERA_HOUSE_LOCAL_XZ[0] - position[0];
+    const dz = OPERA_HOUSE_LOCAL_XZ[1] - position[2];
+    const horizontalDist = Math.hypot(dx, dz) || 1;
+    return [
+      position[0] + (dx / horizontalDist) * STREETLAMP_TARGET_FORWARD_OFFSET,
+      position[1] - STREETLAMP_TARGET_DROP,
+      position[2] + (dz / horizontalDist) * STREETLAMP_TARGET_FORWARD_OFFSET,
+    ];
+  }, [position]);
+
+  return (
+    <>
+      <spotLight
+        ref={lightRef}
+        position={position}
+        color={STREETLAMP_SPOT_COLOR}
+        intensity={STREETLAMP_SPOT_INTENSITY}
+        angle={STREETLAMP_SPOT_ANGLE}
+        penumbra={STREETLAMP_SPOT_PENUMBRA}
+        distance={STREETLAMP_SPOT_DISTANCE}
+        decay={2}
+        castShadow={false}
+      />
+      <object3D ref={targetRef} position={targetPosition} />
+    </>
+  );
+};
+
+// White LED sail floodlights - positioned in the same coordinate space as
+// this component's outermost <group position={[0, 0.6, 0]}> below, i.e.
+// model-relative rather than world-fixed. These (and StreetlampSpot above)
+// live in mesh.tsx rather than the scene-level Canvas specifically so they
+// ride along with whatever rotation Inspector applies to the model - a
+// spotLight placed at the Canvas/scene level stays fixed in world space and
+// visibly stops lining up with the sails as soon as the model is rotated.
+//
+// An earlier version of this aimed at points derived from the sail mesh's
+// axis-aligned bounding-box CORNERS. That massively overshot: the
+// Sidney_Stone group's rotation ([-2.7, -1.33, 0.96]) is a large arbitrary
+// 3D rotation, so combining raw per-axis min/max into corners and
+// transforming those does not track any real point on the mesh - it
+// estimated a sail top around y=1.13 in this frame when the real geometry
+// only reaches y=0.686. Every light ended up aiming into empty sky above
+// the sails, which is why none were visible.
+//
+// This version reads the actual vertex buffer for the "Sidney_White
+// Border_0" mesh (via its GLTF accessor + scene.bin) and transforms every
+// real vertex through the same parent-group chain, then picks distinct
+// highest-point clusters - guaranteed points ON the sail surface, spread
+// across both shell clusters. Each target below is one of those real
+// points and doesn't change from here on regardless of where the fixture
+// itself sits.
+//
+// The fixtures themselves sit out on the water rather than at the podium's
+// edge, at a real, measured water-surface height and extent (same
+// vertex-transform technique applied to "Water_2_water foam_0"). Every
+// field below - position, target ("rotation": a spotLight has no rotation
+// property of its own, it aims from `position` at `target`, so target x/y/z
+// IS the aim control), angle, and intensity - is now fully GUI-adjustable
+// per light (see the "Sail Floodlights" panel in sydneyOperaHouse.tsx) via
+// the `sailFloodlights` prop below. This array is only the starting point
+// for that GUI state, not a fixed layout.
+//
+// 3 targets sit on the larger (concert hall) shell cluster on the left
+// (negative x in this frame); the last 2 sit on the smaller (theatre) shell
+// cluster on the right (positive x) - found by reading the actual vertex
+// buffer for the "Sidney_White Border_0" mesh (via its GLTF accessor +
+// scene.bin), transforming every real vertex through the same parent-group
+// chain this component applies, and picking distinct high-point clusters -
+// guaranteed points ON the sail surface, not just a bounding-box guess.
+export type SailFloodlightConfig = {
+  position: [number, number, number];
+  target: [number, number, number];
+  angle: number;
+  intensity: number;
+};
+export const DEFAULT_SAIL_FLOODLIGHTS: SailFloodlightConfig[] = [
+  {
+    position: [-1.424, 0.75, -0.923],
+    target: [-0.342, 0.686, -0.379],
+    angle: 0.07,
+    intensity: 8,
+  },
+  {
+    position: [-0.708, 0.75, -1.588],
+    target: [-0.346, 0.629, -0.712],
+    angle: 0.07,
+    intensity: 8,
+  },
+  {
+    position: [-1.22, 0.75, -1.224],
+    target: [-0.424, 0.619, -0.517],
+    angle: 0.07,
+    intensity: 8,
+  },
+  {
+    position: [1.147, 0.75, -0.76],
+    target: [0.363, 0.568, -0.483],
+    angle: 0.07,
+    intensity: 8,
+  },
+  {
+    position: [1.077, 0.75, -0.925],
+    target: [0.405, 0.528, -0.586],
+    angle: 0.07,
+    intensity: 8,
+  },
+];
+const SAIL_FLOODLIGHT_COLOR = "#f4f9ff";
+const SAIL_FLOODLIGHT_PENUMBRA = 0.25;
+// Generous relative to the default ~1 unit throw so a fixture dragged
+// further out in the GUI doesn't silently run past the falloff cutoff and
+// go dark - decay=2 already does the real work of fading it out.
+const SAIL_FLOODLIGHT_DISTANCE = 5;
+
+// Same target-parenting fix as StreetlampSpot: a spotLight's `.target` only
+// inherits the model's rotation if it's a genuinely parented <object3D>,
+// not just a position handed to it via a prop.
+const SailFloodlight = ({
+  position,
+  target,
+  angle,
+  intensity,
+}: SailFloodlightConfig) => {
+  // Non-null assertion here (not a real guarantee) purely so the ref's type
+  // matches what useHelper expects below - the runtime null-checks in the
+  // effect and the JSX below are what actually guard against it being unset.
+  const lightRef = React.useRef<THREE.SpotLight>(null!);
+  const targetRef = React.useRef<THREE.Object3D>(null);
+
+  React.useEffect(() => {
+    if (lightRef.current && targetRef.current) {
+      lightRef.current.target = targetRef.current;
+    }
+  }, []);
+
+  // Dev-only wireframe cone showing exactly where each fixture is aimed -
+  // SpotLightHelper reads the light's live world position/target each frame
+  // (added straight to the scene root, not this local group), so it stays
+  // correct even as the model rotates.
+  useHelper(IS_DEV && lightRef, THREE.SpotLightHelper);
+
+  return (
+    <>
+      <spotLight
+        ref={lightRef}
+        position={position}
+        color={SAIL_FLOODLIGHT_COLOR}
+        intensity={intensity}
+        angle={angle}
+        penumbra={SAIL_FLOODLIGHT_PENUMBRA}
+        distance={SAIL_FLOODLIGHT_DISTANCE}
+        decay={2}
+        castShadow={false}
+      />
+      <object3D ref={targetRef} position={target} />
+    </>
+  );
 };
 
 const useAnimatedWaterMaterial = (
   sourceMaterial: THREE.Material | undefined,
   sunDirection: THREE.Vector3,
+  isNight: boolean,
 ) => {
   const waterMaterial = React.useMemo(() => {
     const baseColor =
@@ -128,6 +422,7 @@ const useAnimatedWaterMaterial = (
         uColor: { value: baseColor },
         uHighlight: { value: new THREE.Color("#b8e5f7") },
         uSunDirection: { value: sunDirection.clone() },
+        uNightMix: { value: 0 },
       },
       transparent: true,
       depthWrite: false,
@@ -139,40 +434,102 @@ const useAnimatedWaterMaterial = (
 
   useFrame(({ clock }) => {
     waterMaterial.uniforms.uTime.value = clock.getElapsedTime();
-    // Track the scene's actual directional light so the water's sun glint
-    // lines up with the shadows/highlights on the rest of the model.
+    // Track the scene's actual directional light so the water's sun/moon
+    // glint lines up with the shadows/highlights on the rest of the model.
     waterMaterial.uniforms.uSunDirection.value.copy(sunDirection);
+    waterMaterial.uniforms.uNightMix.value = isNight ? 1 : 0;
   });
 
   return waterMaterial;
 };
 
-const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
+// Every non-glass/water material in the GLTF (ground, pavement, grass,
+// stone, roofs, boats...) is baked with warm daytime-sunset colors. A
+// strong moon light alone can't make those read as "night" - a pink
+// pavement just becomes a *brighter* pink pavement. So at night we also
+// desaturate and darken each material's base color and pull it toward a
+// cool navy, the way moonlight actually flattens color perception.
+const NIGHT_MATERIAL_TINT = new THREE.Color("#39456e");
+const NIGHT_TINTED_MATERIALS = new Set(["Glass", "water_foam"]);
+
+const useNightMaterialTint = (
+  materials: Record<string, THREE.Material>,
+  isNight: boolean,
+) => {
+  const originalColors = React.useRef(new Map<string, THREE.Color>());
+
+  React.useEffect(() => {
+    Object.entries(materials).forEach(([name, material]) => {
+      if (NIGHT_TINTED_MATERIALS.has(name)) return;
+      const mat = material as THREE.MeshStandardMaterial;
+      if (!mat.color) return;
+
+      let original = originalColors.current.get(name);
+      if (!original) {
+        original = mat.color.clone();
+        originalColors.current.set(name, original);
+      }
+
+      if (isNight) {
+        const hsl = { h: 0, s: 0, l: 0 };
+        original.getHSL(hsl);
+        mat.color
+          .setHSL(hsl.h, hsl.s * 0.2, THREE.MathUtils.clamp(hsl.l * 0.15, 0, 1))
+          .lerp(NIGHT_MATERIAL_TINT, 0.55);
+      } else {
+        mat.color.copy(original);
+      }
+    });
+  }, [materials, isNight]);
+};
+
+const Mesh = ({
+  sunDirection = DEFAULT_SUN_DIRECTION,
+  isNight = false,
+  sailFloodlights = DEFAULT_SAIL_FLOODLIGHTS,
+}: MeshProps) => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
+
+  useNightMaterialTint(materials, isNight);
 
   // The GLTF "Glass" material is fully opaque (no real transmission); swap in a
   // physically-based transmissive material so windows/glass actually refract.
+  // At night it also picks up a warm emissive glow, so every window in the
+  // model (opera house, boats, car) reads as lit from within.
   const glassMaterial = React.useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
         color: (materials.Glass as THREE.MeshStandardMaterial).color,
         transmission: 1,
         thickness: 0.4,
-        roughness: 0.08,
+        // A near-mirror 0.08 roughness catches a sharp specular hotspot from
+        // the sail floodlights that flares up huge whenever Float's gentle
+        // bobbing sweeps the surface through the reflection angle. Softening
+        // it at night spreads that highlight out instead.
+        roughness: isNight ? 0.35 : 0.08,
         ior: 1.5,
         metalness: 0,
+        // This IS the "light coming from within" for every window in the
+        // model (opera house, boats, car) - no separate glow lights needed,
+        // this glass itself is what should read as brightly lit.
+        emissive: isNight
+          ? new THREE.Color("#ff9d4d")
+          : new THREE.Color("#000000"),
+        emissiveIntensity: isNight ? 1.4 : 0,
       }),
-    [materials.Glass],
+    [materials.Glass, isNight],
   );
 
   const sailGeometry = React.useMemo(
-    () => smoothSailGeometry((nodes.Sidney_White_Border_0 as THREE.Mesh).geometry),
+    () =>
+      smoothSailGeometry((nodes.Sidney_White_Border_0 as THREE.Mesh).geometry),
     [nodes.Sidney_White_Border_0],
   );
 
   const animatedWaterMaterial = useAnimatedWaterMaterial(
     materials.water_foam,
     sunDirection,
+    isNight,
   );
 
   const boat1Position = React.useMemo(
@@ -224,6 +581,16 @@ const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
 
   return (
     <group position={[0, 0.6, 0]} dispose={null}>
+      {isNight &&
+        sailFloodlights.map((floodlight, i) => (
+          <SailFloodlight
+            key={`sail-floodlight-${i}`}
+            position={floodlight.position}
+            target={floodlight.target}
+            angle={floodlight.angle}
+            intensity={floodlight.intensity}
+          />
+        ))}
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.0003}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group position={[588.78, 396.08, 2376.67]}>
@@ -749,6 +1116,25 @@ const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
               rotation={[Math.PI, 1.5, -Math.PI]}
               scale={2}
             />
+            {isNight && (
+              <group
+                position={[-50.42, 58.02, -1712.52]}
+                rotation={[Math.PI, 1.5, -Math.PI]}
+                scale={2}
+              >
+                {STREETLAMP_LOCAL_POSITIONS.map((lampPosition, i) => (
+                  <React.Fragment key={`streetlamp-${i}`}>
+                    <NightGlow
+                      position={lampPosition}
+                      color="#ff9d4d"
+                      radius={45}
+                      brightness={0.6}
+                    />
+                    <StreetlampSpot position={lampPosition} />
+                  </React.Fragment>
+                ))}
+              </group>
+            )}
           </group>
           <group
             position={[931.95, 509.87, 1401.82]}
@@ -778,6 +1164,14 @@ const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
                 }
                 material={animatedWaterMaterial}
               />
+              {isNight && (
+                <NightGlow
+                  position={BUILDING_WINDOW_LIGHT_POSITIONS[0]}
+                  color="#ff9d4d"
+                  radius={80}
+                  brightness={2.2}
+                />
+              )}
             </group>
             <group
               position={[892.26, -49.52, 3663.72]}
@@ -803,6 +1197,14 @@ const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
                 }
                 material={animatedWaterMaterial}
               />
+              {isNight && (
+                <NightGlow
+                  position={BUILDING_WINDOW_LIGHT_POSITIONS[1]}
+                  color="#ff9d4d"
+                  radius={80}
+                  brightness={2.2}
+                />
+              )}
             </group>
             <group
               position={[-4920.47, 45.21, -45.44]}
@@ -820,6 +1222,14 @@ const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
                 geometry={(nodes.Building_water_foam_0 as THREE.Mesh).geometry}
                 material={animatedWaterMaterial}
               />
+              {isNight && (
+                <NightGlow
+                  position={BUILDING_WINDOW_LIGHT_POSITIONS[2]}
+                  color="#ff9d4d"
+                  radius={80}
+                  brightness={2.2}
+                />
+              )}
             </group>
             <group
               position={[-775.48, 120.3, -1076.12]}
@@ -845,6 +1255,14 @@ const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
                 }
                 material={animatedWaterMaterial}
               />
+              {isNight && (
+                <NightGlow
+                  position={BUILDING_WINDOW_LIGHT_POSITIONS[3]}
+                  color="#ff9d4d"
+                  radius={80}
+                  brightness={2.2}
+                />
+              )}
             </group>
             <group
               position={[-332.83, 120.3, -1076.12]}
@@ -870,6 +1288,14 @@ const Mesh = ({ sunDirection = DEFAULT_SUN_DIRECTION }: MeshProps) => {
                 }
                 material={animatedWaterMaterial}
               />
+              {isNight && (
+                <NightGlow
+                  position={BUILDING_WINDOW_LIGHT_POSITIONS[4]}
+                  color="#ff9d4d"
+                  radius={80}
+                  brightness={2.2}
+                />
+              )}
             </group>
           </group>
           <group

@@ -14,12 +14,45 @@ import {
   DepthOfField,
 } from "@react-three/postprocessing";
 import { Resolution, KernelSize, BlendFunction } from "postprocessing";
-import Mesh from "./mesh";
+import Mesh, { DEFAULT_SAIL_FLOODLIGHTS } from "./mesh";
+import type { SailFloodlightConfig } from "./mesh";
 import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
 import { GLOBAL_VERTEX_SHADER, GLOBAL_FRAGMENT_SHADER } from "./shader";
 import cloudTexture from "../../../static/models/sydneyOperaHouse/cloud.png";
+
+// Fixed night-mode tuning, kept separate from the day gui sliders so flipping
+// "Night Mode" doesn't disturb the day look those sliders control.
+// Ambient/hemisphere are the flat, shadowless "atmosphere" fill - at night
+// that fill should be next to nothing, barely above zero. The moon
+// (directional light below) is the one light meant to actually illuminate
+// the scene, strong enough to visibly light up the model's upward-facing
+// surfaces on its own; the streetlamps/window glows and sail floodlights
+// layer on top of that for local detail.
+const NIGHT_AMBIENT_INTENSITY = 0.003 * Math.PI;
+const NIGHT_HEMI_INTENSITY = 0.004 * Math.PI;
+const NIGHT_HEMI_COLOR = new THREE.Color("#3a4a7a");
+const NIGHT_HEMI_GROUND_COLOR = new THREE.Color("#0c1020");
+const NIGHT_DIR_INTENSITY = 0.65 * Math.PI;
+const NIGHT_DIR_COLOR = new THREE.Color("#dce6ff");
+// Moon direction/position: fixed (unlike the day light's randomized spot) so
+// the water's moon-glint and the visible moon disc always agree.
+const NIGHT_MOON_POSITION = new THREE.Vector3(5, 9, -6);
+const NIGHT_SKY_TOP = new THREE.Color("#020305");
+const NIGHT_SKY_BOTTOM = new THREE.Color("#0a0e1c");
+// The background Cloud puffs use an unlit MeshBasicMaterial (see below), so
+// they render at their own flat color regardless of how dim the scene lights
+// are - dropping ambient/hemisphere intensity does nothing to them. To make
+// them recede into the night background they need their own dark color and
+// a much lower opacity, applied directly.
+const NIGHT_CLOUD_COLOR = "#141a30";
+const NIGHT_CLOUD_OPACITY_SCALE = 0.35;
+const NIGHT_FOG_NEAR = 1;
+const NIGHT_FOG_FAR = 24;
+const DAY_SKY_BOTTOM = new THREE.Color(0xfad6a5);
+const DAY_FOG_NEAR = 0.5;
+const DAY_FOG_FAR = 18;
 
 const SydneyOperaHouse = React.memo(() => (
   <Canvas
@@ -93,6 +126,47 @@ const Model = React.memo(() => {
   const [dofFocusRange, setDofFocusRange] = React.useState(8.5);
   const [dofBokehScale, setDofBokehScale] = React.useState(5);
   const [groundCloudGap, setGroundCloudGap] = React.useState(2.5);
+  const [isNight, setIsNight] = React.useState(true);
+  // One entry per sail floodlight - position, target ("rotation": a
+  // spotLight aims from position at target rather than having a rotation
+  // of its own, so target x/y/z is what the GUI calls Rotation X/Y/Z),
+  // angle, and intensity are all independently GUI-adjustable per light.
+  const [sailFloodlights, setSailFloodlights] = React.useState<
+    SailFloodlightConfig[]
+  >(() =>
+    DEFAULT_SAIL_FLOODLIGHTS.map((light) => ({
+      position: [...light.position] as [number, number, number],
+      target: [...light.target] as [number, number, number],
+      angle: light.angle,
+      intensity: light.intensity,
+    })),
+  );
+
+  const updateSailFloodlightVector = (
+    index: number,
+    key: "position" | "target",
+    axis: 0 | 1 | 2,
+    value: number,
+  ) => {
+    setSailFloodlights((prev) =>
+      prev.map((light, i) => {
+        if (i !== index) return light;
+        const nextVector = [...light[key]] as [number, number, number];
+        nextVector[axis] = value;
+        return { ...light, [key]: nextVector };
+      }),
+    );
+  };
+
+  const updateSailFloodlightScalar = (
+    index: number,
+    key: "angle" | "intensity",
+    value: number,
+  ) => {
+    setSailFloodlights((prev) =>
+      prev.map((light, i) => (i === index ? { ...light, [key]: value } : light)),
+    );
+  };
 
   // Lights
   const hemiLightColor = new THREE.Color();
@@ -120,10 +194,37 @@ const Model = React.memo(() => {
   const groundColor = new THREE.Color();
   groundColor.setHSL(groundColorX, groundColorY, groundColorZ);
 
+  // Night mode swaps in fixed lighting/atmosphere values instead of the day
+  // gui sliders above, so toggling it never disturbs the day-tuned values.
+  const effectiveAmbientIntensity = isNight
+    ? NIGHT_AMBIENT_INTENSITY
+    : ambientLightIntensity;
+  const effectiveHemiIntensity = isNight
+    ? NIGHT_HEMI_INTENSITY
+    : hemiLightIntensity;
+  const effectiveHemiColor = isNight ? NIGHT_HEMI_COLOR : hemiLightColor;
+  const effectiveHemiGroundColor = isNight
+    ? NIGHT_HEMI_GROUND_COLOR
+    : hemiGroundColor;
+  const effectiveDirIntensity = isNight
+    ? NIGHT_DIR_INTENSITY
+    : dirLightIntensity;
+  const effectiveDirColor = isNight ? NIGHT_DIR_COLOR : dirLightColor;
+  // Fixed moon position at night instead of the day light's randomized spot,
+  // so the visible moon disc and the water's moon-glint always agree.
+  const effectiveDirPosition = isNight ? NIGHT_MOON_POSITION : dirPosition;
+
+  // The Cloud puffs are unlit, so night-dimming them means swapping their
+  // color/opacity directly rather than relying on scene light intensity.
+  const cloudColor = (dayColor: string) =>
+    isNight ? NIGHT_CLOUD_COLOR : dayColor;
+  const resolveCloudOpacity = (mult: number) =>
+    cloudOpacity * mult * (isNight ? NIGHT_CLOUD_OPACITY_SCALE : 1);
+
   const uniforms = React.useMemo(
     () => ({
       topColor: { value: hemiLightColor },
-      bottomColor: { value: new THREE.Color(0xfad6a5) },
+      bottomColor: { value: DAY_SKY_BOTTOM.clone() },
       offset: { value: skyOffset },
       exponent: { value: skyExponent },
     }),
@@ -132,12 +233,26 @@ const Model = React.memo(() => {
 
   React.useEffect(() => {
     scene.background = new THREE.Color().setHSL(0.6, 0, 1);
-    scene.fog = new THREE.Fog(scene.background, 1, 25);
+    scene.fog = new THREE.Fog(scene.background, DAY_FOG_NEAR, DAY_FOG_FAR);
     scene.fog.color.copy(uniforms["bottomColor"].value);
 
     // Lil GUI Settings
     if (IS_DEV) createPanel();
   }, []);
+
+  // Swap the sky/fog palette and distances when night mode toggles. Fog and
+  // background share the same Color instance (assigned above), so mutating
+  // it here keeps the horizon and the fog blending seamlessly either way.
+  React.useEffect(() => {
+    if (!scene.fog) return;
+    uniforms.topColor.value.copy(isNight ? NIGHT_SKY_TOP : hemiLightColor);
+    uniforms.bottomColor.value.copy(
+      isNight ? NIGHT_SKY_BOTTOM : DAY_SKY_BOTTOM,
+    );
+    scene.fog.color.copy(uniforms.bottomColor.value);
+    (scene.fog as THREE.Fog).near = isNight ? NIGHT_FOG_NEAR : DAY_FOG_NEAR;
+    (scene.fog as THREE.Fog).far = isNight ? NIGHT_FOG_FAR : DAY_FOG_FAR;
+  }, [isNight]);
 
   // Subtle camera parallax that drifts toward the pointer for a sense of depth.
   useFrame((state, delta) => {
@@ -167,6 +282,8 @@ const Model = React.memo(() => {
     const skyFolder = panel.addFolder("Sky");
     const atmosphereFolder = panel.addFolder("Atmosphere");
     const effectsFolder = panel.addFolder("Effects");
+    const nightFolder = panel.addFolder("Night Mode");
+    const sailFloodlightFolder = panel.addFolder("Sail Floodlights");
     panel.close();
 
     // Position the lil-gui panel at the top-left so it doesn't block the view
@@ -220,7 +337,13 @@ const Model = React.memo(() => {
       dofFocusRange: dofFocusRange,
       dofBokehScale: dofBokehScale,
       groundCloudGap: groundCloudGap,
+      isNight: isNight,
     };
+
+    nightFolder
+      .add(settings, "isNight")
+      .name("Night Mode")
+      .onChange((e: boolean) => setIsNight(e));
 
     ambientLightFolder
       .add(settings, "ambientLightIntensity", 0, 2)
@@ -390,22 +513,72 @@ const Model = React.memo(() => {
       .add(settings, "dofBokehScale", 0, 10)
       .name("Bokeh Scale")
       .onChange((e: number) => setDofBokehScale(e));
+
+    // A subfolder + full set of controls per light, built from whatever
+    // sailFloodlights held at mount (the panel is only ever created once).
+    sailFloodlights.forEach((light, i) => {
+      const lightFolder = sailFloodlightFolder.addFolder(`Light ${i + 1}`);
+      const lightSettings = {
+        posX: light.position[0],
+        posY: light.position[1],
+        posZ: light.position[2],
+        targetX: light.target[0],
+        targetY: light.target[1],
+        targetZ: light.target[2],
+        angle: light.angle,
+        intensity: light.intensity,
+      };
+      lightFolder
+        .add(lightSettings, "posX", -3, 3)
+        .name("Position X")
+        .onChange((e: number) => updateSailFloodlightVector(i, "position", 0, e));
+      lightFolder
+        .add(lightSettings, "posY", -1, 2)
+        .name("Position Y")
+        .onChange((e: number) => updateSailFloodlightVector(i, "position", 1, e));
+      lightFolder
+        .add(lightSettings, "posZ", -3, 3)
+        .name("Position Z")
+        .onChange((e: number) => updateSailFloodlightVector(i, "position", 2, e));
+      // A spotLight has no rotation of its own - it aims from Position at
+      // Target, so these three are effectively the light's "rotation".
+      lightFolder
+        .add(lightSettings, "targetX", -2, 2)
+        .name("Rotation X (target)")
+        .onChange((e: number) => updateSailFloodlightVector(i, "target", 0, e));
+      lightFolder
+        .add(lightSettings, "targetY", -1, 2)
+        .name("Rotation Y (target)")
+        .onChange((e: number) => updateSailFloodlightVector(i, "target", 1, e));
+      lightFolder
+        .add(lightSettings, "targetZ", -2, 2)
+        .name("Rotation Z (target)")
+        .onChange((e: number) => updateSailFloodlightVector(i, "target", 2, e));
+      lightFolder
+        .add(lightSettings, "angle", 0.01, 1)
+        .name("Angle")
+        .onChange((e: number) => updateSailFloodlightScalar(i, "angle", e));
+      lightFolder
+        .add(lightSettings, "intensity", 0, 20)
+        .name("Intensity")
+        .onChange((e: number) => updateSailFloodlightScalar(i, "intensity", e));
+    });
   };
 
   return (
     <React.Suspense fallback={null}>
       {/* Lights */}
-      <ambientLight intensity={ambientLightIntensity} />
+      <ambientLight intensity={effectiveAmbientIntensity} />
       <hemisphereLight
-        color={hemiLightColor}
-        groundColor={hemiGroundColor}
-        intensity={hemiLightIntensity}
+        color={effectiveHemiColor}
+        groundColor={effectiveHemiGroundColor}
+        intensity={effectiveHemiIntensity}
         position={hemiPosition}
       />
       <directionalLight
-        color={dirLightColor}
-        intensity={dirLightIntensity}
-        position={dirPosition}
+        color={effectiveDirColor}
+        intensity={effectiveDirIntensity}
+        position={effectiveDirPosition}
         castShadow={true}
         shadow-mapSize-width={3500}
         shadow-mapSize-height={3500}
@@ -429,14 +602,84 @@ const Model = React.memo(() => {
         />
       </mesh>
       <Sparkles
-        count={60}
+        count={isNight ? 30 : 60}
         scale={[4, 2.2, 4]}
-        size={1.8}
+        size={isNight ? 1.2 : 1.8}
         speed={0.25}
-        opacity={sparklesOpacity}
-        color="#fff3e0"
+        opacity={isNight ? Math.min(sparklesOpacity, 0.15) : sparklesOpacity}
+        color={isNight ? "#dce8ff" : "#fff3e0"}
         position={[0, 0.6, 0]}
       />
+      {isNight && (
+        <group position={NIGHT_MOON_POSITION}>
+          {/* Tone-mapped like everything else - an unclamped, un-tonemapped
+              bright point here fed a raw HDR spike into DepthOfField/Bloom
+              that showed up as garish rainbow ring artifacts. */}
+          <mesh>
+            <sphereGeometry args={[0.4, 32, 32]} />
+            <meshBasicMaterial color="#eef4ff" />
+          </mesh>
+          {/* Soft halo so the moon reads as glowing rather than a flat disc. */}
+          <mesh scale={2.4}>
+            <sphereGeometry args={[0.4, 24, 24]} />
+            <meshBasicMaterial
+              color="#cfe0ff"
+              transparent
+              opacity={0.12}
+              depthWrite={false}
+            />
+          </mesh>
+        </group>
+      )}
+      {/* General uplighting around the building's base, plus a couple of
+          tighter, closer spotlights aimed at the sails specifically. Now
+          that moonlight is dimmed down, these are what should actually make
+          the sails read as lit. */}
+      {isNight && (
+        <>
+          {[0, 1, 2, 3].map((i) => {
+            const angle = (i / 4) * Math.PI * 2;
+            const radius = 1.3;
+            return (
+              <spotLight
+                key={`floodlight-${i}`}
+                position={[
+                  Math.cos(angle) * radius,
+                  -0.5,
+                  Math.sin(angle) * radius,
+                ]}
+                target-position={[0, 0.7, 0]}
+                color="#bcd4ff"
+                intensity={1.4}
+                angle={0.5}
+                penumbra={0.5}
+                distance={2.8}
+                decay={2}
+              />
+            );
+          })}
+          <spotLight
+            position={[0.5, -0.4, 0.9]}
+            target-position={[0, 1.2, 0]}
+            color="#fff2d6"
+            intensity={1.8}
+            angle={0.3}
+            penumbra={0.4}
+            distance={2.6}
+            decay={2}
+          />
+          <spotLight
+            position={[-0.6, -0.4, -0.7]}
+            target-position={[0, 1.2, 0]}
+            color="#fff2d6"
+            intensity={1.8}
+            angle={0.3}
+            penumbra={0.4}
+            distance={2.6}
+            decay={2}
+          />
+        </>
+      )}
       {/* Model */}
       <Float
         speed={1.2}
@@ -459,8 +702,8 @@ const Model = React.memo(() => {
               volume={5}
               smallestVolume={0.85}
               segments={34}
-              color="#ffe3ec"
-              opacity={cloudOpacity}
+              color={cloudColor("#ffe3ec")}
+              opacity={resolveCloudOpacity(1)}
               fade={2}
               growth={1.5}
               speed={0.08}
@@ -472,8 +715,8 @@ const Model = React.memo(() => {
               volume={4.6}
               smallestVolume={0.85}
               segments={34}
-              color="#ffcad4"
-              opacity={cloudOpacity * 0.95}
+              color={cloudColor("#ffcad4")}
+              opacity={resolveCloudOpacity(0.95)}
               fade={2}
               growth={1.5}
               speed={0.1}
@@ -485,8 +728,8 @@ const Model = React.memo(() => {
               volume={4.2}
               smallestVolume={0.85}
               segments={32}
-              color="#ffe0c8"
-              opacity={cloudOpacity * 0.9}
+              color={cloudColor("#ffe0c8")}
+              opacity={resolveCloudOpacity(0.9)}
               fade={2}
               growth={1.5}
               speed={0.07}
@@ -498,8 +741,8 @@ const Model = React.memo(() => {
               volume={3.6}
               smallestVolume={0.85}
               segments={28}
-              color="#ffb8c6"
-              opacity={cloudOpacity * 0.85}
+              color={cloudColor("#ffb8c6")}
+              opacity={resolveCloudOpacity(0.85)}
               fade={2}
               growth={1.5}
               speed={0.09}
@@ -511,8 +754,8 @@ const Model = React.memo(() => {
               volume={3.6}
               smallestVolume={0.85}
               segments={28}
-              color="#fff0e8"
-              opacity={cloudOpacity * 0.85}
+              color={cloudColor("#fff0e8")}
+              opacity={resolveCloudOpacity(0.85)}
               fade={2}
               growth={1.5}
               speed={0.11}
@@ -524,8 +767,8 @@ const Model = React.memo(() => {
               volume={3.2}
               smallestVolume={0.85}
               segments={26}
-              color="#ffcad4"
-              opacity={cloudOpacity * 0.8}
+              color={cloudColor("#ffcad4")}
+              opacity={resolveCloudOpacity(0.8)}
               fade={2}
               growth={1.5}
               speed={0.06}
@@ -537,8 +780,8 @@ const Model = React.memo(() => {
               volume={2.8}
               smallestVolume={0.85}
               segments={20}
-              color="#ffe0c8"
-              opacity={cloudOpacity * 0.7}
+              color={cloudColor("#ffe0c8")}
+              opacity={resolveCloudOpacity(0.7)}
               fade={2}
               growth={1.5}
               speed={0.1}
@@ -550,8 +793,8 @@ const Model = React.memo(() => {
               volume={2.8}
               smallestVolume={0.85}
               segments={20}
-              color="#f5c6d6"
-              opacity={cloudOpacity * 0.7}
+              color={cloudColor("#f5c6d6")}
+              opacity={resolveCloudOpacity(0.7)}
               fade={2}
               growth={1.5}
               speed={0.12}
@@ -564,8 +807,8 @@ const Model = React.memo(() => {
               volume={4.2}
               smallestVolume={0.85}
               segments={26}
-              color="#ffb8c6"
-              opacity={cloudOpacity * 0.9}
+              color={cloudColor("#ffb8c6")}
+              opacity={resolveCloudOpacity(0.9)}
               fade={2}
               growth={1.5}
               speed={0.1}
@@ -577,8 +820,8 @@ const Model = React.memo(() => {
               volume={4.2}
               smallestVolume={0.85}
               segments={26}
-              color="#ffe3ec"
-              opacity={cloudOpacity * 0.9}
+              color={cloudColor("#ffe3ec")}
+              opacity={resolveCloudOpacity(0.9)}
               fade={2}
               growth={1.5}
               speed={0.13}
@@ -587,25 +830,37 @@ const Model = React.memo(() => {
           </Clouds>
         </group>
         <Inspector>
-          <Mesh sunDirection={dirPosition} />
+          <Mesh
+            sunDirection={effectiveDirPosition}
+            isNight={isNight}
+            sailFloodlights={sailFloodlights}
+          />
         </Inspector>
       </Float>
       {/* Effects */}
       <EffectComposer>
         <DepthOfField
           target={[0, 0.45, 0]} // keep the model in focus, let everything else go dreamy
-          focusRange={dofFocusRange} // world-unit band around the model that stays sharp
-          bokehScale={dofBokehScale} // strength of the soft blur outside that band
+          // At night, the streetlamp/window/moon glows are small, hard,
+          // bright points; a strong bokeh blur smears those into garish
+          // rainbow ring artifacts, so keep more of the scene in focus and
+          // cap how strong the out-of-focus blur can get.
+          focusRange={isNight ? Math.max(dofFocusRange, 10) : dofFocusRange}
+          bokehScale={isNight ? Math.min(dofBokehScale, 2) : dofBokehScale}
         />
         <Bloom
-          intensity={bloomIntensity} // The bloom intensity.
+          intensity={isNight ? Math.min(bloomIntensity, 9) : bloomIntensity} // The bloom intensity.
           blurPass={undefined} // A blur pass.
           width={Resolution.AUTO_SIZE} // render width
           height={Resolution.AUTO_SIZE} // render height
           kernelSize={KernelSize.LARGE} // blur kernel size
-          luminanceThreshold={luminanceThreshold} // luminance threshold. Raise this value to mask out darker elements in the scene.
-          luminanceSmoothing={luminanceSmoothing} // smoothness of the luminance threshold. Range is [0, 1]
-          blendFunction={BlendFunction.REFLECT} // blend mode
+          luminanceThreshold={isNight ? Math.max(luminanceThreshold, 1.0) : luminanceThreshold} // luminance threshold. Raise this value to mask out darker elements in the scene.
+          // REFLECT is a steep, non-linear blend - tiny per-frame brightness
+          // changes near the threshold (a moving specular hotspot, a bobbing
+          // light) swing its output wildly, reading as flicker. ADD is a
+          // flat, linear blend that scales smoothly with brightness instead.
+          luminanceSmoothing={isNight ? Math.max(luminanceSmoothing, 0.9) : luminanceSmoothing} // smoothness of the luminance threshold. Range is [0, 1]
+          blendFunction={isNight ? BlendFunction.ADD : BlendFunction.REFLECT} // blend mode
         />
         <BrightnessContrast
           brightness={brightness} // brightness. min: -1, max: 1
