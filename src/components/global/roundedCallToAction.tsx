@@ -13,7 +13,7 @@ import routeTo from "../../routes/routeTo";
 import {
   roundedCtaButtonEffect,
   motionTapEffect,
-} from "../../helper/framerConfig";
+} from "../../helper/motionConfig";
 
 // Same pill treatment as the "My Experience" button on the home page
 // (src/components/index/bottom.tsx) — white pill, black border/text, a

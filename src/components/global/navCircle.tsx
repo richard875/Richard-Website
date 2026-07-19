@@ -9,7 +9,7 @@ import Magnetic from "../motion/Magnetic";
 import {
   mainCircleButtonEffect,
   motionTapEffect,
-} from "../../helper/framerConfig";
+} from "../../helper/motionConfig";
 import ArrowSrc from "../../../static/images/indexCircle/arrow.svg";
 
 // Same rotating-circle construction as ResumeCircle (src/components/global/

@@ -11,7 +11,7 @@ import SplitText from "../motion/SplitText";
 import BottomBackdrop from "./bottomBackdrop";
 import ResumeCircle from "../global/resumeCircle";
 import RoundedCallToAction from "../global/roundedCallToAction";
-import { motionTapEffect } from "../../helper/framerConfig";
+import { motionTapEffect } from "../../helper/motionConfig";
 import {
   INDEX_TO_INTRO,
   CONTACT_GITHUB,

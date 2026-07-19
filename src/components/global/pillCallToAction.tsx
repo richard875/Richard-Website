@@ -16,7 +16,7 @@ import {
   badgeHoverEffect,
   badgeWiggleEffect,
   motionTapEffect,
-} from "../../helper/framerConfig";
+} from "../../helper/motionConfig";
 
 // Shape/sizing follow IntroBadge (src/components/index/bottom.tsx's "From
 // Australia with Love" tag) — the pill border/radius live on the outer

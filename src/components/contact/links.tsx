@@ -7,7 +7,7 @@ import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
 import HoverRoll from "../motion/HoverRoll";
-import { motionTapEffect } from "../../helper/framerConfig";
+import { motionTapEffect } from "../../helper/motionConfig";
 import useDarkModeManager from "../../hooks/useDarkModeManager";
 import { NAME, URL, LINKEDIN_URL, GITHUB_URL } from "../../constants/meta";
 import {

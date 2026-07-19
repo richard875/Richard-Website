@@ -11,7 +11,7 @@ import {
   badgeHoverEffect,
   badgeWiggleEffect,
   motionTapEffect,
-} from "../../helper/framerConfig";
+} from "../../helper/motionConfig";
 import { PROJECTS_LINK } from "../../constants/googleTags";
 
 // Same badge treatment as PillCallToAction (src/components/global/

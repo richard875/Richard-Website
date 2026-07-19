@@ -9,7 +9,7 @@ import Magnetic from "../motion/Magnetic";
 import {
   mainCircleButtonEffect,
   motionTapEffect,
-} from "../../helper/framerConfig";
+} from "../../helper/motionConfig";
 import { INDEX_RESUME, CONTACT_RESUME } from "../../constants/googleTags";
 
 const ARROW = "../../../static/images/indexCircle/arrow.svg";

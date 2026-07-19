@@ -11,7 +11,7 @@ import Magnetic from "../motion/Magnetic";
 import {
   backCircleButtonEffect,
   motionTapEffect,
-} from "../../helper/framerConfig";
+} from "../../helper/motionConfig";
 
 // The "go back" counterpart to NavCircle's (src/components/global/
 // navCircle.tsx) "go forward" action — a small white badge that sits
