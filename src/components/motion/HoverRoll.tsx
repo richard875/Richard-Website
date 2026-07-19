@@ -67,17 +67,24 @@ type HoverRollProps = {
    * strings (e.g. an email address) so the whole cascade doesn't drag.
    */
   stagger?: number;
+  /** Fires the instant a roll (in either direction) begins. */
+  onRollStart?: () => void;
+  /** Fires once every character's roll has finished — not per character. */
+  onRollComplete?: () => void;
 };
 
 const HoverRoll = ({
   children,
   className,
   stagger = HOVER_STAGGER,
+  onRollStart,
+  onRollComplete,
 }: HoverRollProps) => {
   const prefersReduced = usePrefersReducedMotion();
   const ref = React.useRef<HTMLSpanElement | null>(null);
   const frontsRef = React.useRef<HTMLElement[]>([]);
   const backsRef = React.useRef<HTMLElement[]>([]);
+  const rollCompleteRef = React.useRef<gsap.core.Tween | null>(null);
 
   React.useEffect(() => {
     if (prefersReduced) return;
@@ -154,6 +161,7 @@ const HoverRoll = ({
       cancelled = true;
       observer.disconnect();
       gsap.killTweensOf([...frontsRef.current, ...backsRef.current]);
+      rollCompleteRef.current?.kill();
     };
   }, [prefersReduced]);
 
@@ -162,6 +170,23 @@ const HoverRoll = ({
     const fronts = frontsRef.current;
     const backs = backsRef.current;
     if (!fronts.length) return;
+
+    // Killed and rescheduled on every call rather than driven off the
+    // fronts tween's own onComplete: with a staggered array target, GSAP
+    // fires that callback once per character rather than once for the
+    // whole roll, so it can't tell "the last character finished" from "a
+    // character finished". A delayedCall sized to the roll's total
+    // duration (last character's stagger offset + its own duration) gives
+    // a single, reliable "whole roll settled" signal instead — and killing
+    // any pending one here means a roll interrupted mid-flight (rapid
+    // in/out) can't fire a stale onRollComplete after a newer roll has
+    // already taken over.
+    rollCompleteRef.current?.kill();
+    onRollStart?.();
+    rollCompleteRef.current = gsap.delayedCall(
+      HOVER_DURATION + stagger * (fronts.length - 1),
+      () => onRollComplete?.(),
+    );
 
     // Fresh gsap.to calls (not a reversed timeline) so leaving cascades the
     // same left-to-right direction as entering. overwrite: "auto" keeps
