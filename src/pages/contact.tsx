@@ -21,6 +21,7 @@ import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
+import useUnderlineFlicker from "../hooks/useUnderlineFlicker";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import { CONTACT_EMAIL, CONTACT_TO_INDEX_TOP } from "../constants/googleTags";
 import {
@@ -42,6 +43,7 @@ const UNDERLINE_DELAY = 1.2;
 const Contact = ({ location }: { location: WindowLocation }) => {
   const isPwa = usePwaDetection(location);
   const isIphoneX = useIphoneXDetection();
+  const emailUnderline = useUnderlineFlicker();
   const isLandscape = useLandscapeDetection(isPwa);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
@@ -101,13 +103,20 @@ const Contact = ({ location }: { location: WindowLocation }) => {
                     className="cursor-none"
                     rel="noopener noreferrer"
                   >
-                    <HoverRoll stagger={0.008}>{EMAIL}</HoverRoll>
+                    <HoverRoll
+                      stagger={0.008}
+                      onRollStart={emailUnderline.onRollStart}
+                      onRollComplete={emailUnderline.onRollComplete}
+                    >
+                      {EMAIL}
+                    </HoverRoll>
                   </a>
                   {/* A radial-gradient dot pattern, not border-dotted: a native dotted
                       border ties dot size to border-width, so it can't be both 2px
                       thick and sparsely dotted — the gradient decouples thickness
                       (height) from dot size/spacing (background-size). */}
                   <motion.span
+                    ref={emailUnderline.ref}
                     className="absolute inset-x-0 -bottom-px h-2"
                     style={{
                       backgroundImage:
