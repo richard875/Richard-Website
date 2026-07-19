@@ -72,7 +72,6 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
             forward={true}
             setHover={setHover}
             route={Route.Home}
-            fromIntroAndPlain={true}
           />
         </Cta>
       </Wrapper>

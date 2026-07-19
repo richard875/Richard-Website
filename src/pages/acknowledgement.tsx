@@ -66,13 +66,13 @@ const Acknowledgement = ({ location }: { location: WindowLocation }) => {
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
           <CallToAction
+            invertOnly
             name="Back"
             tagId={ACKNOWLEDGEMENT_TO_INDEX}
             tagIdStartNum={1}
             forward={true}
             setHover={setHover}
             route={Route.Home}
-            fromIntroAndPlain={true}
           />
         </Cta>
       </Wrapper>

@@ -192,7 +192,6 @@ const Experience = ({ location }: { location: WindowLocation }) => {
               setHover={() => {}}
               route={Route.Home}
               isDarkMode={isDarkMode}
-              fromIntroAndPlain={true}
               manualCursor={true}
             />
           </Cta>
