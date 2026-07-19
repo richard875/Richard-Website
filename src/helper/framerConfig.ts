@@ -46,23 +46,37 @@ export const motionTapEffect: HoverAndTapType = {
 };
 
 // The pill-badge CTAs' (PillCallToAction, ProjectLink) hover state: a slight
-// grow that holds for the whole hover, a tiny one-shot wiggle that plays
-// through once and settles back at 0 (not a repeating shake), and the
-// outline -> solid-fill colour invert, all in one whileHover so they run as
-// a single coordinated hover response. `motionTapEffect` above is reused
-// for the matching tap/click feedback.
+// grow that holds for the whole hover, and the outline -> solid-fill colour
+// invert, in one whileHover so they run as a single coordinated hover
+// response. `motionTapEffect` above is reused for the matching tap/click
+// feedback.
+//
+// The wiggle used to live in here too (as a `rotate` keyframe array), but
+// whileHover is a gesture animation: Framer cancels/reverses it the instant
+// the pointer leaves, so a quick hover-unhover could catch the rotate
+// keyframes mid-flight and leave the badge visibly stuck on a tilt. The
+// wiggle is now fired separately via `badgeWiggleEffect` + an imperative
+// `useAnimationControls().start(...)` on hover-enter (see
+// PillCallToAction) so it always plays to completion regardless of how
+// briefly the pointer hovers.
 export const badgeHoverEffect = (
   fillColor: string,
   textColor: string,
 ): HoverAndTapType => ({
   scale: 1.06,
-  rotate: [0, -4, 4, -3, 3, 0],
   backgroundColor: fillColor,
   color: textColor,
   transition: {
     scale: { type: "spring", stiffness: 400, damping: 12 },
-    rotate: { duration: 0.5, ease: "easeInOut" },
     backgroundColor: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
     color: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
   },
 });
+
+// One-shot wiggle, triggered imperatively (not via whileHover) so it always
+// runs to completion even if the hover ends before it's done — see the note
+// on badgeHoverEffect above.
+export const badgeWiggleEffect: HoverAndTapType = {
+  rotate: [0, -4, 4, -3, 3, 0],
+  transition: { duration: 0.5, ease: "easeInOut" },
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, useAnimationControls } from "framer-motion";
 import {
   faChevronLeft,
   faChevronRight,
@@ -12,7 +12,11 @@ import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
 import HoverRoll from "../motion/HoverRoll";
-import { badgeHoverEffect, motionTapEffect } from "../../helper/framerConfig";
+import {
+  badgeHoverEffect,
+  badgeWiggleEffect,
+  motionTapEffect,
+} from "../../helper/framerConfig";
 
 // Shape/sizing follow IntroBadge (src/components/index/bottom.tsx's "From
 // Australia with Love" tag) — the pill border/radius live on the outer
@@ -27,10 +31,15 @@ import { badgeHoverEffect, motionTapEffect } from "../../helper/framerConfig";
 // through to `routeTo` below, which still needs it to pick the right
 // page-transition overlay colour.
 //
-// Animation: whileHover (badgeHoverEffect) does three things as one
-// coordinated response — a slight grow that holds for the whole hover, a
-// tiny one-shot wiggle, and the outline -> solid-fill colour invert (border/
-// icon track `currentColor` so they invert for free). whileTap reuses
+// Animation: whileHover (badgeHoverEffect) covers a slight grow that holds
+// for the whole hover and the outline -> solid-fill colour invert (border/
+// icon track `currentColor` so they invert for free). The one-shot wiggle
+// is fired separately, imperatively, via wiggleControls on hover-enter
+// (badgeWiggleEffect) rather than through whileHover — whileHover is a
+// gesture animation that Framer cancels/reverses the moment the pointer
+// leaves, so a quick hover-unhover could catch the rotate keyframes
+// mid-flight and leave the badge stuck on a tilt. Driving it through
+// `animate` instead means it always plays to completion. whileTap reuses
 // NavCircle/BackCircle's motionTapEffect for the press feedback. The label
 // separately gets a SplitText + HoverRoll per-character hover roll.
 //
@@ -61,11 +70,13 @@ const PillCallToAction = ({
 }) => {
   const accentColor = forward ? Color.BRIGHT_GREEN : Color.WHITE;
   const contrastColor = forward ? Color.BLACK : Color.BLACK;
+  const wiggleControls = useAnimationControls();
 
   return (
     <Badge
       id={`${tagId}_${tagIdStartNum}`}
       $accentColor={accentColor}
+      animate={wiggleControls}
       whileHover={
         invertOnly
           ? {
@@ -76,7 +87,10 @@ const PillCallToAction = ({
           : badgeHoverEffect(accentColor, contrastColor)
       }
       whileTap={invertOnly ? undefined : motionTapEffect}
-      onMouseEnter={() => setHover(true)}
+      onMouseEnter={() => {
+        setHover(true);
+        if (!invertOnly) wiggleControls.start(badgeWiggleEffect);
+      }}
       onMouseLeave={() => setHover(false)}
     >
       <a

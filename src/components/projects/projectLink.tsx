@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, useAnimationControls } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import SplitText from "../motion/SplitText";
 import HoverRoll from "../motion/HoverRoll";
-import { badgeHoverEffect, motionTapEffect } from "../../helper/framerConfig";
+import {
+  badgeHoverEffect,
+  badgeWiggleEffect,
+  motionTapEffect,
+} from "../../helper/framerConfig";
 import { PROJECTS_LINK } from "../../constants/googleTags";
 
 // Same badge treatment as PillCallToAction (src/components/global/
@@ -28,14 +32,19 @@ const ProjectLink = ({
   isDarkMode: boolean;
 }) => {
   const accentColor = isDarkMode ? Color.BRIGHT_GREEN : Color.DIM_GREEN;
+  const wiggleControls = useAnimationControls();
 
   return (
     <Badge
       id={`${PROJECTS_LINK}_${name}_0`}
       $accentColor={accentColor}
+      animate={wiggleControls}
       whileHover={badgeHoverEffect(Color.BRIGHT_GREEN, Color.BLACK)}
       whileTap={motionTapEffect}
-      onMouseEnter={() => setHover(true)}
+      onMouseEnter={() => {
+        setHover(true);
+        wiggleControls.start(badgeWiggleEffect);
+      }}
       onMouseLeave={() => setHover(false)}
     >
       <a
