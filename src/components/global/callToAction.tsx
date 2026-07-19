@@ -2,15 +2,42 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import {
-  faCircleChevronLeft,
-  faCircleChevronRight,
+  faChevronLeft,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Color from "../../enums/color";
+import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import { ctaEffect } from "../../helper/framerConfig";
+import SplitText from "../motion/SplitText";
+import HoverRoll from "../motion/HoverRoll";
+import { badgeHoverEffect, circleTapEffect } from "../../helper/framerConfig";
 
+// Shape/sizing follow IntroBadge (src/components/index/bottom.tsx's "From
+// Australia with Love" tag) — the pill border/radius live on the outer
+// Badge, the type sizing on the inner BadgeText. Colour departs from that
+// reference on purpose: IntroBadge is always white/black, but this one uses
+// its own fixed accent — green when `forward` (this CTA moves the visitor
+// further into the site), white when it doesn't (a "Home"/"Back" link) —
+// so it reads as forward-vs-back rather than matching IntroBadge's look.
+//
+// `isDarkMode` no longer affects this component's own colours — accentColor/
+// contrastColor are decided by `forward` alone now. It's kept purely to pass
+// through to `routeTo` below, which still needs it to pick the right
+// page-transition overlay colour.
+//
+// Animation: whileHover (badgeHoverEffect) does three things as one
+// coordinated response — a slight grow that holds for the whole hover, a
+// tiny one-shot wiggle, and the outline -> solid-fill colour invert (border/
+// icon track `currentColor` so they invert for free). whileTap reuses
+// NavCircle/BackCircle's circleTapEffect for the press feedback. The label
+// separately gets a SplitText + HoverRoll per-character hover roll.
+//
+// `invertOnly` strips all of that back down to just the colour invert — no
+// grow, no wiggle, no tap scale, no SplitText/HoverRoll — for pages that
+// want the badge visually present but calmer (acknowledgement.tsx, by
+// explicit request: that page's tone doesn't suit the playful hover).
 const CallToAction = ({
   name,
   tagId,
@@ -19,8 +46,8 @@ const CallToAction = ({
   setHover,
   route,
   isDarkMode = true,
-  fromIntroAndPlain = false,
   manualCursor = false,
+  invertOnly = false,
 }: {
   name: string;
   tagId: string;
@@ -29,72 +56,88 @@ const CallToAction = ({
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   route: Route;
   isDarkMode?: boolean;
-  fromIntroAndPlain?: boolean;
   manualCursor?: boolean;
+  invertOnly?: boolean;
 }) => {
-  const [ctaHover, setCtaHover] = React.useState(false);
-  React.useEffect(() => setHover(ctaHover), [ctaHover]);
+  const accentColor = forward ? Color.BRIGHT_GREEN : Color.WHITE;
+  const contrastColor = forward ? Color.BLACK : Color.BLACK;
 
   return (
-    <Cta
+    <Badge
       id={`${tagId}_${tagIdStartNum}`}
-      $forward={forward}
-      $fromIntroAndPlain={fromIntroAndPlain}
-      $isDarkMode={fromIntroAndPlain ? true : isDarkMode}
-      className="font-secondary-normal select-none underline"
-      onMouseEnter={() => setCtaHover(true)}
-      onMouseLeave={() => setCtaHover(false)}
+      $accentColor={accentColor}
+      whileHover={
+        invertOnly
+          ? {
+              backgroundColor: accentColor,
+              color: contrastColor,
+              transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+            }
+          : badgeHoverEffect(accentColor, contrastColor)
+      }
+      whileTap={invertOnly ? undefined : circleTapEffect}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
-      {!forward && (
-        <motion.div animate={ctaHover ? ctaEffect(forward) : {}}>
-          <FontAwesomeIcon
-            id={`${tagId}_${tagIdStartNum + 1}`}
-            icon={faCircleChevronLeft}
-            size={fromIntroAndPlain ? ("" as any) : "sm"}
-            className={`mt-1.5 ${fromIntroAndPlain ? "mr-2" : "mr-1.5"}`}
-          />
-        </motion.div>
-      )}
-      <h2 id={`${tagId}_${tagIdStartNum + 2}`}>
-        <a
-          href={route}
-          className={manualCursor ? "cursor-pointer" : "cursor-none"}
-          onClick={(e) => routeTo(e, route, isDarkMode)}
+      <a
+        href={route}
+        className={manualCursor ? "cursor-pointer" : "cursor-none"}
+        onClick={(e) => routeTo(e, route, isDarkMode)}
+      >
+        <BadgeText
+          id={`${tagId}_${tagIdStartNum + 2}`}
+          className="font-secondary-normal select-none"
         >
-          {name}
-        </a>
-      </h2>
-      {forward && (
-        <motion.div animate={ctaHover ? ctaEffect(forward) : {}}>
-          <FontAwesomeIcon
-            id={`${tagId}_${tagIdStartNum + 3}`}
-            icon={faCircleChevronRight}
-            size={fromIntroAndPlain ? ("" as any) : "sm"}
-            className={`mt-2 ${fromIntroAndPlain ? "ml-2" : "ml-1.5"} `}
-          />
-        </motion.div>
-      )}
-    </Cta>
+          {!forward && (
+            <FontAwesomeIcon
+              id={`${tagId}_${tagIdStartNum + 1}`}
+              icon={faChevronLeft}
+              size="sm"
+              className="mr-2"
+            />
+          )}
+          {invertOnly ? (
+            <h3>{name}</h3>
+          ) : (
+            <SplitText as="h3" className="split-fast">
+              <HoverRoll>{name}</HoverRoll>
+            </SplitText>
+          )}
+          {forward && (
+            <FontAwesomeIcon
+              id={`${tagId}_${tagIdStartNum + 3}`}
+              icon={faChevronRight}
+              size="sm"
+              className="ml-2"
+            />
+          )}
+        </BadgeText>
+      </a>
+    </Badge>
   );
 };
 
 export default CallToAction;
 
-const Cta = styled.div<{
-  $forward: boolean;
-  $isDarkMode: boolean;
-  $fromIntroAndPlain: boolean;
-}>`
+const Badge = styled(motion.div)<{ $accentColor: Color }>`
+  width: fit-content;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background-color: transparent;
+  border: 2.5px solid currentColor;
+  color: ${({ $accentColor }) => $accentColor};
+`;
+
+const BadgeText = styled.div`
   display: flex;
   align-items: center;
-  text-underline-offset: ${({ $fromIntroAndPlain }) =>
-    $fromIntroAndPlain ? "4px" : "2px"};
-  color: ${({ $forward, $isDarkMode }) =>
-    $forward
-      ? $isDarkMode
-        ? Color.BRIGHT_GREEN
-        : Color.DIM_GREEN
-      : $isDarkMode
-        ? Color.WHITE
-        : Color.BLACK};
+  font-size: 16px;
+
+  @media ${layout.up.sm} {
+    font-size: 18px;
+  }
+
+  @media ${layout.up.xxl} {
+    font-size: 20px;
+  }
 `;
