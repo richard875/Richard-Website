@@ -66,7 +66,6 @@ export default ProjectLink;
 const Badge = styled(motion.div)<{ $accentColor: Color }>`
   width: fit-content;
   margin-top: 15px;
-  margin-left: 5px;
   padding: 7px 15px;
   border-radius: 999px;
   background-color: transparent;
@@ -74,7 +73,6 @@ const Badge = styled(motion.div)<{ $accentColor: Color }>`
   color: ${({ $accentColor }) => $accentColor};
 
   @media ${layout.up.md} {
-    margin-left: 0;
     margin-top: 20px;
   }
 `;

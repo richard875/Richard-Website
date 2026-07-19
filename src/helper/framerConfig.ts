@@ -44,16 +44,6 @@ export const circleTapEffect: WhileHoverType = {
   },
 };
 
-export const ctaEffect = (forward: boolean): WhileHoverType => ({
-  x: forward ? 7 : -7,
-  transition: {
-    type: "spring",
-    stiffness: 500,
-    damping: 10,
-    mass: 1,
-  },
-});
-
 // The pill-badge CTAs' (CallToAction, ProjectLink) hover state: a slight
 // grow that holds for the whole hover, a tiny one-shot wiggle that plays
 // through once and settles back at 0 (not a repeating shake), and the
