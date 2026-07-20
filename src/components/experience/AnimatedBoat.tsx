@@ -132,63 +132,55 @@ const AnimatedBoat = ({
     }
   }, [basePosition, baseRotation]);
 
-  const samplePoints = React.useMemo(() => {
+  // The boat's own rotation is fixed after mount (baseRotation only changes
+  // if the position/rotation props themselves change), so each sample
+  // point's rotated offset from the hull center is constant too - it was
+  // previously being recomputed via a fresh Vector3.clone().applyEuler()
+  // for all 9 points, on every frame, for each of the 3 boats on screen.
+  // Resolving each offset to a plain {x, z} once here turns that into a
+  // zero-allocation lookup in the per-frame loop below.
+  const sampleOffsets = React.useMemo(() => {
     const halfL = boatLength * 0.5;
     const halfW = boatWidth * 0.5;
-    return [
-      { name: "center", offset: new THREE.Vector3(0, 0, 0) },
-      { name: "bow", offset: new THREE.Vector3(0, 0, halfL) },
-      { name: "stern", offset: new THREE.Vector3(0, 0, -halfL) },
-      { name: "port", offset: new THREE.Vector3(-halfW, 0, 0) },
-      { name: "starboard", offset: new THREE.Vector3(halfW, 0, 0) },
-      {
-        name: "bowPort",
-        offset: new THREE.Vector3(-halfW * 0.6, 0, halfL * 0.6),
-      },
-      {
-        name: "bowStarboard",
-        offset: new THREE.Vector3(halfW * 0.6, 0, halfL * 0.6),
-      },
-      {
-        name: "sternPort",
-        offset: new THREE.Vector3(-halfW * 0.6, 0, -halfL * 0.6),
-      },
-      {
-        name: "sternStarboard",
-        offset: new THREE.Vector3(halfW * 0.6, 0, -halfL * 0.6),
-      },
-    ];
-  }, [boatLength, boatWidth]);
+    const rotated = (x: number, z: number) => {
+      const v = new THREE.Vector3(x, 0, z).applyEuler(baseRotation);
+      return { x: v.x, z: v.z };
+    };
+    return {
+      center: rotated(0, 0),
+      bow: rotated(0, halfL),
+      stern: rotated(0, -halfL),
+      port: rotated(-halfW, 0),
+      starboard: rotated(halfW, 0),
+      bowPort: rotated(-halfW * 0.6, halfL * 0.6),
+      bowStarboard: rotated(halfW * 0.6, halfL * 0.6),
+      sternPort: rotated(-halfW * 0.6, -halfL * 0.6),
+      sternStarboard: rotated(halfW * 0.6, -halfL * 0.6),
+    };
+  }, [boatLength, boatWidth, baseRotation]);
 
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
 
     const elapsed = clock.getElapsedTime();
 
-    const heights = samplePoints.map((p) => {
-      const offset = p.offset.clone().applyEuler(baseRotation);
-      const sampleX = basePosition.x + offset.x;
-      const sampleZ = basePosition.z + offset.z;
-      return {
-        point: p.name,
-        height: sampleWaveHeight(waves, sampleX, sampleZ, elapsed),
-      };
-    });
+    const heightAt = (offset: { x: number; z: number }) =>
+      sampleWaveHeight(
+        waves,
+        basePosition.x + offset.x,
+        basePosition.z + offset.z,
+        elapsed,
+      );
 
-    const centerHeight = heights.find((h) => h.point === "center")?.height ?? 0;
-    const bowHeight = heights.find((h) => h.point === "bow")?.height ?? 0;
-    const sternHeight = heights.find((h) => h.point === "stern")?.height ?? 0;
-    const portHeight = heights.find((h) => h.point === "port")?.height ?? 0;
-    const starboardHeight =
-      heights.find((h) => h.point === "starboard")?.height ?? 0;
-    const bowPortHeight =
-      heights.find((h) => h.point === "bowPort")?.height ?? 0;
-    const bowStarboardHeight =
-      heights.find((h) => h.point === "bowStarboard")?.height ?? 0;
-    const sternPortHeight =
-      heights.find((h) => h.point === "sternPort")?.height ?? 0;
-    const sternStarboardHeight =
-      heights.find((h) => h.point === "sternStarboard")?.height ?? 0;
+    const centerHeight = heightAt(sampleOffsets.center);
+    const bowHeight = heightAt(sampleOffsets.bow);
+    const sternHeight = heightAt(sampleOffsets.stern);
+    const portHeight = heightAt(sampleOffsets.port);
+    const starboardHeight = heightAt(sampleOffsets.starboard);
+    const bowPortHeight = heightAt(sampleOffsets.bowPort);
+    const bowStarboardHeight = heightAt(sampleOffsets.bowStarboard);
+    const sternPortHeight = heightAt(sampleOffsets.sternPort);
+    const sternStarboardHeight = heightAt(sampleOffsets.sternStarboard);
 
     const pitch = (bowHeight - sternHeight) / boatLength;
     const roll = (starboardHeight - portHeight) / boatWidth;

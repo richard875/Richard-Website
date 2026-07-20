@@ -13,17 +13,9 @@ import {
   Noise,
   DepthOfField,
 } from "@react-three/postprocessing";
-import { Resolution, KernelSize, BlendFunction } from "postprocessing";
-import Mesh, {
-  DEFAULT_SAIL_FLOODLIGHTS,
-  DEFAULT_DOCK_LIGHTING,
-  DEFAULT_LANDSCAPE_LIGHTING,
-} from "./mesh";
-import type {
-  SailFloodlightConfig,
-  DockLightingConfig,
-  LandscapeLightingConfig,
-} from "./mesh";
+import { KernelSize, BlendFunction } from "postprocessing";
+import Mesh, { DEFAULT_SAIL_FLOODLIGHTS, DEFAULT_DOCK_LIGHTING } from "./mesh";
+import type { SailFloodlightConfig, DockLightingConfig } from "./mesh";
 import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
@@ -68,6 +60,15 @@ const SydneyOperaHouse = React.memo(() => (
     className="canvas"
     shadows
     legacy={true}
+    // No dpr prop meant R3F defaulted to [1, 2], i.e. matching a retina
+    // display's full 2x device pixel ratio - every per-fragment cost in the
+    // scene (dozens of dynamic lights, the postprocessing stack) was being
+    // paid across 4x as many pixels as necessary. With ~74 real lights back
+    // in the scene (see mesh.tsx), that multiplier matters a lot more than
+    // it did with a handful of lights, so this is capped at a flat 1 - no
+    // supersampling at all - rather than the 1.5 it was before. Softening
+    // is barely noticeable once composited through Bloom/grain/vignette.
+    dpr={1}
     camera={{ position: [0, 2.6, 5], fov: 65 }}
   >
     <Model />
@@ -75,7 +76,14 @@ const SydneyOperaHouse = React.memo(() => (
 ));
 
 const Model = React.memo(() => {
-  const cameraDirection = 50;
+  // Tight fit around the model's actual extent (it lives within roughly
+  // +/-1.5 units of the origin - see the sail/dock/landscape fixture
+  // coordinate arrays in mesh.tsx) plus margin, not the scene's raw
+  // (pre-0.0003-scale) gltf units. The previous +/-50 ortho frustum devoted
+  // well over 99% of the 3500x3500 shadow map's texels to empty space
+  // around the model, which is both wasteful to render and gives the model
+  // itself far worse effective shadow resolution than the map size implies.
+  const cameraDirection = 5;
   const { scene, camera } = useThree();
 
   // Hooks
@@ -188,18 +196,6 @@ const Model = React.memo(() => {
 
   const updateDockLighting = (key: keyof DockLightingConfig, value: number) => {
     setDockLighting((prev) => ({ ...prev, [key]: value }));
-  };
-
-  // Shared by every stair/tree/parking-lot uplight - see the "Landscape
-  // Lighting" GUI folder below.
-  const [landscapeLighting, setLandscapeLighting] =
-    React.useState<LandscapeLightingConfig>(DEFAULT_LANDSCAPE_LIGHTING);
-
-  const updateLandscapeLighting = (
-    key: keyof LandscapeLightingConfig,
-    value: number,
-  ) => {
-    setLandscapeLighting((prev) => ({ ...prev, [key]: value }));
   };
 
   // Lights
@@ -319,7 +315,6 @@ const Model = React.memo(() => {
     const nightFolder = panel.addFolder("Night Mode");
     const sailFloodlightFolder = panel.addFolder("Sail Floodlights");
     const dockLightingFolder = panel.addFolder("Dock Lights");
-    const landscapeLightingFolder = panel.addFolder("Landscape Lighting");
     panel.close();
 
     // Position the lil-gui panel at the top-left so it doesn't block the view
@@ -379,9 +374,6 @@ const Model = React.memo(() => {
       dockLightDepth: dockLighting.depth,
       dockGlowRadius: dockLighting.glowRadius,
       dockGlowIntensity: dockLighting.glowIntensity,
-      landscapeIntensity: landscapeLighting.intensity,
-      landscapeAngle: landscapeLighting.angle,
-      landscapeDistance: landscapeLighting.distance,
     };
 
     nightFolder
@@ -579,19 +571,6 @@ const Model = React.memo(() => {
       .name("Glow Intensity")
       .onChange((e: number) => updateDockLighting("glowIntensity", e));
 
-    landscapeLightingFolder
-      .add(settings, "landscapeIntensity", 0, 5)
-      .name("Intensity")
-      .onChange((e: number) => updateLandscapeLighting("intensity", e));
-    landscapeLightingFolder
-      .add(settings, "landscapeAngle", 0.05, 1.5)
-      .name("Beam Angle")
-      .onChange((e: number) => updateLandscapeLighting("angle", e));
-    landscapeLightingFolder
-      .add(settings, "landscapeDistance", 0.05, 2)
-      .name("Distance")
-      .onChange((e: number) => updateLandscapeLighting("distance", e));
-
     // A subfolder + full set of controls per light, built from whatever
     // sailFloodlights held at mount (the panel is only ever created once).
     sailFloodlights.forEach((light, i) => {
@@ -664,13 +643,16 @@ const Model = React.memo(() => {
         intensity={effectiveDirIntensity}
         position={effectiveDirPosition}
         castShadow={true}
-        shadow-mapSize-width={3500}
-        shadow-mapSize-height={3500}
+        // 2048 across a tight +/-5 unit frustum resolves the model far more
+        // sharply than 3500 ever did across +/-50, at roughly a third of the
+        // shadow-pass texel cost.
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
         shadow-camera-left={-cameraDirection}
         shadow-camera-right={cameraDirection}
         shadow-camera-top={cameraDirection}
         shadow-camera-bottom={-cameraDirection}
-        shadow-camera-far={3500}
+        shadow-camera-far={20}
         shadow-bias={-0.0001}
       />
       {/* Sky */}
@@ -714,55 +696,6 @@ const Model = React.memo(() => {
             />
           </mesh>
         </group>
-      )}
-      {/* General uplighting around the building's base, plus a couple of
-          tighter, closer spotlights aimed at the sails specifically. Now
-          that moonlight is dimmed down, these are what should actually make
-          the sails read as lit. */}
-      {isNight && (
-        <>
-          {[0, 1, 2, 3].map((i) => {
-            const angle = (i / 4) * Math.PI * 2;
-            const radius = 1.3;
-            return (
-              <spotLight
-                key={`floodlight-${i}`}
-                position={[
-                  Math.cos(angle) * radius,
-                  -0.5,
-                  Math.sin(angle) * radius,
-                ]}
-                target-position={[0, 0.7, 0]}
-                color="#bcd4ff"
-                intensity={1.4}
-                angle={0.5}
-                penumbra={0.5}
-                distance={2.8}
-                decay={2}
-              />
-            );
-          })}
-          <spotLight
-            position={[0.5, -0.4, 0.9]}
-            target-position={[0, 1.2, 0]}
-            color="#fff2d6"
-            intensity={1.8}
-            angle={0.3}
-            penumbra={0.4}
-            distance={2.6}
-            decay={2}
-          />
-          <spotLight
-            position={[-0.6, -0.4, -0.7]}
-            target-position={[0, 1.2, 0]}
-            color="#fff2d6"
-            intensity={1.8}
-            angle={0.3}
-            penumbra={0.4}
-            distance={2.6}
-            decay={2}
-          />
-        </>
       )}
       {/* Model */}
       <Float
@@ -919,60 +852,90 @@ const Model = React.memo(() => {
             isNight={isNight}
             sailFloodlights={sailFloodlights}
             dockLighting={dockLighting}
-            landscapeLighting={landscapeLighting}
           />
         </Inspector>
       </Float>
       {/* Effects */}
-      <EffectComposer>
-        <DepthOfField
-          target={[0, 0.45, 0]} // keep the model in focus, let everything else go dreamy
-          // At night, the streetlamp/window/moon glows are small, hard,
-          // bright points; a strong bokeh blur smears those into garish
-          // rainbow ring artifacts, so keep more of the scene in focus and
-          // cap how strong the out-of-focus blur can get.
-          focusRange={isNight ? Math.max(dofFocusRange, 10) : dofFocusRange}
-          bokehScale={isNight ? Math.min(dofBokehScale, 2) : dofBokehScale}
-        />
-        <Bloom
-          intensity={isNight ? Math.min(bloomIntensity, 9) : bloomIntensity} // The bloom intensity.
-          blurPass={undefined} // A blur pass.
-          width={Resolution.AUTO_SIZE} // render width
-          height={Resolution.AUTO_SIZE} // render height
-          kernelSize={KernelSize.LARGE} // blur kernel size
-          luminanceThreshold={
-            isNight ? Math.max(luminanceThreshold, 1.0) : luminanceThreshold
-          } // luminance threshold. Raise this value to mask out darker elements in the scene.
-          // REFLECT is a steep, non-linear blend - tiny per-frame brightness
-          // changes near the threshold (a moving specular hotspot, a bobbing
-          // light) swing its output wildly, reading as flicker. ADD is a
-          // flat, linear blend that scales smoothly with brightness instead.
-          luminanceSmoothing={
-            isNight ? Math.max(luminanceSmoothing, 0.9) : luminanceSmoothing
-          } // smoothness of the luminance threshold. Range is [0, 1]
-          blendFunction={isNight ? BlendFunction.ADD : BlendFunction.REFLECT} // blend mode
-        />
-        <BrightnessContrast
-          brightness={brightness} // brightness. min: -1, max: 1
-          contrast={contrast} // contrast: min -1, max: 1
-        />
-        <ColorAverage
-          blendFunction={BlendFunction.OVERLAY} // blend mode
-        />
-        <HueSaturation
-          blendFunction={BlendFunction.ALPHA} // blend mode
-          hue={hue} // hue in radians
-          saturation={saturation} // saturation in radians
-        />
-        <Vignette
-          offset={0.3} // vignette offset
-          darkness={vignetteDarkness} // vignette darkness
-          blendFunction={BlendFunction.NORMAL} // blend mode
-        />
-        <Noise
-          opacity={noiseOpacity} // grain opacity
-          blendFunction={BlendFunction.OVERLAY} // blend mode
-        />
+      {/* multisampling defaults to 8x MSAA - expensive on its own, and
+          largely wasted here: every edge it would smooth gets run straight
+          through DepthOfField/Bloom's blur and then Noise's grain anyway,
+          so the antialiasing it buys is barely visible in the final
+          composite.
+          EffectComposer's children type is JSX.Element | JSX.Element[], not
+          ReactNode, so DepthOfField's night-only inclusion below is built as
+          an explicit array rather than an inline `{cond && <X/>}` - the
+          latter would type as `boolean | Element` and fail to satisfy it. */}
+      <EffectComposer multisampling={0}>
+        {[
+          // DepthOfField is one of the most expensive effects in this stack
+          // (a full CoC pass plus a multi-tap bokeh blur), and at night it's
+          // already tuned to be almost a no-op - focusRange is clamped up to
+          // keep nearly everything sharp and bokehScale clamped down to a
+          // small blur, specifically to avoid smearing the small hard night
+          // glows into rainbow artifacts. Paying full price for a pass whose
+          // own tuning makes it barely visible isn't worth it, so it's
+          // skipped outright at night rather than just dialed down.
+          !isNight && (
+            <DepthOfField
+              key="dof"
+              target={[0, 0.45, 0]} // keep the model in focus, let everything else go dreamy
+              focusRange={dofFocusRange}
+              bokehScale={dofBokehScale}
+            />
+          ),
+          <Bloom
+            key="bloom"
+            intensity={isNight ? Math.min(bloomIntensity, 9) : bloomIntensity} // The bloom intensity.
+            blurPass={undefined} // A blur pass.
+            // A fixed, moderate resolution instead of AUTO_SIZE (which
+            // tracks the full canvas size) keeps Bloom's internal
+            // downsample/blur chain cheap regardless of how large the
+            // canvas renders - a soft glow doesn't need to be computed at
+            // full resolution to read the same once composited back over
+            // the sharp base image.
+            width={480}
+            height={480}
+            kernelSize={isNight ? KernelSize.MEDIUM : KernelSize.LARGE} // blur kernel size
+            luminanceThreshold={
+              isNight ? Math.max(luminanceThreshold, 1.0) : luminanceThreshold
+            } // luminance threshold. Raise this value to mask out darker elements in the scene.
+            // REFLECT is a steep, non-linear blend - tiny per-frame
+            // brightness changes near the threshold (a moving specular
+            // hotspot, a bobbing light) swing its output wildly, reading as
+            // flicker. ADD is a flat, linear blend that scales smoothly
+            // with brightness instead.
+            luminanceSmoothing={
+              isNight ? Math.max(luminanceSmoothing, 0.9) : luminanceSmoothing
+            } // smoothness of the luminance threshold. Range is [0, 1]
+            blendFunction={isNight ? BlendFunction.ADD : BlendFunction.REFLECT} // blend mode
+          />,
+          <BrightnessContrast
+            key="brightness-contrast"
+            brightness={brightness} // brightness. min: -1, max: 1
+            contrast={contrast} // contrast: min -1, max: 1
+          />,
+          <ColorAverage
+            key="color-average"
+            blendFunction={BlendFunction.OVERLAY} // blend mode
+          />,
+          <HueSaturation
+            key="hue-saturation"
+            blendFunction={BlendFunction.ALPHA} // blend mode
+            hue={hue} // hue in radians
+            saturation={saturation} // saturation in radians
+          />,
+          <Vignette
+            key="vignette"
+            offset={0.3} // vignette offset
+            darkness={vignetteDarkness} // vignette darkness
+            blendFunction={BlendFunction.NORMAL} // blend mode
+          />,
+          <Noise
+            key="noise"
+            opacity={noiseOpacity} // grain opacity
+            blendFunction={BlendFunction.OVERLAY} // blend mode
+          />,
+        ].filter((child): child is React.JSX.Element => Boolean(child))}
       </EffectComposer>
     </React.Suspense>
   );

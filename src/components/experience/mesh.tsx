@@ -1,9 +1,12 @@
 import React from "react";
 import * as THREE from "three";
-import { useGLTF, useHelper } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { mergeVertices } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import {
+  mergeVertices,
+  mergeGeometries,
+} from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { WATER_VERTEX_SHADER, WATER_FRAGMENT_SHADER } from "./shader";
 import AnimatedBoat from "./AnimatedBoat";
 import { IS_DEV } from "../../constants/environment";
@@ -166,62 +169,6 @@ const STREETLAMP_TARGET_FORWARD_OFFSET = 70;
 // horizontally toward the opera house instead of one arbitrary shared axis.
 const OPERA_HOUSE_LOCAL_XZ: [number, number] = [273.75, -243.14];
 
-// Bounding-box centers (local space, inside each building's own group) of the
-// building facades, used to fake a lit window since none of these buildings
-// actually have separate window/glass geometry in the model.
-const BUILDING_WINDOW_LIGHT_POSITIONS: [number, number, number][] = [
-  [-349, -10, -247], // Building_1
-  [371, -20, 121], // Building_1_2
-  [-318, -15, -16], // Building
-  [200, -5, 111], // Building_2
-  [200, -5, 155], // Building_2_2
-];
-
-type MeshProps = {
-  sunDirection?: THREE.Vector3;
-  isNight?: boolean;
-  sailFloodlights?: SailFloodlightConfig[];
-  dockLighting?: DockLightingConfig;
-  landscapeLighting?: LandscapeLightingConfig;
-};
-
-// A dot standing in for a distant bulb - purely visual (no real light), so
-// Bloom can pick it out without it ever illuminating anything nearby. An
-// earlier version paired this with a real pointLight, but any point light
-// sitting close to a glossy surface (the boat/opera-house glass) catches a
-// tight specular hotspot that sweeps in and out of Bloom's threshold every
-// frame as the model bobs via Float - a persistent flicker that no amount of
-// intensity tuning fully removed. Dropping the light removes the flicker
-// source entirely; the dot's own steady, tone-mapped brightness is enough to
-// read as "there's a light there" once bloomed.
-const NightGlow = ({
-  position,
-  color,
-  radius,
-  brightness = 1.8,
-}: {
-  position: [number, number, number];
-  color: string;
-  radius: number;
-  brightness?: number;
-}) => {
-  // Pushed past 1.0 by default - these are meant to be the dominant "there's
-  // a light here" cue, and Bloom is what sells them as lit windows/lamps, so
-  // they need to clear its threshold with room to spare. Individual call
-  // sites can dial this down where full brightness reads as too intense.
-  const dotColor = React.useMemo(
-    () => new THREE.Color(color).multiplyScalar(brightness),
-    [color, brightness],
-  );
-
-  return (
-    <mesh position={position}>
-      <sphereGeometry args={[radius, 12, 12]} />
-      <meshBasicMaterial color={dotColor} />
-    </mesh>
-  );
-};
-
 // The actual downward-facing cone of light for a streetlamp, paired with
 // the NightGlow bulb dot above. A THREE.SpotLight aims from its position at
 // its `.target`'s position - unlike the light itself, `.target` is only
@@ -275,11 +222,110 @@ const StreetlampSpot = ({
   );
 };
 
+// Bounding-box centers (local space, inside each building's own group) of the
+// building facades, used to fake a lit window since none of these buildings
+// actually have separate window/glass geometry in the model.
+const BUILDING_WINDOW_LIGHT_POSITIONS: [number, number, number][] = [
+  [-349, -10, -247], // Building_1
+  [371, -20, 121], // Building_1_2
+  [-318, -15, -16], // Building
+  [200, -5, 111], // Building_2
+  [200, -5, 155], // Building_2_2
+];
+
+type MeshProps = {
+  sunDirection?: THREE.Vector3;
+  isNight?: boolean;
+  sailFloodlights?: SailFloodlightConfig[];
+  dockLighting?: DockLightingConfig;
+};
+
+// A dot standing in for a distant bulb - purely visual (no real light), so
+// Bloom can pick it out without it ever illuminating anything nearby. An
+// earlier version paired this with a real pointLight, but any point light
+// sitting close to a glossy surface (the boat/opera-house glass) catches a
+// tight specular hotspot that sweeps in and out of Bloom's threshold every
+// frame as the model bobs via Float - a persistent flicker that no amount of
+// intensity tuning fully removed. Dropping the light removes the flicker
+// source entirely; the dot's own steady, tone-mapped brightness is enough to
+// read as "there's a light there" once bloomed.
+const NightGlow = ({
+  position,
+  color,
+  radius,
+  brightness = 1.8,
+}: {
+  position: [number, number, number];
+  color: string;
+  radius: number;
+  brightness?: number;
+}) => {
+  // Pushed past 1.0 by default - these are meant to be the dominant "there's
+  // a light here" cue, and Bloom is what sells them as lit windows/lamps, so
+  // they need to clear its threshold with room to spare. Individual call
+  // sites can dial this down where full brightness reads as too intense.
+  const dotColor = React.useMemo(
+    () => new THREE.Color(color).multiplyScalar(brightness),
+    [color, brightness],
+  );
+
+  return (
+    <mesh position={position}>
+      <sphereGeometry args={[radius, 12, 12]} />
+      <meshBasicMaterial color={dotColor} />
+    </mesh>
+  );
+};
+
+// Batched form of NightGlow for the fixture arrays below (dock LEDs,
+// parking-lot markers, streetlamp bulbs, building windows), which each
+// place dozens to over a hundred identically-sized, identically-coloured
+// dots. Rendering each as its own <mesh> was a separate draw call per dot -
+// 130 for the dock markers alone, ~165 across every array combined. Since
+// every dot in a given array shares geometry, material and color, they're
+// exactly what THREE.InstancedMesh exists for: one draw call per array
+// instead of one per dot, with per-instance placement done via a matrix
+// buffer instead of separate scene-graph nodes.
+const NightGlowInstances = ({
+  positions,
+  color,
+  radius,
+  brightness = 1.8,
+}: {
+  positions: [number, number, number][];
+  color: string;
+  radius: number;
+  brightness?: number;
+}) => {
+  const meshRef = React.useRef<THREE.InstancedMesh>(null!);
+  const dotColor = React.useMemo(
+    () => new THREE.Color(color).multiplyScalar(brightness),
+    [color, brightness],
+  );
+
+  React.useLayoutEffect(() => {
+    const dummy = new THREE.Object3D();
+    positions.forEach((position, i) => {
+      dummy.position.set(...position);
+      dummy.updateMatrix();
+      meshRef.current.setMatrixAt(i, dummy.matrix);
+    });
+    meshRef.current.instanceMatrix.needsUpdate = true;
+  }, [positions]);
+
+  return (
+    <instancedMesh ref={meshRef} args={[undefined, undefined, positions.length]}>
+      <sphereGeometry args={[radius, 12, 12]} />
+      <meshBasicMaterial color={dotColor} />
+    </instancedMesh>
+  );
+};
+
 // White LED sail floodlights - positioned in the same coordinate space as
 // this component's outermost <group position={[0, 0.6, 0]}> below, i.e.
-// model-relative rather than world-fixed. These (and StreetlampSpot above)
-// live in mesh.tsx rather than the scene-level Canvas specifically so they
-// ride along with whatever rotation Inspector applies to the model - a
+// model-relative rather than world-fixed. These live in mesh.tsx rather
+// than the scene-level Canvas specifically so they ride along with
+// whatever rotation Inspector applies to the model - a
 // spotLight placed at the Canvas/scene level stays fixed in world space and
 // visibly stops lining up with the sails as soon as the model is rotated.
 //
@@ -362,9 +408,9 @@ const SAIL_FLOODLIGHT_PENUMBRA = 0.25;
 // go dark - decay=2 already does the real work of fading it out.
 const SAIL_FLOODLIGHT_DISTANCE = 5;
 
-// Same target-parenting fix as StreetlampSpot: a spotLight's `.target` only
-// inherits the model's rotation if it's a genuinely parented <object3D>,
-// not just a position handed to it via a prop.
+// A spotLight's `.target` only inherits the model's rotation if it's a
+// genuinely parented <object3D>, not just a position handed to it via a
+// prop - see DockLight below for the same pattern.
 const SailFloodlight = ({
   position,
   target,
@@ -427,9 +473,10 @@ const SailFloodlight = ({
 //    this model's un-scaled units are centimetres - the scene's overall
 //    0.0003 scale then implies a ~325 m real perimeter, a plausible size for
 //    the promenade around Bennelong Point. Purely visual (see NightGlow
-//    above): 130+ real lights at this density would be a heavy per-fragment
-//    cost for every standard-material surface in the scene for no visible
-//    gain over the shader-side glow below.
+//    above, rendered via NightGlowInstances): 130+ real lights at this
+//    density would be a heavy per-fragment cost for every standard-material
+//    surface in the scene for no visible gain over the shader-side glow
+//    below.
 //  - DOCK_SPOTLIGHT_POSITIONS: a much sparser evenly-spaced set of real
 //    spotLights, for actual beams/highlights on the water surface.
 //  - DOCK_GLOW_SAMPLES: a medium-density set consumed by the water shader to
@@ -597,6 +644,29 @@ const DOCK_SPOTLIGHT_POSITIONS: [number, number, number, number][] = [
   [-0.8959, 0.5664, -0.9035, -0.4285],
 ];
 
+// Real fixtures thinned to roughly every other position - the array above
+// is already evenly spaced around the waterline perimeter, so taking every
+// other entry mostly keeps that even spacing. DOCK_LIGHT_DISTANCE is
+// widened below to compensate for the doubled spacing between what's left.
+//
+// The straight run from index 0-3 (z=1.1197, the edge nearest the tree
+// line, spanning x=-1.1583 to x=0.7428 per DOCK_LED_MARKERS above - a
+// 1.9011 unit run) is the one exception: plain i%2===0 thinning keeps 0
+// and 2, which land unevenly along that run rather than an even split.
+// These two points are interpolated directly at 30%/70% along the run
+// instead, replacing indices 0-3 entirely.
+const TREE_SIDE_DOCK_LIGHT_A: [number, number, number, number] = [
+  -0.588, 1.1197, 0, 1,
+]; // 30% along the run
+const TREE_SIDE_DOCK_LIGHT_B: [number, number, number, number] = [
+  0.1725, 1.1197, 0, 1,
+]; // 70% along the run
+const THINNED_DOCK_SPOTLIGHT_POSITIONS = [
+  TREE_SIDE_DOCK_LIGHT_A,
+  TREE_SIDE_DOCK_LIGHT_B,
+  ...[4, 6, 8, 10, 12, 14].map((i) => DOCK_SPOTLIGHT_POSITIONS[i]),
+];
+
 // [x, z] - deliberately coarser than DOCK_LED_MARKERS; consumed by the water
 // shader as a fixed-size uniform array (see WATER_FRAGMENT_SHADER), so this
 // count directly sets a per-fragment loop length.
@@ -649,16 +719,25 @@ export const DEFAULT_DOCK_LIGHTING: DockLightingConfig = {
   glowRadius: 0.3,
   glowIntensity: 0.45,
 };
-const DOCK_LIGHT_COLOR = "#bfe9ff"; // cool marine-grade LED white
 const DOCK_LED_COLOR = "#d7f3ff";
+const DOCK_LIGHT_COLOR = "#bfe9ff"; // cool marine-grade LED white
 const DOCK_LIGHT_PENUMBRA = 0.6;
-const DOCK_LIGHT_DISTANCE = 0.5;
+// Widened from 0.5 (tuned for all 16 fixtures) now that only every other
+// fixture is real (THINNED_DOCK_SPOTLIGHT_POSITIONS) - the doubled spacing
+// needs a proportionally wider pool so coverage still overlaps into one
+// continuous glow along the waterline instead of leaving visible gaps.
+const DOCK_LIGHT_DISTANCE = 0.9;
 // How far outward (beam-angle-overlap territory) and how far further down
 // the aim target sits, relative to the fixture itself - this is what gives
 // the "downward pitch with a slight outward angle" the beam needs to
 // actually land in the adjacent water rather than straight down at the wall.
 const DOCK_LIGHT_THROW = 0.22;
 const DOCK_LIGHT_DROP = 0.16;
+// How far below DOCK_WATERLINE_Y the fixture itself sits - shallower than
+// dockLighting.depth (0.035 default), which is still used for the target/
+// LED markers below. See the comment at the fixture's position calculation
+// for why this needs to stay underwater at all.
+const DOCK_LIGHT_HEIGHT_OFFSET = 0.015;
 
 const DockLight = ({
   position,
@@ -698,53 +777,15 @@ const DockLight = ({
   );
 };
 
-// Exterior landscape lighting: in-ground uplights along the entrance
-// stairway base, the plaza/parking area in front of it, and at the base of
-// each tree lining that plaza. All three fixture arrays below are defined in
-// this same shared fixture frame (SailFloodlight/DockLight's coordinate
-// space), found the same way DOCK_WATERLINE_Y and OPERA_HOUSE_LOCAL_XZ were:
-// reading the real vertex buffers for "Sidney_Stone.1_0" (the building's
-// low base/plinth material - a separate mesh from the sail/wall "Stone_0",
-// spanning roughly x:[-0.78,0.67] z:[-1.19,0.45] y:[0.10,0.36] in this
-// frame - the closest thing this stylised model has to a monumental
-// entrance stair) and every Tree_3_* group (whose local origin sits right
-// at each trunk's base), then transforming both through the exact same
-// group-chain matrices this component's JSX applies (G1 rotate -90 X scale
-// 0.0003, G2 rotate 90 X, then each mesh's own parent group chain).
-//
-// That vertex read found the building's low base spans z up to only 0.45,
-// while the podium itself (Floor_Stone_0) extends to z ~1.09-1.23 and the
-// 19 trees all cluster around z ~0.83-0.91 - i.e. there's a whole paved
-// strip between the building's front base and the tree line/water's edge.
-// The two taxis (Car_Sedan_Taxi_1/_2) sit right in that same strip at
-// x ~0.37-0.52, z ~0.69-0.81 - confirming this strip is the model's
-// entrance plaza/drop-off, not open water, and is where the "parking lot"
-// fixtures below live.
-const STAIR_UPLIGHT_POSITIONS: [number, number, number][] = [
-  [-0.7, 0.16, 0.4],
-  [-0.483, 0.16, 0.4],
-  [-0.267, 0.16, 0.4],
-  [-0.05, 0.16, 0.4],
-  [0.167, 0.16, 0.4],
-  [0.383, 0.16, 0.4],
-  [0.6, 0.16, 0.4],
-];
-
-// Real spotlights for actual pooled illumination on the plaza pavement -
-// sparse, one row tracing the pedestrian path between the building and the
-// tree line, one tracing the outer perimeter toward the water's edge.
-const PARKING_LOT_SPOTLIGHT_POSITIONS: [number, number, number][] = [
-  [-0.43, 0.155, 0.62],
-  [0.22, 0.155, 0.62],
-  [0.65, 0.155, 0.62],
-  [-0.42, 0.155, 1.0],
-  [0.42, 0.155, 1.0],
-  [0.46, 0.155, 0.72],
-];
-
-// Denser purely-visual markers (see NightGlow above) tracing the same two
-// rows plus a landscape-island accent by the taxi drop-off - cheap detail
-// between the sparse real spotlights, same trick as DOCK_LED_MARKERS.
+// Purely-visual markers (see NightGlow above, rendered via
+// NightGlowInstances) tracing the pedestrian path and outer perimeter of
+// the plaza in front of the building, plus a landscape-island accent by the
+// taxi drop-off - same trick as DOCK_LED_MARKERS. Defined in this file's
+// shared "outward-facing fixture" coordinate frame (SailFloodlight/
+// DockLight's space). The stair, tree and parking-lot real spotlights that
+// used to accompany these (GroundUplight) were removed entirely - not a
+// THREE.Light, so these markers cost nothing in the fragment-shader light
+// loop regardless of how many of them there are.
 const PARKING_LOT_MARKER_POSITIONS: [number, number, number][] = [
   [-0.65, 0.155, 0.62],
   [-0.43, 0.155, 0.62],
@@ -761,99 +802,7 @@ const PARKING_LOT_MARKER_POSITIONS: [number, number, number][] = [
   [0.6, 0.155, 1.0],
   [0.46, 0.155, 0.72],
 ];
-
-// One fixture per tree, positioned at each Tree_3_* group's own local
-// origin (its trunk base) transformed into this shared frame - see comment
-// block above.
-const TREE_UPLIGHT_POSITIONS: [number, number, number][] = [
-  [0.0061, 0.1041, 0.9095],
-  [0.4979, 0.1185, 0.8559],
-  [0.4242, 0.1041, 0.8465],
-  [-0.4241, 0.1041, 0.845],
-  [-0.2572, 0.1041, 0.845],
-  [-0.5141, 0.1041, 0.845],
-  [0.5477, 0.1041, 0.8772],
-  [0.1043, 0.1041, 0.8892],
-  [0.1707, 0.1041, 0.8575],
-  [0.3141, 0.1041, 0.8772],
-  [-0.0862, 0.0964, 0.8971],
-  [-0.0024, 0.1041, 0.8305],
-  [-0.1677, 0.1041, 0.8857],
-  [0.2296, 0.1077, 0.8783],
-  [0.2499, 0.0964, 0.8781],
-  [0.3904, 0.1077, 0.8831],
-  [-0.7112, 0.1041, 0.845],
-  [-0.6012, 0.1041, 0.9007],
-  [-0.3425, 0.1041, 0.8951],
-  [-0.6205, 0.1077, 0.8293],
-];
-
-export type LandscapeLightingConfig = {
-  intensity: number;
-  angle: number;
-  distance: number;
-};
-export const DEFAULT_LANDSCAPE_LIGHTING: LandscapeLightingConfig = {
-  intensity: 1.2,
-  angle: 0.4,
-  distance: 0.45,
-};
-// ~3000K warm white, shared by every landscape fixture below so the stairs,
-// plaza and trees all read as one consistent lighting system.
-const LANDSCAPE_LIGHT_COLOR = "#ffbf85";
-const LANDSCAPE_LIGHT_PENUMBRA = 0.5;
-// How far above each fixture its aim target sits - since every landscape
-// fixture here is a straight-up in-ground uplight (no outward throw needed,
-// unlike DockLight), position alone is enough to place them.
-const LANDSCAPE_UPLIGHT_THROW = 0.3;
-
-// Same target-parenting approach as SailFloodlight/DockLight. A single
-// reusable uplight covers stairs, trees and the parking lot's real
-// spotlights - all three are just "in-ground fixture aimed straight up",
-// differing only in position and intensity.
-const GroundUplight = ({
-  position,
-  intensity,
-  angle,
-  distance,
-}: {
-  position: [number, number, number];
-  intensity: number;
-  angle: number;
-  distance: number;
-}) => {
-  const lightRef = React.useRef<THREE.SpotLight>(null!);
-  const targetRef = React.useRef<THREE.Object3D>(null);
-
-  React.useEffect(() => {
-    if (lightRef.current && targetRef.current) {
-      lightRef.current.target = targetRef.current;
-    }
-  }, []);
-
-  const targetPosition: [number, number, number] = [
-    position[0],
-    position[1] + LANDSCAPE_UPLIGHT_THROW,
-    position[2],
-  ];
-
-  return (
-    <>
-      <spotLight
-        ref={lightRef}
-        position={position}
-        color={LANDSCAPE_LIGHT_COLOR}
-        intensity={intensity}
-        angle={angle}
-        penumbra={LANDSCAPE_LIGHT_PENUMBRA}
-        distance={distance}
-        decay={2}
-        castShadow={false}
-      />
-      <object3D ref={targetRef} position={targetPosition} />
-    </>
-  );
-};
+const LANDSCAPE_LIGHT_COLOR = "#ffbf85"; // ~3000K warm white
 
 // The water mesh's own local position/rotation (matches the
 // Water_2_water_foam_0 <mesh> below) - reused here to convert
@@ -905,6 +854,146 @@ const DOCK_GLOW_POINTS_WATER_LOCAL = DOCK_GLOW_SAMPLES.map(([x, z]) => {
   );
   return new THREE.Vector2(local.x, local.z);
 });
+
+// The 20 Tree_3_* nodes are the same tree model repeated around the plaza,
+// each as its own <group position/rotation scale={2}><mesh/><mesh/></group>
+// pair (one mesh for the Trees material, one for the trunk's Wood
+// material) - 40 draw calls for what's visually one repeated asset. None of
+// this is animated, so instead of rendering each instance as its own scene
+// node, every instance's geometry is transformed by its own position/
+// rotation/scale (via the same buildLocalMatrix helper the water-glow
+// conversion above uses) and merged into a single static BufferGeometry per
+// material - see mergedTreeGeometry in the Mesh component below. This is
+// exactly what static batching exists for: identical, non-animated meshes
+// that only differ by transform cost nothing extra to draw once merged, so
+// the GPU submits 2 draw calls instead of 40.
+const TREE_INSTANCES: {
+  treesNode: string;
+  woodNode: string;
+  position: [number, number, number];
+  rotation: [number, number, number];
+}[] = [
+  {
+    treesNode: "Tree_3_15_Trees_0",
+    woodNode: "Tree_3_15_Wood_0",
+    position: [-301.47, -5.81, 128.39],
+    rotation: [3.02, 0.7, -Math.PI / 2],
+  },
+  {
+    treesNode: "Tree_3_14_Trees_0",
+    woodNode: "Tree_3_14_Wood_0",
+    position: [1338.04, 42.07, -50.35],
+    rotation: [3.02, 0.7, -Math.PI / 2],
+  },
+  {
+    treesNode: "Tree_3_13_Trees_0",
+    woodNode: "Tree_3_13_Wood_0",
+    position: [1092.19, -5.81, -81.8],
+    rotation: [3.02, 0.7, -Math.PI / 2],
+  },
+  {
+    treesNode: "Tree_3_12_Trees_0",
+    woodNode: "Tree_3_12_Wood_0",
+    position: [-1735.52, -5.81, -86.69],
+    rotation: [0.13, 0.8, 1.39],
+  },
+  {
+    treesNode: "Tree_3_11_Trees_0",
+    woodNode: "Tree_3_11_Wood_0",
+    position: [-1178.98, -5.81, -86.69],
+    rotation: [0.13, 0.8, 1.39],
+  },
+  {
+    treesNode: "Tree_3_10_Trees_0",
+    woodNode: "Tree_3_10_Wood_0",
+    position: [-2035.27, -5.81, -86.69],
+    rotation: [0.13, 0.8, 1.39],
+  },
+  {
+    treesNode: "Tree_3_9_Trees_0",
+    woodNode: "Tree_3_9_Wood_0",
+    position: [1504, -5.81, 20.7],
+    rotation: [0.13, 0.8, 1.39],
+  },
+  {
+    treesNode: "Tree_3_8_Trees_0",
+    woodNode: "Tree_3_8_Wood_0",
+    position: [25.82, -5.81, 60.52],
+    rotation: [0.11, -0.5, 1.54],
+  },
+  {
+    treesNode: "Tree_3_7_Trees_0",
+    woodNode: "Tree_3_7_Wood_0",
+    position: [247.29, -5.81, -45],
+    rotation: [0.11, -0.5, 1.54],
+  },
+  {
+    treesNode: "Tree_3_6_Trees_0",
+    woodNode: "Tree_3_6_Wood_0",
+    position: [725.37, -5.81, 20.7],
+    rotation: [0.13, 0.8, 1.39],
+  },
+  {
+    treesNode: "Tree_3_4_Trees_0",
+    woodNode: "Tree_3_4_Wood_0",
+    position: [-609.23, -31.36, 87.11],
+    rotation: [1.22, Math.PI / 2, 0],
+  },
+  {
+    treesNode: "Tree_3_1_Trees_0",
+    woodNode: "Tree_3_1_Wood_0",
+    position: [-329.65, -5.81, -135.03],
+    rotation: [3.02, 0.7, -Math.PI / 2],
+  },
+  {
+    treesNode: "Tree_3_Trees_0",
+    woodNode: "Tree_3_Wood_0",
+    position: [-880.63, -5.81, 48.82],
+    rotation: [0.13, 0.8, 1.39],
+  },
+  {
+    treesNode: "Tree_3_3_Trees_0",
+    woodNode: "Tree_3_3_Wood_0",
+    position: [443.6, 6.26, 24.37],
+    rotation: [-1.11, 1.41, 2.43],
+  },
+  {
+    treesNode: "Tree_3_2_Trees_0",
+    woodNode: "Tree_3_2_Wood_0",
+    position: [511.17, -31.36, 23.76],
+    rotation: [1.22, Math.PI / 2, 0],
+  },
+  {
+    treesNode: "Tree_3_5_Trees_0",
+    woodNode: "Tree_3_5_Wood_0",
+    position: [979.68, 6.26, 40.44],
+    rotation: [-0.28, 0.91, 1.56],
+  },
+  {
+    treesNode: "Tree_3_16_Trees_0",
+    woodNode: "Tree_3_16_Wood_0",
+    position: [-2692.46, -5.81, -86.69],
+    rotation: [0.09, -0.06, 1.5],
+  },
+  {
+    treesNode: "Tree_3_17_Trees_0",
+    woodNode: "Tree_3_17_Wood_0",
+    position: [-2325.74, -5.81, 98.85],
+    rotation: [0.09, -0.06, 1.5],
+  },
+  {
+    treesNode: "Tree_3_18_Trees_0",
+    woodNode: "Tree_3_18_Wood_0",
+    position: [-1463.47, -5.81, 80.2],
+    rotation: [0.09, -0.06, 1.5],
+  },
+  {
+    treesNode: "Tree_3_19_Trees_0",
+    woodNode: "Tree_3_19_Wood_0",
+    position: [-2389.95, 6.26, -139.06],
+    rotation: [-1.11, 1.41, 2.43],
+  },
+];
 
 const useAnimatedWaterMaterial = (
   sourceMaterial: THREE.Material | undefined,
@@ -999,16 +1088,45 @@ const useNightMaterialTint = (
   }, [materials, isNight]);
 };
 
+// MeshLambertMaterial evaluates the same lights as MeshStandardMaterial but
+// with a much cheaper pure-diffuse model, skipping the roughness/metalness
+// BRDF and specular highlight work entirely - real savings multiplied
+// across every real light in the scene. Scoped this time to surfaces that
+// are barely or never actually seen: the seabed under the (semi-opaque)
+// water plane, the underside pipes, car wheels (tiny, low to the ground,
+// mostly hidden by the car body), and the small background rocks. Every
+// visible hero surface - the sails/trim, the building's own stonework, the
+// promenade, roofs, boat hulls, car bodies - keeps its original PBR
+// material untouched.
+const LAMBERT_MATERIAL_KEYS = ["Ground", "Ground_0", "Ground_1", "Pipe_1", "wheels", "Stone_2"];
+
+const useLambertMaterials = (materials: Record<string, THREE.Material>) =>
+  React.useMemo(() => {
+    const lambertMaterials: Record<string, THREE.MeshLambertMaterial> = {};
+    LAMBERT_MATERIAL_KEYS.forEach((key) => {
+      const source = materials[key] as THREE.MeshStandardMaterial | undefined;
+      if (!source?.color) return;
+      const lambert = new THREE.MeshLambertMaterial();
+      // Shares the SAME Color instance rather than copying it, so
+      // useNightMaterialTint's in-place mutations on the source material
+      // (setHSL/lerp, above) apply here automatically with no extra
+      // bookkeeping - both materials are just reading the one Color object.
+      lambert.color = source.color;
+      lambertMaterials[key] = lambert;
+    });
+    return lambertMaterials;
+  }, [materials]);
+
 const Mesh = ({
   sunDirection = DEFAULT_SUN_DIRECTION,
   isNight = false,
   sailFloodlights = DEFAULT_SAIL_FLOODLIGHTS,
   dockLighting = DEFAULT_DOCK_LIGHTING,
-  landscapeLighting = DEFAULT_LANDSCAPE_LIGHTING,
 }: MeshProps) => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
 
   useNightMaterialTint(materials, isNight);
+  const lambertMaterials = useLambertMaterials(materials);
 
   // The GLTF "Glass" material is fully opaque (no real transmission); swap in a
   // physically-based transmissive material so windows/glass actually refract.
@@ -1044,11 +1162,44 @@ const Mesh = ({
     [nodes.Sidney_White_Border_0],
   );
 
+  // See TREE_INSTANCES above - each of the 20 trees' geometry is baked into
+  // world-local space with its own transform, then merged into one shared
+  // BufferGeometry per material. mergeGeometries requires every input to
+  // share the same set of vertex attributes; the source meshes already all
+  // come from the same "tree" gltf asset repeated 20 times, so this holds
+  // without needing to strip/normalize attributes first.
+  const mergedTreeGeometry = React.useMemo(() => {
+    const treesGeometries = TREE_INSTANCES.map((instance) =>
+      (nodes[instance.treesNode] as THREE.Mesh).geometry
+        .clone()
+        .applyMatrix4(buildLocalMatrix(instance.position, instance.rotation, 2)),
+    );
+    const woodGeometries = TREE_INSTANCES.map((instance) =>
+      (nodes[instance.woodNode] as THREE.Mesh).geometry
+        .clone()
+        .applyMatrix4(buildLocalMatrix(instance.position, instance.rotation, 2)),
+    );
+    return {
+      trees: mergeGeometries(treesGeometries),
+      wood: mergeGeometries(woodGeometries),
+    };
+  }, [nodes]);
+
   const animatedWaterMaterial = useAnimatedWaterMaterial(
     materials.water_foam,
     sunDirection,
     isNight,
     dockLighting,
+  );
+
+  const dockLedMarkerPositions = React.useMemo<[number, number, number][]>(
+    () =>
+      DOCK_LED_MARKERS.map(([x, z]) => [
+        x,
+        DOCK_WATERLINE_Y - dockLighting.depth,
+        z,
+      ]),
+    [dockLighting.depth],
   );
 
   const boat1Position = React.useMemo(
@@ -1111,10 +1262,23 @@ const Mesh = ({
           />
         ))}
       {isNight &&
-        DOCK_SPOTLIGHT_POSITIONS.map(([x, z, outX, outZ], i) => {
+        THINNED_DOCK_SPOTLIGHT_POSITIONS.map(([x, z, outX, outZ], i) => {
+          // Deliberately underwater, not raised to the waterline: the
+          // water surface is a raw ShaderMaterial with no `lights: true`,
+          // so it never receives light from this fixture at all - what
+          // it's actually illuminating is the stone promenade wall behind
+          // it, which has a hard geometric edge nearby. Underwater, that
+          // edge is seen through the translucent water surface, which
+          // blends over it and softens it into a clean-looking pool.
+          // Raised above the waterline, the same edge renders with nothing
+          // softening it and shows up as a harsh, flat-cut clip instead.
+          // DOCK_LIGHT_HEIGHT_OFFSET is a shallower depth than
+          // dockLighting.depth (used below for the target/LED markers) -
+          // still enough to stay under that softening water surface, but
+          // higher than the original depth read as sitting too deep.
           const position: [number, number, number] = [
             x,
-            DOCK_WATERLINE_Y - dockLighting.depth,
+            DOCK_WATERLINE_Y - DOCK_LIGHT_HEIGHT_OFFSET,
             z,
           ];
           const target: [number, number, number] = [
@@ -1132,56 +1296,26 @@ const Mesh = ({
             />
           );
         })}
-      {isNight &&
-        DOCK_LED_MARKERS.map(([x, z], i) => (
-          <NightGlow
-            key={`dock-led-${i}`}
-            position={[x, DOCK_WATERLINE_Y - dockLighting.depth, z]}
-            color={DOCK_LED_COLOR}
-            radius={0.01}
-            brightness={0.8}
-          />
-        ))}
-      {isNight &&
-        STAIR_UPLIGHT_POSITIONS.map((position, i) => (
-          <GroundUplight
-            key={`stair-uplight-${i}`}
-            position={position}
-            intensity={landscapeLighting.intensity}
-            angle={landscapeLighting.angle}
-            distance={landscapeLighting.distance}
-          />
-        ))}
-      {isNight &&
-        TREE_UPLIGHT_POSITIONS.map((position, i) => (
-          <GroundUplight
-            key={`tree-uplight-${i}`}
-            position={position}
-            intensity={landscapeLighting.intensity * 0.75}
-            angle={landscapeLighting.angle}
-            distance={landscapeLighting.distance}
-          />
-        ))}
-      {isNight &&
-        PARKING_LOT_SPOTLIGHT_POSITIONS.map((position, i) => (
-          <GroundUplight
-            key={`parking-spotlight-${i}`}
-            position={position}
-            intensity={landscapeLighting.intensity * 0.6}
-            angle={landscapeLighting.angle}
-            distance={landscapeLighting.distance}
-          />
-        ))}
-      {isNight &&
-        PARKING_LOT_MARKER_POSITIONS.map((position, i) => (
-          <NightGlow
-            key={`parking-marker-${i}`}
-            position={position}
-            color={LANDSCAPE_LIGHT_COLOR}
-            radius={0.01}
-            brightness={0.7}
-          />
-        ))}
+      {isNight && (
+        <NightGlowInstances
+          positions={dockLedMarkerPositions}
+          color={DOCK_LED_COLOR}
+          radius={0.01}
+          brightness={0.8}
+        />
+      )}
+      {/* Stair/tree/parking-lot real spotlights removed entirely - the
+          parking-lot markers just below (NightGlowInstances, not a
+          THREE.Light) are the only thing left tracing that area, and cost
+          nothing in the fragment-shader light loop. */}
+      {isNight && (
+        <NightGlowInstances
+          positions={PARKING_LOT_MARKER_POSITIONS}
+          color={LANDSCAPE_LIGHT_COLOR}
+          radius={0.01}
+          brightness={0.7}
+        />
+      )}
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.0003}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group position={[588.78, 396.08, 2376.67]}>
@@ -1206,7 +1340,7 @@ const Mesh = ({
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_Pipe_1_0 as THREE.Mesh).geometry
                   }
-                  material={materials.Pipe_1}
+                  material={lambertMaterials.Pipe_1}
                 />
                 <mesh
                   castShadow
@@ -1219,25 +1353,25 @@ const Mesh = ({
               </group>
               <mesh
                 geometry={(nodes.Wheels_1_wheels_0 as THREE.Mesh).geometry}
-                material={materials.wheels}
+                material={lambertMaterials.wheels}
                 position={[141.64, -5.82, 527.04]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
                 geometry={(nodes.wheels_1_wheels_0 as THREE.Mesh).geometry}
-                material={materials.wheels}
+                material={lambertMaterials.wheels}
                 position={[244.09, -5.61, 528.68]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
                 geometry={(nodes.Wheels_wheels_0 as THREE.Mesh).geometry}
-                material={materials.wheels}
+                material={lambertMaterials.wheels}
                 position={[244.09, -5.82, 454.97]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
               <mesh
                 geometry={(nodes.wheels_wheels_0 as THREE.Mesh).geometry}
-                material={materials.wheels}
+                material={lambertMaterials.wheels}
                 position={[141.64, -5.61, 453.33]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
@@ -1266,7 +1400,7 @@ const Mesh = ({
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_2_Pipe_1_0 as THREE.Mesh).geometry
                   }
-                  material={materials.Pipe_1}
+                  material={lambertMaterials.Pipe_1}
                 />
                 <mesh
                   castShadow
@@ -1279,239 +1413,44 @@ const Mesh = ({
               </group>
               <mesh
                 geometry={(nodes.Wheels_1_2_wheels_0 as THREE.Mesh).geometry}
-                material={materials.wheels}
+                material={lambertMaterials.wheels}
                 position={[141.64, -5.82, 527.04]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
                 geometry={(nodes.wheels_1_2_wheels_0 as THREE.Mesh).geometry}
-                material={materials.wheels}
+                material={lambertMaterials.wheels}
                 position={[244.09, -5.61, 528.68]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
                 geometry={(nodes.Wheels_2_wheels_0 as THREE.Mesh).geometry}
-                material={materials.wheels}
+                material={lambertMaterials.wheels}
                 position={[244.09, -5.82, 454.97]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
               <mesh
                 geometry={(nodes.wheels_2_wheels_0 as THREE.Mesh).geometry}
-                material={materials.wheels}
+                material={lambertMaterials.wheels}
                 position={[141.64, -5.61, 453.33]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
             </group>
           </group>
           <group position={[321.74, 352.86, 2903.36]}>
-            <group
-              position={[-301.47, -5.81, 128.39]}
-              rotation={[3.02, 0.7, -Math.PI / 2]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_15_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_15_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[1338.04, 42.07, -50.35]}
-              rotation={[3.02, 0.7, -Math.PI / 2]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_14_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_14_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[1092.19, -5.81, -81.8]}
-              rotation={[3.02, 0.7, -Math.PI / 2]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_13_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_13_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-1735.52, -5.81, -86.69]}
-              rotation={[0.13, 0.8, 1.39]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_12_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_12_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-1178.98, -5.81, -86.69]}
-              rotation={[0.13, 0.8, 1.39]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_11_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_11_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-2035.27, -5.81, -86.69]}
-              rotation={[0.13, 0.8, 1.39]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_10_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_10_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[1504, -5.81, 20.7]}
-              rotation={[0.13, 0.8, 1.39]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_9_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_9_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[25.82, -5.81, 60.52]}
-              rotation={[0.11, -0.5, 1.54]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_8_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_8_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[247.29, -5.81, -45]}
-              rotation={[0.11, -0.5, 1.54]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_7_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_7_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[725.37, -5.81, 20.7]}
-              rotation={[0.13, 0.8, 1.39]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_6_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_6_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-609.23, -31.36, 87.11]}
-              rotation={[1.22, Math.PI / 2, 0]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_4_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_4_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-329.65, -5.81, -135.03]}
-              rotation={[3.02, 0.7, -Math.PI / 2]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_1_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_1_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-880.63, -5.81, 48.82]}
-              rotation={[0.13, 0.8, 1.39]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
+            {/* All 20 individual Tree_3_* instances (see TREE_INSTANCES)
+                render here as 2 merged draw calls instead of 40 separate
+                <group><mesh/><mesh/></group> nodes. */}
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={mergedTreeGeometry.trees}
+              material={materials.Trees}
+            />
+            <mesh
+              geometry={mergedTreeGeometry.wood}
+              material={materials.Wood}
+            />
             <group
               position={[36.92, 72.09, 178.04]}
               rotation={[0, Math.PI / 2, 0]}
@@ -1528,118 +1467,6 @@ const Mesh = ({
                 receiveShadow
                 geometry={(nodes.Grass_Trees_0 as THREE.Mesh).geometry}
                 material={materials.Trees}
-              />
-            </group>
-            <group
-              position={[443.6, 6.26, 24.37]}
-              rotation={[-1.11, 1.41, 2.43]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_3_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_3_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[511.17, -31.36, 23.76]}
-              rotation={[1.22, Math.PI / 2, 0]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_2_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_2_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[979.68, 6.26, 40.44]}
-              rotation={[-0.28, 0.91, 1.56]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_5_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_5_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-2692.46, -5.81, -86.69]}
-              rotation={[0.09, -0.06, 1.5]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_16_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_16_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-2325.74, -5.81, 98.85]}
-              rotation={[0.09, -0.06, 1.5]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_17_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_17_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-1463.47, -5.81, 80.2]}
-              rotation={[0.09, -0.06, 1.5]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_18_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_18_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
-              />
-            </group>
-            <group
-              position={[-2389.95, 6.26, -139.06]}
-              rotation={[-1.11, 1.41, 2.43]}
-              scale={2}
-            >
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={(nodes.Tree_3_19_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
-              />
-              <mesh
-                geometry={(nodes.Tree_3_19_Wood_0 as THREE.Mesh).geometry}
-                material={materials.Wood}
               />
             </group>
           </group>
@@ -1713,16 +1540,17 @@ const Mesh = ({
                 rotation={[Math.PI, 1.5, -Math.PI]}
                 scale={2}
               >
+                <NightGlowInstances
+                  positions={STREETLAMP_LOCAL_POSITIONS}
+                  color="#ff9d4d"
+                  radius={45}
+                  brightness={0.6}
+                />
                 {STREETLAMP_LOCAL_POSITIONS.map((lampPosition, i) => (
-                  <React.Fragment key={`streetlamp-${i}`}>
-                    <NightGlow
-                      position={lampPosition}
-                      color="#ff9d4d"
-                      radius={45}
-                      brightness={0.6}
-                    />
-                    <StreetlampSpot position={lampPosition} />
-                  </React.Fragment>
+                  <StreetlampSpot
+                    key={`streetlamp-spot-${i}`}
+                    position={lampPosition}
+                  />
                 ))}
               </group>
             )}
@@ -1739,7 +1567,7 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Building_1_Pipe_1_0 as THREE.Mesh).geometry}
-                material={materials.Pipe_1}
+                material={lambertMaterials.Pipe_1}
               />
               <mesh
                 castShadow
@@ -1982,19 +1810,19 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Floor_3_Ground_0 as THREE.Mesh).geometry}
-                material={materials.Ground}
+                material={lambertMaterials.Ground}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Floor_3_Ground_0_1 as THREE.Mesh).geometry}
-                material={materials.Ground_0}
+                material={lambertMaterials.Ground_0}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Floor_3_Ground_0_2 as THREE.Mesh).geometry}
-                material={materials.Ground_1}
+                material={lambertMaterials.Ground_1}
               />
             </group>
             <group position={[-90.84, -228.19, 39.01]}>
@@ -2019,7 +1847,7 @@ const Mesh = ({
               castShadow
               receiveShadow
               geometry={(nodes.Stones_Stone_0 as THREE.Mesh).geometry}
-              material={materials.Stone_2}
+              material={lambertMaterials.Stone_2}
               position={[-770.29, -420.19, 39.78]}
               rotation={[Math.PI, Math.PI / 2, 0]}
             />
@@ -2027,7 +1855,7 @@ const Mesh = ({
               castShadow
               receiveShadow
               geometry={(nodes.Pipes1_1_Pipe_1_0 as THREE.Mesh).geometry}
-              material={materials.Pipe_1}
+              material={lambertMaterials.Pipe_1}
               position={[-1493.47, -524.33, -558.15]}
               rotation={[-Math.PI / 2, 0, Math.PI / 2]}
             />
@@ -2035,7 +1863,7 @@ const Mesh = ({
               castShadow
               receiveShadow
               geometry={(nodes.Pipes1_Pipe_1_0 as THREE.Mesh).geometry}
-              material={materials.Pipe_1}
+              material={lambertMaterials.Pipe_1}
               position={[711.34, -477.22, 1370.1]}
               rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
             />
