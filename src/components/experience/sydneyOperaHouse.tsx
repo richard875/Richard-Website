@@ -70,6 +70,20 @@ const SydneyOperaHouse = React.memo(() => (
     // is barely noticeable once composited through Bloom/grain/vignette.
     dpr={1}
     camera={{ position: [0, 2.6, 5], fov: 65 }}
+    // Explicitly request the discrete/high-performance GPU on hybrid-graphics
+    // laptops (Intel+NVIDIA/AMD) instead of leaving the choice to the browser,
+    // which often defaults a WebGL context to the integrated GPU to save
+    // power - exactly the wrong tradeoff for a scene with ~30 dynamic lights.
+    // antialias/stencil are both dropped because EffectComposer below (see
+    // its own multisampling={0} comment) owns the actual render targets - the
+    // canvas's own default framebuffer is never what ends up on screen, so
+    // paying for a multisampled backbuffer and a stencil attachment it never
+    // uses is pure waste.
+    gl={{
+      powerPreference: "high-performance",
+      antialias: false,
+      stencil: false,
+    }}
   >
     <Model />
   </Canvas>

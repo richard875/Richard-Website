@@ -1090,15 +1090,53 @@ const useNightMaterialTint = (
 
 // MeshLambertMaterial evaluates the same lights as MeshStandardMaterial but
 // with a much cheaper pure-diffuse model, skipping the roughness/metalness
-// BRDF and specular highlight work entirely - real savings multiplied
-// across every real light in the scene. Scoped this time to surfaces that
-// are barely or never actually seen: the seabed under the (semi-opaque)
-// water plane, the underside pipes, car wheels (tiny, low to the ground,
-// mostly hidden by the car body), and the small background rocks. Every
-// visible hero surface - the sails/trim, the building's own stonework, the
-// promenade, roofs, boat hulls, car bodies - keeps its original PBR
-// material untouched.
-const LAMBERT_MATERIAL_KEYS = ["Ground", "Ground_0", "Ground_1", "Pipe_1", "wheels", "Stone_2"];
+// Cook-Torrance BRDF and Fresnel term entirely - real savings multiplied
+// across every real light in the scene, which matters most at night when
+// ~30 real dynamic lights are active at once (see sydneyOperaHouse.tsx).
+// Every material in this GLTF is every mesh's material key that isn't
+// handled by its own dedicated material elsewhere in this file (Glass uses
+// glassMaterial below for real transmission; water_foam uses
+// animatedWaterMaterial, a fully custom shader with no scene-light
+// dependency at all - neither participates in this lighting model
+// regardless of isNight, so neither is in this list).
+//
+// This used to be split into two tiers - MeshLambertMaterial for surfaces
+// that are barely ever seen (ground, pipes, wheels, rocks), and
+// MeshPhongMaterial for the visible "hero" surfaces (building, sails/trim,
+// boats, cars, promenade, roofs) to preserve a specular sheen - but Phong's
+// Blinn-Phong highlight needed careful shininess/specular tuning to avoid
+// blowing out under the sail floodlights (a "modest" first attempt
+// multiplied out to over 2x pure white at point-blank range, since Phong's
+// specular term isn't energy-conserving the way Standard's roughness-based
+// BRDF is). MeshLambertMaterial has no specular term to tune at all, so
+// every material - hero or hidden - uses it here for a consistent, simpler
+// result.
+//
+// Applied only at night via heroMaterial() below - the day scene has just
+// the 3 base lights (ambient/hemisphere/directional, no sail/dock/
+// streetlamp fixtures), so there's no light-count cost to offset there, and
+// it swaps back to the GLTF's original untouched MeshStandardMaterial that
+// the day look was actually tuned against.
+const LAMBERT_MATERIAL_KEYS = [
+  "Ground",
+  "Ground_0",
+  "Ground_1",
+  "Pipe_1",
+  "wheels",
+  "Stone_2",
+  "material",
+  "Ship",
+  "car_0",
+  "Trees",
+  "Wood",
+  "Stone",
+  "Stone_0",
+  "Stone_1",
+  "Stone.1",
+  "White_Border",
+  "Sidney__0",
+  "roof",
+];
 
 const useLambertMaterials = (materials: Record<string, THREE.Material>) =>
   React.useMemo(() => {
@@ -1106,11 +1144,18 @@ const useLambertMaterials = (materials: Record<string, THREE.Material>) =>
     LAMBERT_MATERIAL_KEYS.forEach((key) => {
       const source = materials[key] as THREE.MeshStandardMaterial | undefined;
       if (!source?.color) return;
-      const lambert = new THREE.MeshLambertMaterial();
-      // Shares the SAME Color instance rather than copying it, so
-      // useNightMaterialTint's in-place mutations on the source material
-      // (setHSL/lerp, above) apply here automatically with no extra
-      // bookkeeping - both materials are just reading the one Color object.
+      const lambert = new THREE.MeshLambertMaterial({
+        color: source.color,
+        // Every material in this GLTF is double-sided (checked against the
+        // source file) - MeshLambertMaterial defaults to THREE.FrontSide,
+        // which would silently cull backfaces (thin sail/tree/leaf geometry
+        // especially) the Standard material was rendering fine.
+        side: THREE.DoubleSide,
+      });
+      // Re-pointed to the SAME Color instance rather than the copy the
+      // constructor made above, so useNightMaterialTint's in-place
+      // setHSL/lerp mutations on the source material apply here
+      // automatically too - both materials just read the one Color object.
       lambert.color = source.color;
       lambertMaterials[key] = lambert;
     });
@@ -1127,6 +1172,11 @@ const Mesh = ({
 
   useNightMaterialTint(materials, isNight);
   const lambertMaterials = useLambertMaterials(materials);
+  // Every LAMBERT_MATERIAL_KEYS mesh below reads its material through this
+  // instead of `materials[key]` directly, so the isNight swap happens in
+  // exactly one place rather than at each of the ~30 call sites.
+  const heroMaterial = (key: string): THREE.Material =>
+    isNight ? (lambertMaterials[key] ?? materials[key]) : materials[key];
 
   // The GLTF "Glass" material is fully opaque (no real transmission); swap in a
   // physically-based transmissive material so windows/glass actually refract.
@@ -1328,7 +1378,7 @@ const Mesh = ({
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_car_0 as THREE.Mesh).geometry
                   }
-                  material={materials.material}
+                  material={heroMaterial("material")}
                 />
                 <mesh
                   geometry={
@@ -1340,7 +1390,7 @@ const Mesh = ({
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_Pipe_1_0 as THREE.Mesh).geometry
                   }
-                  material={lambertMaterials.Pipe_1}
+                  material={heroMaterial("Pipe_1")}
                 />
                 <mesh
                   castShadow
@@ -1348,30 +1398,30 @@ const Mesh = ({
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_Ship_0 as THREE.Mesh).geometry
                   }
-                  material={materials.Ship}
+                  material={heroMaterial("Ship")}
                 />
               </group>
               <mesh
                 geometry={(nodes.Wheels_1_wheels_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.wheels}
+                material={heroMaterial("wheels")}
                 position={[141.64, -5.82, 527.04]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
                 geometry={(nodes.wheels_1_wheels_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.wheels}
+                material={heroMaterial("wheels")}
                 position={[244.09, -5.61, 528.68]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
                 geometry={(nodes.Wheels_wheels_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.wheels}
+                material={heroMaterial("wheels")}
                 position={[244.09, -5.82, 454.97]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
               <mesh
                 geometry={(nodes.wheels_wheels_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.wheels}
+                material={heroMaterial("wheels")}
                 position={[141.64, -5.61, 453.33]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
@@ -1388,7 +1438,7 @@ const Mesh = ({
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_2_car_0 as THREE.Mesh).geometry
                   }
-                  material={materials.car_0}
+                  material={heroMaterial("car_0")}
                 />
                 <mesh
                   geometry={
@@ -1400,7 +1450,7 @@ const Mesh = ({
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_2_Pipe_1_0 as THREE.Mesh).geometry
                   }
-                  material={lambertMaterials.Pipe_1}
+                  material={heroMaterial("Pipe_1")}
                 />
                 <mesh
                   castShadow
@@ -1408,30 +1458,30 @@ const Mesh = ({
                   geometry={
                     (nodes.Car_Sedan_Taxi_1_2_Ship_0 as THREE.Mesh).geometry
                   }
-                  material={materials.Ship}
+                  material={heroMaterial("Ship")}
                 />
               </group>
               <mesh
                 geometry={(nodes.Wheels_1_2_wheels_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.wheels}
+                material={heroMaterial("wheels")}
                 position={[141.64, -5.82, 527.04]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
                 geometry={(nodes.wheels_1_2_wheels_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.wheels}
+                material={heroMaterial("wheels")}
                 position={[244.09, -5.61, 528.68]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
               />
               <mesh
                 geometry={(nodes.Wheels_2_wheels_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.wheels}
+                material={heroMaterial("wheels")}
                 position={[244.09, -5.82, 454.97]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
               <mesh
                 geometry={(nodes.wheels_2_wheels_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.wheels}
+                material={heroMaterial("wheels")}
                 position={[141.64, -5.61, 453.33]}
                 rotation={[-Math.PI / 2, 0, 0]}
               />
@@ -1445,11 +1495,11 @@ const Mesh = ({
               castShadow
               receiveShadow
               geometry={mergedTreeGeometry.trees}
-              material={materials.Trees}
+              material={heroMaterial("Trees")}
             />
             <mesh
               geometry={mergedTreeGeometry.wood}
-              material={materials.Wood}
+              material={heroMaterial("Wood")}
             />
             <group
               position={[36.92, 72.09, 178.04]}
@@ -1460,13 +1510,13 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Grass_Stone_0 as THREE.Mesh).geometry}
-                material={materials.Stone}
+                material={heroMaterial("Stone")}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Grass_Trees_0 as THREE.Mesh).geometry}
-                material={materials.Trees}
+                material={heroMaterial("Trees")}
               />
             </group>
           </group>
@@ -1479,13 +1529,13 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Floor_Stone_0 as THREE.Mesh).geometry}
-                material={materials.Stone_0}
+                material={heroMaterial("Stone_0")}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Floor_Stone_0_1 as THREE.Mesh).geometry}
-                material={materials.Stone_1}
+                material={heroMaterial("Stone_1")}
               />
             </group>
             <group
@@ -1496,19 +1546,19 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Sidney_Stone_0 as THREE.Mesh).geometry}
-                material={materials.Stone}
+                material={heroMaterial("Stone")}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Sidney_Stone1_0 as THREE.Mesh).geometry}
-                material={materials["Stone.1"]}
+                material={heroMaterial("Stone.1")}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={sailGeometry}
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 castShadow
@@ -1520,7 +1570,7 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Sidney__0 as THREE.Mesh).geometry}
-                material={materials.Sidney__0}
+                material={heroMaterial("Sidney__0")}
               />
             </group>
             <mesh
@@ -1529,7 +1579,7 @@ const Mesh = ({
               geometry={
                 (nodes.Streetlight_s_White_Border_0 as THREE.Mesh).geometry
               }
-              material={materials.White_Border}
+              material={heroMaterial("White_Border")}
               position={[-50.42, 58.02, -1712.52]}
               rotation={[Math.PI, 1.5, -Math.PI]}
               scale={2}
@@ -1567,7 +1617,7 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Building_1_Pipe_1_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.Pipe_1}
+                material={heroMaterial("Pipe_1")}
               />
               <mesh
                 castShadow
@@ -1575,7 +1625,7 @@ const Mesh = ({
                 geometry={
                   (nodes.Building_1_White_Border_0 as THREE.Mesh).geometry
                 }
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 geometry={
@@ -1600,7 +1650,7 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Building_1_2_roof_0 as THREE.Mesh).geometry}
-                material={materials.roof}
+                material={heroMaterial("roof")}
               />
               <mesh
                 castShadow
@@ -1608,7 +1658,7 @@ const Mesh = ({
                 geometry={
                   (nodes.Building_1_2_White_Border_0 as THREE.Mesh).geometry
                 }
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 geometry={
@@ -1635,7 +1685,7 @@ const Mesh = ({
                 geometry={
                   (nodes.Building_White_Border_0 as THREE.Mesh).geometry
                 }
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 geometry={(nodes.Building_water_foam_0 as THREE.Mesh).geometry}
@@ -1658,7 +1708,7 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Building_2_roof_0 as THREE.Mesh).geometry}
-                material={materials.roof}
+                material={heroMaterial("roof")}
               />
               <mesh
                 castShadow
@@ -1666,7 +1716,7 @@ const Mesh = ({
                 geometry={
                   (nodes.Building_2_White_Border_0 as THREE.Mesh).geometry
                 }
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 geometry={
@@ -1691,7 +1741,7 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Building_2_2_roof_0 as THREE.Mesh).geometry}
-                material={materials.roof}
+                material={heroMaterial("roof")}
               />
               <mesh
                 castShadow
@@ -1699,7 +1749,7 @@ const Mesh = ({
                 geometry={
                   (nodes.Building_2_2_White_Border_0 as THREE.Mesh).geometry
                 }
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 geometry={
@@ -1735,13 +1785,13 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Yacht_White_Border_0 as THREE.Mesh).geometry}
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Yacht_Ship_0 as THREE.Mesh).geometry}
-                material={materials.Ship}
+                material={heroMaterial("Ship")}
               />
               <mesh
                 geometry={(nodes.Yacht_Glass_0 as THREE.Mesh).geometry}
@@ -1763,7 +1813,7 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Yacht_4_White_Border_0 as THREE.Mesh).geometry}
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 geometry={(nodes.Yacht_4_Glass_0 as THREE.Mesh).geometry}
@@ -1784,13 +1834,13 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Yacht_1_White_Border_0 as THREE.Mesh).geometry}
-                material={materials.White_Border}
+                material={heroMaterial("White_Border")}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Yacht_1_Ship_0 as THREE.Mesh).geometry}
-                material={materials.Ship}
+                material={heroMaterial("Ship")}
               />
               <mesh
                 geometry={(nodes.Yacht_1_Glass_0 as THREE.Mesh).geometry}
@@ -1810,19 +1860,19 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Floor_3_Ground_0 as THREE.Mesh).geometry}
-                material={lambertMaterials.Ground}
+                material={heroMaterial("Ground")}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Floor_3_Ground_0_1 as THREE.Mesh).geometry}
-                material={lambertMaterials.Ground_0}
+                material={heroMaterial("Ground_0")}
               />
               <mesh
                 castShadow
                 receiveShadow
                 geometry={(nodes.Floor_3_Ground_0_2 as THREE.Mesh).geometry}
-                material={lambertMaterials.Ground_1}
+                material={heroMaterial("Ground_1")}
               />
             </group>
             <group position={[-90.84, -228.19, 39.01]}>
@@ -1830,7 +1880,7 @@ const Mesh = ({
                 castShadow
                 receiveShadow
                 geometry={(nodes.Stones_2__0 as THREE.Mesh).geometry}
-                material={materials.Sidney__0}
+                material={heroMaterial("Sidney__0")}
                 position={[-439.62, 34.01, -1.85]}
                 rotation={[Math.PI, Math.PI / 2, 0]}
               />
@@ -1847,7 +1897,7 @@ const Mesh = ({
               castShadow
               receiveShadow
               geometry={(nodes.Stones_Stone_0 as THREE.Mesh).geometry}
-              material={lambertMaterials.Stone_2}
+              material={heroMaterial("Stone_2")}
               position={[-770.29, -420.19, 39.78]}
               rotation={[Math.PI, Math.PI / 2, 0]}
             />
@@ -1855,7 +1905,7 @@ const Mesh = ({
               castShadow
               receiveShadow
               geometry={(nodes.Pipes1_1_Pipe_1_0 as THREE.Mesh).geometry}
-              material={lambertMaterials.Pipe_1}
+              material={heroMaterial("Pipe_1")}
               position={[-1493.47, -524.33, -558.15]}
               rotation={[-Math.PI / 2, 0, Math.PI / 2]}
             />
@@ -1863,7 +1913,7 @@ const Mesh = ({
               castShadow
               receiveShadow
               geometry={(nodes.Pipes1_Pipe_1_0 as THREE.Mesh).geometry}
-              material={lambertMaterials.Pipe_1}
+              material={heroMaterial("Pipe_1")}
               position={[711.34, -477.22, 1370.1]}
               rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
             />

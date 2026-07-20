@@ -211,12 +211,20 @@ const AnimatedBoat = ({
     const posLerp = 0.08;
     const rotLerp = 0.1;
 
-    state.position.lerp(
-      new THREE.Vector3(
-        basePosition.x + driftX + swayX,
-        targetY,
-        basePosition.z + driftZ + swayZ,
-      ),
+    // Lerped component-by-component (rather than via a fresh
+    // `new THREE.Vector3(...)` handed to `Vector3.lerp`) so this allocates
+    // nothing - this runs 3x/frame (one AnimatedBoat per yacht), and a
+    // scalar MathUtils.lerp is exactly what Vector3.lerp does internally
+    // anyway, just without the temporary target object.
+    state.position.x = THREE.MathUtils.lerp(
+      state.position.x,
+      basePosition.x + driftX + swayX,
+      posLerp,
+    );
+    state.position.y = THREE.MathUtils.lerp(state.position.y, targetY, posLerp);
+    state.position.z = THREE.MathUtils.lerp(
+      state.position.z,
+      basePosition.z + driftZ + swayZ,
       posLerp,
     );
 
@@ -224,31 +232,36 @@ const AnimatedBoat = ({
     const maxPitch = THREE.MathUtils.degToRad(7.68);
     const maxYaw = THREE.MathUtils.degToRad(5.12);
 
-    const targetRotation = new THREE.Euler(
+    // Same idea as above - the target Euler angles are computed as plain
+    // numbers and lerped directly into state.rotation, instead of
+    // allocating a `new THREE.Euler(...)` purely to read its x/y/z back out
+    // one line later.
+    const targetRotationX =
       baseRotation.x +
-        THREE.MathUtils.clamp(pitch * 0.864 + timePitch, -maxPitch, maxPitch) +
-        orientationOffsetEuler.x,
+      THREE.MathUtils.clamp(pitch * 0.864 + timePitch, -maxPitch, maxPitch) +
+      orientationOffsetEuler.x;
+    const targetRotationY =
       baseRotation.y +
-        THREE.MathUtils.clamp(yaw * 0.768 + timeYaw, -maxYaw, maxYaw) +
-        orientationOffsetEuler.y,
+      THREE.MathUtils.clamp(yaw * 0.768 + timeYaw, -maxYaw, maxYaw) +
+      orientationOffsetEuler.y;
+    const targetRotationZ =
       baseRotation.z -
-        THREE.MathUtils.clamp(roll * 0.864 + timeRoll, -maxRoll, maxRoll) +
-        orientationOffsetEuler.z,
-    );
+      THREE.MathUtils.clamp(roll * 0.864 + timeRoll, -maxRoll, maxRoll) +
+      orientationOffsetEuler.z;
 
     state.rotation.x = THREE.MathUtils.lerp(
       state.rotation.x,
-      targetRotation.x,
+      targetRotationX,
       rotLerp,
     );
     state.rotation.y = THREE.MathUtils.lerp(
       state.rotation.y,
-      targetRotation.y,
+      targetRotationY,
       rotLerp * 0.6,
     );
     state.rotation.z = THREE.MathUtils.lerp(
       state.rotation.z,
-      targetRotation.z,
+      targetRotationZ,
       rotLerp,
     );
 
