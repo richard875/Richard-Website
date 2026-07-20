@@ -14,8 +14,16 @@ import {
   DepthOfField,
 } from "@react-three/postprocessing";
 import { KernelSize, BlendFunction } from "postprocessing";
-import Mesh, { DEFAULT_SAIL_FLOODLIGHTS, DEFAULT_DOCK_LIGHTING } from "./mesh";
-import type { SailFloodlightConfig, DockLightingConfig } from "./mesh";
+import Mesh, {
+  DEFAULT_SAIL_FLOODLIGHTS,
+  DEFAULT_DOCK_LIGHTING,
+  DEFAULT_STREETLAMP_LIGHTING,
+} from "./mesh";
+import type {
+  SailFloodlightConfig,
+  DockLightingConfig,
+  StreetlampLightingConfig,
+} from "./mesh";
 import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
@@ -212,6 +220,19 @@ const Model = React.memo(() => {
     setDockLighting((prev) => ({ ...prev, [key]: value }));
   };
 
+  // Same shared-config pattern as dockLighting above - all 14 streetlamp
+  // posts are identical fixtures, so they read from one config object
+  // rather than a per-fixture array like sailFloodlights.
+  const [streetlampLighting, setStreetlampLighting] =
+    React.useState<StreetlampLightingConfig>(DEFAULT_STREETLAMP_LIGHTING);
+
+  const updateStreetlampLighting = (
+    key: keyof StreetlampLightingConfig,
+    value: number,
+  ) => {
+    setStreetlampLighting((prev) => ({ ...prev, [key]: value }));
+  };
+
   // Lights
   const hemiLightColor = new THREE.Color();
   hemiLightColor.setHSL(hemiLightColorX, hemiLightColorY, hemiLightColorZ);
@@ -329,6 +350,7 @@ const Model = React.memo(() => {
     const nightFolder = panel.addFolder("Night Mode");
     const sailFloodlightFolder = panel.addFolder("Sail Floodlights");
     const dockLightingFolder = panel.addFolder("Dock Lights");
+    const streetlampLightingFolder = panel.addFolder("Streetlamp Lights");
     panel.close();
 
     // Position the lil-gui panel at the top-left so it doesn't block the view
@@ -388,6 +410,10 @@ const Model = React.memo(() => {
       dockLightDepth: dockLighting.depth,
       dockGlowRadius: dockLighting.glowRadius,
       dockGlowIntensity: dockLighting.glowIntensity,
+      streetlampIntensity: streetlampLighting.intensity,
+      streetlampAngle: streetlampLighting.angle,
+      streetlampTargetDrop: streetlampLighting.targetDrop,
+      streetlampTargetForwardOffset: streetlampLighting.targetForwardOffset,
     };
 
     nightFolder
@@ -584,6 +610,25 @@ const Model = React.memo(() => {
       .add(settings, "dockGlowIntensity", 0, 10)
       .name("Glow Intensity")
       .onChange((e: number) => updateDockLighting("glowIntensity", e));
+
+    streetlampLightingFolder
+      .add(settings, "streetlampIntensity", 0, 5)
+      .name("Intensity")
+      .onChange((e: number) => updateStreetlampLighting("intensity", e));
+    streetlampLightingFolder
+      .add(settings, "streetlampAngle", 0.05, 1.5)
+      .name("Beam Angle")
+      .onChange((e: number) => updateStreetlampLighting("angle", e));
+    streetlampLightingFolder
+      .add(settings, "streetlampTargetDrop", 0, 200)
+      .name("Aim Drop")
+      .onChange((e: number) => updateStreetlampLighting("targetDrop", e));
+    streetlampLightingFolder
+      .add(settings, "streetlampTargetForwardOffset", -100, 200)
+      .name("Aim Forward Offset")
+      .onChange((e: number) =>
+        updateStreetlampLighting("targetForwardOffset", e),
+      );
 
     // A subfolder + full set of controls per light, built from whatever
     // sailFloodlights held at mount (the panel is only ever created once).
@@ -866,6 +911,7 @@ const Model = React.memo(() => {
             isNight={isNight}
             sailFloodlights={sailFloodlights}
             dockLighting={dockLighting}
+            streetlampLighting={streetlampLighting}
           />
         </Inspector>
       </Float>

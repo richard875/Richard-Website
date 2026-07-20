@@ -138,26 +138,40 @@ const STREETLAMP_LOCAL_POSITIONS: [number, number, number][] = [
 
 // SpotLight color/cone for the streetlamps - tuned to pool tightly on the
 // pavement directly under each post rather than spill across the plaza.
+// Color/penumbra/distance are left fixed (not exposed in the GUI); the rest
+// of these are just the starting values for the shared, GUI-adjustable
+// StreetlampLightingConfig below - every one of the 14 posts renders from
+// the same object, unlike SailFloodlightConfig's array of independent
+// per-fixture configs, since these fixtures really are identical.
 const STREETLAMP_SPOT_COLOR = "#ffb066";
-const STREETLAMP_SPOT_ANGLE = 0.8;
 const STREETLAMP_SPOT_PENUMBRA = 0.65;
 // `distance`/`intensity` are literal world-space numbers - three.js does
 // NOT rescale them by the parent group's transform the way it does a
 // light's position, so these look nothing like the STREETLAMP_LOCAL_POSITIONS
 // coordinates even though the light sits in that same local hierarchy.
 const STREETLAMP_SPOT_DISTANCE = 0.45;
-const STREETLAMP_SPOT_INTENSITY = 0.3;
-// How far straight down (in the SAME local, pre-scale units as
-// STREETLAMP_LOCAL_POSITIONS) from each lamp head the aim target sits. This
-// is local-space, so it DOES get carried through the parent's transform
-// along with the light's own position - that's what actually points the
-// cone down at the ground instead of off in some arbitrary direction.
-const STREETLAMP_TARGET_DROP = 85;
-// Horizontal nudge (same local units) applied to the target alongside the
-// vertical drop, so the cone rakes forward off the post instead of landing
-// in a perfect circle directly underneath it - like a real lamp head
-// cantilevered out over the path on an arm.
-const STREETLAMP_TARGET_FORWARD_OFFSET = 70;
+export type StreetlampLightingConfig = {
+  intensity: number;
+  angle: number;
+  // How far straight down (in the SAME local, pre-scale units as
+  // STREETLAMP_LOCAL_POSITIONS) from each lamp head the aim target sits.
+  // This is local-space, so it DOES get carried through the parent's
+  // transform along with the light's own position - that's what actually
+  // points the cone down at the ground instead of off in some arbitrary
+  // direction.
+  targetDrop: number;
+  // Horizontal nudge (same local units) applied to the target alongside the
+  // vertical drop, so the cone rakes forward off the post instead of
+  // landing in a perfect circle directly underneath it - like a real lamp
+  // head cantilevered out over the path on an arm.
+  targetForwardOffset: number;
+};
+export const DEFAULT_STREETLAMP_LIGHTING: StreetlampLightingConfig = {
+  intensity: 0.3,
+  angle: 0.8,
+  targetDrop: 85,
+  targetForwardOffset: 70,
+};
 // The Sydney Opera House's origin (the Sidney_Stone group's position),
 // expressed in this same streetlamp-group local coordinate space. The two
 // groups are siblings under the same parent in the JSX below, so this was
@@ -181,8 +195,16 @@ const OPERA_HOUSE_LOCAL_XZ: [number, number] = [273.75, -243.14];
 // at this scale).
 const StreetlampSpot = ({
   position,
+  intensity,
+  angle,
+  targetDrop,
+  targetForwardOffset,
 }: {
   position: [number, number, number];
+  intensity: number;
+  angle: number;
+  targetDrop: number;
+  targetForwardOffset: number;
 }) => {
   const lightRef = React.useRef<THREE.SpotLight>(null);
   const targetRef = React.useRef<THREE.Object3D>(null);
@@ -198,11 +220,11 @@ const StreetlampSpot = ({
     const dz = OPERA_HOUSE_LOCAL_XZ[1] - position[2];
     const horizontalDist = Math.hypot(dx, dz) || 1;
     return [
-      position[0] + (dx / horizontalDist) * STREETLAMP_TARGET_FORWARD_OFFSET,
-      position[1] - STREETLAMP_TARGET_DROP,
-      position[2] + (dz / horizontalDist) * STREETLAMP_TARGET_FORWARD_OFFSET,
+      position[0] + (dx / horizontalDist) * targetForwardOffset,
+      position[1] - targetDrop,
+      position[2] + (dz / horizontalDist) * targetForwardOffset,
     ];
-  }, [position]);
+  }, [position, targetDrop, targetForwardOffset]);
 
   return (
     <>
@@ -210,8 +232,8 @@ const StreetlampSpot = ({
         ref={lightRef}
         position={position}
         color={STREETLAMP_SPOT_COLOR}
-        intensity={STREETLAMP_SPOT_INTENSITY}
-        angle={STREETLAMP_SPOT_ANGLE}
+        intensity={intensity}
+        angle={angle}
         penumbra={STREETLAMP_SPOT_PENUMBRA}
         distance={STREETLAMP_SPOT_DISTANCE}
         decay={2}
@@ -238,6 +260,7 @@ type MeshProps = {
   isNight?: boolean;
   sailFloodlights?: SailFloodlightConfig[];
   dockLighting?: DockLightingConfig;
+  streetlampLighting?: StreetlampLightingConfig;
 };
 
 // A dot standing in for a distant bulb - purely visual (no real light), so
@@ -1201,6 +1224,7 @@ const Mesh = ({
   isNight = false,
   sailFloodlights = DEFAULT_SAIL_FLOODLIGHTS,
   dockLighting = DEFAULT_DOCK_LIGHTING,
+  streetlampLighting = DEFAULT_STREETLAMP_LIGHTING,
 }: MeshProps) => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
 
@@ -1638,6 +1662,10 @@ const Mesh = ({
                   <StreetlampSpot
                     key={`streetlamp-spot-${i}`}
                     position={lampPosition}
+                    intensity={streetlampLighting.intensity}
+                    angle={streetlampLighting.angle}
+                    targetDrop={streetlampLighting.targetDrop}
+                    targetForwardOffset={streetlampLighting.targetForwardOffset}
                   />
                 ))}
               </group>
