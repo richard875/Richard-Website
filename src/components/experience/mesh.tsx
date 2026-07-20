@@ -181,6 +181,7 @@ type MeshProps = {
   sunDirection?: THREE.Vector3;
   isNight?: boolean;
   sailFloodlights?: SailFloodlightConfig[];
+  dockLighting?: DockLightingConfig;
 };
 
 // A dot standing in for a distant bulb - purely visual (no real light), so
@@ -405,10 +406,353 @@ const SailFloodlight = ({
   );
 };
 
+// Underwater LED dock lighting, traced along the seawall's actual waterline.
+//
+// The promenade/podium stonework - node "Floor_Stone_0" at gltf node index
+// 98 (447 verts, material Stone_0; NOT the ~6270-vert "Floor_Stone_0_1" slab,
+// which is the podium's top surface and never crosses the waterline) - is a
+// real closed 3D solid. Slicing its vertex buffer at the water's resting
+// height (y = 0.08 in this component's coordinate frame - the single most
+// common vertex height in "Water_2_water foam_0", i.e. its flat rest plane
+// before the wave shader displaces it) produces one clean 60-point closed
+// polygon: the literal line where stone meets water. That polygon was
+// walked into an ordered loop, arc-length resampled, and each sample's
+// outward (into-the-water) direction resolved with a point-in-polygon test
+// - the promenade is a peninsula, so "away from the polygon's centroid"
+// alone gives the wrong side at several concave stretches of coastline.
+//
+// Three different resamplings of that one loop feed three different needs:
+//  - DOCK_LED_MARKERS: dense, true-to-spec fixture spacing (8 ft), assuming
+//    this model's un-scaled units are centimetres - the scene's overall
+//    0.0003 scale then implies a ~325 m real perimeter, a plausible size for
+//    the promenade around Bennelong Point. Purely visual (see NightGlow
+//    above): 130+ real lights at this density would be a heavy per-fragment
+//    cost for every standard-material surface in the scene for no visible
+//    gain over the shader-side glow below.
+//  - DOCK_SPOTLIGHT_POSITIONS: a much sparser evenly-spaced set of real
+//    spotLights, for actual beams/highlights on the water surface.
+//  - DOCK_GLOW_SAMPLES: a medium-density set consumed by the water shader to
+//    paint a continuous underwater glow band - a distance-to-nearest-sample
+//    falloff is inherently seamless, which satisfies "no visible dark gaps"
+//    far more cheaply (and completely) than any number of discrete lights
+//    could.
+const DOCK_WATERLINE_Y = 0.08;
+
+// [x, z, outwardX, outwardZ]
+const DOCK_LED_MARKERS: [number, number, number, number][] = [
+  [-1.1583, 1.1197, 0, 1],
+  [-1.0852, 1.1197, 0, 1],
+  [-1.0121, 1.1197, 0, 1],
+  [-0.939, 1.1197, 0, 1],
+  [-0.8658, 1.1197, 0, 1],
+  [-0.7927, 1.1197, 0, 1],
+  [-0.7196, 1.1197, 0, 1],
+  [-0.6465, 1.1197, 0, 1],
+  [-0.5734, 1.1197, 0, 1],
+  [-0.5002, 1.1197, 0, 1],
+  [-0.4271, 1.1197, 0, 1],
+  [-0.354, 1.1197, 0, 1],
+  [-0.2809, 1.1197, 0, 1],
+  [-0.2078, 1.1197, 0, 1],
+  [-0.1347, 1.1197, 0, 1],
+  [-0.0615, 1.1197, 0, 1],
+  [0.0116, 1.1197, 0, 1],
+  [0.0847, 1.1197, 0, 1],
+  [0.1578, 1.1197, 0, 1],
+  [0.2309, 1.1197, 0, 1],
+  [0.3041, 1.1197, 0, 1],
+  [0.3772, 1.1197, 0, 1],
+  [0.4503, 1.1197, 0, 1],
+  [0.5234, 1.1197, 0, 1],
+  [0.5965, 1.1197, 0, 1],
+  [0.6696, 1.1197, 0, 1],
+  [0.7428, 1.1197, 0, 1],
+  [0.7672, 1.071, 1, 0],
+  [0.7672, 0.9979, 1, 0],
+  [0.7672, 0.9248, 1, 0],
+  [0.7672, 0.8517, 1, 0],
+  [0.7672, 0.7785, 1, 0],
+  [0.7672, 0.7054, 1, 0],
+  [0.813, 0.6782, 0, 1],
+  [0.8862, 0.6782, 0, 1],
+  [0.9593, 0.6782, 0, 1],
+  [1.0324, 0.6782, 0, 1],
+  [1.0837, 0.7, -1, 0],
+  [1.0837, 0.7731, -1, 0],
+  [1.1271, 0.8028, 0, 1],
+  [1.2003, 0.8028, 0, 1],
+  [1.2283, 0.7578, 1, 0],
+  [1.2283, 0.6846, 1, 0],
+  [1.2283, 0.6115, 1, 0],
+  [1.2283, 0.5384, 1, 0],
+  [1.2283, 0.4653, 1, 0],
+  [1.2283, 0.3922, 1, 0],
+  [1.1976, 0.3498, 0, -1],
+  [1.1245, 0.3498, 0, -1],
+  [1.0837, 0.3821, -1, 0],
+  [1.0837, 0.4552, -1, 0],
+  [1.0298, 0.4744, 0, -1],
+  [0.9566, 0.4744, 0, -1],
+  [0.8835, 0.4744, 0, -1],
+  [0.8104, 0.4744, 0, -1],
+  [0.7672, 0.4445, 1, 0],
+  [0.7672, 0.3714, 1, 0],
+  [0.7672, 0.2983, 1, 0],
+  [0.7672, 0.2251, 1, 0],
+  [0.7672, 0.152, 1, 0],
+  [0.7672, 0.0789, 1, 0],
+  [0.7672, 0.0058, 1, 0],
+  [0.7672, -0.0673, 1, 0],
+  [0.7672, -0.1404, 1, 0],
+  [0.7672, -0.2136, 1, 0],
+  [0.7672, -0.2867, 1, 0],
+  [0.7672, -0.3598, 1, 0],
+  [0.7672, -0.4329, 1, 0],
+  [0.7672, -0.506, 1, 0],
+  [0.7672, -0.5792, 1, 0],
+  [0.7672, -0.6523, 1, 0],
+  [0.7672, -0.7254, 1, 0],
+  [0.7672, -0.7985, 1, 0],
+  [0.7672, -0.8716, 1, 0],
+  [0.7672, -0.9447, 1, 0],
+  [0.7672, -1.0179, 1, 0],
+  [0.7672, -1.091, 1, 0],
+  [0.7395, -1.1392, 0.1044, -0.9945],
+  [0.6668, -1.1468, 0.1044, -0.9945],
+  [0.5941, -1.1545, 0.1044, -0.9945],
+  [0.5322, -1.1895, 0.6034, -0.7975],
+  [0.4732, -1.2327, 0.5476, -0.8368],
+  [0.412, -1.2728, 0.5476, -0.8368],
+  [0.3508, -1.3128, 0.5476, -0.8368],
+  [0.2862, -1.3462, 0.3759, -0.9267],
+  [0.2184, -1.3737, 0.3759, -0.9267],
+  [0.1507, -1.4012, 0.3759, -0.9267],
+  [0.0802, -1.4196, 0.1906, -0.9817],
+  [0.0084, -1.4335, 0.1906, -0.9817],
+  [-0.0635, -1.4459, 0, -1],
+  [-0.1366, -1.4459, 0, -1],
+  [-0.2097, -1.4459, 0, -1],
+  [-0.2828, -1.4459, 0, -1],
+  [-0.355, -1.4348, -0.18, -0.9837],
+  [-0.4269, -1.4217, -0.18, -0.9837],
+  [-0.4971, -1.4046, -0.5977, -0.8017],
+  [-0.5557, -1.3609, -0.5977, -0.8017],
+  [-0.6104, -1.313, -0.7678, -0.6407],
+  [-0.6573, -1.2569, -0.7678, -0.6407],
+  [-0.6939, -1.1952, -0.9552, -0.2959],
+  [-0.7143, -1.125, -0.9658, -0.2592],
+  [-0.7332, -1.0544, -0.9658, -0.2592],
+  [-0.7667, -0.9979, -0.2863, -0.9581],
+  [-0.8368, -0.9769, -0.2863, -0.9581],
+  [-0.8522, -0.9154, -1, 0],
+  [-0.8522, -0.8422, -1, 0],
+  [-0.8522, -0.7691, -1, 0],
+  [-0.8522, -0.696, -1, 0],
+  [-0.8522, -0.6229, -1, 0],
+  [-0.8522, -0.5498, -1, 0],
+  [-0.8522, -0.4766, -1, 0],
+  [-0.8522, -0.4035, -1, 0],
+  [-0.8522, -0.3304, -1, 0],
+  [-0.8522, -0.2573, -1, 0],
+  [-0.8522, -0.1842, -1, 0],
+  [-0.8522, -0.1111, -1, 0],
+  [-0.8849, -0.0595, -0.3927, -0.9196],
+  [-0.92, -0.0096, -1, 0],
+  [-0.92, 0.0635, -1, 0],
+  [-0.92, 0.1366, -1, 0],
+  [-0.92, 0.2098, -1, 0],
+  [-0.92, 0.2829, -1, 0],
+  [-0.92, 0.356, -1, 0],
+  [-0.92, 0.4291, -1, 0],
+  [-0.8678, 0.4677, -0.3927, 0.9196],
+  [-0.8763, 0.5252, -0.9035, -0.4285],
+  [-0.9077, 0.5912, -0.9035, -0.4285],
+  [-0.939, 0.6573, -0.9035, -0.4285],
+  [-0.9703, 0.7234, -0.9035, -0.4285],
+  [-1.0017, 0.7894, -0.9035, -0.4285],
+  [-1.033, 0.8555, -0.9035, -0.4285],
+  [-1.0643, 0.9216, -0.9035, -0.4285],
+  [-1.0956, 0.9876, -0.9035, -0.4285],
+  [-1.127, 1.0537, -0.9035, -0.4285],
+];
+
+// [x, z, outwardX, outwardZ]
+const DOCK_SPOTLIGHT_POSITIONS: [number, number, number, number][] = [
+  [-1.1583, 1.1197, 0, 1],
+  [-0.5459, 1.1197, 0, 1],
+  [0.0664, 1.1197, 0, 1],
+  [0.6788, 1.1197, 0, 1],
+  [0.8496, 0.6782, 0, 1],
+  [1.2283, 0.6938, 1, 0],
+  [1.0837, 0.4735, -1, 0],
+  [0.7672, 0.1794, 1, 0],
+  [0.7672, -0.4329, 1, 0],
+  [0.7672, -1.0453, 1, 0],
+  [0.3031, -1.3393, 0.3759, -0.9267],
+  [-0.292, -1.4459, 0, -1],
+  [-0.7238, -1.0897, -0.9658, -0.2592],
+  [-0.8522, -0.5589, -1, 0],
+  [-0.92, 0.0087, -1, 0],
+  [-0.8959, 0.5664, -0.9035, -0.4285],
+];
+
+// [x, z] - deliberately coarser than DOCK_LED_MARKERS; consumed by the water
+// shader as a fixed-size uniform array (see WATER_FRAGMENT_SHADER), so this
+// count directly sets a per-fragment loop length.
+const DOCK_GLOW_SAMPLES: [number, number][] = [
+  [-1.1583, 1.1197],
+  [-0.8521, 1.1197],
+  [-0.5459, 1.1197],
+  [-0.2398, 1.1197],
+  [0.0664, 1.1197],
+  [0.3726, 1.1197],
+  [0.6788, 1.1197],
+  [0.7672, 0.9019],
+  [0.8496, 0.6782],
+  [1.0837, 0.7503],
+  [1.2283, 0.6938],
+  [1.2283, 0.3876],
+  [1.0837, 0.4735],
+  [0.7784, 0.4744],
+  [0.7672, 0.1794],
+  [0.7672, -0.1267],
+  [0.7672, -0.4329],
+  [0.7672, -0.7391],
+  [0.7672, -1.0453],
+  [0.5577, -1.1702],
+  [0.3031, -1.3393],
+  [0.0129, -1.4326],
+  [-0.292, -1.4459],
+  [-0.574, -1.3472],
+  [-0.7238, -1.0897],
+  [-0.8522, -0.8651],
+  [-0.8522, -0.5589],
+  [-0.8522, -0.2527],
+  [-0.92, 0.0087],
+  [-0.92, 0.3149],
+  [-0.8959, 0.5664],
+  [-1.0271, 0.8431],
+];
+
+export type DockLightingConfig = {
+  intensity: number;
+  angle: number;
+  depth: number;
+  glowRadius: number;
+  glowIntensity: number;
+};
+export const DEFAULT_DOCK_LIGHTING: DockLightingConfig = {
+  intensity: 0.6,
+  angle: 1.2,
+  depth: 0.035,
+  glowRadius: 0.3,
+  glowIntensity: 0.45,
+};
+const DOCK_LIGHT_COLOR = "#bfe9ff"; // cool marine-grade LED white
+const DOCK_LED_COLOR = "#d7f3ff";
+const DOCK_LIGHT_PENUMBRA = 0.6;
+const DOCK_LIGHT_DISTANCE = 0.5;
+// How far outward (beam-angle-overlap territory) and how far further down
+// the aim target sits, relative to the fixture itself - this is what gives
+// the "downward pitch with a slight outward angle" the beam needs to
+// actually land in the adjacent water rather than straight down at the wall.
+const DOCK_LIGHT_THROW = 0.22;
+const DOCK_LIGHT_DROP = 0.16;
+
+const DockLight = ({
+  position,
+  target,
+  intensity,
+  angle,
+}: {
+  position: [number, number, number];
+  target: [number, number, number];
+  intensity: number;
+  angle: number;
+}) => {
+  const lightRef = React.useRef<THREE.SpotLight>(null!);
+  const targetRef = React.useRef<THREE.Object3D>(null);
+
+  React.useEffect(() => {
+    if (lightRef.current && targetRef.current) {
+      lightRef.current.target = targetRef.current;
+    }
+  }, []);
+
+  return (
+    <>
+      <spotLight
+        ref={lightRef}
+        position={position}
+        color={DOCK_LIGHT_COLOR}
+        intensity={intensity}
+        angle={angle}
+        penumbra={DOCK_LIGHT_PENUMBRA}
+        distance={DOCK_LIGHT_DISTANCE}
+        decay={2}
+        castShadow={false}
+      />
+      <object3D ref={targetRef} position={target} />
+    </>
+  );
+};
+
+// The water mesh's own local position/rotation (matches the
+// Water_2_water_foam_0 <mesh> below) - reused here to convert
+// DOCK_GLOW_SAMPLES (defined in this file's shared "outward-facing fixture"
+// coordinate frame, same as DOCK_LED_MARKERS/SailFloodlight/etc.) into that
+// mesh's own raw vertex space, since that's the frame the water shader
+// actually computes distances in (see `vLocalXZ` in shader.ts).
+const WATER_MESH_LOCAL_POSITION: [number, number, number] = [
+  -94.09, -222.05, 49.23,
+];
+const WATER_MESH_LOCAL_ROTATION: [number, number, number] = [0, Math.PI / 2, 0];
+
+const buildLocalMatrix = (
+  position: [number, number, number],
+  rotation: [number, number, number],
+  scale = 1,
+) => {
+  const object = new THREE.Object3D();
+  object.position.set(...position);
+  object.rotation.set(...rotation);
+  object.scale.setScalar(scale);
+  object.updateMatrix();
+  return object.matrix.clone();
+};
+
+// The chain of groups this file's JSX wraps the whole model in before it
+// ever reaches the water mesh's own position/rotation (mirrors, in order,
+// the <group rotation=[-PI/2,0,0] scale=0.0003>, <group rotation=[PI/2,0,0]>
+// and the "groundwater" <group position=[69.93,-55.57,-44.55]
+// rotation=[0,-PI/2,0]> below). Float/Inspector wrap this entire component
+// from outside, so they apply identically to both the fixture-frame points
+// and the water mesh's raw vertices and cancel out of this conversion -
+// nothing here needs to be recomputed per frame.
+const COMMON_FRAME_TO_WATER_LOCAL = buildLocalMatrix(
+  [0, 0, 0],
+  [-Math.PI / 2, 0, 0],
+  0.0003,
+)
+  .multiply(buildLocalMatrix([0, 0, 0], [Math.PI / 2, 0, 0]))
+  .multiply(buildLocalMatrix([69.93, -55.57, -44.55], [0, -Math.PI / 2, 0]))
+  .multiply(
+    buildLocalMatrix(WATER_MESH_LOCAL_POSITION, WATER_MESH_LOCAL_ROTATION),
+  )
+  .invert();
+
+const DOCK_GLOW_POINTS_WATER_LOCAL = DOCK_GLOW_SAMPLES.map(([x, z]) => {
+  const local = new THREE.Vector3(x, DOCK_WATERLINE_Y, z).applyMatrix4(
+    COMMON_FRAME_TO_WATER_LOCAL,
+  );
+  return new THREE.Vector2(local.x, local.z);
+});
+
 const useAnimatedWaterMaterial = (
   sourceMaterial: THREE.Material | undefined,
   sunDirection: THREE.Vector3,
   isNight: boolean,
+  dockLighting: DockLightingConfig,
 ) => {
   const waterMaterial = React.useMemo(() => {
     const baseColor =
@@ -423,6 +767,17 @@ const useAnimatedWaterMaterial = (
         uHighlight: { value: new THREE.Color("#b8e5f7") },
         uSunDirection: { value: sunDirection.clone() },
         uNightMix: { value: 0 },
+        // uDockGlowPoints is defined in Water_2_water_foam_0's own raw
+        // vertex space (see DOCK_GLOW_POINTS_WATER_LOCAL above) - this
+        // material is also reused on the smaller per-building water_foam
+        // patches, whose local transforms differ, so the glow can land
+        // slightly off on those. They're small, distant decorative patches
+        // far from the seawall, so the mismatch is not worth a per-mesh
+        // material just to correct.
+        uDockGlowPoints: { value: DOCK_GLOW_POINTS_WATER_LOCAL },
+        uDockGlowColor: { value: new THREE.Color(DOCK_LED_COLOR) },
+        uDockGlowRadius: { value: dockLighting.glowRadius },
+        uDockGlowIntensity: { value: dockLighting.glowIntensity },
       },
       transparent: true,
       depthWrite: false,
@@ -438,6 +793,9 @@ const useAnimatedWaterMaterial = (
     // glint lines up with the shadows/highlights on the rest of the model.
     waterMaterial.uniforms.uSunDirection.value.copy(sunDirection);
     waterMaterial.uniforms.uNightMix.value = isNight ? 1 : 0;
+    waterMaterial.uniforms.uDockGlowRadius.value = dockLighting.glowRadius;
+    waterMaterial.uniforms.uDockGlowIntensity.value =
+      dockLighting.glowIntensity;
   });
 
   return waterMaterial;
@@ -487,6 +845,7 @@ const Mesh = ({
   sunDirection = DEFAULT_SUN_DIRECTION,
   isNight = false,
   sailFloodlights = DEFAULT_SAIL_FLOODLIGHTS,
+  dockLighting = DEFAULT_DOCK_LIGHTING,
 }: MeshProps) => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
 
@@ -530,6 +889,7 @@ const Mesh = ({
     materials.water_foam,
     sunDirection,
     isNight,
+    dockLighting,
   );
 
   const boat1Position = React.useMemo(
@@ -589,6 +949,38 @@ const Mesh = ({
             target={floodlight.target}
             angle={floodlight.angle}
             intensity={floodlight.intensity}
+          />
+        ))}
+      {isNight &&
+        DOCK_SPOTLIGHT_POSITIONS.map(([x, z, outX, outZ], i) => {
+          const position: [number, number, number] = [
+            x,
+            DOCK_WATERLINE_Y - dockLighting.depth,
+            z,
+          ];
+          const target: [number, number, number] = [
+            x + outX * DOCK_LIGHT_THROW,
+            DOCK_WATERLINE_Y - dockLighting.depth - DOCK_LIGHT_DROP,
+            z + outZ * DOCK_LIGHT_THROW,
+          ];
+          return (
+            <DockLight
+              key={`dock-spotlight-${i}`}
+              position={position}
+              target={target}
+              intensity={dockLighting.intensity}
+              angle={dockLighting.angle}
+            />
+          );
+        })}
+      {isNight &&
+        DOCK_LED_MARKERS.map(([x, z], i) => (
+          <NightGlow
+            key={`dock-led-${i}`}
+            position={[x, DOCK_WATERLINE_Y - dockLighting.depth, z]}
+            color={DOCK_LED_COLOR}
+            radius={0.01}
+            brightness={0.8}
           />
         ))}
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.0003}>
@@ -1421,8 +1813,8 @@ const Mesh = ({
               receiveShadow
               geometry={(nodes.Water_2_water_foam_0 as THREE.Mesh).geometry}
               material={animatedWaterMaterial}
-              position={[-94.09, -222.05, 49.23]}
-              rotation={[0, Math.PI / 2, 0]}
+              position={WATER_MESH_LOCAL_POSITION}
+              rotation={WATER_MESH_LOCAL_ROTATION}
             />
             <mesh
               castShadow

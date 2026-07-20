@@ -14,8 +14,8 @@ import {
   DepthOfField,
 } from "@react-three/postprocessing";
 import { Resolution, KernelSize, BlendFunction } from "postprocessing";
-import Mesh, { DEFAULT_SAIL_FLOODLIGHTS } from "./mesh";
-import type { SailFloodlightConfig } from "./mesh";
+import Mesh, { DEFAULT_SAIL_FLOODLIGHTS, DEFAULT_DOCK_LIGHTING } from "./mesh";
+import type { SailFloodlightConfig, DockLightingConfig } from "./mesh";
 import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
@@ -164,8 +164,22 @@ const Model = React.memo(() => {
     value: number,
   ) => {
     setSailFloodlights((prev) =>
-      prev.map((light, i) => (i === index ? { ...light, [key]: value } : light)),
+      prev.map((light, i) =>
+        i === index ? { ...light, [key]: value } : light,
+      ),
     );
+  };
+
+  // Every dock light shares these same parameters ("identical lighting
+  // parameters ... across all fixtures for a consistent appearance"), so
+  // unlike sailFloodlights this is one shared config object rather than a
+  // per-fixture array.
+  const [dockLighting, setDockLighting] = React.useState<DockLightingConfig>(
+    DEFAULT_DOCK_LIGHTING,
+  );
+
+  const updateDockLighting = (key: keyof DockLightingConfig, value: number) => {
+    setDockLighting((prev) => ({ ...prev, [key]: value }));
   };
 
   // Lights
@@ -284,6 +298,7 @@ const Model = React.memo(() => {
     const effectsFolder = panel.addFolder("Effects");
     const nightFolder = panel.addFolder("Night Mode");
     const sailFloodlightFolder = panel.addFolder("Sail Floodlights");
+    const dockLightingFolder = panel.addFolder("Dock Lights");
     panel.close();
 
     // Position the lil-gui panel at the top-left so it doesn't block the view
@@ -338,6 +353,11 @@ const Model = React.memo(() => {
       dofBokehScale: dofBokehScale,
       groundCloudGap: groundCloudGap,
       isNight: isNight,
+      dockLightIntensity: dockLighting.intensity,
+      dockLightAngle: dockLighting.angle,
+      dockLightDepth: dockLighting.depth,
+      dockGlowRadius: dockLighting.glowRadius,
+      dockGlowIntensity: dockLighting.glowIntensity,
     };
 
     nightFolder
@@ -514,6 +534,27 @@ const Model = React.memo(() => {
       .name("Bokeh Scale")
       .onChange((e: number) => setDofBokehScale(e));
 
+    dockLightingFolder
+      .add(settings, "dockLightIntensity", 0, 10)
+      .name("Intensity")
+      .onChange((e: number) => updateDockLighting("intensity", e));
+    dockLightingFolder
+      .add(settings, "dockLightAngle", 0.05, 5)
+      .name("Beam Angle")
+      .onChange((e: number) => updateDockLighting("angle", e));
+    dockLightingFolder
+      .add(settings, "dockLightDepth", 0, 5)
+      .name("Depth Offset")
+      .onChange((e: number) => updateDockLighting("depth", e));
+    dockLightingFolder
+      .add(settings, "dockGlowRadius", 0.05, 3)
+      .name("Glow Radius")
+      .onChange((e: number) => updateDockLighting("glowRadius", e));
+    dockLightingFolder
+      .add(settings, "dockGlowIntensity", 0, 10)
+      .name("Glow Intensity")
+      .onChange((e: number) => updateDockLighting("glowIntensity", e));
+
     // A subfolder + full set of controls per light, built from whatever
     // sailFloodlights held at mount (the panel is only ever created once).
     sailFloodlights.forEach((light, i) => {
@@ -531,15 +572,21 @@ const Model = React.memo(() => {
       lightFolder
         .add(lightSettings, "posX", -3, 3)
         .name("Position X")
-        .onChange((e: number) => updateSailFloodlightVector(i, "position", 0, e));
+        .onChange((e: number) =>
+          updateSailFloodlightVector(i, "position", 0, e),
+        );
       lightFolder
         .add(lightSettings, "posY", -1, 2)
         .name("Position Y")
-        .onChange((e: number) => updateSailFloodlightVector(i, "position", 1, e));
+        .onChange((e: number) =>
+          updateSailFloodlightVector(i, "position", 1, e),
+        );
       lightFolder
         .add(lightSettings, "posZ", -3, 3)
         .name("Position Z")
-        .onChange((e: number) => updateSailFloodlightVector(i, "position", 2, e));
+        .onChange((e: number) =>
+          updateSailFloodlightVector(i, "position", 2, e),
+        );
       // A spotLight has no rotation of its own - it aims from Position at
       // Target, so these three are effectively the light's "rotation".
       lightFolder
@@ -834,6 +881,7 @@ const Model = React.memo(() => {
             sunDirection={effectiveDirPosition}
             isNight={isNight}
             sailFloodlights={sailFloodlights}
+            dockLighting={dockLighting}
           />
         </Inspector>
       </Float>
@@ -854,12 +902,16 @@ const Model = React.memo(() => {
           width={Resolution.AUTO_SIZE} // render width
           height={Resolution.AUTO_SIZE} // render height
           kernelSize={KernelSize.LARGE} // blur kernel size
-          luminanceThreshold={isNight ? Math.max(luminanceThreshold, 1.0) : luminanceThreshold} // luminance threshold. Raise this value to mask out darker elements in the scene.
+          luminanceThreshold={
+            isNight ? Math.max(luminanceThreshold, 1.0) : luminanceThreshold
+          } // luminance threshold. Raise this value to mask out darker elements in the scene.
           // REFLECT is a steep, non-linear blend - tiny per-frame brightness
           // changes near the threshold (a moving specular hotspot, a bobbing
           // light) swing its output wildly, reading as flicker. ADD is a
           // flat, linear blend that scales smoothly with brightness instead.
-          luminanceSmoothing={isNight ? Math.max(luminanceSmoothing, 0.9) : luminanceSmoothing} // smoothness of the luminance threshold. Range is [0, 1]
+          luminanceSmoothing={
+            isNight ? Math.max(luminanceSmoothing, 0.9) : luminanceSmoothing
+          } // smoothness of the luminance threshold. Range is [0, 1]
           blendFunction={isNight ? BlendFunction.ADD : BlendFunction.REFLECT} // blend mode
         />
         <BrightnessContrast

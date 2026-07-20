@@ -26,6 +26,7 @@ varying vec2 vUv;
 varying vec3 vNormal;
 varying vec3 vWorldPosition;
 varying float vWaveHeight;
+varying vec2 vLocalXZ;
 
 float waveHeight(vec2 pos, float time) {
   float wave = sin((pos.x + pos.y) * 0.0035 + time * 1.35) * 0.28;
@@ -37,6 +38,11 @@ float waveHeight(vec2 pos, float time) {
 void main() {
   vUv = uv;
   vec3 pos = position;
+  // Raw, pre-displacement local x/z - the same space the dock-light glow
+  // sample points are precomputed into (see DOCK_GLOW_POINTS_WATER_LOCAL in
+  // mesh.tsx), so the underwater glow below can compare distances directly
+  // without caring about Float/Inspector's world-space transform.
+  vLocalXZ = pos.xz;
 
   float wave = waveHeight(pos.xz, uTime);
   pos.y += wave;
@@ -62,10 +68,15 @@ uniform vec3 uColor;
 uniform vec3 uHighlight;
 uniform vec3 uSunDirection;
 uniform float uNightMix;
+uniform vec2 uDockGlowPoints[32];
+uniform vec3 uDockGlowColor;
+uniform float uDockGlowRadius;
+uniform float uDockGlowIntensity;
 varying vec2 vUv;
 varying vec3 vNormal;
 varying vec3 vWorldPosition;
 varying float vWaveHeight;
+varying vec2 vLocalXZ;
 
 void main() {
   vec3 normal = normalize(vNormal);
@@ -121,6 +132,28 @@ void main() {
   color = mix(color, sunHalo, glow * mix(1.0, 0.35, uNightMix));
   color += specular * sunCore * mix(1.0, 0.5, uNightMix);
   color *= mix(1.2, 0.45, uNightMix);
+
+  // Underwater LED dock lighting: a per-fragment distance-to-nearest-sample
+  // falloff is inherently seamless (no discrete cone-overlap gaps to hide),
+  // and far cheaper than lighting the water with dozens of real spotLights.
+  // uDockGlowPoints is fixed-size to match DOCK_GLOW_SAMPLES in mesh.tsx.
+  float dockGlowDist = 1000.0;
+  for (int i = 0; i < 32; i++) {
+    dockGlowDist = min(dockGlowDist, distance(vLocalXZ, uDockGlowPoints[i]));
+  }
+  // Exponential falloff - a simple stand-in for physically-based underwater
+  // light attenuation (Beer-Lambert-style extinction with distance).
+  float dockAttenuation = exp(-dockGlowDist / max(uDockGlowRadius, 0.0001));
+  // A slow two-axis ripple stands in for animated caustics - much cheaper
+  // than simulating real caustic focusing, and reads correctly because it
+  // only modulates glow that's already localised to the seawall, not the
+  // whole surface.
+  float caustic = 0.65 + 0.35 * sin(vLocalXZ.x * 26.0 + uTime * 1.6) * cos(vLocalXZ.y * 23.0 - uTime * 1.3);
+  float dockGlow = dockAttenuation * caustic * uDockGlowIntensity * uNightMix;
+  color += uDockGlowColor * dockGlow;
+  // The glow also catches the surface itself at grazing angles - light
+  // scattering up through the water rather than only lighting what's below.
+  color = mix(color, uDockGlowColor, fresnel * dockGlow * 0.5);
 
   float alpha = clamp(mix(0.6, 0.92, fresnel + foam * 0.3), 0.0, 1.0);
   gl_FragColor = vec4(color, alpha);
