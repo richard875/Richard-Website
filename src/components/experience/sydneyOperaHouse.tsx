@@ -68,15 +68,6 @@ const SydneyOperaHouse = React.memo(() => (
     className="canvas"
     shadows
     legacy={true}
-    // No dpr prop meant R3F defaulted to [1, 2], i.e. matching a retina
-    // display's full 2x device pixel ratio - every per-fragment cost in the
-    // scene (dozens of dynamic lights, the postprocessing stack) was being
-    // paid across 4x as many pixels as necessary. With ~74 real lights back
-    // in the scene (see mesh.tsx), that multiplier matters a lot more than
-    // it did with a handful of lights, so this is capped at a flat 1 - no
-    // supersampling at all - rather than the 1.5 it was before. Softening
-    // is barely noticeable once composited through Bloom/grain/vignette.
-    dpr={1}
     camera={{ position: [0, 2.6, 5], fov: 65 }}
     // Explicitly request the discrete/high-performance GPU on hybrid-graphics
     // laptops (Intel+NVIDIA/AMD) instead of leaving the choice to the browser,
