@@ -27,8 +27,20 @@ const AUTO_ROTATION_SPEED = 0.2;
 
 const Inspector = ({ children }: { children: React.JSX.Element }) => {
   const meshRef = React.useRef<THREE.Mesh>(null!);
-  const dragRotationRef = React.useRef(0);
-  const autoRotationRef = React.useRef(0);
+  // Single source of truth for the mesh's current Y rotation - both auto-spin
+  // and dragging write straight into this same ref, so there's only ever one
+  // value representing where the model actually is.
+  const rotationRef = React.useRef(0);
+  // Snapshot of rotationRef taken the instant a drag starts. Dragging then
+  // applies this gesture's `movement` (which always starts at 0) as a delta
+  // on top of that snapshot, rather than seeding rotation from use-gesture's
+  // `offset` - offset is tracked independently of the mesh's own rotation
+  // (e.g. it's 0 on the first drag after any auto-spin), so writing it
+  // straight into rotationRef snapped the model to an unrelated angle the
+  // instant you clicked. Beta never showed this because rotation lived in a
+  // spring there, so retargeting it eased the mismatch away instead of
+  // exposing it; the direct ref write here has no such implicit animation.
+  const dragBaseRotationRef = React.useRef(0);
   const isDraggingRef = React.useRef(false);
 
   const [{ scale }, api] = useSpring(() => ({
@@ -37,13 +49,9 @@ const Inspector = ({ children }: { children: React.JSX.Element }) => {
 
   const bind = useGesture(
     {
-      onDrag: ({ active, first, offset: [y] }) => {
-        // Matches the original behaviour: starting a drag discards whatever
-        // auto-rotation had accumulated so far and rotation instead tracks
-        // the drag offset directly; releasing resumes auto-rotating from
-        // wherever the drag left off.
-        if (first) autoRotationRef.current = 0;
-        dragRotationRef.current = y / 50;
+      onDrag: ({ active, first, movement: [mx] }) => {
+        if (first) dragBaseRotationRef.current = rotationRef.current;
+        rotationRef.current = dragBaseRotationRef.current + mx / 50;
         isDraggingRef.current = active;
         api.start({ scale: active ? [1.1, 1.1, 1.1] : [1, 1, 1] });
       },
@@ -53,9 +61,8 @@ const Inspector = ({ children }: { children: React.JSX.Element }) => {
 
   useFrame((_, delta) => {
     if (!isDraggingRef.current)
-      autoRotationRef.current -= AUTO_ROTATION_SPEED * delta;
-    meshRef.current.rotation.y =
-      dragRotationRef.current + autoRotationRef.current;
+      rotationRef.current -= AUTO_ROTATION_SPEED * delta;
+    meshRef.current.rotation.y = rotationRef.current;
   });
 
   return (
