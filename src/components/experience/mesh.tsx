@@ -392,10 +392,10 @@ export const DEFAULT_SAIL_FLOODLIGHTS: SailFloodlightConfig[] = [
     intensity: 17,
   },
   {
-    position: [1.116, 0.143, -0.378],
-    target: [0.152, 0.644, -0.252],
-    angle: 0.43,
-    intensity: 9,
+    position: [1.34, 0.14, -0.38],
+    target: [0.15, 0.64, -0.25],
+    angle: 0.4,
+    intensity: 20,
   },
   {
     position: [1.116, 0.143, -0.6],
