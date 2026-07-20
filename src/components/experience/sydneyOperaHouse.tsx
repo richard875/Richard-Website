@@ -62,6 +62,245 @@ const DAY_SKY_BOTTOM = new THREE.Color(0xfad6a5);
 const DAY_FOG_NEAR = 0.5;
 const DAY_FOG_FAR = 18;
 
+// Time-of-day tuning (7am-7pm), used whenever the scene is in day mode (see
+// effectiveIsNight below). One keyframe per anchor hour; render values in
+// between are linearly interpolated (see interpolateDayLighting), so
+// dragging the "Time of Day" gui slider - or just leaving the tab open
+// across real time - sweeps smoothly through the whole set rather than
+// jumping between fixed looks. The 17:00 (5pm) keyframe deliberately isn't
+// listed here - it's built from the existing Ambient/Hemi/Direct Light gui
+// slider state instead (see goldenHourKeyframe in Model), which is exactly
+// the warm/golden look this scene originally shipped with (and is what the
+// gui sliders already default to) - reusing it keeps those sliders live
+// rather than leaving them dead once time-of-day drives the render.
+type TimeLightingKeyframe = {
+  hour: number;
+  ambientIntensity: number;
+  hemiIntensity: number;
+  hemiColorHSL: [number, number, number];
+  hemiGroundColorHSL: [number, number, number];
+  dirIntensity: number;
+  dirColorHSL: [number, number, number];
+  // Fixed per-keyframe sun position (unlike the old randomized gui default)
+  // so the sun/light arcs deterministically across the sky as hour changes,
+  // the same way NIGHT_MOON_POSITION is fixed above.
+  dirPosition: [number, number, number];
+  skyBottom: number; // hex
+  fogNear: number;
+  fogFar: number;
+  // 0 = fully desaturated toward NEUTRAL_CLOUD_COLOR (crisp midday cloud),
+  // 1 = the cloud's own hard-coded pink/peach hex prop, unchanged (see
+  // applyCloudWarmth/cloudColor in Model).
+  cloudWarmth: number;
+  sparkleColor: string;
+  sparkleOpacityScale: number;
+};
+
+const DAWN_KEYFRAME: TimeLightingKeyframe = {
+  hour: 7,
+  ambientIntensity: 0.14 * Math.PI,
+  hemiIntensity: 0.55 * Math.PI,
+  hemiColorHSL: [0.64, 0.55, 0.58],
+  hemiGroundColorHSL: [0.06, 0.6, 0.7],
+  dirIntensity: 0.38 * Math.PI,
+  dirColorHSL: [0.07, 0.8, 0.85],
+  dirPosition: [7, 1.0, 5],
+  skyBottom: 0xffd9c2,
+  fogNear: 0.6,
+  fogFar: 16,
+  cloudWarmth: 0.5,
+  sparkleColor: "#ffe9d6",
+  sparkleOpacityScale: 0.6,
+};
+const MORNING_KEYFRAME: TimeLightingKeyframe = {
+  hour: 10,
+  ambientIntensity: 0.2 * Math.PI,
+  hemiIntensity: 0.85 * Math.PI,
+  hemiColorHSL: [0.58, 0.75, 0.6],
+  hemiGroundColorHSL: [0.12, 0.55, 0.78],
+  dirIntensity: 0.55 * Math.PI,
+  dirColorHSL: [0.12, 0.35, 0.94],
+  dirPosition: [5, 5, 3],
+  skyBottom: 0xeaf4ff,
+  fogNear: 0.5,
+  fogFar: 17,
+  cloudWarmth: 0.15,
+  sparkleColor: "#ffffff",
+  sparkleOpacityScale: 0.9,
+};
+const NOON_KEYFRAME: TimeLightingKeyframe = {
+  hour: 12,
+  ambientIntensity: 0.24 * Math.PI,
+  hemiIntensity: 0.95 * Math.PI,
+  hemiColorHSL: [0.56, 0.85, 0.62],
+  hemiGroundColorHSL: [0.13, 0.45, 0.82],
+  dirIntensity: 0.62 * Math.PI,
+  dirColorHSL: [0.14, 0.15, 0.98],
+  dirPosition: [1, 8, 0],
+  skyBottom: 0xdcefff,
+  fogNear: 0.45,
+  fogFar: 18,
+  cloudWarmth: 0,
+  sparkleColor: "#ffffff",
+  sparkleOpacityScale: 1,
+};
+const AFTERNOON_KEYFRAME: TimeLightingKeyframe = {
+  hour: 15,
+  ambientIntensity: 0.22 * Math.PI,
+  hemiIntensity: 0.88 * Math.PI,
+  hemiColorHSL: [0.6, 0.85, 0.6],
+  hemiGroundColorHSL: [0.1, 0.6, 0.78],
+  dirIntensity: 0.58 * Math.PI,
+  dirColorHSL: [0.11, 0.4, 0.95],
+  dirPosition: [-3, 5.5, -2],
+  skyBottom: 0xf3e4c8,
+  fogNear: 0.48,
+  fogFar: 18,
+  cloudWarmth: 0.45,
+  sparkleColor: "#fff6ea",
+  sparkleOpacityScale: 0.95,
+};
+const DUSK_KEYFRAME: TimeLightingKeyframe = {
+  hour: 19,
+  ambientIntensity: 0.1 * Math.PI,
+  hemiIntensity: 0.4 * Math.PI,
+  hemiColorHSL: [0.68, 0.55, 0.4],
+  hemiGroundColorHSL: [0.04, 0.6, 0.55],
+  dirIntensity: 0.3 * Math.PI,
+  dirColorHSL: [0.02, 0.55, 0.68],
+  dirPosition: [-8, 0.6, 6],
+  skyBottom: 0xd98a6b,
+  fogNear: 0.7,
+  fogFar: 15,
+  cloudWarmth: 1,
+  sparkleColor: "#ffd9c2",
+  sparkleOpacityScale: 0.7,
+};
+
+// The one static "outside daylight hours" look used whenever the OS/browser
+// theme is light but the real clock (or the overridden time slider) falls
+// before 7am or at/after 7pm - see isTwilight in Model. Deliberately close
+// in tone to DUSK_KEYFRAME/DAWN_KEYFRAME (same deep blue-violet family) so
+// crossing the 7pm/7am boundary reads as a continuation of dusk/dawn rather
+// than a hard cut, while still being clearly dimmer/cooler than either -
+// "a little past 7pm, a little before 7am" as one shared scene, not two.
+const TWILIGHT_AMBIENT_INTENSITY = 0.05 * Math.PI;
+const TWILIGHT_HEMI_INTENSITY = 0.22 * Math.PI;
+const TWILIGHT_HEMI_COLOR = new THREE.Color().setHSL(0.68, 0.5, 0.3);
+const TWILIGHT_HEMI_GROUND_COLOR = new THREE.Color().setHSL(0.66, 0.35, 0.22);
+const TWILIGHT_DIR_INTENSITY = 0.2 * Math.PI;
+const TWILIGHT_DIR_COLOR = new THREE.Color().setHSL(0.72, 0.3, 0.55);
+const TWILIGHT_SUN_POSITION = new THREE.Vector3(-8.5, 0.3, 6.2);
+const TWILIGHT_SKY_BOTTOM = new THREE.Color(0x453a5e);
+const TWILIGHT_FOG_NEAR = 0.9;
+const TWILIGHT_FOG_FAR = 13;
+const TWILIGHT_CLOUD_COLOR = "#352f52";
+const TWILIGHT_CLOUD_OPACITY_SCALE = 0.55;
+const TWILIGHT_SPARKLE_COLOR = "#cdd8ff";
+const TWILIGHT_SPARKLE_OPACITY_SCALE = 0.45;
+const TWILIGHT_SPARKLES_COUNT = 45;
+
+// Pale, cool near-white the day clouds desaturate toward at cloudWarmth=0
+// (crisp midday puffs) before blending back up to each cloud's own hard-
+// coded pink/peach hex at cloudWarmth=1 (golden hour, unchanged from today).
+const NEUTRAL_CLOUD_COLOR = new THREE.Color("#f5f9ff");
+
+const lerpHSL = (
+  a: [number, number, number],
+  b: [number, number, number],
+  t: number,
+): [number, number, number] => [
+  THREE.MathUtils.lerp(a[0], b[0], t),
+  THREE.MathUtils.lerp(a[1], b[1], t),
+  THREE.MathUtils.lerp(a[2], b[2], t),
+];
+
+const lerpVec3 = (
+  a: [number, number, number],
+  b: [number, number, number],
+  t: number,
+): [number, number, number] => [
+  THREE.MathUtils.lerp(a[0], b[0], t),
+  THREE.MathUtils.lerp(a[1], b[1], t),
+  THREE.MathUtils.lerp(a[2], b[2], t),
+];
+
+// Piecewise-linear interpolation across sorted keyframes (ascending `hour`).
+// `hour` is clamped to the keyframe span rather than wrapping - callers are
+// expected to only invoke this for hours already known to be within
+// [7, 19) (see isTwilight in Model), which TWILIGHT_* handles separately.
+const interpolateDayLighting = (
+  hour: number,
+  keyframes: TimeLightingKeyframe[],
+): TimeLightingKeyframe => {
+  const clampedHour = THREE.MathUtils.clamp(
+    hour,
+    keyframes[0].hour,
+    keyframes[keyframes.length - 1].hour,
+  );
+  let lower = keyframes[0];
+  let upper = keyframes[keyframes.length - 1];
+  for (let i = 0; i < keyframes.length - 1; i++) {
+    if (clampedHour >= keyframes[i].hour && clampedHour <= keyframes[i + 1].hour) {
+      lower = keyframes[i];
+      upper = keyframes[i + 1];
+      break;
+    }
+  }
+  const span = upper.hour - lower.hour;
+  const t = span === 0 ? 0 : (clampedHour - lower.hour) / span;
+
+  return {
+    hour: clampedHour,
+    ambientIntensity: THREE.MathUtils.lerp(
+      lower.ambientIntensity,
+      upper.ambientIntensity,
+      t,
+    ),
+    hemiIntensity: THREE.MathUtils.lerp(lower.hemiIntensity, upper.hemiIntensity, t),
+    hemiColorHSL: lerpHSL(lower.hemiColorHSL, upper.hemiColorHSL, t),
+    hemiGroundColorHSL: lerpHSL(
+      lower.hemiGroundColorHSL,
+      upper.hemiGroundColorHSL,
+      t,
+    ),
+    dirIntensity: THREE.MathUtils.lerp(lower.dirIntensity, upper.dirIntensity, t),
+    dirColorHSL: lerpHSL(lower.dirColorHSL, upper.dirColorHSL, t),
+    dirPosition: lerpVec3(lower.dirPosition, upper.dirPosition, t),
+    skyBottom: new THREE.Color(lower.skyBottom)
+      .lerp(new THREE.Color(upper.skyBottom), t)
+      .getHex(),
+    fogNear: THREE.MathUtils.lerp(lower.fogNear, upper.fogNear, t),
+    fogFar: THREE.MathUtils.lerp(lower.fogFar, upper.fogFar, t),
+    cloudWarmth: THREE.MathUtils.lerp(lower.cloudWarmth, upper.cloudWarmth, t),
+    sparkleColor: new THREE.Color(lower.sparkleColor)
+      .lerp(new THREE.Color(upper.sparkleColor), t)
+      .getStyle(),
+    sparkleOpacityScale: THREE.MathUtils.lerp(
+      lower.sparkleOpacityScale,
+      upper.sparkleOpacityScale,
+      t,
+    ),
+  };
+};
+
+// Ticks once a minute off the browser's real local clock - fine-grained
+// enough that a visitor leaving the tab open across, say, sunset actually
+// sees the scene drift, without re-rendering every frame for a value that
+// only matters at whole-minute resolution.
+const useCurrentHour = () => {
+  const readHour = () => {
+    const now = new Date();
+    return now.getHours() + now.getMinutes() / 60;
+  };
+  const [hour, setHour] = React.useState(readHour);
+  React.useEffect(() => {
+    const id = setInterval(() => setHour(readHour()), 60_000);
+    return () => clearInterval(id);
+  }, []);
+  return hour;
+};
+
 const SydneyOperaHouse = React.memo(() => (
   <Canvas
     id={`${INTRO_SOH}_2`}
@@ -124,13 +363,13 @@ const Model = React.memo(() => {
   const [dirLightColorX, setDirLightColorX] = React.useState(0.1);
   const [dirLightColorY, setDirLightColorY] = React.useState(1);
   const [dirLightColorZ, setDirLightColorZ] = React.useState(0.95);
-  const [dirPositionX, setDirPositionX] = React.useState(
-    Math.random() * 20 - 10,
-  );
+  // Fixed rather than randomized - this position now doubles as the 17:00
+  // (5pm) keyframe anchor for the time-of-day system below (see
+  // goldenHourKeyframe), which needs a deterministic starting point to
+  // interpolate the sun's arc from/to across the rest of the day.
+  const [dirPositionX, setDirPositionX] = React.useState(-6);
   const [dirPositionY, setDirPositionY] = React.useState(1);
-  const [dirPositionZ, setDirPositionZ] = React.useState(
-    Math.floor(Math.random() * 10) + 1,
-  );
+  const [dirPositionZ, setDirPositionZ] = React.useState(5);
   const [groundColorX, setGroundColorX] = React.useState(0.08);
   const [groundColorY, setGroundColorY] = React.useState(1);
   const [groundColorZ, setGroundColorZ] = React.useState(0.75);
@@ -168,6 +407,19 @@ const Model = React.memo(() => {
   // backgroundColor`, a side effect this 3D scene has no business
   // triggering a second time.
   const [systemIsDarkMode, setSystemIsDarkMode] = React.useState(true);
+  // Manual "Daytime" gui slider (7am-7pm) - only takes effect once Override
+  // Scene is on AND Night Mode is off (see the Time Option gui sync effect
+  // below and timeOverrideActive further down). Otherwise the scene follows
+  // the visitor's real local clock via useCurrentHour.
+  const [timeOfDayHour, setTimeOfDayHour] = React.useState(12);
+  // Handles to the gui's Night Mode/Daytime controllers, set once by
+  // createPanel below - kept in a ref (not local consts inside createPanel)
+  // so the sync effect further down can imperatively re-disable/re-value
+  // them whenever overrideScene/isNight/systemIsDarkMode change, without
+  // needing createPanel itself to ever re-run (it's still only called once,
+  // on mount).
+  const nightModeControllerRef = React.useRef<any>(null);
+  const timeOfDayControllerRef = React.useRef<any>(null);
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -182,6 +434,18 @@ const Model = React.memo(() => {
   // The value every day/night branch below actually reads - the OS theme by
   // default, or the manual "Night Mode" checkbox once Override Scene is on.
   const effectiveIsNight = overrideScene ? isNight : systemIsDarkMode;
+  const realHour = useCurrentHour();
+  // The time slider only matters once you've both opted into manual control
+  // (Override Scene) and aren't forcing full Night Mode - otherwise the real
+  // clock drives the scene, same as effectiveIsNight follows the OS theme by
+  // default above.
+  const timeOverrideActive = overrideScene && !isNight;
+  const effectiveHour = timeOverrideActive ? timeOfDayHour : realHour;
+  // The one extra "outside daylight hours" scene (see TWILIGHT_* above) -
+  // only relevant in day mode; night mode already has its own always-on look
+  // regardless of clock time.
+  const isTwilight =
+    !effectiveIsNight && (effectiveHour < 7 || effectiveHour >= 19);
   // One entry per sail floodlight - position, target ("rotation": a
   // spotLight aims from position at target rather than having a rotation
   // of its own, so target x/y/z is what the GUI calls Rotation X/Y/Z),
@@ -251,11 +515,11 @@ const Model = React.memo(() => {
   };
 
   // Lights
+  // Still used as the sky shader's initial topColor value below (line ~642)
+  // and to build the 17:00 keyframe's HSL tuple - the actual day/night
+  // hemisphere light color is effectiveHemiColor further down.
   const hemiLightColor = new THREE.Color();
   hemiLightColor.setHSL(hemiLightColorX, hemiLightColorY, hemiLightColorZ);
-
-  const hemiGroundColor = new THREE.Color();
-  hemiGroundColor.setHSL(hemiGroundColorX, hemiGroundColorY, hemiGroundColorZ);
 
   const hemiPosition = new THREE.Vector3(
     hemiPositionX,
@@ -263,49 +527,114 @@ const Model = React.memo(() => {
     hemiPositionZ,
   );
 
-  const dirLightColor = new THREE.Color();
-  dirLightColor.setHSL(dirLightColorX, dirLightColorY, dirLightColorZ);
-
-  const dirPosition = new THREE.Vector3(
-    dirPositionX,
-    dirPositionY,
-    dirPositionZ,
-  );
-
   // Ground
   const groundColor = new THREE.Color();
   groundColor.setHSL(groundColorX, groundColorY, groundColorZ);
 
+  // The 17:00 (5pm) keyframe is built from the Ambient/Hemi/Direct Light gui
+  // slider state directly - the same warm/golden values this scene has
+  // always defaulted to (see the dirPositionX/Y/Z comment above) - so those
+  // sliders stay live for tuning that one anchor instead of going dead once
+  // time-of-day drives the render. Only its inputs (not the object itself)
+  // need to be listed as deps since it's rebuilt fresh every render anyway.
+  const goldenHourKeyframe: TimeLightingKeyframe = {
+    hour: 17,
+    ambientIntensity: ambientLightIntensity,
+    hemiIntensity: hemiLightIntensity,
+    hemiColorHSL: [hemiLightColorX, hemiLightColorY, hemiLightColorZ],
+    hemiGroundColorHSL: [hemiGroundColorX, hemiGroundColorY, hemiGroundColorZ],
+    dirIntensity: dirLightIntensity,
+    dirColorHSL: [dirLightColorX, dirLightColorY, dirLightColorZ],
+    dirPosition: [dirPositionX, dirPositionY, dirPositionZ],
+    skyBottom: DAY_SKY_BOTTOM.getHex(),
+    fogNear: DAY_FOG_NEAR,
+    fogFar: DAY_FOG_FAR,
+    cloudWarmth: 1,
+    sparkleColor: "#fff3e0",
+    sparkleOpacityScale: 1,
+  };
+  const dayKeyframes: TimeLightingKeyframe[] = [
+    DAWN_KEYFRAME,
+    MORNING_KEYFRAME,
+    NOON_KEYFRAME,
+    AFTERNOON_KEYFRAME,
+    goldenHourKeyframe,
+    DUSK_KEYFRAME,
+  ];
+  const dayLighting = interpolateDayLighting(effectiveHour, dayKeyframes);
+  const dayHemiColor = new THREE.Color().setHSL(...dayLighting.hemiColorHSL);
+  const dayHemiGroundColor = new THREE.Color().setHSL(
+    ...dayLighting.hemiGroundColorHSL,
+  );
+  const dayDirColor = new THREE.Color().setHSL(...dayLighting.dirColorHSL);
+  const dayDirPosition = new THREE.Vector3(...dayLighting.dirPosition);
+
   // Night mode swaps in fixed lighting/atmosphere values instead of the day
   // gui sliders above, so toggling it never disturbs the day-tuned values.
+  // Twilight (see isTwilight above) sits between the two: still "day" as far
+  // as effectiveIsNight is concerned, but past the 7am-7pm window the
+  // time-of-day keyframes cover, so it gets its own fixed TWILIGHT_* look
+  // rather than extrapolating the day curve indefinitely.
   const effectiveAmbientIntensity = effectiveIsNight
     ? NIGHT_AMBIENT_INTENSITY
-    : ambientLightIntensity;
+    : isTwilight
+      ? TWILIGHT_AMBIENT_INTENSITY
+      : dayLighting.ambientIntensity;
   const effectiveHemiIntensity = effectiveIsNight
     ? NIGHT_HEMI_INTENSITY
-    : hemiLightIntensity;
+    : isTwilight
+      ? TWILIGHT_HEMI_INTENSITY
+      : dayLighting.hemiIntensity;
   const effectiveHemiColor = effectiveIsNight
     ? NIGHT_HEMI_COLOR
-    : hemiLightColor;
+    : isTwilight
+      ? TWILIGHT_HEMI_COLOR
+      : dayHemiColor;
   const effectiveHemiGroundColor = effectiveIsNight
     ? NIGHT_HEMI_GROUND_COLOR
-    : hemiGroundColor;
+    : isTwilight
+      ? TWILIGHT_HEMI_GROUND_COLOR
+      : dayHemiGroundColor;
   const effectiveDirIntensity = effectiveIsNight
     ? NIGHT_DIR_INTENSITY
-    : dirLightIntensity;
-  const effectiveDirColor = effectiveIsNight ? NIGHT_DIR_COLOR : dirLightColor;
-  // Fixed moon position at night instead of the day light's randomized spot,
-  // so the visible moon disc and the water's moon-glint always agree.
+    : isTwilight
+      ? TWILIGHT_DIR_INTENSITY
+      : dayLighting.dirIntensity;
+  const effectiveDirColor = effectiveIsNight
+    ? NIGHT_DIR_COLOR
+    : isTwilight
+      ? TWILIGHT_DIR_COLOR
+      : dayDirColor;
+  // Fixed moon/twilight position instead of the day light's keyframed arc,
+  // so the visible moon disc and the water's moon-glint always agree at
+  // night, same as before.
   const effectiveDirPosition = effectiveIsNight
     ? NIGHT_MOON_POSITION
-    : dirPosition;
+    : isTwilight
+      ? TWILIGHT_SUN_POSITION
+      : dayDirPosition;
 
-  // The Cloud puffs are unlit, so night-dimming them means swapping their
-  // color/opacity directly rather than relying on scene light intensity.
-  const cloudColor = (dayColor: string) =>
-    effectiveIsNight ? NIGHT_CLOUD_COLOR : dayColor;
+  // The Cloud puffs are unlit, so night/twilight-dimming them means swapping
+  // their color/opacity directly rather than relying on scene light
+  // intensity. During the day window, each cloud keeps its own hard-coded
+  // hex but desaturates toward NEUTRAL_CLOUD_COLOR as cloudWarmth drops
+  // toward midday (see dayLighting.cloudWarmth).
+  const cloudColor = (dayColor: string) => {
+    if (effectiveIsNight) return NIGHT_CLOUD_COLOR;
+    if (isTwilight) return TWILIGHT_CLOUD_COLOR;
+    return NEUTRAL_CLOUD_COLOR.clone().lerp(
+      new THREE.Color(dayColor),
+      THREE.MathUtils.clamp(dayLighting.cloudWarmth, 0, 1),
+    );
+  };
   const resolveCloudOpacity = (mult: number) =>
-    cloudOpacity * mult * (effectiveIsNight ? NIGHT_CLOUD_OPACITY_SCALE : 1);
+    cloudOpacity *
+    mult *
+    (effectiveIsNight
+      ? NIGHT_CLOUD_OPACITY_SCALE
+      : isTwilight
+        ? TWILIGHT_CLOUD_OPACITY_SCALE
+        : 1);
 
   const uniforms = React.useMemo(
     () => ({
@@ -326,25 +655,88 @@ const Model = React.memo(() => {
     if (IS_DEV) createPanel();
   }, []);
 
-  // Swap the sky/fog palette and distances when night mode toggles. Fog and
-  // background share the same Color instance (assigned above), so mutating
-  // it here keeps the horizon and the fog blending seamlessly either way.
+  // Keeps the Time Option gui in sync with overrideScene/isNight/
+  // systemIsDarkMode - the single place that decides what's enabled and
+  // what Night Mode displays, since createPanel itself only runs once and
+  // never sees later state changes on its own.
+  React.useEffect(() => {
+    const nightModeController = nightModeControllerRef.current;
+    const timeOfDayController = timeOfDayControllerRef.current;
+    if (!nightModeController || !timeOfDayController) return;
+
+    nightModeController.disable(!overrideScene);
+    if (!overrideScene) {
+      // Not overridden - Night Mode is just a (disabled) readout of the OS
+      // theme. Going through setValue (rather than mutating the bound
+      // settings object directly) also fires its onChange, which keeps the
+      // `isNight` React state seeded with the current OS value - so the
+      // moment Override Scene does get checked, Night Mode starts already
+      // matching whatever the OS currently says instead of some stale value.
+      nightModeController.setValue(systemIsDarkMode);
+    }
+
+    // Daytime only takes over from the real clock once you've explicitly
+    // opted into manual control (Override Scene) AND Night Mode is off -
+    // initially disabled (Override Scene starts unchecked), and disabled
+    // again the instant Night Mode is checked. Matches timeOverrideActive
+    // below exactly (disabled iff NOT timeOverrideActive).
+    timeOfDayController.disable(!overrideScene || isNight);
+  }, [overrideScene, isNight, systemIsDarkMode]);
+
+  // Swap the sky/fog palette and distances as night mode, twilight, and
+  // time-of-day change. Fog and background share the same Color instance
+  // (assigned above), so mutating it here keeps the horizon and the fog
+  // blending seamlessly either way. The dependency array lists the
+  // individual gui slider/hour primitives that feed dayLighting/dayHemiColor
+  // rather than those derived objects themselves, since those are rebuilt
+  // (new object identity) on every render.
   React.useEffect(() => {
     if (!scene.fog) return;
     uniforms.topColor.value.copy(
-      effectiveIsNight ? NIGHT_SKY_TOP : hemiLightColor,
+      effectiveIsNight
+        ? NIGHT_SKY_TOP
+        : isTwilight
+          ? TWILIGHT_HEMI_COLOR
+          : dayHemiColor,
     );
     uniforms.bottomColor.value.copy(
-      effectiveIsNight ? NIGHT_SKY_BOTTOM : DAY_SKY_BOTTOM,
+      effectiveIsNight
+        ? NIGHT_SKY_BOTTOM
+        : isTwilight
+          ? TWILIGHT_SKY_BOTTOM
+          : new THREE.Color(dayLighting.skyBottom),
     );
     scene.fog.color.copy(uniforms.bottomColor.value);
     (scene.fog as THREE.Fog).near = effectiveIsNight
       ? NIGHT_FOG_NEAR
-      : DAY_FOG_NEAR;
+      : isTwilight
+        ? TWILIGHT_FOG_NEAR
+        : dayLighting.fogNear;
     (scene.fog as THREE.Fog).far = effectiveIsNight
       ? NIGHT_FOG_FAR
-      : DAY_FOG_FAR;
-  }, [effectiveIsNight]);
+      : isTwilight
+        ? TWILIGHT_FOG_FAR
+        : dayLighting.fogFar;
+  }, [
+    effectiveIsNight,
+    isTwilight,
+    effectiveHour,
+    ambientLightIntensity,
+    hemiLightIntensity,
+    hemiLightColorX,
+    hemiLightColorY,
+    hemiLightColorZ,
+    hemiGroundColorX,
+    hemiGroundColorY,
+    hemiGroundColorZ,
+    dirLightIntensity,
+    dirLightColorX,
+    dirLightColorY,
+    dirLightColorZ,
+    dirPositionX,
+    dirPositionY,
+    dirPositionZ,
+  ]);
 
   // Subtle camera parallax that drifts toward the pointer for a sense of depth.
   useFrame((state, delta) => {
@@ -374,7 +766,7 @@ const Model = React.memo(() => {
     const skyFolder = panel.addFolder("Sky");
     const atmosphereFolder = panel.addFolder("Atmosphere");
     const effectsFolder = panel.addFolder("Effects");
-    const nightFolder = panel.addFolder("Night Mode");
+    const timeOptionFolder = panel.addFolder("Time Option");
     const sailFloodlightFolder = panel.addFolder("Sail Floodlights");
     const dockLightingFolder = panel.addFolder("Dock Lights");
     const streetlampLightingFolder = panel.addFolder("Streetlamp Lights");
@@ -433,6 +825,7 @@ const Model = React.memo(() => {
       groundCloudGap: groundCloudGap,
       isNight: isNight,
       overrideScene: overrideScene,
+      timeOfDayHour: timeOfDayHour,
       dockLightIntensity: dockLighting.intensity,
       dockLightAngle: dockLighting.angle,
       dockLightDepth: dockLighting.depth,
@@ -444,22 +837,31 @@ const Model = React.memo(() => {
       streetlampTargetForwardOffset: streetlampLighting.targetForwardOffset,
     };
 
-    // Disabled unless Override Scene is checked - while off, this checkbox
-    // is visible but inert, since effectiveIsNight ignores its value
-    // entirely and follows the OS theme instead.
-    const nightModeController = nightFolder
+    // Time Option: Override Scene, then Night Mode, then Daytime, in that
+    // order. Each control here just mirrors its own React state via
+    // setState - none of them reach across to disable/sync the others
+    // directly. That cross-wiring instead lives in the syncTimeOptionGui
+    // effect below, which re-runs whenever overrideScene/isNight/
+    // systemIsDarkMode change and is the single source of truth for what's
+    // enabled and what value Night Mode shows. Keeping it there (rather than
+    // in these onChange handlers) avoids the stale-closure trap the old
+    // version had: createPanel only runs once on mount, so any React state
+    // captured directly in these closures would be frozen at its initial
+    // value forever.
+    timeOptionFolder
+      .add(settings, "overrideScene")
+      .name("Override Scene")
+      .onChange((e: boolean) => setOverrideScene(e));
+
+    nightModeControllerRef.current = timeOptionFolder
       .add(settings, "isNight")
       .name("Night Mode")
       .onChange((e: boolean) => setIsNight(e));
-    nightModeController.disable(!overrideScene);
 
-    nightFolder
-      .add(settings, "overrideScene")
-      .name("Override Scene")
-      .onChange((e: boolean) => {
-        setOverrideScene(e);
-        nightModeController.disable(!e);
-      });
+    timeOfDayControllerRef.current = timeOptionFolder
+      .add(settings, "timeOfDayHour", 7, 19, 0.25)
+      .name("Daytime")
+      .onChange((e: number) => setTimeOfDayHour(e));
 
     ambientLightFolder
       .add(settings, "ambientLightIntensity", 0, 2)
@@ -767,14 +1169,26 @@ const Model = React.memo(() => {
         />
       </mesh>
       <Sparkles
-        count={effectiveIsNight ? 30 : 60}
+        count={
+          effectiveIsNight ? 30 : isTwilight ? TWILIGHT_SPARKLES_COUNT : 60
+        }
         scale={[4, 2.2, 4]}
         size={effectiveIsNight ? 1.2 : 1.8}
         speed={0.25}
         opacity={
-          effectiveIsNight ? Math.min(sparklesOpacity, 0.15) : sparklesOpacity
+          effectiveIsNight
+            ? Math.min(sparklesOpacity, 0.15)
+            : isTwilight
+              ? Math.min(sparklesOpacity, TWILIGHT_SPARKLE_OPACITY_SCALE)
+              : sparklesOpacity * dayLighting.sparkleOpacityScale
         }
-        color={effectiveIsNight ? "#dce8ff" : "#fff3e0"}
+        color={
+          effectiveIsNight
+            ? "#dce8ff"
+            : isTwilight
+              ? TWILIGHT_SPARKLE_COLOR
+              : dayLighting.sparkleColor
+        }
         position={[0, 0.6, 0]}
       />
       {effectiveIsNight && (
