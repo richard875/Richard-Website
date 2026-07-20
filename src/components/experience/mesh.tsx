@@ -182,6 +182,7 @@ type MeshProps = {
   isNight?: boolean;
   sailFloodlights?: SailFloodlightConfig[];
   dockLighting?: DockLightingConfig;
+  landscapeLighting?: LandscapeLightingConfig;
 };
 
 // A dot standing in for a distant bulb - purely visual (no real light), so
@@ -697,6 +698,163 @@ const DockLight = ({
   );
 };
 
+// Exterior landscape lighting: in-ground uplights along the entrance
+// stairway base, the plaza/parking area in front of it, and at the base of
+// each tree lining that plaza. All three fixture arrays below are defined in
+// this same shared fixture frame (SailFloodlight/DockLight's coordinate
+// space), found the same way DOCK_WATERLINE_Y and OPERA_HOUSE_LOCAL_XZ were:
+// reading the real vertex buffers for "Sidney_Stone.1_0" (the building's
+// low base/plinth material - a separate mesh from the sail/wall "Stone_0",
+// spanning roughly x:[-0.78,0.67] z:[-1.19,0.45] y:[0.10,0.36] in this
+// frame - the closest thing this stylised model has to a monumental
+// entrance stair) and every Tree_3_* group (whose local origin sits right
+// at each trunk's base), then transforming both through the exact same
+// group-chain matrices this component's JSX applies (G1 rotate -90 X scale
+// 0.0003, G2 rotate 90 X, then each mesh's own parent group chain).
+//
+// That vertex read found the building's low base spans z up to only 0.45,
+// while the podium itself (Floor_Stone_0) extends to z ~1.09-1.23 and the
+// 19 trees all cluster around z ~0.83-0.91 - i.e. there's a whole paved
+// strip between the building's front base and the tree line/water's edge.
+// The two taxis (Car_Sedan_Taxi_1/_2) sit right in that same strip at
+// x ~0.37-0.52, z ~0.69-0.81 - confirming this strip is the model's
+// entrance plaza/drop-off, not open water, and is where the "parking lot"
+// fixtures below live.
+const STAIR_UPLIGHT_POSITIONS: [number, number, number][] = [
+  [-0.7, 0.16, 0.4],
+  [-0.483, 0.16, 0.4],
+  [-0.267, 0.16, 0.4],
+  [-0.05, 0.16, 0.4],
+  [0.167, 0.16, 0.4],
+  [0.383, 0.16, 0.4],
+  [0.6, 0.16, 0.4],
+];
+
+// Real spotlights for actual pooled illumination on the plaza pavement -
+// sparse, one row tracing the pedestrian path between the building and the
+// tree line, one tracing the outer perimeter toward the water's edge.
+const PARKING_LOT_SPOTLIGHT_POSITIONS: [number, number, number][] = [
+  [-0.43, 0.155, 0.62],
+  [0.22, 0.155, 0.62],
+  [0.65, 0.155, 0.62],
+  [-0.42, 0.155, 1.0],
+  [0.42, 0.155, 1.0],
+  [0.46, 0.155, 0.72],
+];
+
+// Denser purely-visual markers (see NightGlow above) tracing the same two
+// rows plus a landscape-island accent by the taxi drop-off - cheap detail
+// between the sparse real spotlights, same trick as DOCK_LED_MARKERS.
+const PARKING_LOT_MARKER_POSITIONS: [number, number, number][] = [
+  [-0.65, 0.155, 0.62],
+  [-0.43, 0.155, 0.62],
+  [-0.22, 0.155, 0.62],
+  [0.0, 0.155, 0.62],
+  [0.22, 0.155, 0.62],
+  [0.43, 0.155, 0.62],
+  [0.65, 0.155, 0.62],
+  [-0.7, 0.155, 1.0],
+  [-0.42, 0.155, 1.0],
+  [-0.14, 0.155, 1.0],
+  [0.14, 0.155, 1.0],
+  [0.42, 0.155, 1.0],
+  [0.6, 0.155, 1.0],
+  [0.46, 0.155, 0.72],
+];
+
+// One fixture per tree, positioned at each Tree_3_* group's own local
+// origin (its trunk base) transformed into this shared frame - see comment
+// block above.
+const TREE_UPLIGHT_POSITIONS: [number, number, number][] = [
+  [0.0061, 0.1041, 0.9095],
+  [0.4979, 0.1185, 0.8559],
+  [0.4242, 0.1041, 0.8465],
+  [-0.4241, 0.1041, 0.845],
+  [-0.2572, 0.1041, 0.845],
+  [-0.5141, 0.1041, 0.845],
+  [0.5477, 0.1041, 0.8772],
+  [0.1043, 0.1041, 0.8892],
+  [0.1707, 0.1041, 0.8575],
+  [0.3141, 0.1041, 0.8772],
+  [-0.0862, 0.0964, 0.8971],
+  [-0.0024, 0.1041, 0.8305],
+  [-0.1677, 0.1041, 0.8857],
+  [0.2296, 0.1077, 0.8783],
+  [0.2499, 0.0964, 0.8781],
+  [0.3904, 0.1077, 0.8831],
+  [-0.7112, 0.1041, 0.845],
+  [-0.6012, 0.1041, 0.9007],
+  [-0.3425, 0.1041, 0.8951],
+  [-0.6205, 0.1077, 0.8293],
+];
+
+export type LandscapeLightingConfig = {
+  intensity: number;
+  angle: number;
+  distance: number;
+};
+export const DEFAULT_LANDSCAPE_LIGHTING: LandscapeLightingConfig = {
+  intensity: 1.2,
+  angle: 0.4,
+  distance: 0.45,
+};
+// ~3000K warm white, shared by every landscape fixture below so the stairs,
+// plaza and trees all read as one consistent lighting system.
+const LANDSCAPE_LIGHT_COLOR = "#ffbf85";
+const LANDSCAPE_LIGHT_PENUMBRA = 0.5;
+// How far above each fixture its aim target sits - since every landscape
+// fixture here is a straight-up in-ground uplight (no outward throw needed,
+// unlike DockLight), position alone is enough to place them.
+const LANDSCAPE_UPLIGHT_THROW = 0.3;
+
+// Same target-parenting approach as SailFloodlight/DockLight. A single
+// reusable uplight covers stairs, trees and the parking lot's real
+// spotlights - all three are just "in-ground fixture aimed straight up",
+// differing only in position and intensity.
+const GroundUplight = ({
+  position,
+  intensity,
+  angle,
+  distance,
+}: {
+  position: [number, number, number];
+  intensity: number;
+  angle: number;
+  distance: number;
+}) => {
+  const lightRef = React.useRef<THREE.SpotLight>(null!);
+  const targetRef = React.useRef<THREE.Object3D>(null);
+
+  React.useEffect(() => {
+    if (lightRef.current && targetRef.current) {
+      lightRef.current.target = targetRef.current;
+    }
+  }, []);
+
+  const targetPosition: [number, number, number] = [
+    position[0],
+    position[1] + LANDSCAPE_UPLIGHT_THROW,
+    position[2],
+  ];
+
+  return (
+    <>
+      <spotLight
+        ref={lightRef}
+        position={position}
+        color={LANDSCAPE_LIGHT_COLOR}
+        intensity={intensity}
+        angle={angle}
+        penumbra={LANDSCAPE_LIGHT_PENUMBRA}
+        distance={distance}
+        decay={2}
+        castShadow={false}
+      />
+      <object3D ref={targetRef} position={targetPosition} />
+    </>
+  );
+};
+
 // The water mesh's own local position/rotation (matches the
 // Water_2_water_foam_0 <mesh> below) - reused here to convert
 // DOCK_GLOW_SAMPLES (defined in this file's shared "outward-facing fixture"
@@ -846,6 +1004,7 @@ const Mesh = ({
   isNight = false,
   sailFloodlights = DEFAULT_SAIL_FLOODLIGHTS,
   dockLighting = DEFAULT_DOCK_LIGHTING,
+  landscapeLighting = DEFAULT_LANDSCAPE_LIGHTING,
 }: MeshProps) => {
   const { nodes, materials } = useLoader(GLTFLoader, MODEL_PATH);
 
@@ -981,6 +1140,46 @@ const Mesh = ({
             color={DOCK_LED_COLOR}
             radius={0.01}
             brightness={0.8}
+          />
+        ))}
+      {isNight &&
+        STAIR_UPLIGHT_POSITIONS.map((position, i) => (
+          <GroundUplight
+            key={`stair-uplight-${i}`}
+            position={position}
+            intensity={landscapeLighting.intensity}
+            angle={landscapeLighting.angle}
+            distance={landscapeLighting.distance}
+          />
+        ))}
+      {isNight &&
+        TREE_UPLIGHT_POSITIONS.map((position, i) => (
+          <GroundUplight
+            key={`tree-uplight-${i}`}
+            position={position}
+            intensity={landscapeLighting.intensity * 0.75}
+            angle={landscapeLighting.angle}
+            distance={landscapeLighting.distance}
+          />
+        ))}
+      {isNight &&
+        PARKING_LOT_SPOTLIGHT_POSITIONS.map((position, i) => (
+          <GroundUplight
+            key={`parking-spotlight-${i}`}
+            position={position}
+            intensity={landscapeLighting.intensity * 0.6}
+            angle={landscapeLighting.angle}
+            distance={landscapeLighting.distance}
+          />
+        ))}
+      {isNight &&
+        PARKING_LOT_MARKER_POSITIONS.map((position, i) => (
+          <NightGlow
+            key={`parking-marker-${i}`}
+            position={position}
+            color={LANDSCAPE_LIGHT_COLOR}
+            radius={0.01}
+            brightness={0.7}
           />
         ))}
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.0003}>

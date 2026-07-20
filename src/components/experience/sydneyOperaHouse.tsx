@@ -14,8 +14,16 @@ import {
   DepthOfField,
 } from "@react-three/postprocessing";
 import { Resolution, KernelSize, BlendFunction } from "postprocessing";
-import Mesh, { DEFAULT_SAIL_FLOODLIGHTS, DEFAULT_DOCK_LIGHTING } from "./mesh";
-import type { SailFloodlightConfig, DockLightingConfig } from "./mesh";
+import Mesh, {
+  DEFAULT_SAIL_FLOODLIGHTS,
+  DEFAULT_DOCK_LIGHTING,
+  DEFAULT_LANDSCAPE_LIGHTING,
+} from "./mesh";
+import type {
+  SailFloodlightConfig,
+  DockLightingConfig,
+  LandscapeLightingConfig,
+} from "./mesh";
 import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
@@ -182,6 +190,18 @@ const Model = React.memo(() => {
     setDockLighting((prev) => ({ ...prev, [key]: value }));
   };
 
+  // Shared by every stair/tree/parking-lot uplight - see the "Landscape
+  // Lighting" GUI folder below.
+  const [landscapeLighting, setLandscapeLighting] =
+    React.useState<LandscapeLightingConfig>(DEFAULT_LANDSCAPE_LIGHTING);
+
+  const updateLandscapeLighting = (
+    key: keyof LandscapeLightingConfig,
+    value: number,
+  ) => {
+    setLandscapeLighting((prev) => ({ ...prev, [key]: value }));
+  };
+
   // Lights
   const hemiLightColor = new THREE.Color();
   hemiLightColor.setHSL(hemiLightColorX, hemiLightColorY, hemiLightColorZ);
@@ -299,6 +319,7 @@ const Model = React.memo(() => {
     const nightFolder = panel.addFolder("Night Mode");
     const sailFloodlightFolder = panel.addFolder("Sail Floodlights");
     const dockLightingFolder = panel.addFolder("Dock Lights");
+    const landscapeLightingFolder = panel.addFolder("Landscape Lighting");
     panel.close();
 
     // Position the lil-gui panel at the top-left so it doesn't block the view
@@ -358,6 +379,9 @@ const Model = React.memo(() => {
       dockLightDepth: dockLighting.depth,
       dockGlowRadius: dockLighting.glowRadius,
       dockGlowIntensity: dockLighting.glowIntensity,
+      landscapeIntensity: landscapeLighting.intensity,
+      landscapeAngle: landscapeLighting.angle,
+      landscapeDistance: landscapeLighting.distance,
     };
 
     nightFolder
@@ -554,6 +578,19 @@ const Model = React.memo(() => {
       .add(settings, "dockGlowIntensity", 0, 10)
       .name("Glow Intensity")
       .onChange((e: number) => updateDockLighting("glowIntensity", e));
+
+    landscapeLightingFolder
+      .add(settings, "landscapeIntensity", 0, 5)
+      .name("Intensity")
+      .onChange((e: number) => updateLandscapeLighting("intensity", e));
+    landscapeLightingFolder
+      .add(settings, "landscapeAngle", 0.05, 1.5)
+      .name("Beam Angle")
+      .onChange((e: number) => updateLandscapeLighting("angle", e));
+    landscapeLightingFolder
+      .add(settings, "landscapeDistance", 0.05, 2)
+      .name("Distance")
+      .onChange((e: number) => updateLandscapeLighting("distance", e));
 
     // A subfolder + full set of controls per light, built from whatever
     // sailFloodlights held at mount (the panel is only ever created once).
@@ -882,6 +919,7 @@ const Model = React.memo(() => {
             isNight={isNight}
             sailFloodlights={sailFloodlights}
             dockLighting={dockLighting}
+            landscapeLighting={landscapeLighting}
           />
         </Inspector>
       </Float>
