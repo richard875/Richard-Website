@@ -13,7 +13,7 @@ import {
   Noise,
   DepthOfField,
 } from "@react-three/postprocessing";
-import { KernelSize, BlendFunction } from "postprocessing";
+import { Resolution, KernelSize, BlendFunction } from "postprocessing";
 import Mesh, {
   DEFAULT_SAIL_FLOODLIGHTS,
   DEFAULT_DOCK_LIGHTING,
@@ -960,16 +960,11 @@ const Model = React.memo(() => {
         </Inspector>
       </Float>
       {/* Effects */}
-      {/* multisampling defaults to 8x MSAA - expensive on its own, and
-          largely wasted here: every edge it would smooth gets run straight
-          through DepthOfField/Bloom's blur and then Noise's grain anyway,
-          so the antialiasing it buys is barely visible in the final
-          composite.
-          EffectComposer's children type is JSX.Element | JSX.Element[], not
+      {/* EffectComposer's children type is JSX.Element | JSX.Element[], not
           ReactNode, so DepthOfField's night-only inclusion below is built as
           an explicit array rather than an inline `{cond && <X/>}` - the
           latter would type as `boolean | Element` and fail to satisfy it. */}
-      <EffectComposer multisampling={0}>
+      <EffectComposer>
         {[
           // DepthOfField is one of the most expensive effects in this stack
           // (a full CoC pass plus a multi-tap bokeh blur), and at night it's
@@ -993,14 +988,8 @@ const Model = React.memo(() => {
               effectiveIsNight ? Math.min(bloomIntensity, 9) : bloomIntensity
             } // The bloom intensity.
             blurPass={undefined} // A blur pass.
-            // A fixed, moderate resolution instead of AUTO_SIZE (which
-            // tracks the full canvas size) keeps Bloom's internal
-            // downsample/blur chain cheap regardless of how large the
-            // canvas renders - a soft glow doesn't need to be computed at
-            // full resolution to read the same once composited back over
-            // the sharp base image.
-            width={480}
-            height={480}
+            width={Resolution.AUTO_SIZE} // render width
+            height={Resolution.AUTO_SIZE} // render height
             kernelSize={effectiveIsNight ? KernelSize.MEDIUM : KernelSize.LARGE} // blur kernel size
             luminanceThreshold={
               effectiveIsNight
