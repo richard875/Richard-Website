@@ -342,16 +342,16 @@ export const DEFAULT_SAIL_FLOODLIGHTS: SailFloodlightConfig[] = [
     intensity: 8,
   },
   {
-    position: [1.147, 0.75, -0.76],
-    target: [0.363, 0.568, -0.483],
-    angle: 0.07,
-    intensity: 8,
+    position: [1.116, 0.143, -0.378],
+    target: [0.152, 0.644, -0.252],
+    angle: 0.43,
+    intensity: 9,
   },
   {
-    position: [1.077, 0.75, -0.925],
-    target: [0.405, 0.528, -0.586],
-    angle: 0.07,
-    intensity: 8,
+    position: [1.116, 0.143, -0.6],
+    target: [0.34, 0.503, -0.916],
+    angle: 0.4,
+    intensity: 6,
   },
 ];
 const SAIL_FLOODLIGHT_COLOR = "#f4f9ff";
@@ -386,7 +386,7 @@ const SailFloodlight = ({
   // SpotLightHelper reads the light's live world position/target each frame
   // (added straight to the scene root, not this local group), so it stays
   // correct even as the model rotates.
-  useHelper(IS_DEV && lightRef, THREE.SpotLightHelper);
+  // useHelper(IS_DEV && lightRef, THREE.SpotLightHelper);
 
   return (
     <>
