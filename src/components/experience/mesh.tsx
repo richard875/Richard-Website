@@ -167,10 +167,10 @@ export type StreetlampLightingConfig = {
   targetForwardOffset: number;
 };
 export const DEFAULT_STREETLAMP_LIGHTING: StreetlampLightingConfig = {
-  intensity: 0.3,
-  angle: 0.8,
-  targetDrop: 85,
-  targetForwardOffset: 70,
+  intensity: 0.6,
+  angle: 1.2,
+  targetDrop: 170,
+  targetForwardOffset: 25,
 };
 // The Sydney Opera House's origin (the Sidney_Stone group's position),
 // expressed in this same streetlamp-group local coordinate space. The two

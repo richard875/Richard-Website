@@ -612,7 +612,7 @@ const Model = React.memo(() => {
       .onChange((e: number) => updateDockLighting("glowIntensity", e));
 
     streetlampLightingFolder
-      .add(settings, "streetlampIntensity", 0, 5)
+      .add(settings, "streetlampIntensity", 0, 1.5)
       .name("Intensity")
       .onChange((e: number) => updateStreetlampLighting("intensity", e));
     streetlampLightingFolder
