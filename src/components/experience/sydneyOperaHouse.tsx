@@ -220,28 +220,28 @@ const DUSK_KEYFRAME: TimeLightingKeyframe = {
 
 // The one static "outside daylight hours" look used whenever the OS/browser
 // theme is light but the real clock (or the overridden time slider) falls
-// before 7am or at/after 7pm - see isTwilight in Model. Continues the same
-// gentle GOLDEN_HOUR->DUSK slope one step further (same hue/saturation
-// again, lightness/intensity stepped down a little more) rather than a
-// separate, steeper "getting dark" curve - it's meant to read as "a few
-// minutes past 7pm" or "a few minutes before 7am", not as the start of
-// night. Actual night is a completely separate system (NIGHT_* above, gated
-// on OS/manual dark mode), so this never needs to get anywhere near that
-// dark.
-const TWILIGHT_AMBIENT_INTENSITY = 0.08 * Math.PI;
-const TWILIGHT_HEMI_INTENSITY = 0.32 * Math.PI;
-const TWILIGHT_HEMI_COLOR = new THREE.Color().setHSL(0.62, 1, 0.24);
-const TWILIGHT_HEMI_GROUND_COLOR = new THREE.Color().setHSL(0.095, 1, 0.25);
-const TWILIGHT_DIR_INTENSITY = 0.2 * Math.PI;
-const TWILIGHT_DIR_COLOR = new THREE.Color().setHSL(0.1, 1, 0.55);
-const TWILIGHT_SUN_POSITION = new THREE.Vector3(-6.8, 0.8, 5.4);
-const TWILIGHT_SKY_BOTTOM = new THREE.Color(0xd65a0f);
-const TWILIGHT_FOG_NEAR = 0.65;
-const TWILIGHT_FOG_FAR = 15;
-const TWILIGHT_CLOUD_COLOR = "#c07040";
-const TWILIGHT_CLOUD_OPACITY_SCALE = 0.88;
-const TWILIGHT_SPARKLE_COLOR = "#ffb870";
-const TWILIGHT_SPARKLE_OPACITY_SCALE = 0.7;
+// before 7am or at/after 7pm - see isTwilight in Model. Meant to read as
+// roughly "20:00" - a small, direct step dimmer than DUSK_KEYFRAME (19:00),
+// not independently derived math: hue and saturation are copied from
+// DUSK_KEYFRAME exactly unchanged, only intensity and lightness step down a
+// little further. The garish red an earlier version of this produced wasn't
+// actually these values - it was the clouds rendering through a completely
+// different, flattened single-color code path (see the cloudColor comment
+// in Model), which made "Dimmed" look nothing like 19:00 even when these
+// numbers were close to DUSK_KEYFRAME's.
+const TWILIGHT_AMBIENT_INTENSITY = 0.12 * Math.PI;
+const TWILIGHT_HEMI_INTENSITY = 0.48 * Math.PI;
+const TWILIGHT_HEMI_COLOR = new THREE.Color().setHSL(0.62, 1, 0.36);
+const TWILIGHT_HEMI_GROUND_COLOR = new THREE.Color().setHSL(0.095, 1, 0.43);
+const TWILIGHT_DIR_INTENSITY = 0.3 * Math.PI;
+const TWILIGHT_DIR_COLOR = new THREE.Color().setHSL(0.1, 1, 0.68);
+const TWILIGHT_SUN_POSITION = new THREE.Vector3(-6.7, 0.9, 5.3);
+const TWILIGHT_SKY_BOTTOM = new THREE.Color(0xd18951);
+const TWILIGHT_FOG_NEAR = 0.62;
+const TWILIGHT_FOG_FAR = 15.5;
+const TWILIGHT_CLOUD_OPACITY_SCALE = 0.95;
+const TWILIGHT_SPARKLE_COLOR = "#ffba7c";
+const TWILIGHT_SPARKLE_OPACITY_SCALE = 0.75;
 const TWILIGHT_SPARKLES_COUNT = 55;
 
 // Pale, cool near-white the day clouds desaturate toward at cloudWarmth=0
@@ -674,17 +674,23 @@ const Model = React.memo(() => {
       ? TWILIGHT_SUN_POSITION
       : dayDirPosition;
 
-  // The Cloud puffs are unlit, so night/twilight-dimming them means swapping
-  // their color/opacity directly rather than relying on scene light
-  // intensity. During the day window, each cloud keeps its own hard-coded
-  // hex but desaturates toward NEUTRAL_CLOUD_COLOR as cloudWarmth drops
-  // toward midday (see dayLighting.cloudWarmth).
+  // The Cloud puffs are unlit, so night-dimming them means swapping their
+  // color/opacity directly rather than relying on scene light intensity.
+  // Twilight deliberately does NOT get its own flat cloud color the way
+  // night does - it used to (TWILIGHT_CLOUD_COLOR), which flattened all 9
+  // puffs' own distinct hard-coded hues into one uniform wash and, combined
+  // with Bloom/ColorAverage, was a big part of why "Dimmed" looked so much
+  // worse than DUSK_KEYFRAME (19:00) despite similar light values - the
+  // clouds were on a completely different code path. Twilight now reuses
+  // the exact same per-cloud full-warmth coloring as any other daytime hour
+  // (cloudWarmth=1, same as DUSK_KEYFRAME/goldenHourKeyframe), so its clouds
+  // look identical to 19:00's; only intensity/lightness differ.
   const cloudColor = (dayColor: string) => {
     if (effectiveIsNight) return NIGHT_CLOUD_COLOR;
-    if (isTwilight) return TWILIGHT_CLOUD_COLOR;
+    const warmth = isTwilight ? 1 : dayLighting.cloudWarmth;
     return NEUTRAL_CLOUD_COLOR.clone().lerp(
       new THREE.Color(dayColor),
-      THREE.MathUtils.clamp(dayLighting.cloudWarmth, 0, 1),
+      THREE.MathUtils.clamp(warmth, 0, 1),
     );
   };
   const resolveCloudOpacity = (mult: number) =>
