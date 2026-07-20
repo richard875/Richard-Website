@@ -456,14 +456,21 @@ const Model = React.memo(() => {
   // below and timeOverrideActive further down). Otherwise the scene follows
   // the visitor's real local clock via useCurrentHour.
   const [timeOfDayHour, setTimeOfDayHour] = React.useState(12);
-  // Handles to the gui's Night Mode/Daytime controllers, set once by
+  // Manual "Dimmed" gui checkbox - forces the twilight/"Static Scene" look
+  // (see TWILIGHT_* above and isTwilight below) regardless of the Daytime
+  // slider's value. Same enable condition as Daytime itself (Override Scene
+  // on, Night Mode off); checking it also disables Daytime, since the hour
+  // no longer matters once twilight is being forced.
+  const [dimmed, setDimmed] = React.useState(false);
+  // Handles to the gui's Night Mode/Daytime/Dimmed controllers, set once by
   // createPanel below - kept in a ref (not local consts inside createPanel)
   // so the sync effect further down can imperatively re-disable/re-value
-  // them whenever overrideScene/isNight/systemIsDarkMode change, without
-  // needing createPanel itself to ever re-run (it's still only called once,
-  // on mount).
+  // them whenever overrideScene/isNight/systemIsDarkMode/dimmed change,
+  // without needing createPanel itself to ever re-run (it's still only
+  // called once, on mount).
   const nightModeControllerRef = React.useRef<any>(null);
   const timeOfDayControllerRef = React.useRef<any>(null);
+  const dimmedControllerRef = React.useRef<any>(null);
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -485,6 +492,11 @@ const Model = React.memo(() => {
   // default above.
   const timeOverrideActive = overrideScene && !isNight;
   const effectiveHour = timeOverrideActive ? timeOfDayHour : realHour;
+  // "Dimmed" forces the twilight/"Static Scene" look on demand - same gate
+  // as timeOverrideActive (Override Scene on, Night Mode off), so it can
+  // never fire while night mode (auto or manual) is already showing its own
+  // always-on look.
+  const dimmedOverrideActive = overrideScene && !isNight && dimmed;
   // The one extra "outside daylight hours" scene (see TWILIGHT_* above) -
   // only relevant in day mode; night mode already has its own always-on look
   // regardless of clock time. Strictly > 19 (not >= 19) so hour 19 exactly -
@@ -492,7 +504,8 @@ const Model = React.memo(() => {
   // the day interpolation below rather than jumping straight to the twilight
   // look right at the boundary you're most likely to actually test.
   const isTwilight =
-    !effectiveIsNight && (effectiveHour < 7 || effectiveHour > 19);
+    !effectiveIsNight &&
+    (dimmedOverrideActive || effectiveHour < 7 || effectiveHour > 19);
   // One entry per sail floodlight - position, target ("rotation": a
   // spotLight aims from position at target rather than having a rotation
   // of its own, so target x/y/z is what the GUI calls Rotation X/Y/Z),
@@ -703,13 +716,15 @@ const Model = React.memo(() => {
   }, []);
 
   // Keeps the Time Option gui in sync with overrideScene/isNight/
-  // systemIsDarkMode - the single place that decides what's enabled and
-  // what Night Mode displays, since createPanel itself only runs once and
-  // never sees later state changes on its own.
+  // systemIsDarkMode/dimmed - the single place that decides what's enabled
+  // and what Night Mode displays, since createPanel itself only runs once
+  // and never sees later state changes on its own.
   React.useEffect(() => {
     const nightModeController = nightModeControllerRef.current;
     const timeOfDayController = timeOfDayControllerRef.current;
-    if (!nightModeController || !timeOfDayController) return;
+    const dimmedController = dimmedControllerRef.current;
+    if (!nightModeController || !timeOfDayController || !dimmedController)
+      return;
 
     nightModeController.disable(!overrideScene);
     if (!overrideScene) {
@@ -722,13 +737,19 @@ const Model = React.memo(() => {
       nightModeController.setValue(systemIsDarkMode);
     }
 
+    // Dimmed shares Daytime's base gate (Override Scene on, Night Mode
+    // off) - initially disabled (Override Scene starts unchecked), and
+    // disabled again the instant Night Mode is checked.
+    const baseDisabled = !overrideScene || isNight;
+    dimmedController.disable(baseDisabled);
+
     // Daytime only takes over from the real clock once you've explicitly
-    // opted into manual control (Override Scene) AND Night Mode is off -
-    // initially disabled (Override Scene starts unchecked), and disabled
-    // again the instant Night Mode is checked. Matches timeOverrideActive
-    // below exactly (disabled iff NOT timeOverrideActive).
-    timeOfDayController.disable(!overrideScene || isNight);
-  }, [overrideScene, isNight, systemIsDarkMode]);
+    // opted into manual control (Override Scene) AND Night Mode is off, AND
+    // additionally disabled whenever Dimmed is forcing the twilight/"Static
+    // Scene" look instead - the hour no longer matters once that's active.
+    // Matches timeOverrideActive/dimmedOverrideActive above exactly.
+    timeOfDayController.disable(baseDisabled || dimmed);
+  }, [overrideScene, isNight, systemIsDarkMode, dimmed]);
 
   // Swap the sky/fog palette and distances as night mode, twilight, and
   // time-of-day change. Fog and background share the same Color instance
@@ -873,6 +894,7 @@ const Model = React.memo(() => {
       isNight: isNight,
       overrideScene: overrideScene,
       timeOfDayHour: timeOfDayHour,
+      dimmed: dimmed,
       dockLightIntensity: dockLighting.intensity,
       dockLightAngle: dockLighting.angle,
       dockLightDepth: dockLighting.depth,
@@ -909,6 +931,11 @@ const Model = React.memo(() => {
       .add(settings, "timeOfDayHour", 7, 19, 0.25)
       .name("Daytime")
       .onChange((e: number) => setTimeOfDayHour(e));
+
+    dimmedControllerRef.current = timeOptionFolder
+      .add(settings, "dimmed")
+      .name("Dimmed")
+      .onChange((e: boolean) => setDimmed(e));
 
     ambientLightFolder
       .add(settings, "ambientLightIntensity", 0, 2)
