@@ -96,109 +96,153 @@ type TimeLightingKeyframe = {
   sparkleOpacityScale: number;
 };
 
+// 7:30am-4pm previously desaturated toward near-white/pale-pastel at the
+// midday end (noon dirColorHSL saturation 0.15, cloudWarmth 0) and swung the
+// sun almost directly overhead (noon dirPosition y=8) - both read as washed
+// out and flat against the rest of the scene's saturated, always-golden
+// diorama look (see the reference screenshot). These keep real color and
+// warmth at every hour (cloudWarmth never drops below ~0.45) and keep the
+// sun at a moderate, raking elevation throughout (peaking around y=4 at
+// noon, not 8) so the sails keep visible shadow modeling all day instead of
+// flattening out under a near-vertical light.
+// hemiColorHSL's hue is pinned to 0.62 (matching goldenHourKeyframe/the
+// original scene's sky) across every one of these, rather than drifting
+// with time-of-day mood - only saturation/lightness vary. The fixed global
+// postprocessing hue rotation below (HueSaturation's `hue` gui slider, 6
+// radians =~ -16.2deg, tuned around that one 0.62 value) was pulling any
+// lower hue down into cyan/turquoise territory instead of blue once
+// rotated, which is what actually made 9am-3pm look wrong.
 const DAWN_KEYFRAME: TimeLightingKeyframe = {
   hour: 7,
-  ambientIntensity: 0.14 * Math.PI,
-  hemiIntensity: 0.55 * Math.PI,
-  hemiColorHSL: [0.64, 0.55, 0.58],
-  hemiGroundColorHSL: [0.06, 0.6, 0.7],
-  dirIntensity: 0.38 * Math.PI,
-  dirColorHSL: [0.07, 0.8, 0.85],
-  dirPosition: [7, 1.0, 5],
-  skyBottom: 0xffd9c2,
+  ambientIntensity: 0.16 * Math.PI,
+  hemiIntensity: 0.65 * Math.PI,
+  hemiColorHSL: [0.62, 0.7, 0.5],
+  hemiGroundColorHSL: [0.05, 0.75, 0.62],
+  dirIntensity: 0.42 * Math.PI,
+  dirColorHSL: [0.05, 0.85, 0.78],
+  dirPosition: [7, 1.2, 4],
+  skyBottom: 0xffb98f,
   fogNear: 0.6,
   fogFar: 16,
-  cloudWarmth: 0.5,
-  sparkleColor: "#ffe9d6",
-  sparkleOpacityScale: 0.6,
+  cloudWarmth: 0.65,
+  sparkleColor: "#ffd9b3",
+  sparkleOpacityScale: 0.65,
 };
 const MORNING_KEYFRAME: TimeLightingKeyframe = {
   hour: 10,
-  ambientIntensity: 0.2 * Math.PI,
-  hemiIntensity: 0.85 * Math.PI,
-  hemiColorHSL: [0.58, 0.75, 0.6],
-  hemiGroundColorHSL: [0.12, 0.55, 0.78],
-  dirIntensity: 0.55 * Math.PI,
-  dirColorHSL: [0.12, 0.35, 0.94],
-  dirPosition: [5, 5, 3],
-  skyBottom: 0xeaf4ff,
+  ambientIntensity: 0.22 * Math.PI,
+  hemiIntensity: 0.88 * Math.PI,
+  hemiColorHSL: [0.62, 0.85, 0.58],
+  hemiGroundColorHSL: [0.1, 0.7, 0.72],
+  dirIntensity: 0.52 * Math.PI,
+  dirColorHSL: [0.11, 0.55, 0.9],
+  dirPosition: [5, 2.6, 3],
+  skyBottom: 0xffd6a3,
   fogNear: 0.5,
   fogFar: 17,
-  cloudWarmth: 0.15,
-  sparkleColor: "#ffffff",
+  cloudWarmth: 0.55,
+  sparkleColor: "#fff2d9",
   sparkleOpacityScale: 0.9,
 };
+// (hemiColorHSL hue pinned to 0.62 here too - see the comment above DAWN.)
+// The sun position here (and at 15:00 below) deliberately keeps a strong
+// horizontal offset rather than swinging up toward vertical - a near-
+// overhead light was hitting the glass roof material (near-mirror, 0.08
+// roughness in day mode - see glassMaterial in mesh.tsx) at close to normal
+// incidence, mirror-reflecting the light straight at the camera and blowing
+// Bloom out into a solid white blob across the sails. Keeping the elevation
+// modest and the horizontal component large avoids that hotspot angle
+// entirely while still reading as "midday" through color/brightness alone.
 const NOON_KEYFRAME: TimeLightingKeyframe = {
   hour: 12,
   ambientIntensity: 0.24 * Math.PI,
-  hemiIntensity: 0.95 * Math.PI,
-  hemiColorHSL: [0.56, 0.85, 0.62],
-  hemiGroundColorHSL: [0.13, 0.45, 0.82],
-  dirIntensity: 0.62 * Math.PI,
-  dirColorHSL: [0.14, 0.15, 0.98],
-  dirPosition: [1, 8, 0],
-  skyBottom: 0xdcefff,
+  hemiIntensity: 0.92 * Math.PI,
+  hemiColorHSL: [0.62, 0.9, 0.58],
+  hemiGroundColorHSL: [0.12, 0.6, 0.78],
+  dirIntensity: 0.5 * Math.PI,
+  dirColorHSL: [0.13, 0.35, 0.95],
+  dirPosition: [3, 2.4, -1],
+  skyBottom: 0xffd9a3,
   fogNear: 0.45,
   fogFar: 18,
-  cloudWarmth: 0,
-  sparkleColor: "#ffffff",
+  cloudWarmth: 0.45,
+  sparkleColor: "#fff8e6",
   sparkleOpacityScale: 1,
 };
 const AFTERNOON_KEYFRAME: TimeLightingKeyframe = {
   hour: 15,
   ambientIntensity: 0.22 * Math.PI,
-  hemiIntensity: 0.88 * Math.PI,
-  hemiColorHSL: [0.6, 0.85, 0.6],
-  hemiGroundColorHSL: [0.1, 0.6, 0.78],
-  dirIntensity: 0.58 * Math.PI,
-  dirColorHSL: [0.11, 0.4, 0.95],
-  dirPosition: [-3, 5.5, -2],
-  skyBottom: 0xf3e4c8,
+  hemiIntensity: 0.9 * Math.PI,
+  hemiColorHSL: [0.62, 0.95, 0.56],
+  hemiGroundColorHSL: [0.09, 0.75, 0.75],
+  dirIntensity: 0.6 * Math.PI,
+  dirColorHSL: [0.1, 0.7, 0.88],
+  dirPosition: [-3, 2.6, -1.5],
+  skyBottom: 0xffcf9e,
   fogNear: 0.48,
   fogFar: 18,
-  cloudWarmth: 0.45,
-  sparkleColor: "#fff6ea",
-  sparkleOpacityScale: 0.95,
+  cloudWarmth: 0.75,
+  sparkleColor: "#ffe6c2",
+  sparkleOpacityScale: 0.97,
 };
+// 19:00 is a real, visible step dimmer than goldenHourKeyframe - about 70%
+// of its light intensities, with lightness pulled down a good deal further
+// too (hue/saturation stay identical to golden hour; see the note below on
+// why saturation must never drop). An earlier, much gentler version of this
+// (differing from golden hour by only ~5%) looked completely unchanged in
+// the actual EffectComposer output - the fixed Bloom/ColorAverage/tone-
+// mapping chain (tuned only around the one original golden-hour look)
+// compresses small differences away entirely, so "gentle" has to mean
+// perceptually gentle after that pipeline, not numerically gentle before it.
+// hemiColorHSL/dirColorHSL/hemiGroundColorHSL keep the exact same hue AND
+// saturation as goldenHourKeyframe (0.62/1 and 0.095-0.1/1) and only step
+// lightness down - saturation has to stay matched, not drop: desaturating a
+// color while holding its lightness constant makes it paler/whiter, which
+// reads as BRIGHTER even though the underlying light intensities are lower.
+// That's what made an earlier version of this get steadily brighter past
+// 17:00 instead of dimmer.
 const DUSK_KEYFRAME: TimeLightingKeyframe = {
   hour: 19,
-  ambientIntensity: 0.1 * Math.PI,
-  hemiIntensity: 0.4 * Math.PI,
-  hemiColorHSL: [0.68, 0.55, 0.4],
-  hemiGroundColorHSL: [0.04, 0.6, 0.55],
-  dirIntensity: 0.3 * Math.PI,
-  dirColorHSL: [0.02, 0.55, 0.68],
-  dirPosition: [-8, 0.6, 6],
-  skyBottom: 0xd98a6b,
-  fogNear: 0.7,
-  fogFar: 15,
+  ambientIntensity: 0.14 * Math.PI,
+  hemiIntensity: 0.56 * Math.PI,
+  hemiColorHSL: [0.62, 1, 0.42],
+  hemiGroundColorHSL: [0.095, 1, 0.5],
+  dirIntensity: 0.35 * Math.PI,
+  dirColorHSL: [0.1, 1, 0.75],
+  dirPosition: [-6.5, 0.95, 5.25],
+  skyBottom: 0xe8985a,
+  fogNear: 0.6,
+  fogFar: 16,
   cloudWarmth: 1,
-  sparkleColor: "#ffd9c2",
-  sparkleOpacityScale: 0.7,
+  sparkleColor: "#ffcf8a",
+  sparkleOpacityScale: 0.8,
 };
 
 // The one static "outside daylight hours" look used whenever the OS/browser
 // theme is light but the real clock (or the overridden time slider) falls
-// before 7am or at/after 7pm - see isTwilight in Model. Deliberately close
-// in tone to DUSK_KEYFRAME/DAWN_KEYFRAME (same deep blue-violet family) so
-// crossing the 7pm/7am boundary reads as a continuation of dusk/dawn rather
-// than a hard cut, while still being clearly dimmer/cooler than either -
-// "a little past 7pm, a little before 7am" as one shared scene, not two.
-const TWILIGHT_AMBIENT_INTENSITY = 0.05 * Math.PI;
-const TWILIGHT_HEMI_INTENSITY = 0.22 * Math.PI;
-const TWILIGHT_HEMI_COLOR = new THREE.Color().setHSL(0.68, 0.5, 0.3);
-const TWILIGHT_HEMI_GROUND_COLOR = new THREE.Color().setHSL(0.66, 0.35, 0.22);
+// before 7am or at/after 7pm - see isTwilight in Model. Continues the same
+// gentle GOLDEN_HOUR->DUSK slope one step further (same hue/saturation
+// again, lightness/intensity stepped down a little more) rather than a
+// separate, steeper "getting dark" curve - it's meant to read as "a few
+// minutes past 7pm" or "a few minutes before 7am", not as the start of
+// night. Actual night is a completely separate system (NIGHT_* above, gated
+// on OS/manual dark mode), so this never needs to get anywhere near that
+// dark.
+const TWILIGHT_AMBIENT_INTENSITY = 0.08 * Math.PI;
+const TWILIGHT_HEMI_INTENSITY = 0.32 * Math.PI;
+const TWILIGHT_HEMI_COLOR = new THREE.Color().setHSL(0.62, 1, 0.24);
+const TWILIGHT_HEMI_GROUND_COLOR = new THREE.Color().setHSL(0.095, 1, 0.25);
 const TWILIGHT_DIR_INTENSITY = 0.2 * Math.PI;
-const TWILIGHT_DIR_COLOR = new THREE.Color().setHSL(0.72, 0.3, 0.55);
-const TWILIGHT_SUN_POSITION = new THREE.Vector3(-8.5, 0.3, 6.2);
-const TWILIGHT_SKY_BOTTOM = new THREE.Color(0x453a5e);
-const TWILIGHT_FOG_NEAR = 0.9;
-const TWILIGHT_FOG_FAR = 13;
-const TWILIGHT_CLOUD_COLOR = "#352f52";
-const TWILIGHT_CLOUD_OPACITY_SCALE = 0.55;
-const TWILIGHT_SPARKLE_COLOR = "#cdd8ff";
-const TWILIGHT_SPARKLE_OPACITY_SCALE = 0.45;
-const TWILIGHT_SPARKLES_COUNT = 45;
+const TWILIGHT_DIR_COLOR = new THREE.Color().setHSL(0.1, 1, 0.55);
+const TWILIGHT_SUN_POSITION = new THREE.Vector3(-6.8, 0.8, 5.4);
+const TWILIGHT_SKY_BOTTOM = new THREE.Color(0xd65a0f);
+const TWILIGHT_FOG_NEAR = 0.65;
+const TWILIGHT_FOG_FAR = 15;
+const TWILIGHT_CLOUD_COLOR = "#c07040";
+const TWILIGHT_CLOUD_OPACITY_SCALE = 0.88;
+const TWILIGHT_SPARKLE_COLOR = "#ffb870";
+const TWILIGHT_SPARKLE_OPACITY_SCALE = 0.7;
+const TWILIGHT_SPARKLES_COUNT = 55;
 
 // Pale, cool near-white the day clouds desaturate toward at cloudWarmth=0
 // (crisp midday puffs) before blending back up to each cloud's own hard-
@@ -443,9 +487,12 @@ const Model = React.memo(() => {
   const effectiveHour = timeOverrideActive ? timeOfDayHour : realHour;
   // The one extra "outside daylight hours" scene (see TWILIGHT_* above) -
   // only relevant in day mode; night mode already has its own always-on look
-  // regardless of clock time.
+  // regardless of clock time. Strictly > 19 (not >= 19) so hour 19 exactly -
+  // the Daytime slider's own max value - still resolves to DUSK_KEYFRAME via
+  // the day interpolation below rather than jumping straight to the twilight
+  // look right at the boundary you're most likely to actually test.
   const isTwilight =
-    !effectiveIsNight && (effectiveHour < 7 || effectiveHour >= 19);
+    !effectiveIsNight && (effectiveHour < 7 || effectiveHour > 19);
   // One entry per sail floodlight - position, target ("rotation": a
   // spotLight aims from position at target rather than having a rotation
   // of its own, so target x/y/z is what the GUI calls Rotation X/Y/Z),
