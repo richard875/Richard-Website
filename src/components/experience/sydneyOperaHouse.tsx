@@ -165,6 +165,32 @@ const Model = React.memo(() => {
   const [dofBokehScale, setDofBokehScale] = React.useState(5);
   const [groundCloudGap, setGroundCloudGap] = React.useState(2.5);
   const [isNight, setIsNight] = React.useState(true);
+  // Off by default: day/night instead tracks the visitor's OS-level
+  // light/dark theme preference (see systemIsDarkMode below). Flipping this
+  // on lets the manual "Night Mode" checkbox above take over completely -
+  // while off, that checkbox still exists in the GUI but has no effect,
+  // since effectiveIsNight (below) ignores it entirely.
+  const [overrideScene, setOverrideScene] = React.useState(false);
+  // Mirrors the OS `prefers-color-scheme` media query. Not routed through
+  // the shared useDarkModeManager hook (used elsewhere on this page) -
+  // that hook's job also includes driving `document.body.style.
+  // backgroundColor`, a side effect this 3D scene has no business
+  // triggering a second time.
+  const [systemIsDarkMode, setSystemIsDarkMode] = React.useState(true);
+
+  React.useEffect(() => {
+    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateSystemIsDarkMode = () =>
+      setSystemIsDarkMode(mediaQueryList.matches);
+    mediaQueryList.addEventListener("change", updateSystemIsDarkMode);
+    updateSystemIsDarkMode();
+    return () =>
+      mediaQueryList.removeEventListener("change", updateSystemIsDarkMode);
+  }, []);
+
+  // The value every day/night branch below actually reads - the OS theme by
+  // default, or the manual "Night Mode" checkbox once Override Scene is on.
+  const effectiveIsNight = overrideScene ? isNight : systemIsDarkMode;
   // One entry per sail floodlight - position, target ("rotation": a
   // spotLight aims from position at target rather than having a rotation
   // of its own, so target x/y/z is what the GUI calls Rotation X/Y/Z),
@@ -261,30 +287,36 @@ const Model = React.memo(() => {
 
   // Night mode swaps in fixed lighting/atmosphere values instead of the day
   // gui sliders above, so toggling it never disturbs the day-tuned values.
-  const effectiveAmbientIntensity = isNight
+  const effectiveAmbientIntensity = effectiveIsNight
     ? NIGHT_AMBIENT_INTENSITY
     : ambientLightIntensity;
-  const effectiveHemiIntensity = isNight
+  const effectiveHemiIntensity = effectiveIsNight
     ? NIGHT_HEMI_INTENSITY
     : hemiLightIntensity;
-  const effectiveHemiColor = isNight ? NIGHT_HEMI_COLOR : hemiLightColor;
-  const effectiveHemiGroundColor = isNight
+  const effectiveHemiColor = effectiveIsNight
+    ? NIGHT_HEMI_COLOR
+    : hemiLightColor;
+  const effectiveHemiGroundColor = effectiveIsNight
     ? NIGHT_HEMI_GROUND_COLOR
     : hemiGroundColor;
-  const effectiveDirIntensity = isNight
+  const effectiveDirIntensity = effectiveIsNight
     ? NIGHT_DIR_INTENSITY
     : dirLightIntensity;
-  const effectiveDirColor = isNight ? NIGHT_DIR_COLOR : dirLightColor;
+  const effectiveDirColor = effectiveIsNight
+    ? NIGHT_DIR_COLOR
+    : dirLightColor;
   // Fixed moon position at night instead of the day light's randomized spot,
   // so the visible moon disc and the water's moon-glint always agree.
-  const effectiveDirPosition = isNight ? NIGHT_MOON_POSITION : dirPosition;
+  const effectiveDirPosition = effectiveIsNight
+    ? NIGHT_MOON_POSITION
+    : dirPosition;
 
   // The Cloud puffs are unlit, so night-dimming them means swapping their
   // color/opacity directly rather than relying on scene light intensity.
   const cloudColor = (dayColor: string) =>
-    isNight ? NIGHT_CLOUD_COLOR : dayColor;
+    effectiveIsNight ? NIGHT_CLOUD_COLOR : dayColor;
   const resolveCloudOpacity = (mult: number) =>
-    cloudOpacity * mult * (isNight ? NIGHT_CLOUD_OPACITY_SCALE : 1);
+    cloudOpacity * mult * (effectiveIsNight ? NIGHT_CLOUD_OPACITY_SCALE : 1);
 
   const uniforms = React.useMemo(
     () => ({
@@ -310,14 +342,20 @@ const Model = React.memo(() => {
   // it here keeps the horizon and the fog blending seamlessly either way.
   React.useEffect(() => {
     if (!scene.fog) return;
-    uniforms.topColor.value.copy(isNight ? NIGHT_SKY_TOP : hemiLightColor);
+    uniforms.topColor.value.copy(
+      effectiveIsNight ? NIGHT_SKY_TOP : hemiLightColor,
+    );
     uniforms.bottomColor.value.copy(
-      isNight ? NIGHT_SKY_BOTTOM : DAY_SKY_BOTTOM,
+      effectiveIsNight ? NIGHT_SKY_BOTTOM : DAY_SKY_BOTTOM,
     );
     scene.fog.color.copy(uniforms.bottomColor.value);
-    (scene.fog as THREE.Fog).near = isNight ? NIGHT_FOG_NEAR : DAY_FOG_NEAR;
-    (scene.fog as THREE.Fog).far = isNight ? NIGHT_FOG_FAR : DAY_FOG_FAR;
-  }, [isNight]);
+    (scene.fog as THREE.Fog).near = effectiveIsNight
+      ? NIGHT_FOG_NEAR
+      : DAY_FOG_NEAR;
+    (scene.fog as THREE.Fog).far = effectiveIsNight
+      ? NIGHT_FOG_FAR
+      : DAY_FOG_FAR;
+  }, [effectiveIsNight]);
 
   // Subtle camera parallax that drifts toward the pointer for a sense of depth.
   useFrame((state, delta) => {
@@ -405,6 +443,7 @@ const Model = React.memo(() => {
       dofBokehScale: dofBokehScale,
       groundCloudGap: groundCloudGap,
       isNight: isNight,
+      overrideScene: overrideScene,
       dockLightIntensity: dockLighting.intensity,
       dockLightAngle: dockLighting.angle,
       dockLightDepth: dockLighting.depth,
@@ -416,10 +455,22 @@ const Model = React.memo(() => {
       streetlampTargetForwardOffset: streetlampLighting.targetForwardOffset,
     };
 
-    nightFolder
+    // Disabled unless Override Scene is checked - while off, this checkbox
+    // is visible but inert, since effectiveIsNight ignores its value
+    // entirely and follows the OS theme instead.
+    const nightModeController = nightFolder
       .add(settings, "isNight")
       .name("Night Mode")
       .onChange((e: boolean) => setIsNight(e));
+    nightModeController.disable(!overrideScene);
+
+    nightFolder
+      .add(settings, "overrideScene")
+      .name("Override Scene")
+      .onChange((e: boolean) => {
+        setOverrideScene(e);
+        nightModeController.disable(!e);
+      });
 
     ambientLightFolder
       .add(settings, "ambientLightIntensity", 0, 2)
@@ -727,15 +778,17 @@ const Model = React.memo(() => {
         />
       </mesh>
       <Sparkles
-        count={isNight ? 30 : 60}
+        count={effectiveIsNight ? 30 : 60}
         scale={[4, 2.2, 4]}
-        size={isNight ? 1.2 : 1.8}
+        size={effectiveIsNight ? 1.2 : 1.8}
         speed={0.25}
-        opacity={isNight ? Math.min(sparklesOpacity, 0.15) : sparklesOpacity}
-        color={isNight ? "#dce8ff" : "#fff3e0"}
+        opacity={
+          effectiveIsNight ? Math.min(sparklesOpacity, 0.15) : sparklesOpacity
+        }
+        color={effectiveIsNight ? "#dce8ff" : "#fff3e0"}
         position={[0, 0.6, 0]}
       />
-      {isNight && (
+      {effectiveIsNight && (
         <group position={NIGHT_MOON_POSITION}>
           {/* Tone-mapped like everything else - an unclamped, un-tonemapped
               bright point here fed a raw HDR spike into DepthOfField/Bloom
@@ -908,7 +961,7 @@ const Model = React.memo(() => {
         <Inspector>
           <Mesh
             sunDirection={effectiveDirPosition}
-            isNight={isNight}
+            isNight={effectiveIsNight}
             sailFloodlights={sailFloodlights}
             dockLighting={dockLighting}
             streetlampLighting={streetlampLighting}
@@ -935,7 +988,7 @@ const Model = React.memo(() => {
           // glows into rainbow artifacts. Paying full price for a pass whose
           // own tuning makes it barely visible isn't worth it, so it's
           // skipped outright at night rather than just dialed down.
-          !isNight && (
+          !effectiveIsNight && (
             <DepthOfField
               key="dof"
               target={[0, 0.45, 0]} // keep the model in focus, let everything else go dreamy
@@ -945,7 +998,9 @@ const Model = React.memo(() => {
           ),
           <Bloom
             key="bloom"
-            intensity={isNight ? Math.min(bloomIntensity, 9) : bloomIntensity} // The bloom intensity.
+            intensity={
+              effectiveIsNight ? Math.min(bloomIntensity, 9) : bloomIntensity
+            } // The bloom intensity.
             blurPass={undefined} // A blur pass.
             // A fixed, moderate resolution instead of AUTO_SIZE (which
             // tracks the full canvas size) keeps Bloom's internal
@@ -955,9 +1010,11 @@ const Model = React.memo(() => {
             // the sharp base image.
             width={480}
             height={480}
-            kernelSize={isNight ? KernelSize.MEDIUM : KernelSize.LARGE} // blur kernel size
+            kernelSize={effectiveIsNight ? KernelSize.MEDIUM : KernelSize.LARGE} // blur kernel size
             luminanceThreshold={
-              isNight ? Math.max(luminanceThreshold, 1.0) : luminanceThreshold
+              effectiveIsNight
+                ? Math.max(luminanceThreshold, 1.0)
+                : luminanceThreshold
             } // luminance threshold. Raise this value to mask out darker elements in the scene.
             // REFLECT is a steep, non-linear blend - tiny per-frame
             // brightness changes near the threshold (a moving specular
@@ -965,9 +1022,13 @@ const Model = React.memo(() => {
             // flicker. ADD is a flat, linear blend that scales smoothly
             // with brightness instead.
             luminanceSmoothing={
-              isNight ? Math.max(luminanceSmoothing, 0.9) : luminanceSmoothing
+              effectiveIsNight
+                ? Math.max(luminanceSmoothing, 0.9)
+                : luminanceSmoothing
             } // smoothness of the luminance threshold. Range is [0, 1]
-            blendFunction={isNight ? BlendFunction.ADD : BlendFunction.REFLECT} // blend mode
+            blendFunction={
+              effectiveIsNight ? BlendFunction.ADD : BlendFunction.REFLECT
+            } // blend mode
           />,
           <BrightnessContrast
             key="brightness-contrast"

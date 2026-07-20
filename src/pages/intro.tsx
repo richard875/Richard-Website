@@ -272,6 +272,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           <SydneyOperaHouse />
         </motion.div>
         <SydneyOperaHouseInfoText
+          $isDarkMode={isDarkMode}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
@@ -425,7 +426,7 @@ const Right = styled.div`
   }
 `;
 
-const SydneyOperaHouseInfoText = styled(motion.div)`
+const SydneyOperaHouseInfoText = styled(motion.div)<{ $isDarkMode: boolean }>`
   left: 0;
   right: 0;
   bottom: 10%;
@@ -434,6 +435,7 @@ const SydneyOperaHouseInfoText = styled(motion.div)`
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 `;
 
 const Cta = styled(motion.div)`
