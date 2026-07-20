@@ -26,8 +26,8 @@ import {
 // further into the site), white when it doesn't (a "Home"/"Back" link) —
 // so it reads as forward-vs-back rather than matching IntroBadge's look.
 //
-// `isDarkMode` no longer affects this component's own colours — accentColor/
-// contrastColor are decided by `forward` alone now. It's kept purely to pass
+// `isDarkMode` no longer affects this component's own colours — accentColor
+// is decided by `forward` alone now. It's kept purely to pass
 // through to `routeTo` below, which still needs it to pick the right
 // page-transition overlay colour.
 //
@@ -69,7 +69,6 @@ const PillCallToAction = ({
   invertOnly?: boolean;
 }) => {
   const accentColor = forward ? Color.BRIGHT_GREEN : Color.WHITE;
-  const contrastColor = forward ? Color.BLACK : Color.BLACK;
   const wiggleControls = useAnimationControls();
 
   return (
@@ -81,10 +80,10 @@ const PillCallToAction = ({
         invertOnly
           ? {
               backgroundColor: accentColor,
-              color: contrastColor,
+              color: Color.BLACK,
               transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
             }
-          : badgeHoverEffect(accentColor, contrastColor)
+          : badgeHoverEffect(accentColor, Color.BLACK)
       }
       whileTap={invertOnly ? undefined : motionTapEffect}
       onMouseEnter={() => {
