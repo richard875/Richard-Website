@@ -11,7 +11,7 @@ import { WATER_VERTEX_SHADER, WATER_FRAGMENT_SHADER } from "./shader";
 import AnimatedBoat from "./AnimatedBoat";
 import { IS_DEV } from "../../constants/environment";
 
-const MODEL_PATH = "/models/sydneyOperaHouse/sydneyOperaHouse.gltf";
+const MODEL_PATH = "/models/sydneyOperaHouse.gltf";
 
 // Fallback used only if no scene sun direction is supplied.
 const DEFAULT_SUN_DIRECTION = new THREE.Vector3(0.6, 0.2, 0.4);

@@ -28,7 +28,7 @@ import Inspector from "./inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
 import { GLOBAL_VERTEX_SHADER, GLOBAL_FRAGMENT_SHADER } from "./shader";
-import cloudTexture from "../../../static/models/sydneyOperaHouse/cloud.png";
+import cloudTexture from "../../../static/models/cloud.png";
 
 // Fixed night-mode tuning, kept separate from the day gui sliders so flipping
 // "Night Mode" doesn't disturb the day look those sliders control.
@@ -293,9 +293,7 @@ const Model = React.memo(() => {
   const effectiveDirIntensity = effectiveIsNight
     ? NIGHT_DIR_INTENSITY
     : dirLightIntensity;
-  const effectiveDirColor = effectiveIsNight
-    ? NIGHT_DIR_COLOR
-    : dirLightColor;
+  const effectiveDirColor = effectiveIsNight ? NIGHT_DIR_COLOR : dirLightColor;
   // Fixed moon position at night instead of the day light's randomized spot,
   // so the visible moon disc and the water's moon-glint always agree.
   const effectiveDirPosition = effectiveIsNight
