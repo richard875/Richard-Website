@@ -285,7 +285,10 @@ const interpolateDayLighting = (
   let lower = keyframes[0];
   let upper = keyframes[keyframes.length - 1];
   for (let i = 0; i < keyframes.length - 1; i++) {
-    if (clampedHour >= keyframes[i].hour && clampedHour <= keyframes[i + 1].hour) {
+    if (
+      clampedHour >= keyframes[i].hour &&
+      clampedHour <= keyframes[i + 1].hour
+    ) {
       lower = keyframes[i];
       upper = keyframes[i + 1];
       break;
@@ -301,14 +304,22 @@ const interpolateDayLighting = (
       upper.ambientIntensity,
       t,
     ),
-    hemiIntensity: THREE.MathUtils.lerp(lower.hemiIntensity, upper.hemiIntensity, t),
+    hemiIntensity: THREE.MathUtils.lerp(
+      lower.hemiIntensity,
+      upper.hemiIntensity,
+      t,
+    ),
     hemiColorHSL: lerpHSL(lower.hemiColorHSL, upper.hemiColorHSL, t),
     hemiGroundColorHSL: lerpHSL(
       lower.hemiGroundColorHSL,
       upper.hemiGroundColorHSL,
       t,
     ),
-    dirIntensity: THREE.MathUtils.lerp(lower.dirIntensity, upper.dirIntensity, t),
+    dirIntensity: THREE.MathUtils.lerp(
+      lower.dirIntensity,
+      upper.dirIntensity,
+      t,
+    ),
     dirColorHSL: lerpHSL(lower.dirColorHSL, upper.dirColorHSL, t),
     dirPosition: lerpVec3(lower.dirPosition, upper.dirPosition, t),
     skyBottom: new THREE.Color(lower.skyBottom)
@@ -718,7 +729,7 @@ const Model = React.memo(() => {
     scene.fog.color.copy(uniforms["bottomColor"].value);
 
     // Lil GUI Settings
-    if (IS_DEV) createPanel();
+    if (IS_DEV || window.location.hash === "#debug") createPanel();
   }, []);
 
   // Keeps the Time Option gui in sync with overrideScene/isNight/
