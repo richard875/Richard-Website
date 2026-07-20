@@ -398,10 +398,10 @@ export const DEFAULT_SAIL_FLOODLIGHTS: SailFloodlightConfig[] = [
     intensity: 20,
   },
   {
-    position: [1.116, 0.143, -0.6],
-    target: [0.34, 0.503, -0.916],
-    angle: 0.4,
-    intensity: 6,
+    position: [1.34, 0.14, -0.38],
+    target: [0.08, 0.56, -1.03],
+    angle: 0.28,
+    intensity: 20,
   },
 ];
 const SAIL_FLOODLIGHT_COLOR = "#f4f9ff";
