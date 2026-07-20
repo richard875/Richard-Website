@@ -1,6 +1,6 @@
 import React from "react";
 import * as THREE from "three";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, useHelper } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import {
@@ -314,7 +314,10 @@ const NightGlowInstances = ({
   }, [positions]);
 
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, positions.length]}>
+    <instancedMesh
+      ref={meshRef}
+      args={[undefined, undefined, positions.length]}
+    >
       <sphereGeometry args={[radius, 12, 12]} />
       <meshBasicMaterial color={dotColor} />
     </instancedMesh>
@@ -477,8 +480,10 @@ const SailFloodlight = ({
 //    density would be a heavy per-fragment cost for every standard-material
 //    surface in the scene for no visible gain over the shader-side glow
 //    below.
-//  - DOCK_SPOTLIGHT_POSITIONS: a much sparser evenly-spaced set of real
-//    spotLights, for actual beams/highlights on the water surface.
+//  - the hand-placed TREE_SIDE/EAST_WALL/SOUTH_WALL/WEST_WALL/NOTCH_DOCK_LIGHT
+//    fixtures below: a much sparser set of real spotLights, each given as a
+//    percentage along one wall of the loop, for actual beams/highlights on
+//    the water surface.
 //  - DOCK_GLOW_SAMPLES: a medium-density set consumed by the water shader to
 //    paint a continuous underwater glow band - a distance-to-nearest-sample
 //    falloff is inherently seamless, which satisfies "no visible dark gaps"
@@ -624,47 +629,70 @@ const DOCK_LED_MARKERS: [number, number, number, number][] = [
   [-1.127, 1.0537, -0.9035, -0.4285],
 ];
 
-// [x, z, outwardX, outwardZ]
-const DOCK_SPOTLIGHT_POSITIONS: [number, number, number, number][] = [
-  [-1.1583, 1.1197, 0, 1],
-  [-0.5459, 1.1197, 0, 1],
-  [0.0664, 1.1197, 0, 1],
-  [0.6788, 1.1197, 0, 1],
-  [0.8496, 0.6782, 0, 1],
-  [1.2283, 0.6938, 1, 0],
-  [1.0837, 0.4735, -1, 0],
-  [0.7672, 0.1794, 1, 0],
-  [0.7672, -0.4329, 1, 0],
-  [0.7672, -1.0453, 1, 0],
-  [0.3031, -1.3393, 0.3759, -0.9267],
-  [-0.292, -1.4459, 0, -1],
-  [-0.7238, -1.0897, -0.9658, -0.2592],
-  [-0.8522, -0.5589, -1, 0],
-  [-0.92, 0.0087, -1, 0],
-  [-0.8959, 0.5664, -0.9035, -0.4285],
-];
-
-// Real fixtures thinned to roughly every other position - the array above
-// is already evenly spaced around the waterline perimeter, so taking every
-// other entry mostly keeps that even spacing. DOCK_LIGHT_DISTANCE is
-// widened below to compensate for the doubled spacing between what's left.
+// Real dock spotlights - a sparse, hand-placed set of fixtures, each given
+// as a percentage along one wall of the DOCK_LED_MARKERS loop above (walked
+// in the same direction: increasing marker index runs left-to-right/start-
+// to-end of each wall) rather than a raw [x, z] pair, so a wall's fixture
+// count/spacing can be retuned without hand-computing new coordinates.
+// Straight walls are interpolated as a straight line; the curved south wall
+// is arc-length interpolated along the actual marker polyline instead.
 //
-// The straight run from index 0-3 (z=1.1197, the edge nearest the tree
-// line, spanning x=-1.1583 to x=0.7428 per DOCK_LED_MARKERS above - a
-// 1.9011 unit run) is the one exception: plain i%2===0 thinning keeps 0
-// and 2, which land unevenly along that run rather than an even split.
-// These two points are interpolated directly at 30%/70% along the run
-// instead, replacing indices 0-3 entirely.
+// Tree-line/stairs wall: z=1.1197, x=-1.1583 to x=0.7428 (a 1.9011 unit
+// straight run).
 const TREE_SIDE_DOCK_LIGHT_A: [number, number, number, number] = [
   -0.588, 1.1197, 0, 1,
 ]; // 30% along the run
 const TREE_SIDE_DOCK_LIGHT_B: [number, number, number, number] = [
   0.1725, 1.1197, 0, 1,
 ]; // 70% along the run
+
+// East wall, immediately 90° clockwise from the tree-line/stairs wall:
+// x=0.7672, z=0.4445 to z=-1.091 (a 1.5355 unit straight run).
+const EAST_WALL_DOCK_LIGHT_A: [number, number, number, number] = [
+  0.7672, 0.1374, 1, 0,
+]; // 20% along the run
+const EAST_WALL_DOCK_LIGHT_B: [number, number, number, number] = [
+  0.7672, -0.6304, 1, 0,
+]; // 70% along the run
+
+// South wall - the curved run rounding the promenade's southern tip, from
+// the east wall's end (0.7672, -1.091) to the west wall's start
+// (-0.8522, -0.9154); ~2.007 units of actual polyline.
+const SOUTH_WALL_DOCK_LIGHT_A: [number, number, number, number] = [
+  0.3424, -1.3171, 0.3759, -0.9267,
+]; // 25% along the run
+const SOUTH_WALL_DOCK_LIGHT_B: [number, number, number, number] = [
+  -0.5268, -1.3825, -0.5977, -0.8017,
+]; // 70% along the run
+
+// West wall, from the south wall's end to where the loop turns onto the
+// diagonal run back up toward the tree line. x steps from -0.8522 to -0.92
+// partway through, but the step (0.0327 units) is small enough that this
+// still reads as one straight wall (~1.365 units of actual polyline).
+const WEST_WALL_DOCK_LIGHT_A: [number, number, number, number] = [
+  -0.8522, -0.6424, -1, 0,
+]; // 20% along the run
+const WEST_WALL_DOCK_LIGHT_B: [number, number, number, number] = [
+  -0.92, 0.0196, -1, 0,
+]; // 70% along the run
+
+// The short diagonal run connecting the west wall's end back up to the
+// tree-line wall's start (-0.92, 0.4291) to (-1.1583, 1.1197); ~0.781 units
+// of actual polyline, arc-length interpolated same as the south wall above.
+const NOTCH_DOCK_LIGHT: [number, number, number, number] = [
+  -0.991, 0.7669, -0.9035, -0.4285,
+]; // 50% along the run (the middle)
+
 const THINNED_DOCK_SPOTLIGHT_POSITIONS = [
   TREE_SIDE_DOCK_LIGHT_A,
   TREE_SIDE_DOCK_LIGHT_B,
-  ...[4, 6, 8, 10, 12, 14].map((i) => DOCK_SPOTLIGHT_POSITIONS[i]),
+  EAST_WALL_DOCK_LIGHT_A,
+  EAST_WALL_DOCK_LIGHT_B,
+  SOUTH_WALL_DOCK_LIGHT_A,
+  SOUTH_WALL_DOCK_LIGHT_B,
+  WEST_WALL_DOCK_LIGHT_A,
+  WEST_WALL_DOCK_LIGHT_B,
+  NOTCH_DOCK_LIGHT,
 ];
 
 // [x, z] - deliberately coarser than DOCK_LED_MARKERS; consumed by the water
@@ -713,19 +741,20 @@ export type DockLightingConfig = {
   glowIntensity: number;
 };
 export const DEFAULT_DOCK_LIGHTING: DockLightingConfig = {
-  intensity: 0.6,
-  angle: 1.2,
-  depth: 0.035,
+  intensity: 2,
+  angle: 1.045,
+  depth: 0.005,
   glowRadius: 0.3,
   glowIntensity: 0.45,
 };
 const DOCK_LED_COLOR = "#d7f3ff";
 const DOCK_LIGHT_COLOR = "#bfe9ff"; // cool marine-grade LED white
 const DOCK_LIGHT_PENUMBRA = 0.6;
-// Widened from 0.5 (tuned for all 16 fixtures) now that only every other
-// fixture is real (THINNED_DOCK_SPOTLIGHT_POSITIONS) - the doubled spacing
-// needs a proportionally wider pool so coverage still overlaps into one
-// continuous glow along the waterline instead of leaving visible gaps.
+// Widened from 0.5 (tuned for a denser, evenly-spaced fixture set) to suit
+// the sparser hand-placed THINNED_DOCK_SPOTLIGHT_POSITIONS above - the wider
+// gaps between fixtures need a proportionally wider pool so coverage still
+// overlaps into one continuous glow along the waterline instead of leaving
+// visible gaps.
 const DOCK_LIGHT_DISTANCE = 0.9;
 // How far outward (beam-angle-overlap territory) and how far further down
 // the aim target sits, relative to the fixture itself - this is what gives
@@ -752,6 +781,11 @@ const DockLight = ({
 }) => {
   const lightRef = React.useRef<THREE.SpotLight>(null!);
   const targetRef = React.useRef<THREE.Object3D>(null);
+
+  // Dev-only wireframe cone showing exactly where each of the 8 dock
+  // fixtures sits and what it's aimed at. IS_DEV-gated, so this is a no-op
+  // (and zero runtime cost) in production.
+  // useHelper(IS_DEV && lightRef, THREE.SpotLightHelper);
 
   React.useEffect(() => {
     if (lightRef.current && targetRef.current) {
@@ -1222,12 +1256,16 @@ const Mesh = ({
     const treesGeometries = TREE_INSTANCES.map((instance) =>
       (nodes[instance.treesNode] as THREE.Mesh).geometry
         .clone()
-        .applyMatrix4(buildLocalMatrix(instance.position, instance.rotation, 2)),
+        .applyMatrix4(
+          buildLocalMatrix(instance.position, instance.rotation, 2),
+        ),
     );
     const woodGeometries = TREE_INSTANCES.map((instance) =>
       (nodes[instance.woodNode] as THREE.Mesh).geometry
         .clone()
-        .applyMatrix4(buildLocalMatrix(instance.position, instance.rotation, 2)),
+        .applyMatrix4(
+          buildLocalMatrix(instance.position, instance.rotation, 2),
+        ),
     );
     return {
       trees: mergeGeometries(treesGeometries),

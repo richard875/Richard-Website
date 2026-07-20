@@ -569,15 +569,15 @@ const Model = React.memo(() => {
       .name("Intensity")
       .onChange((e: number) => updateDockLighting("intensity", e));
     dockLightingFolder
-      .add(settings, "dockLightAngle", 0.05, 5)
+      .add(settings, "dockLightAngle", 0.05, 10)
       .name("Beam Angle")
       .onChange((e: number) => updateDockLighting("angle", e));
     dockLightingFolder
-      .add(settings, "dockLightDepth", 0, 5)
+      .add(settings, "dockLightDepth", -10, 10)
       .name("Depth Offset")
       .onChange((e: number) => updateDockLighting("depth", e));
     dockLightingFolder
-      .add(settings, "dockGlowRadius", 0.05, 3)
+      .add(settings, "dockGlowRadius", 0.05, 10)
       .name("Glow Radius")
       .onChange((e: number) => updateDockLighting("glowRadius", e));
     dockLightingFolder
