@@ -717,7 +717,16 @@ const Model = React.memo(() => {
     scene.fog.color.copy(uniforms["bottomColor"].value);
 
     // Lil GUI Settings
-    if (IS_DEV || window.location.hash === "#debug") createPanel();
+    // createPanel appends the panel's DOM node straight to document.body,
+    // outside React's tree, so it's never cleaned up by React unmounting
+    // this component on its own - Gatsby's client-side route change would
+    // otherwise leave it stuck on every other page until a hard refresh.
+    // destroy() removes that node (and its listeners) once this page unmounts.
+    const panel =
+      IS_DEV || window.location.hash === "#debug" ? createPanel() : null;
+    return () => {
+      panel?.destroy();
+    };
   }, []);
 
   // Keeps the Time Option gui in sync with overrideScene/isNight/
@@ -1212,6 +1221,8 @@ const Model = React.memo(() => {
         .name("Intensity")
         .onChange((e: number) => updateSailFloodlightScalar(i, "intensity", e));
     });
+
+    return panel;
   };
 
   return (
