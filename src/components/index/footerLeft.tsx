@@ -3,7 +3,7 @@ import styled from "styled-components";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import SplitText from "../motion/SplitText";
+import SplitText from "../motion/splitText";
 import { INDEX_TO_ACKNOWLEDGEMENT_DESKTOP } from "../../constants/googleTags";
 
 const FooterLeft = ({

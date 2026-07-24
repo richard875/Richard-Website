@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Icon from "../../enums/icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import SplitText from "../motion/SplitText";
+import SplitText from "../motion/splitText";
 import iconPicker from "../../helper/iconPicker";
 import {
   BLOCK_PADDING,

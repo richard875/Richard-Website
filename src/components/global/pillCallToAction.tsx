@@ -10,7 +10,7 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import SplitText from "../motion/SplitText";
+import SplitText from "../motion/splitText";
 import HoverRoll from "../motion/hoverRoll";
 import {
   badgeHoverEffect,

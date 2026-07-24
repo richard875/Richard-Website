@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import SplitText from "../motion/SplitText";
+import SplitText from "../motion/splitText";
 import HoverRoll from "../motion/hoverRoll";
 import {
   badgeHoverEffect,

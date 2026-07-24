@@ -5,7 +5,7 @@ import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Color from "../../enums/color";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import SplitText from "../motion/SplitText";
+import SplitText from "../motion/splitText";
 import HoverRoll from "../motion/hoverRoll";
 import { motionTapEffect } from "../../helper/motionConfig";
 import getTransitionColor from "../../helper/getTransitionColor";

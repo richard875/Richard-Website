@@ -10,7 +10,7 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import Links from "../components/contact/links";
 import Cursor from "../components/cursor/cursor";
-import SplitText from "../components/motion/SplitText";
+import SplitText from "../components/motion/splitText";
 import HoverRoll from "../components/motion/hoverRoll";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";

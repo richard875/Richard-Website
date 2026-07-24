@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { CSSTransition } from "react-transition-group";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import SplitText from "../motion/SplitText";
+import SplitText from "../motion/splitText";
 import TextSection from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
