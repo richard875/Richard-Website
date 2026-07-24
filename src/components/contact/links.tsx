@@ -6,7 +6,7 @@ import Color from "../../enums/color";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
-import HoverRoll from "../motion/HoverRoll";
+import HoverRoll from "../motion/hoverRoll";
 import { motionTapEffect } from "../../helper/motionConfig";
 import getTransitionColor from "../../helper/getTransitionColor";
 import useDarkModeManager from "../../hooks/useDarkModeManager";

@@ -11,7 +11,7 @@ import Preload from "../components/seo/preload";
 import Links from "../components/contact/links";
 import Cursor from "../components/cursor/cursor";
 import SplitText from "../components/motion/SplitText";
-import HoverRoll from "../components/motion/HoverRoll";
+import HoverRoll from "../components/motion/hoverRoll";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import ResumeCircle from "../components/global/resumeCircle";

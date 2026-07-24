@@ -5,7 +5,7 @@ import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/SplitText";
-import HoverRoll from "../motion/HoverRoll";
+import HoverRoll from "../motion/hoverRoll";
 import { EMAIL } from "../../constants/meta";
 import { INDEX_EMAIL, INDEX_TO_CONTACT } from "../../constants/googleTags";
 

@@ -11,7 +11,7 @@ import Preload from "../components/seo/preload";
 import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
 import SplitText from "../components/motion/SplitText";
-import HoverRoll from "../components/motion/HoverRoll";
+import HoverRoll from "../components/motion/hoverRoll";
 import PillCallToAction from "../components/global/pillCallToAction";
 import RoundedCallToAction from "../components/global/roundedCallToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
