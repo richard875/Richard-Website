@@ -36,7 +36,7 @@ import {
 import { EXPERIENCE_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import workData from "../../static/data/work.json";
 import MetaImage from "../../static/images/meta/meta-image.jpg";
-import ToProjectsCircle from "../../static/images/NavCircle/toProjectsCircle.png";
+import ToProjectsCircle from "../../static/images/NavCircle/to-projects-circle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
