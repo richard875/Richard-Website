@@ -436,9 +436,6 @@ const Model = React.memo(() => {
   const [dirPositionX, setDirPositionX] = React.useState(-6);
   const [dirPositionY, setDirPositionY] = React.useState(1);
   const [dirPositionZ, setDirPositionZ] = React.useState(5);
-  const [groundColorX, setGroundColorX] = React.useState(0.08);
-  const [groundColorY, setGroundColorY] = React.useState(1);
-  const [groundColorZ, setGroundColorZ] = React.useState(0.75);
   const [skyOffset, setSkyOffset] = React.useState(43);
   const [skyExponent, setSkyExponent] = React.useState(0.6);
   const [skySphereGeometryX, setSkySphereGeometryX] = React.useState(215);
@@ -493,6 +490,15 @@ const Model = React.memo(() => {
   const nightModeControllerRef = React.useRef<any>(null);
   const timeOfDayControllerRef = React.useRef<any>(null);
   const dimmedControllerRef = React.useRef<any>(null);
+  // Handles to the Day/Night Scene Options folders and the two day-only
+  // DepthOfField controls in Effects (Focus Range/Bokeh Scale, skipped
+  // entirely at night - see the DepthOfField comment near the effect
+  // pipeline below) - shown/hidden in the same sync effect based on
+  // effectiveIsNight, mirroring which options actually do anything.
+  const daySceneOptionsFolderRef = React.useRef<any>(null);
+  const nightSceneOptionsFolderRef = React.useRef<any>(null);
+  const dofFocusRangeControllerRef = React.useRef<any>(null);
+  const dofBokehScaleControllerRef = React.useRef<any>(null);
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -608,10 +614,6 @@ const Model = React.memo(() => {
     hemiPositionY,
     hemiPositionZ,
   );
-
-  // Ground
-  const groundColor = new THREE.Color();
-  groundColor.setHSL(groundColorX, groundColorY, groundColorZ);
 
   // The 17:00 (5pm) keyframe is built from the Ambient/Hemi/Direct Light gui
   // slider state directly - the same warm/golden values this scene has
@@ -753,6 +755,17 @@ const Model = React.memo(() => {
     // Scene" look instead - the hour no longer matters once that's active.
     // Matches timeOverrideActive/dimmedOverrideActive above exactly.
     timeOfDayController.disable(baseDisabled || dimmed);
+
+    // Day Scene Options (and the day-only Focus Range/Bokeh Scale DOF
+    // controls in Effects) are only relevant while the day pipeline is
+    // actually rendering; Night Scene Options only while night mode is.
+    // effectiveIsNight already captures "OS theme by default, or the
+    // manual Night Mode checkbox once Override Scene is on" - same value
+    // every render branch above reads.
+    daySceneOptionsFolderRef.current?.show(!effectiveIsNight);
+    nightSceneOptionsFolderRef.current?.show(effectiveIsNight);
+    dofFocusRangeControllerRef.current?.show(!effectiveIsNight);
+    dofBokehScaleControllerRef.current?.show(!effectiveIsNight);
   }, [overrideScene, isNight, systemIsDarkMode, dimmed]);
 
   // Swap the sky/fog palette and distances as night mode, twilight, and
@@ -821,17 +834,34 @@ const Model = React.memo(() => {
 
   const createPanel = () => {
     const panel = new GUI({ width: 310 });
-    const ambientLightFolder = panel.addFolder("Ambient Light");
-    const hemiLightFolder = panel.addFolder("Hemi Light");
-    const dirLightFolder = panel.addFolder("Direct Light");
-    const groundFolder = panel.addFolder("Ground");
-    const skyFolder = panel.addFolder("Sky");
-    const atmosphereFolder = panel.addFolder("Atmosphere");
-    const effectsFolder = panel.addFolder("Effects");
     const timeOptionFolder = panel.addFolder("Time Option");
-    const sailFloodlightFolder = panel.addFolder("Sail Floodlights");
-    const dockLightingFolder = panel.addFolder("Dock Lights");
-    const streetlampLightingFolder = panel.addFolder("Streetlamp Lights");
+    const skyFolder = panel.addFolder("Sky").close();
+    const atmosphereFolder = panel.addFolder("Atmosphere").close();
+    const effectsFolder = panel.addFolder("Effects").close();
+    const daySceneOptionsFolder = panel.addFolder("Day Scene Options").close();
+    daySceneOptionsFolderRef.current = daySceneOptionsFolder;
+    const ambientLightFolder = daySceneOptionsFolder
+      .addFolder("Ambient Light")
+      .close();
+    const hemiLightFolder = daySceneOptionsFolder
+      .addFolder("Hemi Light")
+      .close();
+    const dirLightFolder = daySceneOptionsFolder
+      .addFolder("Direct Light")
+      .close();
+    const nightSceneOptionsFolder = panel
+      .addFolder("Night Scene Options")
+      .close();
+    nightSceneOptionsFolderRef.current = nightSceneOptionsFolder;
+    const sailFloodlightFolder = nightSceneOptionsFolder
+      .addFolder("Sail Floodlights")
+      .close();
+    const dockLightingFolder = nightSceneOptionsFolder
+      .addFolder("Dock Lights")
+      .close();
+    const streetlampLightingFolder = nightSceneOptionsFolder
+      .addFolder("Streetlamp Lights")
+      .close();
     panel.close();
 
     // Position the lil-gui panel at the top-left so it doesn't block the view
@@ -861,9 +891,6 @@ const Model = React.memo(() => {
       dirPositionX: dirPositionX,
       dirPositionY: dirPositionY,
       dirPositionZ: dirPositionZ,
-      groundColorX: groundColorX,
-      groundColorY: groundColorY,
-      groundColorZ: groundColorZ,
       skyOffset: skyOffset,
       skyExponent: skyExponent,
       skySphereGeometryX: skySphereGeometryX,
@@ -1003,18 +1030,6 @@ const Model = React.memo(() => {
       .add(settings, "dirPositionZ", -10, 10)
       .name("Position Z")
       .onChange((e: number) => setDirPositionZ(e));
-    groundFolder
-      .add(settings, "groundColorX", 0, 1)
-      .name("Color X")
-      .onChange((e: number) => setGroundColorX(e));
-    groundFolder
-      .add(settings, "groundColorY", 0, 2)
-      .name("Color Y")
-      .onChange((e: number) => setGroundColorY(e));
-    groundFolder
-      .add(settings, "groundColorZ", 0, 1)
-      .name("Color Z")
-      .onChange((e: number) => setGroundColorZ(e));
     skyFolder
       .add(settings, "skyOffset", 0, 100)
       .name("Offset")
@@ -1091,11 +1106,11 @@ const Model = React.memo(() => {
       .add(settings, "noiseOpacity", 0, 0.2)
       .name("Noise Opacity")
       .onChange((e: number) => setNoiseOpacity(e));
-    effectsFolder
+    dofFocusRangeControllerRef.current = effectsFolder
       .add(settings, "dofFocusRange", 0.2, 10)
       .name("Focus Range")
       .onChange((e: number) => setDofFocusRange(e));
-    effectsFolder
+    dofBokehScaleControllerRef.current = effectsFolder
       .add(settings, "dofBokehScale", 0, 10)
       .name("Bokeh Scale")
       .onChange((e: number) => setDofBokehScale(e));
