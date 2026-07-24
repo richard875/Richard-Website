@@ -8,7 +8,7 @@ import {
   mergeGeometries,
 } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { WATER_VERTEX_SHADER, WATER_FRAGMENT_SHADER } from "./shader";
-import AnimatedBoat from "./AnimatedBoat";
+import AnimatedBoat from "./animatedBoat";
 import { IS_DEV } from "../../constants/environment";
 
 const MODEL_PATH = "/models/sydneyOperaHouse.gltf";
