@@ -481,10 +481,15 @@ const Model = React.memo(() => {
   const [dirPositionX, setDirPositionX] = React.useState(-6);
   const [dirPositionY, setDirPositionY] = React.useState(1);
   const [dirPositionZ, setDirPositionZ] = React.useState(5);
-  const [skyOffset, setSkyOffset] = React.useState(43);
+  // Lowered from 43 alongside the GLOBAL_FRAGMENT_SHADER fix in shader.ts
+  // (offset now biases only the sky gradient's Y reference, not X/Z) - with
+  // the old X/Z-broadcasting bug, part of this value's "budget" was wasted
+  // skewing the gradient off-axis instead of raising it, so the same visual
+  // horizon height now needs a smaller number.
+  const [skyOffset, setSkyOffset] = React.useState(15);
   const [skyExponent, setSkyExponent] = React.useState(0.6);
   const [skySphereGeometryX, setSkySphereGeometryX] = React.useState(215);
-  const [skySphereGeometryY, setSkySphereGeometryY] = React.useState(0);
+  const [skySphereGeometryY, setSkySphereGeometryY] = React.useState(32);
   const [skySphereGeometryZ, setSkySphereGeometryZ] = React.useState(15);
   const [bloomIntensity, setBloomIntensity] = React.useState(10.0);
   const [luminanceThreshold, setLuminanceThreshold] = React.useState(1);

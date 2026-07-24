@@ -16,7 +16,17 @@ uniform float exponent;
 
 varying vec3 vWorldPosition;
 void main() {
-  float h = normalize( vWorldPosition + offset ).y;
+  // offset is a scalar meant to bias the gradient's height reference alone
+  // (raising/lowering where the topColor/bottomColor transition falls) - GLSL
+  // broadcasts a float added to a vec3 across all three components though, so
+  // "vWorldPosition + offset" was also shifting X/Z, tilting the sky's "up"
+  // reference diagonally off true zenith instead of just vertically. That
+  // skew is what made the gradient read as a directional wedge coming from
+  // one corner rather than a level horizon band, most visible against a
+  // saturated, high-contrast palette. Applying offset to Y alone keeps the
+  // intended vertical bias without the unintended diagonal one.
+  vec3 dir = vec3( vWorldPosition.x, vWorldPosition.y + offset, vWorldPosition.z );
+  float h = normalize( dir ).y;
   gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
 }`;
 
