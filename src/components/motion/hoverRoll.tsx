@@ -115,7 +115,7 @@ const HoverRoll = ({
         // was pushing this text above the surrounding line. An inline-flex
         // container doesn't have that carve-out — its baseline still comes
         // from its baseline-aligned flex item (front's own text baseline).
-        // line-height: 1.2 matches BwGradual-Medium's own font metrics
+        // line-height: 1.2 matches BwGradual Medium's own font metrics
         // (hhea/OS-2 ascent 0.97em + descent 0.23em = 1.2em), tightening
         // front/back's inherited line-height down to the font's natural
         // height so the y:100% swap travels only as far as it has to

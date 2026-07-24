@@ -21,21 +21,21 @@ const Preload = ({ videos }: { videos?: "experience" | "projects" }) => (
         different one, fetching each font twice. */}
     <link
       rel="preload"
-      href="/fonts/SansSerifFLF-Demibold.woff"
+      href="/fonts/sans-serif-flf-demibold.woff"
       as="font"
       type="font/woff"
       crossOrigin="anonymous"
     />
     <link
       rel="preload"
-      href="/fonts/SansSerifBldFLF.woff"
+      href="/fonts/sans-serif-flf-bold.woff"
       as="font"
       type="font/woff"
       crossOrigin="anonymous"
     />
     <link
       rel="preload"
-      href="/fonts/BwGradual-Medium.ttf"
+      href="/fonts/bw-gradual-medium.ttf"
       as="font"
       type="font/ttf"
       crossOrigin="anonymous"
