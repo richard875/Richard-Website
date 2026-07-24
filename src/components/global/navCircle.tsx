@@ -10,7 +10,7 @@ import {
   mainCircleButtonEffect,
   motionTapEffect,
 } from "../../helper/motionConfig";
-import ArrowSrc from "../../../static/images/indexCircle/arrow.svg";
+import ArrowSrc from "../../../static/images/index-circle/arrow.svg";
 
 // Same rotating-circle construction as ResumeCircle (src/components/global/
 // resumeCircle.tsx) — green disc, black outline, a spinning text-ring, and a

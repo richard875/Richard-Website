@@ -12,8 +12,8 @@ import {
 } from "../../helper/motionConfig";
 import { INDEX_RESUME, CONTACT_RESUME } from "../../constants/googleTags";
 
-const ARROW = "../../../static/images/indexCircle/arrow.svg";
-const CIRCLE = "../../../static/images/indexCircle/circle.png";
+const ARROW = "../../../static/images/index-circle/arrow.svg";
+const CIRCLE = "../../../static/images/index-circle/circle.png";
 
 const ResumeCircle = ({
   isHome,
