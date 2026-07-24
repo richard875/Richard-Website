@@ -5,7 +5,7 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import Magnetic from "../motion/Magnetic";
+import Magnetic from "../motion/magnetic";
 import {
   mainCircleButtonEffect,
   motionTapEffect,

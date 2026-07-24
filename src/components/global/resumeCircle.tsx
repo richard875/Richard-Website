@@ -5,7 +5,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import getResume from "../../helper/getResume";
-import Magnetic from "../motion/Magnetic";
+import Magnetic from "../motion/magnetic";
 import {
   mainCircleButtonEffect,
   motionTapEffect,
