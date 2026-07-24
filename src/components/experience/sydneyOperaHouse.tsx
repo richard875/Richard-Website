@@ -220,29 +220,39 @@ const DUSK_KEYFRAME: TimeLightingKeyframe = {
 
 // The one static "outside daylight hours" look used whenever the OS/browser
 // theme is light but the real clock (or the overridden time slider) falls
-// before 7am or at/after 7pm - see isTwilight in Model. Meant to read as
-// roughly "20:00" - a small, direct step dimmer than DUSK_KEYFRAME (19:00),
-// not independently derived math: hue and saturation are copied from
-// DUSK_KEYFRAME exactly unchanged, only intensity and lightness step down a
-// little further. The garish red an earlier version of this produced wasn't
-// actually these values - it was the clouds rendering through a completely
-// different, flattened single-color code path (see the cloudColor comment
-// in Model), which made "Dimmed" look nothing like 19:00 even when these
-// numbers were close to DUSK_KEYFRAME's.
-const TWILIGHT_AMBIENT_INTENSITY = 0.12 * Math.PI;
-const TWILIGHT_HEMI_INTENSITY = 0.48 * Math.PI;
-const TWILIGHT_HEMI_COLOR = new THREE.Color().setHSL(0.62, 1, 0.36);
-const TWILIGHT_HEMI_GROUND_COLOR = new THREE.Color().setHSL(0.095, 1, 0.43);
-const TWILIGHT_DIR_INTENSITY = 0.3 * Math.PI;
-const TWILIGHT_DIR_COLOR = new THREE.Color().setHSL(0.1, 1, 0.68);
-const TWILIGHT_SUN_POSITION = new THREE.Vector3(-6.7, 0.9, 5.3);
-const TWILIGHT_SKY_BOTTOM = new THREE.Color(0xd18951);
-const TWILIGHT_FOG_NEAR = 0.62;
-const TWILIGHT_FOG_FAR = 15.5;
-const TWILIGHT_CLOUD_OPACITY_SCALE = 0.95;
-const TWILIGHT_SPARKLE_COLOR = "#ffba7c";
-const TWILIGHT_SPARKLE_OPACITY_SCALE = 0.75;
-const TWILIGHT_SPARKLES_COUNT = 55;
+// before 7am or at/after 7pm - see isTwilight in Model. Deliberately just
+// another keyframe fed through the exact same interpolateDayLighting
+// pipeline as every real daytime hour (see dayKeyframes in Model), rather
+// than a separately hand-tuned set of raw THREE.Color/Vector3 constants.
+// An earlier version used the latter - independently-authored numbers that
+// were individually close to DUSK_KEYFRAME's - and it still rendered as a
+// garish, oversaturated red/magenta wash completely unlike 19:00, because
+// this scene's fixed Bloom/ColorAverage/HueSaturation postprocessing chain
+// is only ever verified against colors that actually flow through the real
+// day pipeline; small deltas authored outside it land in un-vetted territory
+// and can come out looking nothing like intended. Routing "Dimmed" through
+// interpolateDayLighting at hour 19.5 (see lightingHour in Model)
+// guarantees it's built from values that pipeline has already rendered
+// correctly one keyframe earlier, just carried one small, same-shaped step
+// further - same hue/saturation as DUSK_KEYFRAME throughout, only intensity
+// and lightness stepped down a little more (see the DUSK_KEYFRAME comment on
+// why saturation must never drop on its own).
+const DIMMED_KEYFRAME: TimeLightingKeyframe = {
+  hour: 19.5,
+  ambientIntensity: DUSK_KEYFRAME.ambientIntensity * 0.85,
+  hemiIntensity: DUSK_KEYFRAME.hemiIntensity * 0.85,
+  hemiColorHSL: [0.62, 1, 0.37],
+  hemiGroundColorHSL: [0.095, 1, 0.44],
+  dirIntensity: DUSK_KEYFRAME.dirIntensity * 0.85,
+  dirColorHSL: [0.1, 1, 0.69],
+  dirPosition: DUSK_KEYFRAME.dirPosition,
+  skyBottom: 0xd18951,
+  fogNear: DUSK_KEYFRAME.fogNear,
+  fogFar: DUSK_KEYFRAME.fogFar,
+  cloudWarmth: 1,
+  sparkleColor: DUSK_KEYFRAME.sparkleColor,
+  sparkleOpacityScale: DUSK_KEYFRAME.sparkleOpacityScale * 0.9,
+};
 
 // Pale, cool near-white the day clouds desaturate toward at cloudWarmth=0
 // (crisp midday puffs) before blending back up to each cloud's own hard-
@@ -270,9 +280,10 @@ const lerpVec3 = (
 ];
 
 // Piecewise-linear interpolation across sorted keyframes (ascending `hour`).
-// `hour` is clamped to the keyframe span rather than wrapping - callers are
-// expected to only invoke this for hours already known to be within
-// [7, 19) (see isTwilight in Model), which TWILIGHT_* handles separately.
+// `hour` is clamped to the keyframe span rather than wrapping. The Daytime
+// gui slider only ever calls this with hours in [7, 19]; isTwilight (see
+// Model) reaches the trailing DIMMED_KEYFRAME segment by passing 19.5
+// explicitly via lightingHour, not by the real clock drifting past 19.
 const interpolateDayLighting = (
   hour: number,
   keyframes: TimeLightingKeyframe[],
@@ -468,8 +479,8 @@ const Model = React.memo(() => {
   // the visitor's real local clock via useCurrentHour.
   const [timeOfDayHour, setTimeOfDayHour] = React.useState(12);
   // Manual "Dimmed" gui checkbox - forces the twilight/"Static Scene" look
-  // (see TWILIGHT_* above and isTwilight below) regardless of the Daytime
-  // slider's value. Same enable condition as Daytime itself (Override Scene
+  // (see DIMMED_KEYFRAME above and isTwilight below) regardless of the
+  // Daytime slider's value. Same enable condition as Daytime itself (Override Scene
   // on, Night Mode off); checking it also disables Daytime, since the hour
   // no longer matters once twilight is being forced.
   const [dimmed, setDimmed] = React.useState(false);
@@ -508,8 +519,8 @@ const Model = React.memo(() => {
   // never fire while night mode (auto or manual) is already showing its own
   // always-on look.
   const dimmedOverrideActive = overrideScene && !isNight && dimmed;
-  // The one extra "outside daylight hours" scene (see TWILIGHT_* above) -
-  // only relevant in day mode; night mode already has its own always-on look
+  // The one extra "outside daylight hours" scene (see DIMMED_KEYFRAME
+  // above) - only relevant in day mode; night mode already has its own always-on look
   // regardless of clock time. Strictly > 19 (not >= 19) so hour 19 exactly -
   // the Daytime slider's own max value - still resolves to DUSK_KEYFRAME via
   // the day interpolation below rather than jumping straight to the twilight
@@ -631,8 +642,16 @@ const Model = React.memo(() => {
     AFTERNOON_KEYFRAME,
     goldenHourKeyframe,
     DUSK_KEYFRAME,
+    DIMMED_KEYFRAME,
   ];
-  const dayLighting = interpolateDayLighting(effectiveHour, dayKeyframes);
+  // Twilight (see isTwilight above) pins the hour fed into the day curve at
+  // DIMMED_KEYFRAME's 19:30 rather than following the real clock (or the
+  // Daytime slider, which tops out at 19 anyway and never reaches this
+  // segment on its own) - it's meant to read as one small, static step
+  // dimmer than 19:00, not a continued sweep into full darkness the way
+  // Night Mode is.
+  const lightingHour = isTwilight ? DIMMED_KEYFRAME.hour : effectiveHour;
+  const dayLighting = interpolateDayLighting(lightingHour, dayKeyframes);
   const dayHemiColor = new THREE.Color().setHSL(...dayLighting.hemiColorHSL);
   const dayHemiGroundColor = new THREE.Color().setHSL(
     ...dayLighting.hemiGroundColorHSL,
@@ -642,76 +661,44 @@ const Model = React.memo(() => {
 
   // Night mode swaps in fixed lighting/atmosphere values instead of the day
   // gui sliders above, so toggling it never disturbs the day-tuned values.
-  // Twilight (see isTwilight above) sits between the two: still "day" as far
-  // as effectiveIsNight is concerned, but past the 7am-7pm window the
-  // time-of-day keyframes cover, so it gets its own fixed TWILIGHT_* look
-  // rather than extrapolating the day curve indefinitely.
+  // Twilight (see isTwilight above) no longer needs its own branch here - it
+  // already reaches this dayLighting/dayHemiColor/etc set (built off
+  // DIMMED_KEYFRAME) via lightingHour above, so it just falls through the
+  // same day branch as every other hour.
   const effectiveAmbientIntensity = effectiveIsNight
     ? NIGHT_AMBIENT_INTENSITY
-    : isTwilight
-      ? TWILIGHT_AMBIENT_INTENSITY
-      : dayLighting.ambientIntensity;
+    : dayLighting.ambientIntensity;
   const effectiveHemiIntensity = effectiveIsNight
     ? NIGHT_HEMI_INTENSITY
-    : isTwilight
-      ? TWILIGHT_HEMI_INTENSITY
-      : dayLighting.hemiIntensity;
-  const effectiveHemiColor = effectiveIsNight
-    ? NIGHT_HEMI_COLOR
-    : isTwilight
-      ? TWILIGHT_HEMI_COLOR
-      : dayHemiColor;
+    : dayLighting.hemiIntensity;
+  const effectiveHemiColor = effectiveIsNight ? NIGHT_HEMI_COLOR : dayHemiColor;
   const effectiveHemiGroundColor = effectiveIsNight
     ? NIGHT_HEMI_GROUND_COLOR
-    : isTwilight
-      ? TWILIGHT_HEMI_GROUND_COLOR
-      : dayHemiGroundColor;
+    : dayHemiGroundColor;
   const effectiveDirIntensity = effectiveIsNight
     ? NIGHT_DIR_INTENSITY
-    : isTwilight
-      ? TWILIGHT_DIR_INTENSITY
-      : dayLighting.dirIntensity;
-  const effectiveDirColor = effectiveIsNight
-    ? NIGHT_DIR_COLOR
-    : isTwilight
-      ? TWILIGHT_DIR_COLOR
-      : dayDirColor;
-  // Fixed moon/twilight position instead of the day light's keyframed arc,
-  // so the visible moon disc and the water's moon-glint always agree at
-  // night, same as before.
+    : dayLighting.dirIntensity;
+  const effectiveDirColor = effectiveIsNight ? NIGHT_DIR_COLOR : dayDirColor;
+  // Fixed moon position instead of the day light's keyframed arc, so the
+  // visible moon disc and the water's moon-glint always agree at night.
   const effectiveDirPosition = effectiveIsNight
     ? NIGHT_MOON_POSITION
-    : isTwilight
-      ? TWILIGHT_SUN_POSITION
-      : dayDirPosition;
+    : dayDirPosition;
 
   // The Cloud puffs are unlit, so night-dimming them means swapping their
   // color/opacity directly rather than relying on scene light intensity.
-  // Twilight deliberately does NOT get its own flat cloud color the way
-  // night does - it used to (TWILIGHT_CLOUD_COLOR), which flattened all 9
-  // puffs' own distinct hard-coded hues into one uniform wash and, combined
-  // with Bloom/ColorAverage, was a big part of why "Dimmed" looked so much
-  // worse than DUSK_KEYFRAME (19:00) despite similar light values - the
-  // clouds were on a completely different code path. Twilight now reuses
-  // the exact same per-cloud full-warmth coloring as any other daytime hour
-  // (cloudWarmth=1, same as DUSK_KEYFRAME/goldenHourKeyframe), so its clouds
-  // look identical to 19:00's; only intensity/lightness differ.
+  // Twilight no longer needs its own branch here either - DIMMED_KEYFRAME's
+  // cloudWarmth (1, same as DUSK_KEYFRAME/goldenHourKeyframe) already flows
+  // through dayLighting.cloudWarmth via lightingHour above.
   const cloudColor = (dayColor: string) => {
     if (effectiveIsNight) return NIGHT_CLOUD_COLOR;
-    const warmth = isTwilight ? 1 : dayLighting.cloudWarmth;
     return NEUTRAL_CLOUD_COLOR.clone().lerp(
       new THREE.Color(dayColor),
-      THREE.MathUtils.clamp(warmth, 0, 1),
+      THREE.MathUtils.clamp(dayLighting.cloudWarmth, 0, 1),
     );
   };
   const resolveCloudOpacity = (mult: number) =>
-    cloudOpacity *
-    mult *
-    (effectiveIsNight
-      ? NIGHT_CLOUD_OPACITY_SCALE
-      : isTwilight
-        ? TWILIGHT_CLOUD_OPACITY_SCALE
-        : 1);
+    cloudOpacity * mult * (effectiveIsNight ? NIGHT_CLOUD_OPACITY_SCALE : 1);
 
   const uniforms = React.useMemo(
     () => ({
@@ -778,30 +765,20 @@ const Model = React.memo(() => {
   React.useEffect(() => {
     if (!scene.fog) return;
     uniforms.topColor.value.copy(
-      effectiveIsNight
-        ? NIGHT_SKY_TOP
-        : isTwilight
-          ? TWILIGHT_HEMI_COLOR
-          : dayHemiColor,
+      effectiveIsNight ? NIGHT_SKY_TOP : dayHemiColor,
     );
     uniforms.bottomColor.value.copy(
       effectiveIsNight
         ? NIGHT_SKY_BOTTOM
-        : isTwilight
-          ? TWILIGHT_SKY_BOTTOM
-          : new THREE.Color(dayLighting.skyBottom),
+        : new THREE.Color(dayLighting.skyBottom),
     );
     scene.fog.color.copy(uniforms.bottomColor.value);
     (scene.fog as THREE.Fog).near = effectiveIsNight
       ? NIGHT_FOG_NEAR
-      : isTwilight
-        ? TWILIGHT_FOG_NEAR
-        : dayLighting.fogNear;
+      : dayLighting.fogNear;
     (scene.fog as THREE.Fog).far = effectiveIsNight
       ? NIGHT_FOG_FAR
-      : isTwilight
-        ? TWILIGHT_FOG_FAR
-        : dayLighting.fogFar;
+      : dayLighting.fogFar;
   }, [
     effectiveIsNight,
     isTwilight,
@@ -1260,26 +1237,16 @@ const Model = React.memo(() => {
         />
       </mesh>
       <Sparkles
-        count={
-          effectiveIsNight ? 30 : isTwilight ? TWILIGHT_SPARKLES_COUNT : 60
-        }
+        count={effectiveIsNight ? 30 : 60}
         scale={[4, 2.2, 4]}
         size={effectiveIsNight ? 1.2 : 1.8}
         speed={0.25}
         opacity={
           effectiveIsNight
             ? Math.min(sparklesOpacity, 0.15)
-            : isTwilight
-              ? Math.min(sparklesOpacity, TWILIGHT_SPARKLE_OPACITY_SCALE)
-              : sparklesOpacity * dayLighting.sparkleOpacityScale
+            : sparklesOpacity * dayLighting.sparkleOpacityScale
         }
-        color={
-          effectiveIsNight
-            ? "#dce8ff"
-            : isTwilight
-              ? TWILIGHT_SPARKLE_COLOR
-              : dayLighting.sparkleColor
-        }
+        color={effectiveIsNight ? "#dce8ff" : dayLighting.sparkleColor}
         position={[0, 0.6, 0]}
       />
       {effectiveIsNight && (
