@@ -490,15 +490,14 @@ const Model = React.memo(() => {
   const nightModeControllerRef = React.useRef<any>(null);
   const timeOfDayControllerRef = React.useRef<any>(null);
   const dimmedControllerRef = React.useRef<any>(null);
-  // Handles to the Day/Night Scene Options folders and the two day-only
-  // DepthOfField controls in Effects (Focus Range/Bokeh Scale, skipped
-  // entirely at night - see the DepthOfField comment near the effect
-  // pipeline below) - shown/hidden in the same sync effect based on
-  // effectiveIsNight, mirroring which options actually do anything.
+  // Handles to the Day/Night Scene Options folders - shown/hidden in the
+  // same sync effect based on effectiveIsNight, mirroring which options
+  // actually do anything. Depth of Field (Focus Range/Bokeh Scale) lives
+  // as a subfolder inside Day Scene Options (it's skipped entirely at
+  // night - see the DepthOfField comment near the effect pipeline below),
+  // so hiding the parent folder already takes care of it without its own ref.
   const daySceneOptionsFolderRef = React.useRef<any>(null);
   const nightSceneOptionsFolderRef = React.useRef<any>(null);
-  const dofFocusRangeControllerRef = React.useRef<any>(null);
-  const dofBokehScaleControllerRef = React.useRef<any>(null);
 
   React.useEffect(() => {
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
@@ -756,16 +755,13 @@ const Model = React.memo(() => {
     // Matches timeOverrideActive/dimmedOverrideActive above exactly.
     timeOfDayController.disable(baseDisabled || dimmed);
 
-    // Day Scene Options (and the day-only Focus Range/Bokeh Scale DOF
-    // controls in Effects) are only relevant while the day pipeline is
-    // actually rendering; Night Scene Options only while night mode is.
-    // effectiveIsNight already captures "OS theme by default, or the
-    // manual Night Mode checkbox once Override Scene is on" - same value
-    // every render branch above reads.
+    // Day Scene Options (including its nested Depth of Field subfolder) is
+    // only relevant while the day pipeline is actually rendering; Night
+    // Scene Options only while night mode is. effectiveIsNight already
+    // captures "OS theme by default, or the manual Night Mode checkbox
+    // once Override Scene is on" - same value every render branch above reads.
     daySceneOptionsFolderRef.current?.show(!effectiveIsNight);
     nightSceneOptionsFolderRef.current?.show(effectiveIsNight);
-    dofFocusRangeControllerRef.current?.show(!effectiveIsNight);
-    dofBokehScaleControllerRef.current?.show(!effectiveIsNight);
   }, [overrideScene, isNight, systemIsDarkMode, dimmed]);
 
   // Swap the sky/fog palette and distances as night mode, twilight, and
@@ -848,6 +844,12 @@ const Model = React.memo(() => {
       .close();
     const dirLightFolder = daySceneOptionsFolder
       .addFolder("Direct Light")
+      .close();
+    // Focus Range/Bokeh Scale are day-only - DepthOfField is skipped
+    // entirely at night (see the effect pipeline below) - so they belong
+    // here with the other day-only options rather than in Effects.
+    const depthOfFieldFolder = daySceneOptionsFolder
+      .addFolder("Depth of Field")
       .close();
     const nightSceneOptionsFolder = panel
       .addFolder("Night Scene Options")
@@ -1106,11 +1108,11 @@ const Model = React.memo(() => {
       .add(settings, "noiseOpacity", 0, 0.2)
       .name("Noise Opacity")
       .onChange((e: number) => setNoiseOpacity(e));
-    dofFocusRangeControllerRef.current = effectsFolder
+    depthOfFieldFolder
       .add(settings, "dofFocusRange", 0.2, 10)
       .name("Focus Range")
       .onChange((e: number) => setDofFocusRange(e));
-    dofBokehScaleControllerRef.current = effectsFolder
+    depthOfFieldFolder
       .add(settings, "dofBokehScale", 0, 10)
       .name("Bokeh Scale")
       .onChange((e: number) => setDofBokehScale(e));
