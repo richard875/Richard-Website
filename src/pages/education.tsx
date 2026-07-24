@@ -19,7 +19,7 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import NavCluster from "../components/global/navCluster";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import getTransitionColor from "../helper/getTransitionColor";
 import {
   EDUCATION_TO_CONTACT,

@@ -15,7 +15,7 @@ import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import SkillsBlock from "../components/work/skillsBlock";
 import NavCluster from "../components/global/navCluster";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
 import WorkExperience from "../types/workExperience";
 import useWindowSize from "../hooks/useWindowSize";

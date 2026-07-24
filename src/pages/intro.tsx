@@ -15,7 +15,7 @@ import HoverRoll from "../components/motion/HoverRoll";
 import PillCallToAction from "../components/global/pillCallToAction";
 import RoundedCallToAction from "../components/global/roundedCallToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import setOverflow from "../helper/setOverflow";
 import getTransitionColor from "../helper/getTransitionColor";
 import useDarkModeManager from "../hooks/useDarkModeManager";

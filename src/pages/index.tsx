@@ -25,7 +25,7 @@ import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import MetaImage from "../../static/images/meta/metaImage.jpg";
 
 const IndexPage = ({ location }: { location: WindowLocation }) => {

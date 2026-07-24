@@ -16,7 +16,7 @@ import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import ResumeCircle from "../components/global/resumeCircle";
 import RoundedCallToAction from "../components/global/roundedCallToAction";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
