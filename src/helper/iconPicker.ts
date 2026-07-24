@@ -30,6 +30,7 @@ import youtubeBlack from "../../static/images/logos/youtube-black.svg";
 
 import angular from "../../static/images/skills/angular.svg";
 import aws from "../../static/images/skills/aws.svg";
+import awsBlack from "../../static/images/skills/aws-black.svg";
 import csharp from "../../static/images/skills/csharp.svg";
 import docker from "../../static/images/skills/docker.svg";
 import dotnet from "../../static/images/skills/dotnet.svg";
@@ -37,9 +38,11 @@ import go from "../../static/images/skills/go.svg";
 import graphql from "../../static/images/skills/graphql.svg";
 import jenkins from "../../static/images/skills/jenkins.svg";
 import mongodb from "../../static/images/skills/mongodb.svg";
+import mongodbBlack from "../../static/images/skills/mongodb-black.svg";
 import postgresql from "../../static/images/skills/postgresql.svg";
 import python from "../../static/images/skills/python.svg";
 import react from "../../static/images/skills/react.svg";
+import reactBlack from "../../static/images/skills/react-black.svg";
 import svelte from "../../static/images/skills/svelte.svg";
 import swift from "../../static/images/skills/swift.svg";
 import threejs from "../../static/images/skills/threejs.svg";
@@ -86,7 +89,7 @@ const iconPicker = (logo: string, isDark: boolean) => {
     case Icon.Angular:
       return angular;
     case Icon.AWS:
-      return aws;
+      return isDark ? aws : awsBlack;
     case Icon.CSharp:
       return csharp;
     case Icon.Docker:
@@ -100,13 +103,13 @@ const iconPicker = (logo: string, isDark: boolean) => {
     case Icon.Jenkins:
       return jenkins;
     case Icon.MongoDB:
-      return mongodb;
+      return isDark ? mongodb : mongodbBlack;
     case Icon.PostgreSQL:
       return postgresql;
     case Icon.Python:
       return python;
     case Icon.React:
-      return react;
+      return isDark ? react : reactBlack;
     case Icon.Svelte:
       return svelte;
     case Icon.Swift:
