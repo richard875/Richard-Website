@@ -26,7 +26,7 @@ import Landscape from "../components/global/landscape";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
 import InitialTransition from "../components/transition/initialTransition";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 
 const IndexPage = ({ location }: { location: WindowLocation }) => {
   // Hooks and Refs

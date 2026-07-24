@@ -38,7 +38,7 @@ import {
   GITHUB_URL,
   LINKEDIN_URL,
 } from "../constants/meta";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 
 const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
 const AUSTRALIA = `${HTTPS}www.youtube.com/watch?v=rMdbVHPmCW0`;

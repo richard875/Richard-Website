@@ -34,7 +34,7 @@ import {
 } from "../constants/googleTags";
 import { PROJECTS_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import projectsData from "../../static/data/projects.json";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 import ToEducationCircle from "../../static/images/NavCircle/toEducationCircle.png";
 
 gsap.registerPlugin(ScrollTrigger);

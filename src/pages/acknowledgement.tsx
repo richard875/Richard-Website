@@ -14,7 +14,7 @@ import Landscape from "../components/global/landscape";
 import PillCallToAction from "../components/global/pillCallToAction";
 import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import { ACKNOWLEDGEMENT_TO_INDEX } from "../constants/googleTags";
