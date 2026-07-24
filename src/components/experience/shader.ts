@@ -158,3 +158,13 @@ void main() {
   float alpha = clamp(mix(0.6, 0.92, fresnel + foam * 0.3), 0.0, 1.0);
   gl_FragColor = vec4(color, alpha);
 }`;
+
+// Deliberately takes no `depth` parameter - see DepthKeepAlive in
+// sydneyOperaHouse.tsx for why: postprocessing's EffectPass only reads the
+// depth texture into its merged shader when some effect's mainImage
+// signature literally declares that param, so leaving it out keeps this
+// effect's only cost to the DEPTH attribute flag it exists to hold.
+export const DEPTH_KEEPALIVE_FRAGMENT_SHADER = `
+void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
+  outputColor = inputColor;
+}`;
