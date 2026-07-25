@@ -1,14 +1,29 @@
 {
   "primary": [
     {
+      "name": "sparkle",
+      "displayName": "AI Agent / Vibe Coding / Loop Engineering",
+      "skill": 100
+    },
+    {
       "name": "typescript",
       "displayName": "JavaScript / TypeScript / Node.js",
       "skill": 95
     },
     {
       "name": "react",
-      "displayName": "React / Next.js / Gatsby",
+      "displayName": "React / Next.js / Frontend Frameworks",
       "skill": 95
+    },
+    {
+      "name": "kafka",
+      "displayName": "Apache Kafka",
+      "skill": 90
+    },
+    {
+      "name": "kubernetes",
+      "displayName": "Kubernetes",
+      "skill": 85
     },
     {
       "name": "aws",
@@ -19,28 +34,17 @@
       "name": "postgresql",
       "displayName": "MySQL / PostgreSQL / Microsoft SQL Server",
       "displayNameMobile": "MySQL / PostgreSQL",
-      "skill": 85
-    },
-    {
-      "name": "mongodb",
-      "displayName": "MongoDB",
       "skill": 80
-    },
-    {
-      "name": "dotnet",
-      "displayName": ".NET / C#",
-      "skill": 65
-    },
-    {
-      "name": "go",
-      "displayName": "Go",
-      "skill": 65
     }
   ],
   "secondary": [
     {
-      "name": "svelte",
-      "displayName": "Svelte"
+      "name": "docker",
+      "displayName": "Docker"
+    },
+    {
+      "name": "dotnet",
+      "displayName": ".NET"
     },
     {
       "name": "angular",
@@ -51,28 +55,24 @@
       "displayName": "Vue"
     },
     {
-      "name": "graphql",
-      "displayName": "GraphQL"
+      "name": "gitlab",
+      "displayName": "CI / CD"
     },
     {
-      "name": "swift",
-      "displayName": "swift"
+      "name": "mongodb",
+      "displayName": "MongoDB"
     },
     {
       "name": "python",
       "displayName": "Python"
     },
     {
-      "name": "jenkins",
-      "displayName": "Jenkins"
+      "name": "grafana",
+      "displayName": "Grafana"
     },
     {
-      "name": "docker",
-      "displayName": "Docker"
-    },
-    {
-      "name": "threejs",
-      "displayName": "Three.js"
+      "name": "swift",
+      "displayName": "Swift"
     }
   ]
 }
