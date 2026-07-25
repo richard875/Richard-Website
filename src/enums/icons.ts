@@ -53,6 +53,7 @@ enum Icon {
   MidJourney = "midjourney",
   MistralAI = "mistralai",
   Ollama = "ollama",
+  Openclaw = "openclaw",
   Empty = "",
 }
 
@@ -68,6 +69,7 @@ export const AI_ICONS: Icon[] = [
   Icon.MidJourney,
   Icon.MistralAI,
   Icon.Ollama,
+  Icon.Openclaw,
 ];
 
 export default Icon;

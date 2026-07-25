@@ -74,6 +74,7 @@ import midjourneyBlack from "../../static/images/ai/midjourney-black.svg";
 import mistralai from "../../static/images/ai/mistralai.svg";
 import ollama from "../../static/images/ai/ollama.svg";
 import ollamaBlack from "../../static/images/ai/ollama-black.svg";
+import openclaw from "../../static/images/ai/openclaw.svg";
 
 const iconPicker = (logo: string, isDark: boolean) => {
   switch (logo) {
@@ -181,6 +182,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return mistralai;
     case Icon.Ollama:
       return isDark ? ollama : ollamaBlack;
+    case Icon.Openclaw:
+      return openclaw;
     default:
       return Icon.Empty;
   }
