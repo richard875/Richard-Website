@@ -56,4 +56,18 @@ enum Icon {
   Empty = "",
 }
 
+export const AI_ICONS: Icon[] = [
+  Icon.ChatGPT,
+  Icon.Claude,
+  Icon.Cursor,
+  Icon.Gemini,
+  Icon.Grok,
+  Icon.HuggingFace,
+  Icon.MCP,
+  Icon.MetaAI,
+  Icon.MidJourney,
+  Icon.MistralAI,
+  Icon.Ollama,
+];
+
 export default Icon;

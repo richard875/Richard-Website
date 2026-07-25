@@ -9,6 +9,9 @@ import getTransitionColor from "../../helper/getTransitionColor";
 import { sparkleEntranceEffect } from "../../helper/motionConfig";
 import skillsData from "../../../static/data/skills.json";
 import Skills, { Skill as SkillType } from "../../types/skills";
+import RotatingAiSkillsImage, {
+  skillsImageStyles,
+} from "./rotatingAiSkillsImage";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -73,10 +76,17 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
                 <span>{skill.displayName}</span>
               )}
             </SkillsText>
-            <SkillsImage
-              src={iconPicker(skill.name, isDarkMode)}
-              alt={skill.displayName}
-            ></SkillsImage>
+            {skill.name === Icon.Sparkle ? (
+              <RotatingAiSkillsImage
+                isDarkMode={isDarkMode}
+                alt={skill.displayName}
+              />
+            ) : (
+              <SkillsImage
+                src={iconPicker(skill.name, isDarkMode)}
+                alt={skill.displayName}
+              ></SkillsImage>
+            )}
           </SkillsTextWrapper>
           <SkillsBar
             $isDarkMode={isDarkMode}
@@ -198,19 +208,7 @@ const SkillsText = styled.h3<{ $isTitle: boolean }>`
 `;
 
 const SkillsImage = styled.img`
-  width: auto;
-  height: 20px;
-  margin-left: 10px;
-  margin-bottom: 4px;
-  user-select: none;
-
-  @media ${layout.up.sm} {
-    margin-bottom: 3px;
-  }
-
-  @media ${layout.up.xxxl} {
-    height: 23px;
-  }
+  ${skillsImageStyles}
 `;
 
 const SkillsBar = styled(motion.div)<{ $isDarkMode: boolean }>`
