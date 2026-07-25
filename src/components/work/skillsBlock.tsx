@@ -16,6 +16,14 @@ import {
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
 
+// Entrance for the AI sparkle logo: settles in from a small, off-axis twist
+// into place, like it's just twinkled into view.
+const logoEntranceEffect = {
+  initial: { opacity: 0, scale: 0.4, rotate: -180 },
+  animate: { opacity: 1, scale: 1, rotate: 0 },
+  transition: { duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] as const },
+};
+
 const SecondarySkills = ({
   skill,
   isDarkMode,
@@ -42,9 +50,10 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
     >
       <Logo
         className="hidden xxxl:block"
-        $height={50}
-        src={iconPicker(Icon.React, isDarkMode)}
+        $height={45}
+        src={iconPicker(Icon.Sparkle, isDarkMode)}
         alt={"My Skills"}
+        {...logoEntranceEffect}
       />
       <TitleWrapper>
         <Title>Proficient Skills</Title>
@@ -52,8 +61,9 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
           className="xxxl:hidden"
           $height={30}
           style={{ paddingBottom: "5px" }}
-          src={iconPicker(Icon.React, isDarkMode)}
+          src={iconPicker(Icon.Sparkle, isDarkMode)}
           alt={"My Skills"}
+          {...logoEntranceEffect}
         />
       </TitleWrapper>
       {(skillsData as Skills).primary.map((skill: SkillType, index: number) => (
@@ -146,7 +156,7 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const Logo = styled.img<{ $height: number }>`
+const Logo = styled(motion.img)<{ $height: number }>`
   width: auto;
   height: ${({ $height }) => $height + "px"};
   margin-left: 8px;

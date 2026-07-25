@@ -30,6 +30,7 @@ enum Icon {
   PostgreSQL = "postgresql",
   Python = "python",
   React = "react",
+  Sparkle = "sparkle",
   Svelte = "svelte",
   Swift = "swift",
   ThreeJS = "threejs",

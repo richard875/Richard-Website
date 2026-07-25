@@ -43,6 +43,7 @@ import postgresql from "../../static/images/skills/postgresql.svg";
 import python from "../../static/images/skills/python.svg";
 import react from "../../static/images/skills/react.svg";
 import reactBlack from "../../static/images/skills/react-black.svg";
+import sparkle from "../../static/images/skills/sparkle.svg";
 import svelte from "../../static/images/skills/svelte.svg";
 import swift from "../../static/images/skills/swift.svg";
 import threejs from "../../static/images/skills/threejs.svg";
@@ -110,6 +111,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return python;
     case Icon.React:
       return isDark ? react : reactBlack;
+    case Icon.Sparkle:
+      return sparkle;
     case Icon.Svelte:
       return svelte;
     case Icon.Swift:
