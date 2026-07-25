@@ -41,6 +41,18 @@ enum Icon {
   ThreeJS = "threejs",
   TypeScript = "typescript",
   Vue = "vue",
+  // AI
+  ChatGPT = "chatgpt",
+  Claude = "claude",
+  Cursor = "cursor",
+  Gemini = "gemini",
+  Grok = "grok",
+  HuggingFace = "huggingface",
+  MCP = "mcp",
+  MetaAI = "metaai",
+  MidJourney = "midjourney",
+  MistralAI = "mistralai",
+  Ollama = "ollama",
   Empty = "",
 }
 

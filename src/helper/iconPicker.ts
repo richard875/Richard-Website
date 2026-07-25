@@ -56,6 +56,24 @@ import threejsBlack from "../../static/images/skills/threejs-black.svg";
 import typescript from "../../static/images/skills/typescript.svg";
 import vue from "../../static/images/skills/vue.svg";
 
+import chatgpt from "../../static/images/ai/chatgpt.svg";
+import chatgptBlack from "../../static/images/ai/chatgpt-black.svg";
+import claude from "../../static/images/ai/claude.svg";
+import cursor from "../../static/images/ai/cursor.svg";
+import cursorBlack from "../../static/images/ai/cursor-black.svg";
+import gemini from "../../static/images/ai/gemini.svg";
+import grok from "../../static/images/ai/grok.svg";
+import grokBlack from "../../static/images/ai/grok-black.svg";
+import huggingface from "../../static/images/ai/huggingface.svg";
+import mcp from "../../static/images/ai/mcp.svg";
+import mcpBlack from "../../static/images/ai/mcp-black.svg";
+import metaai from "../../static/images/ai/metaai.svg";
+import midjourney from "../../static/images/ai/midjourney.svg";
+import midjourneyBlack from "../../static/images/ai/midjourney-black.svg";
+import mistralai from "../../static/images/ai/mistralai.svg";
+import ollama from "../../static/images/ai/ollama.svg";
+import ollamaBlack from "../../static/images/ai/ollama-black.svg";
+
 const iconPicker = (logo: string, isDark: boolean) => {
   switch (logo) {
     case Icon.Canary:
@@ -92,6 +110,7 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return yourcar;
     case Icon.YouTube:
       return isDark ? youtube : youtubeBlack;
+    // Skills
     case Icon.Angular:
       return angular;
     case Icon.AWS:
@@ -138,6 +157,29 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return typescript;
     case Icon.Vue:
       return vue;
+    // AI
+    case Icon.ChatGPT:
+      return isDark ? chatgpt : chatgptBlack;
+    case Icon.Claude:
+      return claude;
+    case Icon.Cursor:
+      return isDark ? cursor : cursorBlack;
+    case Icon.Gemini:
+      return gemini;
+    case Icon.Grok:
+      return isDark ? grok : grokBlack;
+    case Icon.HuggingFace:
+      return huggingface;
+    case Icon.MCP:
+      return isDark ? mcp : mcpBlack;
+    case Icon.MetaAI:
+      return metaai;
+    case Icon.MidJourney:
+      return isDark ? midjourney : midjourneyBlack;
+    case Icon.MistralAI:
+      return mistralai;
+    case Icon.Ollama:
+      return isDark ? ollama : ollamaBlack;
     default:
       return Icon.Empty;
   }
