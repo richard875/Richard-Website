@@ -1,1 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="100%" height="100%" viewBox="0 0 129 91" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g><rect x="18.292" y="0" width="18.293" height="18.123" style="fill:#ffd800;fill-rule:nonzero;"/><rect x="91.473" y="0" width="18.293" height="18.123" style="fill:#ffd800;fill-rule:nonzero;"/><rect x="18.292" y="18.121" width="36.586" height="18.123" style="fill:#ffaf00;fill-rule:nonzero;"/><rect x="73.181" y="18.121" width="36.586" height="18.123" style="fill:#ffaf00;fill-rule:nonzero;"/><rect x="18.292" y="36.243" width="91.476" height="18.122" style="fill:#ff8205;fill-rule:nonzero;"/><rect x="18.292" y="54.37" width="18.293" height="18.123" style="fill:#fa500f;fill-rule:nonzero;"/><rect x="54.883" y="54.37" width="18.293" height="18.123" style="fill:#fa500f;fill-rule:nonzero;"/><rect x="91.473" y="54.37" width="18.293" height="18.123" style="fill:#fa500f;fill-rule:nonzero;"/><rect x="0" y="72.504" width="54.89" height="18.123" style="fill:#e10500;fill-rule:nonzero;"/><rect x="73.181" y="72.504" width="54.89" height="18.123" style="fill:#e10500;fill-rule:nonzero;"/></g></svg>
+<svg width="129" height="91" viewBox="0 0 129 91" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.585 0H18.292V18.123H36.585V0Z" fill="#FFD800"/>
+<path d="M109.766 0H91.473V18.123H109.766V0Z" fill="#FFD800"/>
+<path d="M54.878 18.121H18.292V36.244H54.878V18.121Z" fill="#FFAF00"/>
+<path d="M109.767 18.121H73.181V36.244H109.767V18.121Z" fill="#FFAF00"/>
+<path d="M109.768 36.243H18.292V54.365H109.768V36.243Z" fill="#FF8205"/>
+<path d="M36.585 54.37H18.292V72.493H36.585V54.37Z" fill="#FA500F"/>
+<path d="M73.176 54.37H54.883V72.493H73.176V54.37Z" fill="#FA500F"/>
+<path d="M109.766 54.37H91.473V72.493H109.766V54.37Z" fill="#FA500F"/>
+<path d="M54.89 72.504H0V90.627H54.89V72.504Z" fill="#E10500"/>
+<path d="M128.071 72.504H73.181V90.627H128.071V72.504Z" fill="#E10500"/>
+</svg>
