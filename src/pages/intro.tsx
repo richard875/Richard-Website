@@ -10,8 +10,7 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
-import SplitText from "../components/motion/splitText";
-import HoverRoll from "../components/motion/hoverRoll";
+import IntroBody from "../components/experience/introBody";
 import PillCallToAction from "../components/global/pillCallToAction";
 import RoundedCallToAction from "../components/global/roundedCallToAction";
 import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
@@ -19,29 +18,15 @@ import InitialTransition from "../components/transition/initialTransition";
 import setOverflow from "../helper/setOverflow";
 import getTransitionColor from "../helper/getTransitionColor";
 import useDarkModeManager from "../hooks/useDarkModeManager";
-import useUnderlineFlicker from "../hooks/useUnderlineFlicker";
 import {
   INTRO_SOH,
-  INTRO_EMAIL,
-  INTRO_GITHUB,
-  INTRO_LINKEDIN,
-  INTRO_AUSTRALIA,
   INTRO_TO_INDEX,
   INTRO_TO_EXPERIENCE,
 } from "../constants/googleTags";
-import {
-  HTTPS,
-  EMAIL,
-  FIRST_NAME,
-  PAGE_TITLE,
-  INTRO_TITLE,
-  GITHUB_URL,
-  LINKEDIN_URL,
-} from "../constants/meta";
+import { PAGE_TITLE, INTRO_TITLE } from "../constants/meta";
 import MetaImage from "../../static/images/meta/meta-image.jpg";
 
 const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
-const AUSTRALIA = `${HTTPS}www.youtube.com/watch?v=rMdbVHPmCW0`;
 
 // Entrance choreography: text reveals first, then the logos, then the
 // back/forward nav buttons, then the Sydney Opera House scene — each stage
@@ -60,131 +45,11 @@ const SOH_DELAY = 1.35;
 // SplitText char reveal on purpose, since a per-character reveal and a fading
 // underline fight each other visually if they run at once.
 const UNDERLINE_DELAY = SOH_DELAY + STAGE_DURATION - 0.25;
-const UNDERLINE_STAGGER = 0.05;
 
 const Experience = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
   const [transitionColor, setTransitionColor] = React.useState(
     Color.BACKGROUND_WHITE,
-  );
-
-  const linkedInUnderline = useUnderlineFlicker();
-  const githubUnderline = useUnderlineFlicker();
-  const emailUnderline = useUnderlineFlicker();
-
-  // Memoised so its identity is stable across re-renders — SplitText splits
-  // this into characters once and a parent re-render must not rebuild the
-  // nodes underneath it.
-  //
-  // LinkedIn/GitHub/email are HoverRoll, not plain text: that adds the
-  // hover-roll interaction to the very `.char` spans this single SplitText
-  // produces for them, rather than giving them their own separate split and
-  // reveal — see HoverRoll' own doc comment for how it grafts onto
-  // SplitText's DOM instead of doing its own split.
-  const introBody = React.useMemo(
-    () => (
-      <SplitText
-        as="span"
-        className="split-fast"
-        delay={TEXT_DELAY}
-        amount={0.1}
-      >
-        G'day, I'm {FIRST_NAME}. I'm a Software Engineer and Creative Designer
-        from<Sydney>&nbsp;Sydney</Sydney>,
-        <Australia
-          id={`${INTRO_AUSTRALIA}_0`}
-          onClick={(e) => {
-            e.preventDefault();
-            window.open(AUSTRALIA, "_blank");
-          }}
-        >
-          &nbsp;Australia
-        </Australia>
-        . On this corner of the internet, you'll find information about me. You
-        can connect with me on&nbsp;
-        <LinkedIn id={`${INTRO_LINKEDIN}_0`}>
-          <a
-            id={`${INTRO_LINKEDIN}_1`}
-            href={LINKEDIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <HoverRoll
-              stagger={0.014}
-              onRollStart={linkedInUnderline.onRollStart}
-              onRollComplete={linkedInUnderline.onRollComplete}
-            >
-              LinkedIn
-            </HoverRoll>
-          </a>
-          <Underline
-            ref={linkedInUnderline.ref}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              ease: [0.22, 1, 0.36, 1],
-              delay: UNDERLINE_DELAY,
-            }}
-          />
-        </LinkedIn>
-        , check out my repositories on&nbsp;
-        <Github id={`${INTRO_GITHUB}_0`}>
-          <a
-            id={`${INTRO_GITHUB}_1`}
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <HoverRoll
-              stagger={0.016}
-              onRollStart={githubUnderline.onRollStart}
-              onRollComplete={githubUnderline.onRollComplete}
-            >
-              GitHub
-            </HoverRoll>
-          </a>
-          <Underline
-            ref={githubUnderline.ref}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              ease: [0.22, 1, 0.36, 1],
-              delay: UNDERLINE_DELAY + UNDERLINE_STAGGER,
-            }}
-          />
-        </Github>
-        , or reach out to me via&nbsp;
-        <Email id={`${INTRO_EMAIL}_0`}>
-          <a
-            id={`${INTRO_EMAIL}_1`}
-            href={`mailto:${EMAIL}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <HoverRoll
-              onRollStart={emailUnderline.onRollStart}
-              onRollComplete={emailUnderline.onRollComplete}
-            >
-              email
-            </HoverRoll>
-          </a>
-          <Underline
-            ref={emailUnderline.ref}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              ease: [0.22, 1, 0.36, 1],
-              delay: UNDERLINE_DELAY + UNDERLINE_STAGGER * 2,
-            }}
-          />
-        </Email>
-        . I hope you find my page enjoyable and have a great day!
-      </SplitText>
-    ),
-    [],
   );
 
   return (
@@ -222,7 +87,9 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             />
           </Cta>
         </div>
-        <LeftText className="font-secondary-normal">{introBody}</LeftText>
+        <LeftText className="font-secondary-normal">
+          <IntroBody delay={TEXT_DELAY} underlineDelay={UNDERLINE_DELAY} />
+        </LeftText>
         <div className="hidden sm:block">
           <Logos delay={LOGOS_DELAY} />
         </div>
@@ -347,63 +214,6 @@ const LeftText = styled(motion.p)`
     font-size: 1.85vw;
     line-height: 1.8;
   }
-`;
-
-const HoverableText = styled.span`
-  cursor: pointer;
-`;
-
-// position: relative + display: inline-block so the Underline bar below can
-// position itself against this (unsplit) span rather than some distant
-// ancestor. display: inline-block matters as much as position: relative
-// here: an absolutely positioned child of a plain `inline` box has a
-// browser-inconsistent containing block for `left`/`right`, so `left: 0;
-// right: 0` resolves against the wrong width and the bar drifts off to one
-// side. inline-block gives it a proper box to anchor to while still
-// wrapping like a word within the surrounding text.
-const HoverableTextUnderline = styled(HoverableText)`
-  position: relative;
-  display: inline-block;
-`;
-
-// A real text-decoration underline can't be used here: this text sits inside
-// a per-character SplitText reveal, which wraps each char in its own
-// `display: inline-block` span (splitting.css), and text-decoration can't
-// paint through those — each char ends up drawing its own tiny underline
-// segment instead of one continuous line. This bar sidesteps the problem by
-// living outside the split text entirely: it's a separate, absolutely
-// positioned element with its own `currentColor` background, so it always
-// renders as one unbroken line regardless of what SplitText does to the text
-// above it. Its opacity (not the bar itself) is what fades in via
-// framer-motion, on the usages below.
-const Underline = styled(motion.span)`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.67vw;
-  height: 3px;
-  background-color: currentColor;
-`;
-
-const Sydney = styled.span`
-  color: ${Color.SYDNEY_ORANGE};
-`;
-
-const Australia = styled(HoverableText)`
-  cursor: pointer;
-  color: ${Color.AUSTRALIA_GOLD};
-`;
-
-const LinkedIn = styled(HoverableTextUnderline)`
-  color: ${Color.LINKEDIN_BLUE};
-`;
-
-const Github = styled(HoverableTextUnderline)`
-  color: ${Color.BACKGROUND_WHITE};
-`;
-
-const Email = styled(HoverableTextUnderline)`
-  color: ${Color.BLUE};
 `;
 
 const Right = styled.div`
