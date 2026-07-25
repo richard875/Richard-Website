@@ -5,7 +5,7 @@ import { WATER_VERTEX_SHADER, WATER_FRAGMENT_SHADER } from "../../shader";
 import type { DockLightingConfig } from "../types";
 import { DOCK_GLOW_POINTS_WATER_LOCAL, DOCK_LED_COLOR } from "./dockWaterline";
 
-export const useAnimatedWaterMaterial = (
+const useAnimatedWaterMaterial = (
   sourceMaterial: THREE.Material | undefined,
   sunDirection: THREE.Vector3,
   isNight: boolean,
@@ -57,3 +57,5 @@ export const useAnimatedWaterMaterial = (
 
   return waterMaterial;
 };
+
+export default useAnimatedWaterMaterial;

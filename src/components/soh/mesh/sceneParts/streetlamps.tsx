@@ -1,7 +1,7 @@
 import React from "react";
 import * as THREE from "three";
 import { NightGlowInstances } from "../nightGlow";
-import { StreetlampSpot } from "../streetlampSpot";
+import StreetlampSpot from "../streetlampSpot";
 import { STREETLAMP_LOCAL_POSITIONS } from "../streetlamps";
 import type { StreetlampLightingConfig } from "../types";
 
@@ -9,7 +9,7 @@ import type { StreetlampLightingConfig } from "../types";
 // plus, at night, the per-post glow-ball instances and real spotlight
 // cones. Rendered as a sibling of OperaHouseBuilding inside mesh.tsx's
 // shared [904.35, 676.99, 907.95] wrapper group.
-export const Streetlamps = ({
+const Streetlamps = ({
   nodes,
   heroMaterial,
   isNight,
@@ -56,3 +56,5 @@ export const Streetlamps = ({
     )}
   </>
 );
+
+export default Streetlamps;

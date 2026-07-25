@@ -6,7 +6,7 @@ import {
   DOCK_LIGHT_PENUMBRA,
 } from "./waterline/dockWaterline";
 
-export const DockLight = ({
+const DockLight = ({
   position,
   target,
   intensity,
@@ -48,3 +48,5 @@ export const DockLight = ({
     </>
   );
 };
+
+export default DockLight;

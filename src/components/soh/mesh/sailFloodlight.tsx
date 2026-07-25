@@ -55,7 +55,7 @@ const SAIL_FLOODLIGHT_DISTANCE = 5;
 // A spotLight's `.target` only inherits the model's rotation if it's a
 // genuinely parented <object3D>, not just a position handed to it via a
 // prop - see DockLight for the same pattern.
-export const SailFloodlight = ({
+const SailFloodlight = ({
   position,
   target,
   angle,
@@ -96,3 +96,5 @@ export const SailFloodlight = ({
     </>
   );
 };
+
+export default SailFloodlight;

@@ -71,7 +71,7 @@ const BUILDINGS: BuildingConfig[] = [
   },
 ];
 
-export const Buildings = ({
+const Buildings = ({
   nodes,
   heroMaterial,
   animatedWaterMaterial,
@@ -133,3 +133,5 @@ export const Buildings = ({
     ))}
   </group>
 );
+
+export default Buildings;

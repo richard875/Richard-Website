@@ -27,7 +27,7 @@ type SkyUniforms = {
 // dayHemiColor/dayLighting (both are fresh objects every render, so
 // depending on them directly would fire this effect on every render
 // instead of only when something that affects the sky actually changed).
-export const useSceneFogSync = (
+const useSceneFogSync = (
   scene: THREE.Scene,
   uniforms: SkyUniforms,
   effectiveIsNight: boolean,
@@ -62,3 +62,5 @@ export const useSceneFogSync = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
+
+export default useSceneFogSync;

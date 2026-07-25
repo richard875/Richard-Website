@@ -5,7 +5,7 @@ import * as THREE from "three";
 // lights present in day mode; night mode layers the sail floodlights, dock
 // lights and streetlamps (see mesh/sceneParts/NightFixtures.tsx etc.) on
 // top of these same 3.
-export const SceneLights = ({
+const SceneLights = ({
   ambientIntensity,
   hemiColor,
   hemiGroundColor,
@@ -53,3 +53,5 @@ export const SceneLights = ({
     />
   </>
 );
+
+export default SceneLights;

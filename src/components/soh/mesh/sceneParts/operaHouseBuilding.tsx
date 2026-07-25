@@ -5,7 +5,7 @@ import * as THREE from "three";
 // (stone base, sail roof, glass, trim). Rendered as a sibling of
 // Streetlamps inside mesh.tsx's shared [904.35, 676.99, 907.95] wrapper
 // group, since both live in that same local coordinate frame.
-export const OperaHouseBuilding = ({
+const OperaHouseBuilding = ({
   nodes,
   heroMaterial,
   glassMaterial,
@@ -65,3 +65,5 @@ export const OperaHouseBuilding = ({
     </group>
   </>
 );
+
+export default OperaHouseBuilding;

@@ -2,7 +2,7 @@ import React from "react";
 import * as THREE from "three";
 import AnimatedBoat from "../../animatedBoat";
 
-export const Boats = ({
+const Boats = ({
   nodes,
   heroMaterial,
   glassMaterial,
@@ -142,3 +142,5 @@ export const Boats = ({
     </group>
   );
 };
+
+export default Boats;

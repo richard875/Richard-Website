@@ -1,7 +1,7 @@
 import React from "react";
 import { NightGlowInstances } from "../nightGlow";
-import { SailFloodlight } from "../sailFloodlight";
-import { DockLight } from "../dockLight";
+import SailFloodlight from "../sailFloodlight";
+import DockLight from "../dockLight";
 import type { DockLightingConfig, SailFloodlightConfig } from "../types";
 import {
   DOCK_LED_COLOR,
@@ -21,7 +21,7 @@ import {
 // visual - see NightGlow), and the parking-lot/plaza perimeter markers.
 // Rendered as siblings to the main model group rather than nested inside
 // it, since none of these need the model's own transform chain.
-export const NightFixtures = ({
+const NightFixtures = ({
   isNight,
   sailFloodlights,
   dockLighting,
@@ -98,3 +98,5 @@ export const NightFixtures = ({
     </>
   );
 };
+
+export default NightFixtures;

@@ -15,15 +15,15 @@ import type {
 import Inspector from "../soh/inspector";
 import { INTRO_SOH } from "../../constants/googleTags";
 import { DAY_SKY_BOTTOM } from "./scene/lightingKeyframes";
-import { useDayNightLighting } from "./scene/useDayNightLighting";
-import { useSceneFogSync } from "./scene/useSceneFogSync";
-import { useCameraParallax } from "./scene/useCameraParallax";
-import { SceneLights } from "./scene/sceneLights";
-import { SceneSky } from "./scene/sceneSky";
-import { Moon } from "./scene/moon";
-import { SceneClouds } from "./scene/sceneClouds";
-import { ScenePostProcessing } from "./scene/scenePostProcessing";
-import { useOperaHouseGuiPanel } from "./scene/gui/useOperaHouseGuiPanel";
+import useDayNightLighting from "./scene/useDayNightLighting";
+import useSceneFogSync from "./scene/useSceneFogSync";
+import useCameraParallax from "./scene/useCameraParallax";
+import SceneLights from "./scene/sceneLights";
+import SceneSky from "./scene/sceneSky";
+import Moon from "./scene/moon";
+import SceneClouds from "./scene/sceneClouds";
+import ScenePostProcessing from "./scene/scenePostProcessing";
+import useOperaHouseGuiPanel from "./scene/gui/useOperaHouseGuiPanel";
 
 const SydneyOperaHouse = React.memo(() => (
   <Canvas

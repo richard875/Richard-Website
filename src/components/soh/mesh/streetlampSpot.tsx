@@ -17,7 +17,7 @@ import {
 // scene already has one big shadow-casting directional light; adding real
 // shadow maps to all 14 of these would be expensive for very little payoff
 // at this scale).
-export const StreetlampSpot = ({
+const StreetlampSpot = ({
   position,
   intensity,
   angle,
@@ -67,3 +67,5 @@ export const StreetlampSpot = ({
     </>
   );
 };
+
+export default StreetlampSpot;

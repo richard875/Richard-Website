@@ -8,7 +8,7 @@ import cloudTexture from "../../../../static/models/cloud.png";
 // the hemisphere light's blue/orange mix. `cloudColor`/`resolveCloudOpacity`
 // come from useDayNightLighting and gui `cloudOpacity` respectively - see
 // the callers in sydneyOperaHouse.tsx.
-export const SceneClouds = ({
+const SceneClouds = ({
   cloudColor,
   resolveCloudOpacity,
 }: {
@@ -149,3 +149,5 @@ export const SceneClouds = ({
     />
   </Clouds>
 );
+
+export default SceneClouds;

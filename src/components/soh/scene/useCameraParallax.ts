@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { useThree, useFrame } from "@react-three/fiber";
 
 // Subtle camera parallax that drifts toward the pointer for a sense of depth.
-export const useCameraParallax = (parallaxStrength: number) => {
+const useCameraParallax = (parallaxStrength: number) => {
   const { camera } = useThree();
 
   useFrame((state, delta) => {
@@ -23,3 +23,5 @@ export const useCameraParallax = (parallaxStrength: number) => {
     camera.lookAt(0, 0.5, 0);
   });
 };
+
+export default useCameraParallax;

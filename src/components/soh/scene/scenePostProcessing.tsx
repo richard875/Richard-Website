@@ -10,9 +10,9 @@ import {
   DepthOfField,
 } from "@react-three/postprocessing";
 import { Resolution, KernelSize, BlendFunction } from "postprocessing";
-import { DepthKeepAlive } from "./depthKeepAlive";
+import DepthKeepAlive from "./depthKeepAlive";
 
-export const ScenePostProcessing = ({
+const ScenePostProcessing = ({
   effectiveIsNight,
   bloomIntensity,
   luminanceThreshold,
@@ -123,3 +123,5 @@ export const ScenePostProcessing = ({
     ].filter((child): child is React.JSX.Element => Boolean(child))}
   </EffectComposer>
 );
+
+export default ScenePostProcessing;

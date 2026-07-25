@@ -10,19 +10,19 @@ import {
   useLambertMaterials,
   useNightMaterialTint,
 } from "./mesh/materials";
-import { useAnimatedWaterMaterial } from "./mesh/waterline/useAnimatedWaterMaterial";
+import useAnimatedWaterMaterial from "./mesh/waterline/useAnimatedWaterMaterial";
 import {
   DOCK_WATERLINE_Y,
   DOCK_LED_MARKERS,
 } from "./mesh/waterline/dockWaterline";
-import { NightFixtures } from "./mesh/sceneParts/nightFixtures";
-import { TaxiCars } from "./mesh/sceneParts/taxiCars";
-import { Trees } from "./mesh/sceneParts/trees";
-import { OperaHouseBuilding } from "./mesh/sceneParts/operaHouseBuilding";
-import { Streetlamps } from "./mesh/sceneParts/streetlamps";
-import { Buildings } from "./mesh/sceneParts/buildings";
-import { Boats } from "./mesh/sceneParts/boats";
-import { GroundAndWater } from "./mesh/sceneParts/groundAndWater";
+import NightFixtures from "./mesh/sceneParts/nightFixtures";
+import TaxiCars from "./mesh/sceneParts/taxiCars";
+import Trees from "./mesh/sceneParts/trees";
+import OperaHouseBuilding from "./mesh/sceneParts/operaHouseBuilding";
+import Streetlamps from "./mesh/sceneParts/streetlamps";
+import Buildings from "./mesh/sceneParts/buildings";
+import Boats from "./mesh/sceneParts/boats";
+import GroundAndWater from "./mesh/sceneParts/groundAndWater";
 import {
   DEFAULT_DOCK_LIGHTING,
   DEFAULT_SAIL_FLOODLIGHTS,

@@ -5,7 +5,7 @@ import {
   WATER_MESH_LOCAL_ROTATION,
 } from "../waterline/dockWaterline";
 
-export const GroundAndWater = ({
+const GroundAndWater = ({
   nodes,
   heroMaterial,
   animatedWaterMaterial,
@@ -79,3 +79,5 @@ export const GroundAndWater = ({
     />
   </group>
 );
+
+export default GroundAndWater;

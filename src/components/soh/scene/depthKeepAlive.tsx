@@ -25,7 +25,7 @@ import { DEPTH_KEEPALIVE_FRAGMENT_SHADER } from "../shader";
 // instance directly and handing it to <primitive> - the same pattern
 // several of @react-three/postprocessing's own built-ins use internally -
 // sidesteps that entirely.
-export const DepthKeepAlive = () => {
+const DepthKeepAlive = () => {
   const effect = React.useMemo(
     () =>
       new Effect("DepthKeepAliveEffect", DEPTH_KEEPALIVE_FRAGMENT_SHADER, {
@@ -36,3 +36,5 @@ export const DepthKeepAlive = () => {
   );
   return <primitive object={effect} />;
 };
+
+export default DepthKeepAlive;

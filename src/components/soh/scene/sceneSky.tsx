@@ -14,7 +14,7 @@ export type SkyUniforms = {
 // The sky sphere (a shaderMaterial gradient, kept in sync with the day/
 // night palette by useSceneFogSync mutating `uniforms` in place) plus the
 // star/dust Sparkles field in front of it.
-export const SceneSky = ({
+const SceneSky = ({
   uniforms,
   skySphereGeometryX,
   skySphereGeometryY,
@@ -58,3 +58,5 @@ export const SceneSky = ({
     />
   </>
 );
+
+export default SceneSky;

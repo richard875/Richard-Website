@@ -41,7 +41,7 @@ export type GuiPanelValues = Omit<
 // keeps the Time Option folder's enabled/disabled state and the Day/Night
 // Scene Options folders' visibility in sync with React state afterwards.
 // See guiSections.ts for what each folder actually contains.
-export const useOperaHouseGuiPanel = ({
+const useOperaHouseGuiPanel = ({
   values,
   callbacks,
   sailFloodlights,
@@ -238,3 +238,5 @@ export const useOperaHouseGuiPanel = ({
     values.dimmed,
   ]);
 };
+
+export default useOperaHouseGuiPanel;

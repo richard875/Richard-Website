@@ -1,7 +1,7 @@
 import React from "react";
 import * as THREE from "three";
 
-export const Trees = ({
+const Trees = ({
   nodes,
   heroMaterial,
   mergedTreeGeometry,
@@ -44,3 +44,5 @@ export const Trees = ({
     </group>
   </group>
 );
+
+export default Trees;

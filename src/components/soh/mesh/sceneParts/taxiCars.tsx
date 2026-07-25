@@ -1,7 +1,7 @@
 import React from "react";
 import * as THREE from "three";
 
-export const TaxiCars = ({
+const TaxiCars = ({
   nodes,
   heroMaterial,
   glassMaterial,
@@ -108,3 +108,5 @@ export const TaxiCars = ({
     </group>
   </group>
 );
+
+export default TaxiCars;

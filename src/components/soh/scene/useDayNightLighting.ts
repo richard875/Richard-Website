@@ -22,7 +22,7 @@ import {
   TimeLightingKeyframe,
   interpolateDayLighting,
 } from "./lightingKeyframes";
-import { useCurrentHour } from "./useCurrentHour";
+import useCurrentHour from "./useCurrentHour";
 
 export type DayNightLightingInputs = {
   ambientLightIntensity: number;
@@ -53,7 +53,7 @@ export type DayNightLightingInputs = {
 // where "now" falls on the day keyframe curve, and every effective
 // light/sky/cloud value that follows from that. See lightingKeyframes.ts
 // for the actual keyframe data this interpolates between.
-export const useDayNightLighting = (inputs: DayNightLightingInputs) => {
+const useDayNightLighting = (inputs: DayNightLightingInputs) => {
   const {
     ambientLightIntensity,
     hemiLightIntensity,
@@ -206,3 +206,5 @@ export const useDayNightLighting = (inputs: DayNightLightingInputs) => {
     resolveCloudOpacity,
   };
 };
+
+export default useDayNightLighting;

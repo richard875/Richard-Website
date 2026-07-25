@@ -4,7 +4,7 @@ import { NIGHT_MOON_POSITION } from "./lightingKeyframes";
 // Night-only moon disc + soft halo, fixed at NIGHT_MOON_POSITION (same
 // position the directional "moon" light uses at night) so the visible disc
 // and the water's moon-glint always agree.
-export const Moon = () => (
+const Moon = () => (
   <group position={NIGHT_MOON_POSITION}>
     {/* Tone-mapped like everything else - an unclamped, un-tonemapped
         bright point here fed a raw HDR spike into DepthOfField/Bloom
@@ -25,3 +25,5 @@ export const Moon = () => (
     </mesh>
   </group>
 );
+
+export default Moon;
