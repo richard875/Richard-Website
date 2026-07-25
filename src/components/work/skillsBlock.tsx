@@ -6,6 +6,7 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import iconPicker from "../../helper/iconPicker";
 import getTransitionColor from "../../helper/getTransitionColor";
+import { sparkleEntranceEffect } from "../../helper/motionConfig";
 import skillsData from "../../../static/data/skills.json";
 import Skills, { Skill as SkillType } from "../../types/skills";
 import {
@@ -15,14 +16,6 @@ import {
   BLOCK_WIDTH_DESKTOP,
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
-
-// Entrance for the AI sparkle logo: settles in from a small, off-axis twist
-// into place, like it's just twinkled into view.
-const logoEntranceEffect = {
-  initial: { opacity: 0, scale: 0.4, rotate: -180 },
-  animate: { opacity: 1, scale: 1, rotate: 0 },
-  transition: { duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] as const },
-};
 
 const SecondarySkills = ({
   skill,
@@ -53,7 +46,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
         $height={45}
         src={iconPicker(Icon.Sparkle, isDarkMode)}
         alt={"My Skills"}
-        {...logoEntranceEffect}
+        {...sparkleEntranceEffect}
       />
       <TitleWrapper>
         <Title>Proficient Skills</Title>
@@ -63,7 +56,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
           style={{ paddingBottom: "5px" }}
           src={iconPicker(Icon.Sparkle, isDarkMode)}
           alt={"My Skills"}
-          {...logoEntranceEffect}
+          {...sparkleEntranceEffect}
         />
       </TitleWrapper>
       {(skillsData as Skills).primary.map((skill: SkillType, index: number) => (

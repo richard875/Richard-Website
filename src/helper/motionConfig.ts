@@ -80,3 +80,28 @@ export const badgeWiggleEffect: HoverAndTapType = {
   rotate: [0, -4, 4, -3, 3, 0],
   transition: { duration: 0.5, ease: "easeInOut" },
 };
+
+// Entrance for the AI sparkle logo: fades in cleanly while scale + rotate
+// spring into place with a light, unhurried overshoot, like it settles and
+// gives one gentle wobble — opacity stays smooth so the bounce doesn't flicker.
+export const sparkleEntranceEffect = {
+  initial: { opacity: 0, scale: 0.3, rotate: -90 },
+  animate: { opacity: 1, scale: 1, rotate: 0 },
+  transition: {
+    opacity: { duration: 0.5, delay: 0.35, ease: "easeOut" as const },
+    scale: {
+      type: "spring" as const,
+      stiffness: 160,
+      damping: 14,
+      mass: 1,
+      delay: 0.35,
+    },
+    rotate: {
+      type: "spring" as const,
+      stiffness: 140,
+      damping: 16,
+      mass: 1.1,
+      delay: 0.35,
+    },
+  },
+};
