@@ -115,6 +115,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
         delay={0.6}
         backRoute={Route.Intro}
         backTagId={EXPERIENCE_TO_INTRO}
+        onBackClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
         forwardRoute={Route.Projects}
         forwardTagId={EXPERIENCE_TO_PROJECTS}
         forwardImage={ToProjectsCircle}

@@ -107,7 +107,7 @@ const Links = ({
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onClick={(e) => {
-            setTransitionColor(Color.BACKGROUND_BLACK);
+            setTransitionColor(getTransitionColor(isDarkMode));
             routeTo(e, Route.Intro);
           }}
         >
