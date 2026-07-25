@@ -6,7 +6,7 @@ import layout from "../../styles/layout";
 import usyd from "../../../static/images/logos/usyd.svg";
 import qantas from "../../../static/images/logos/qantas.svg";
 import coates from "../../../static/images/logos/coates.svg";
-import nzgovt from "../../../static/images/logos/nzgovt.png";
+import fdjunited from "../../../static/images/logos/fdjunited.svg";
 
 const Logos = ({ delay = 0.2 }: { delay?: number }) => (
   <Container
@@ -14,15 +14,15 @@ const Logos = ({ delay = 0.2 }: { delay?: number }) => (
     animate={{ opacity: 1 }}
     transition={{ stiffness: 0, duration: 0.3, delay }}
   >
+    <FdjLogo>
+      <img src={fdjunited} alt="FDJ United" />
+    </FdjLogo>
     <QantasLogo>
       <img src={qantas} alt="Qantas" />
     </QantasLogo>
     <CoatesLogo>
       <img src={coates} alt="Coates Group" />
     </CoatesLogo>
-    <NzGovtLogo>
-      <img src={nzgovt} alt="New Zealand Government" />
-    </NzGovtLogo>
     <UsydLogo>
       <img src={usyd} alt="University of Sydney" />
     </UsydLogo>
@@ -71,6 +71,27 @@ const Logo = styled.div`
   }
 `;
 
+const FdjLogo = styled(Logo)`
+  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
+
+  @media ${layout.up.sm} {
+    border-bottom: 0;
+    border-right: 0.5px solid ${Color.BORDER_WHITE};
+  }
+
+  img {
+    height: 6vw;
+
+    @media ${layout.up.sm} {
+      height: 2.3vw;
+    }
+
+    @media ${layout.up.lg} {
+      height: 1.3vw;
+    }
+  }
+`;
+
 const QantasLogo = styled(Logo)`
   border-bottom: 0.5px solid ${Color.BORDER_WHITE};
 
@@ -109,27 +130,6 @@ const CoatesLogo = styled(Logo)`
 
     @media ${layout.up.lg} {
       height: 1.8vw;
-    }
-  }
-`;
-
-const NzGovtLogo = styled(Logo)`
-  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
-
-  @media ${layout.up.sm} {
-    border-bottom: 0;
-    border-right: 0.5px solid ${Color.BORDER_WHITE};
-  }
-
-  img {
-    height: 10vw;
-
-    @media ${layout.up.sm} {
-      height: 4.5vw;
-    }
-
-    @media ${layout.up.lg} {
-      height: 2.5vw;
     }
   }
 `;
