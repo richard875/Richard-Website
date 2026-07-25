@@ -31,12 +31,16 @@ import youtubeBlack from "../../static/images/logos/youtube-black.svg";
 import angular from "../../static/images/skills/angular.svg";
 import aws from "../../static/images/skills/aws.svg";
 import awsBlack from "../../static/images/skills/aws-black.svg";
+import couchbase from "../../static/images/skills/couchbase.svg";
 import csharp from "../../static/images/skills/csharp.svg";
 import docker from "../../static/images/skills/docker.svg";
 import dotnet from "../../static/images/skills/dotnet.svg";
 import go from "../../static/images/skills/go.svg";
+import grafana from "../../static/images/skills/grafana.svg";
 import graphql from "../../static/images/skills/graphql.svg";
 import jenkins from "../../static/images/skills/jenkins.svg";
+import kafka from "../../static/images/skills/kafka.svg";
+import kubernetes from "../../static/images/skills/kubernetes.svg";
 import mongodb from "../../static/images/skills/mongodb.svg";
 import mongodbBlack from "../../static/images/skills/mongodb-black.svg";
 import postgresql from "../../static/images/skills/postgresql.svg";
@@ -91,6 +95,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return angular;
     case Icon.AWS:
       return isDark ? aws : awsBlack;
+    case Icon.Couchbase:
+      return couchbase;
     case Icon.CSharp:
       return csharp;
     case Icon.Docker:
@@ -99,10 +105,16 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return dotnet;
     case Icon.Go:
       return go;
+    case Icon.Grafana:
+      return grafana;
     case Icon.GraphQL:
       return graphql;
     case Icon.Jenkins:
       return jenkins;
+    case Icon.Kafka:
+      return kafka;
+    case Icon.Kubernetes:
+      return kubernetes;
     case Icon.MongoDB:
       return isDark ? mongodb : mongodbBlack;
     case Icon.PostgreSQL:
