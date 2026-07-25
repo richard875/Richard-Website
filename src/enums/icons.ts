@@ -24,6 +24,7 @@ enum Icon {
   CSharp = "csharp",
   Docker = "docker",
   DotNet = "dotnet",
+  GitLab = "gitlab",
   Go = "go",
   Grafana = "grafana",
   GraphQL = "graphql",

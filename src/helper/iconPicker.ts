@@ -35,6 +35,7 @@ import couchbase from "../../static/images/skills/couchbase.svg";
 import csharp from "../../static/images/skills/csharp.svg";
 import docker from "../../static/images/skills/docker.svg";
 import dotnet from "../../static/images/skills/dotnet.svg";
+import gitlab from "../../static/images/skills/gitlab.svg";
 import go from "../../static/images/skills/go.svg";
 import grafana from "../../static/images/skills/grafana.svg";
 import graphql from "../../static/images/skills/graphql.svg";
@@ -103,6 +104,8 @@ const iconPicker = (logo: string, isDark: boolean) => {
       return docker;
     case Icon.DotNet:
       return dotnet;
+    case Icon.GitLab:
+      return gitlab;
     case Icon.Go:
       return go;
     case Icon.Grafana:
