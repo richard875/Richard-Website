@@ -105,3 +105,31 @@ export const sparkleEntranceEffect = {
     },
   },
 };
+
+// One-shot easter egg: a full 360 spin that settles into a little wiggle,
+// triggered imperatively via useAnimationControls on hover-enter (same
+// pattern as badgeWiggleEffect/PillCallToAction below) so it always plays to
+// completion even if the pointer leaves mid-spin — whileHover would
+// cancel/reverse a multi-keyframe rotate the instant hover ends, leaving the
+// icon stuck mid-turn instead of landing upright.
+//
+// `base` is the rotation value to animate from (the caller tracks how many
+// full turns have accumulated so far and passes that back in) — using an
+// absolute run-on value rather than resetting to 0 each time avoids a
+// visible snap-back, since rotate(360deg) reads identically to rotate(0deg).
+export const sparkleSpinWiggleEffect = (base: number): TargetAndTransition => ({
+  rotate: [
+    base,
+    base + 360,
+    base + 344,
+    base + 376,
+    base + 352,
+    base + 364,
+    base + 360,
+  ],
+  transition: {
+    duration: 0.9,
+    ease: "easeInOut",
+    times: [0, 0.55, 0.68, 0.78, 0.87, 0.94, 1],
+  },
+});
