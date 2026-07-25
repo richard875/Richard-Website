@@ -47,13 +47,14 @@ const SOH_DELAY = 1.35;
 const UNDERLINE_DELAY = SOH_DELAY + STAGE_DURATION - 0.25;
 
 const Experience = ({ location }: { location: WindowLocation }) => {
-  const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
+  const isDarkMode = useDarkModeManager(false);
   const [transitionColor, setTransitionColor] = React.useState(
     Color.BACKGROUND_WHITE,
   );
 
   return (
     <Container
+      $isDarkMode={isDarkMode}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.5 }}
@@ -87,11 +88,15 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             />
           </Cta>
         </div>
-        <LeftText className="font-secondary-normal">
-          <IntroBody delay={TEXT_DELAY} underlineDelay={UNDERLINE_DELAY} />
+        <LeftText className="font-secondary-normal" $isDarkMode={isDarkMode}>
+          <IntroBody
+            delay={TEXT_DELAY}
+            isDarkMode={isDarkMode}
+            underlineDelay={UNDERLINE_DELAY}
+          />
         </LeftText>
         <div className="hidden sm:block">
-          <Logos delay={LOGOS_DELAY} />
+          <Logos delay={LOGOS_DELAY} isDarkMode={isDarkMode} />
         </div>
         <Cta
           id={`${INTRO_TO_EXPERIENCE}_0`}
@@ -117,7 +122,7 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           />
         </Cta>
         <div className="sm:hidden">
-          <Logos delay={LOGOS_DELAY} />
+          <Logos delay={LOGOS_DELAY} isDarkMode={isDarkMode} />
         </div>
       </Left>
       <Right
@@ -160,7 +165,16 @@ export default Experience;
 export const Head: HeadFC = () => (
   <Splash>
     <title>{CURRENT_PAGE_TITLE}</title>
-    <meta name="theme-color" content={Color.BACKGROUND_BLACK} />
+    <meta
+      name="theme-color"
+      content={Color.BACKGROUND_BLACK}
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content={Color.BACKGROUND_WHITE_SECONDARY}
+      media="(prefers-color-scheme: light)"
+    />
     <Preload />
     <MetaTags
       path={Route.Intro}
@@ -170,7 +184,9 @@ export const Head: HeadFC = () => (
   </Splash>
 );
 
-const Container = styled(motion.div)`
+const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
+  background-color: ${({ $isDarkMode }) => getTransitionColor($isDarkMode)};
+
   @media ${layout.up.lg} {
     display: flex;
     align-items: center;
@@ -180,7 +196,6 @@ const Container = styled(motion.div)`
 
 const Left = styled.div`
   padding: 30px;
-  background-color: ${Color.BACKGROUND_BLACK};
 
   @media ${layout.down.sm} {
     padding-bottom: 10px;
@@ -200,10 +215,10 @@ const Left = styled.div`
   }
 `;
 
-const LeftText = styled(motion.p)`
+const LeftText = styled(motion.p)<{ $isDarkMode: boolean }>`
   font-size: 6vw;
   line-height: 1.65;
-  color: ${Color.WHITE};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 
   @media ${layout.up.sm} {
     font-size: 3vw;
@@ -220,7 +235,6 @@ const Right = styled.div`
   height: 500px;
   cursor: grab;
   user-select: none;
-  background-color: ${Color.BACKGROUND_WHITE_SECONDARY};
 
   &:active {
     cursor: grabbing;

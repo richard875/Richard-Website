@@ -34,9 +34,11 @@ const UNDERLINE_STAGGER = 0.05;
 // SplitText's DOM instead of doing its own split.
 const IntroBody = ({
   delay,
+  isDarkMode,
   underlineDelay,
 }: {
   delay: number;
+  isDarkMode: boolean;
   underlineDelay: number;
 }) => {
   const linkedInUnderline = useUnderlineFlicker();
@@ -90,7 +92,7 @@ const IntroBody = ({
         </span>{" "}
         check out my repositories on&nbsp;
         <span className="whitespace-nowrap">
-          <Github id={`${INTRO_GITHUB}_0`}>
+          <Github id={`${INTRO_GITHUB}_0`} $isDarkMode={isDarkMode}>
             <a
               id={`${INTRO_GITHUB}_1`}
               href={GITHUB_URL}
@@ -150,7 +152,7 @@ const IntroBody = ({
         I hope you find my page enjoyable and have a great day!
       </SplitText>
     ),
-    [],
+    [isDarkMode],
   );
 };
 
@@ -205,8 +207,9 @@ const LinkedIn = styled(HoverableTextUnderline)`
   color: ${Color.LINKEDIN_BLUE};
 `;
 
-const Github = styled(HoverableTextUnderline)`
-  color: ${Color.BACKGROUND_WHITE};
+const Github = styled(HoverableTextUnderline)<{ $isDarkMode: boolean }>`
+  color: ${({ $isDarkMode }) =>
+    $isDarkMode ? Color.BACKGROUND_WHITE : Color.BACKGROUND_BLACK};
 `;
 
 const Email = styled(HoverableTextUnderline)`

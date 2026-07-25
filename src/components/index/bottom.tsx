@@ -12,6 +12,7 @@ import BottomBackdrop from "./bottomBackdrop";
 import ResumeCircle from "../global/resumeCircle";
 import RoundedCallToAction from "../global/roundedCallToAction";
 import { motionTapEffect } from "../../helper/motionConfig";
+import getTransitionColor from "../../helper/getTransitionColor";
 import {
   INDEX_TO_INTRO,
   CONTACT_GITHUB,
@@ -24,10 +25,14 @@ const ENTRANCE_DELAY = 0.9;
 
 const Bottom = ({
   setHover,
+  isDarkMode,
   isIphoneXPwa,
+  setTransitionColor,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
+  isDarkMode: boolean;
   isIphoneXPwa: boolean;
+  setTransitionColor: React.Dispatch<React.SetStateAction<Color>>;
 }) => {
   // Non-text elements (button, social) fade up on the shared entrance
   // beat; the text lines get the per-character split reveal.
@@ -71,7 +76,11 @@ const Bottom = ({
             Sydney, Australia
           </SplitText>
         </SmallText>
-        <Button id={`${INDEX_TO_INTRO}_0`} {...fade(ENTRANCE_DELAY + 0.75)}>
+        <Button
+          id={`${INDEX_TO_INTRO}_0`}
+          {...fade(ENTRANCE_DELAY + 0.75)}
+          onClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
+        >
           <RoundedCallToAction
             name="My Experience"
             tagId={INDEX_TO_INTRO}
@@ -79,6 +88,7 @@ const Bottom = ({
             forward={true}
             route={Route.Intro}
             setHover={setHover}
+            isDarkMode={isDarkMode}
           />
         </Button>
         <Social {...fade(ENTRANCE_DELAY + 0.95)}>
@@ -129,6 +139,7 @@ const Bottom = ({
           className="font-primary-normal select-none"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
+          onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
         >
           {!isIphoneXPwa && (
             <a

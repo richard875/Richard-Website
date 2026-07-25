@@ -23,7 +23,7 @@ const routeTo = (
       document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
       break;
     case Route.Intro:
-      document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
+      document.body.style.backgroundColor = getTransitionColor(isDarkMode);
       break;
     case Route.Experience:
       document.body.style.backgroundColor = getTransitionColor(isDarkMode);

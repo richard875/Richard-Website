@@ -26,10 +26,12 @@ import {
 // further into the site), white when it doesn't (a "Home"/"Back" link) —
 // so it reads as forward-vs-back rather than matching IntroBadge's look.
 //
-// `isDarkMode` no longer affects this component's own colours — accentColor
-// is decided by `forward` alone now. It's kept purely to pass
-// through to `routeTo` below, which still needs it to pick the right
-// page-transition overlay colour.
+// `isDarkMode` mostly just passes through to `routeTo` below, which needs it
+// to pick the right page-transition overlay colour — accentColor is decided
+// by `forward` alone for the green "forward" variant. The one exception is
+// the white "back"/"Home" variant: it only exists today against dark
+// backgrounds (404/intro), so when `isDarkMode` is false it swaps to black to
+// stay visible against a light page background.
 //
 // Animation: whileHover (badgeHoverEffect) covers a slight grow that holds
 // for the whole hover and the outline -> solid-fill colour invert (border/
@@ -68,7 +70,13 @@ const PillCallToAction = ({
   manualCursor?: boolean;
   invertOnly?: boolean;
 }) => {
-  const accentColor = forward ? Color.BRIGHT_GREEN : Color.WHITE;
+  const accentColor = forward
+    ? Color.BRIGHT_GREEN
+    : isDarkMode
+      ? Color.WHITE
+      : Color.BLACK;
+  const hoverTextColor =
+    accentColor === Color.BLACK ? Color.WHITE : Color.BLACK;
   const wiggleControls = useAnimationControls();
 
   return (
@@ -80,10 +88,10 @@ const PillCallToAction = ({
         invertOnly
           ? {
               backgroundColor: accentColor,
-              color: Color.BLACK,
+              color: hoverTextColor,
               transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
             }
-          : badgeHoverEffect(accentColor, Color.BLACK)
+          : badgeHoverEffect(accentColor, hoverTextColor)
       }
       whileTap={invertOnly ? undefined : motionTapEffect}
       onMouseEnter={() => {

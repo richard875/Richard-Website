@@ -12,6 +12,7 @@ import MousePosition from "../types/mousePosition";
 import { SITE_TITLE } from "../constants/meta";
 import { INDEX_TO_ACKNOWLEDGEMENT_IPHONEXPWA } from "../constants/googleTags";
 import usePwaDetection from "../hooks/usePwaDetection";
+import useDarkModeManager from "../hooks/useDarkModeManager";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import gsapAnimationIndex from "../helper/gsapAnimationIndex";
@@ -32,9 +33,13 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
   // Hooks and Refs
   const isPwa = usePwaDetection(location);
   const isIphoneX = useIphoneXDetection();
+  const isDarkMode = useDarkModeManager(false);
   const isLandscape = useLandscapeDetection(isPwa);
   const acknowledgementRef = React.useRef(null);
   const [hover, setHover] = React.useState(false);
+  const [transitionColor, setTransitionColor] = React.useState(
+    Color.BACKGROUND_BLACK,
+  );
 
   React.useEffect(() => {
     if (!isLandscape) {
@@ -76,16 +81,22 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
           transform: { type: "spring", stiffness: 65, delay: 0.2 },
         }}
       >
-        <InitialTransition color={Color.BACKGROUND_BLACK} />
+        <InitialTransition color={transitionColor} />
         <Box $isIphoneXPwa={isIphoneX && isPwa}>
           <Wrapper>
             <Top setHover={setHover} />
-            <Bottom setHover={setHover} isIphoneXPwa={isIphoneX && isPwa} />
+            <Bottom
+              setHover={setHover}
+              isDarkMode={isDarkMode}
+              isIphoneXPwa={isIphoneX && isPwa}
+              setTransitionColor={setTransitionColor}
+            />
           </Wrapper>
           <div
             ref={acknowledgementRef}
             id={`${INDEX_TO_ACKNOWLEDGEMENT_IPHONEXPWA}_0`}
             className="sm:hidden"
+            onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
           >
             {isIphoneX && isPwa && (
               <h2
@@ -98,7 +109,10 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
             )}
           </div>
           <Footer>
-            <FooterLeft setHover={setHover} />
+            <FooterLeft
+              setHover={setHover}
+              setTransitionColor={setTransitionColor}
+            />
             <FooterRight />
           </Footer>
         </Box>

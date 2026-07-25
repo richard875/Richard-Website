@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import layout from "../../styles/layout";
+import Color from "../../enums/color";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/splitText";
@@ -8,8 +9,10 @@ import { INDEX_TO_ACKNOWLEDGEMENT_DESKTOP } from "../../constants/googleTags";
 
 const FooterLeft = ({
   setHover,
+  setTransitionColor,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
+  setTransitionColor: React.Dispatch<React.SetStateAction<Color>>;
 }) => (
   <Container id={`${INDEX_TO_ACKNOWLEDGEMENT_DESKTOP}_0`}>
     <h2
@@ -17,6 +20,7 @@ const FooterLeft = ({
       className="font-secondary-normal select-none"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
     >
       <a
         href={Route.Acknowledgement}
