@@ -59,86 +59,95 @@ const IntroBody = ({
         </Australia>
         . On this corner of the internet, you'll find information about me. You
         can connect with me on&nbsp;
-        <LinkedIn id={`${INTRO_LINKEDIN}_0`}>
-          <a
-            id={`${INTRO_LINKEDIN}_1`}
-            href={LINKEDIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <HoverRoll
-              stagger={0.014}
-              onRollStart={linkedInUnderline.onRollStart}
-              onRollComplete={linkedInUnderline.onRollComplete}
+        <span className="whitespace-nowrap">
+          <LinkedIn id={`${INTRO_LINKEDIN}_0`}>
+            <a
+              id={`${INTRO_LINKEDIN}_1`}
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              LinkedIn
-            </HoverRoll>
-          </a>
-          <Underline
-            ref={linkedInUnderline.ref}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              ease: [0.22, 1, 0.36, 1],
-              delay: underlineDelay,
-            }}
-          />
-        </LinkedIn>
-        , check out my repositories on&nbsp;
-        <Github id={`${INTRO_GITHUB}_0`}>
-          <a
-            id={`${INTRO_GITHUB}_1`}
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <HoverRoll
-              stagger={0.016}
-              onRollStart={githubUnderline.onRollStart}
-              onRollComplete={githubUnderline.onRollComplete}
+              <HoverRoll
+                stagger={0.014}
+                onRollStart={linkedInUnderline.onRollStart}
+                onRollComplete={linkedInUnderline.onRollComplete}
+              >
+                LinkedIn
+              </HoverRoll>
+            </a>
+            <Underline
+              ref={linkedInUnderline.ref}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1],
+                delay: underlineDelay,
+              }}
+            />
+          </LinkedIn>
+          ,
+        </span>{" "}
+        check out my repositories on&nbsp;
+        <span className="whitespace-nowrap">
+          <Github id={`${INTRO_GITHUB}_0`}>
+            <a
+              id={`${INTRO_GITHUB}_1`}
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              GitHub
-            </HoverRoll>
-          </a>
-          <Underline
-            ref={githubUnderline.ref}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              ease: [0.22, 1, 0.36, 1],
-              delay: underlineDelay + UNDERLINE_STAGGER,
-            }}
-          />
-        </Github>
-        , or reach out to me via&nbsp;
-        <Email id={`${INTRO_EMAIL}_0`}>
-          <a
-            id={`${INTRO_EMAIL}_1`}
-            href={`mailto:${EMAIL}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <HoverRoll
-              onRollStart={emailUnderline.onRollStart}
-              onRollComplete={emailUnderline.onRollComplete}
+              <HoverRoll
+                stagger={0.016}
+                onRollStart={githubUnderline.onRollStart}
+                onRollComplete={githubUnderline.onRollComplete}
+              >
+                GitHub
+              </HoverRoll>
+            </a>
+            <Underline
+              ref={githubUnderline.ref}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1],
+                delay: underlineDelay + UNDERLINE_STAGGER,
+              }}
+            />
+          </Github>
+          ,
+        </span>{" "}
+        or reach out to me via&nbsp;
+        <span className="whitespace-nowrap">
+          <Email id={`${INTRO_EMAIL}_0`}>
+            <a
+              id={`${INTRO_EMAIL}_1`}
+              href={`mailto:${EMAIL}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              email
-            </HoverRoll>
-          </a>
-          <Underline
-            ref={emailUnderline.ref}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              ease: [0.22, 1, 0.36, 1],
-              delay: underlineDelay + UNDERLINE_STAGGER * 2,
-            }}
-          />
-        </Email>
-        . I hope you find my page enjoyable and have a great day!
+              <HoverRoll
+                onRollStart={emailUnderline.onRollStart}
+                onRollComplete={emailUnderline.onRollComplete}
+              >
+                email
+              </HoverRoll>
+            </a>
+            <Underline
+              ref={emailUnderline.ref}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1],
+                delay: underlineDelay + UNDERLINE_STAGGER * 2,
+              }}
+            />
+          </Email>
+          .
+        </span>{" "}
+        I hope you find my page enjoyable and have a great day!
       </SplitText>
     ),
     [],
