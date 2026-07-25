@@ -31,7 +31,10 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
   const isLandscape = useLandscapeDetection(isPwa);
   const [hover, setHover] = React.useState(false);
 
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the page briefly shows
+  // whatever colour InitialTransition's exit-mask state defaulted to
+  // instead of this page's actual black background.
+  React.useLayoutEffect(() => {
     document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
     document.body.style.overflow = "hidden";
 

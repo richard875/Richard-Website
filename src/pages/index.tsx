@@ -41,7 +41,10 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
     Color.BACKGROUND_BLACK,
   );
 
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the page briefly shows
+  // whatever colour InitialTransition's exit-mask state defaulted to
+  // (black) instead of this page's actual white background.
+  React.useLayoutEffect(() => {
     if (!isLandscape) {
       document.body.style.backgroundColor = Color.BACKGROUND_WHITE;
 

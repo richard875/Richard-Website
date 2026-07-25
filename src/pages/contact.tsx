@@ -50,7 +50,12 @@ const Contact = ({ location }: { location: WindowLocation }) => {
     Color.BACKGROUND_WHITE,
   );
 
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the page briefly shows
+  // whatever colour InitialTransition's exit-mask state defaulted to
+  // (white) instead of this page's actual black background.
+  React.useLayoutEffect(() => {
+    document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
+
     const heightMatcher = "(min-height: 100vh)";
     const ofl = window.matchMedia(heightMatcher).matches ? "hidden" : "auto";
     document.body.style.overflow = ofl;
