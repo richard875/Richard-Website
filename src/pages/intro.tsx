@@ -13,7 +13,7 @@ import Logos from "../components/experience/logos";
 import IntroBody from "../components/experience/introBody";
 import PillCallToAction from "../components/global/pillCallToAction";
 import RoundedCallToAction from "../components/global/roundedCallToAction";
-import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
+import SydneyOperaHouse from "../components/soh/sydneyOperaHouse";
 import InitialTransition from "../components/transition/initialTransition";
 import setOverflow from "../helper/setOverflow";
 import getTransitionColor from "../helper/getTransitionColor";

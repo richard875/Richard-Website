@@ -30,7 +30,7 @@ import type {
   DockLightingConfig,
   StreetlampLightingConfig,
 } from "./mesh";
-import Inspector from "./inspector";
+import Inspector from "../soh/inspector";
 import { IS_DEV } from "../../constants/environment";
 import { INTRO_SOH } from "../../constants/googleTags";
 import {

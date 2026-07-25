@@ -6,7 +6,7 @@ const GOOGLE_INDEXING_URL = `${HTTPS}indexing.googleapis.com/v3/urlNotifications
 
 const axioConfigGoogle = (
   url: string,
-  accessToken: string | null | undefined
+  accessToken: string | null | undefined,
 ) => {
   const headers = {
     "Content-Type": "application/json",
