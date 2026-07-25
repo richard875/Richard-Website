@@ -52,6 +52,7 @@ const IntroBody = ({
         from<Sydney>&nbsp;Sydney</Sydney>,
         <Australia
           id={`${INTRO_AUSTRALIA}_0`}
+          $isDarkMode={isDarkMode}
           onClick={(e) => {
             e.preventDefault();
             window.open(AUSTRALIA, "_blank");
@@ -198,9 +199,10 @@ const Sydney = styled.span`
   color: ${Color.SYDNEY_ORANGE};
 `;
 
-const Australia = styled(HoverableText)`
+const Australia = styled(HoverableText)<{ $isDarkMode: boolean }>`
   cursor: pointer;
-  color: ${Color.AUSTRALIA_GOLD};
+  color: ${({ $isDarkMode }) =>
+    $isDarkMode ? Color.AUSTRALIA_GOLD : Color.AUSTRALIA_GOLD_SECONDARY};
 `;
 
 const LinkedIn = styled(HoverableTextUnderline)`

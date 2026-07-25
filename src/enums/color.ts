@@ -16,6 +16,7 @@ enum Color {
   LINKEDIN_BLUE = "#0077b5",
   SYDNEY_ORANGE = "#E14327",
   AUSTRALIA_GOLD = "#FFCD00",
+  AUSTRALIA_GOLD_SECONDARY = "#F1B502",
 }
 
 export default Color;
