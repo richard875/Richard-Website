@@ -55,6 +55,14 @@ const Projects = ({ location }: { location: WindowLocation }) => {
     Color.BACKGROUND_BLACK,
   );
 
+  // On mobile this is just a normal vertical-scroll page (the pin/scrub
+  // setup below is skipped below 769px), so nothing else resets scroll
+  // between page mounts — without this, arriving here keeps whatever
+  // scrollY the previous page left behind instead of starting at the top.
+  React.useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   React.useEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
       let ctx = gsap.context(() => {

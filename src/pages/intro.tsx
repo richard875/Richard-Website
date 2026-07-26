@@ -52,6 +52,14 @@ const Experience = ({ location }: { location: WindowLocation }) => {
     Color.BACKGROUND_WHITE,
   );
 
+  // Below the `lg` breakpoint this stacks into a normal vertical-scroll
+  // page, so nothing else resets scroll between page mounts — without this,
+  // arriving here keeps whatever scrollY the previous page left behind
+  // instead of starting at the top.
+  React.useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Container
       $isDarkMode={isDarkMode}
