@@ -40,6 +40,13 @@ const ProjectLink = ({
     <Badge
       id={`${PROJECTS_LINK}_${name}_0`}
       $accentColor={accentColor}
+      // whileHover also animates `color`, so Framer Motion caches whatever
+      // colour was current the first time it's hovered as the value to
+      // revert to afterwards — it only re-reads a *live* value from the
+      // `style` prop, never from a styled-components class, so without this
+      // explicit style prop the badge gets stuck on that first-hover colour
+      // and stops following isDarkMode after that.
+      className={`!text-[${accentColor}]`}
       animate={wiggleControls}
       whileHover={badgeHoverEffect(Color.BRIGHT_GREEN, Color.BLACK)}
       whileTap={motionTapEffect}
