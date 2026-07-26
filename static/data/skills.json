@@ -2,7 +2,8 @@
   "primary": [
     {
       "name": "sparkle",
-      "displayName": "AI Agent / Vibe Coding / Loop Engineering",
+      "displayName": "AI Agent / Agentic Coding / Loop Engineering",
+      "displayNameMobile": "AI Agent / Agentic Coding",
       "skill": 100
     },
     {
