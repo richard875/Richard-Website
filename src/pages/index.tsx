@@ -24,10 +24,13 @@ import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
+import SplitText from "../components/motion/splitText";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
 import InitialTransition from "../components/transition/initialTransition";
 import MetaImage from "../../static/images/meta/meta-image.jpg";
+
+const ENTRANCE_DELAY = 0.9;
 
 const IndexPage = ({ location }: { location: WindowLocation }) => {
   // Hooks and Refs
@@ -107,7 +110,9 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
                 className="font-secondary-normal mt-2 ml-1 select-none"
                 onClick={(e) => routeTo(e, Route.Acknowledgement)}
               >
-                Acknowledgement of Country
+                <SplitText as="span" delay={ENTRANCE_DELAY + 0.9}>
+                  Acknowledgement of Country
+                </SplitText>
               </h2>
             )}
           </div>
