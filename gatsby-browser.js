@@ -17,24 +17,33 @@ export const wrapPageElement = ({ element }) => (
   </MotionConfig>
 );
 
-// /experience and /projects fake horizontal scrolling by pinning content to
-// the vertical scroll position (see their gsap ScrollTrigger setup). Gatsby's
-// default scroll restoration fires on the outgoing page the instant the URL
-// changes — well before AnimatePresence's exit animation finishes removing it
-// — so it visibly yanks that still-pinned content back to its start position
-// before the page transition covers it. Both pages reset their own scroll to
-// 0 on mount instead, so restoration is disabled here only when leaving one
+// /intro, /experience, /projects, and /education can all end up scrolled
+// partway down (either real vertical scroll on mobile, or the vertical
+// scroll that /experience and /projects fake horizontal scrolling with via
+// gsap ScrollTrigger). Gatsby's default scroll restoration fires on the
+// outgoing page the instant the URL changes — well before AnimatePresence's
+// exit animation finishes removing it — so it visibly snaps that still-
+// visible page back to the top before the page transition covers it. Each
+// of these pages resets its own scroll to 0 on mount instead (see their
+// useLayoutEffect), so restoration is disabled here only when leaving one
 // of them, leaving default behaviour intact everywhere else.
-const NO_SCROLL_RESTORE_PATHS = ["/experience", "/experience/", "/projects", "/projects/"];
+const NO_SCROLL_RESTORE_PATHS = [
+  "/intro",
+  "/intro/",
+  "/experience",
+  "/experience/",
+  "/projects",
+  "/projects/",
+  "/education",
+  "/education/",
+];
 
 export const shouldUpdateScroll = ({ prevRouterProps }) => {
-  if (
+  const match =
     prevRouterProps &&
-    NO_SCROLL_RESTORE_PATHS.includes(prevRouterProps.location.pathname)
-  ) {
-    return false;
-  }
-  return true;
+    NO_SCROLL_RESTORE_PATHS.includes(prevRouterProps.location.pathname);
+
+  return !match;
 };
 
 export const onServiceWorkerUpdateReady = () => {
