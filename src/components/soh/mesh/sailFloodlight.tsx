@@ -1,6 +1,6 @@
 import React from "react";
-import * as THREE from "three";
 import type { SailFloodlightConfig } from "./types";
+import useSpotlightTarget from "./useSpotlightTarget";
 
 // White LED sail floodlights - positioned in the same coordinate space as
 // Mesh's outermost <group position={[0, 0.6, 0]}>, i.e. model-relative
@@ -54,30 +54,15 @@ const SAIL_FLOODLIGHT_DISTANCE = 5;
 
 // A spotLight's `.target` only inherits the model's rotation if it's a
 // genuinely parented <object3D>, not just a position handed to it via a
-// prop - see DockLight for the same pattern.
+// prop - see useSpotlightTarget for the shared wiring (DockLight/
+// StreetlampSpot use the same hook).
 const SailFloodlight = ({
   position,
   target,
   angle,
   intensity,
 }: SailFloodlightConfig) => {
-  // Non-null assertion here (not a real guarantee) purely so the ref's type
-  // matches what useHelper expects - the runtime null-checks in the effect
-  // and the JSX below are what actually guard against it being unset.
-  const lightRef = React.useRef<THREE.SpotLight>(null!);
-  const targetRef = React.useRef<THREE.Object3D>(null);
-
-  React.useEffect(() => {
-    if (lightRef.current && targetRef.current) {
-      lightRef.current.target = targetRef.current;
-    }
-  }, []);
-
-  // Dev-only wireframe cone showing exactly where each fixture is aimed -
-  // SpotLightHelper reads the light's live world position/target each frame
-  // (added straight to the scene root, not this local group), so it stays
-  // correct even as the model rotates.
-  // useHelper(IS_DEV && lightRef, THREE.SpotLightHelper);
+  const { lightRef, targetRef } = useSpotlightTarget();
 
   return (
     <>

@@ -38,12 +38,8 @@ export const DAY_FOG_FAR = 18;
 // interpolateDayLighting below), so dragging the "Time of Day" gui slider -
 // or just leaving the tab open across real time - sweeps smoothly through
 // the whole set rather than jumping between fixed looks. The 17:00 (5pm)
-// keyframe deliberately isn't listed here - it's built from the existing
-// Ambient/Hemi/Direct Light gui slider state instead (see
-// goldenHourKeyframe in useDayNightLighting), which is exactly the
-// warm/golden look this scene originally shipped with (and is what the gui
-// sliders already default to) - reusing it keeps those sliders live rather
-// than leaving them dead once time-of-day drives the render.
+// keyframe isn't a plain constant like the rest below - see
+// buildGoldenHourKeyframe further down for why.
 export type TimeLightingKeyframe = {
   hour: number;
   ambientIntensity: number;
@@ -171,6 +167,44 @@ export const AFTERNOON_KEYFRAME: TimeLightingKeyframe = {
   sparkleColor: "#ffe6c2",
   sparkleOpacityScale: 0.97,
 };
+
+// 17:00 (5pm) is the one keyframe not exported as a plain constant above -
+// it's built from the Ambient/Hemi/Direct Light gui slider state instead
+// (see the DayNightLightingInputs fields passed in from
+// useDayNightLighting), which is exactly the warm/golden look this scene
+// originally shipped with (and is what those gui sliders already default
+// to) - reusing it keeps those sliders live for tuning that one anchor
+// rather than going dead once time-of-day drives the render. This still
+// lives alongside every other keyframe here (rather than being assembled
+// ad hoc inside the hook) so there's one place that shapes a
+// TimeLightingKeyframe, even though this one anchor's numbers come from the
+// caller instead of being hardcoded.
+export const buildGoldenHourKeyframe = (input: {
+  ambientIntensity: number;
+  hemiIntensity: number;
+  hemiColorHSL: [number, number, number];
+  hemiGroundColorHSL: [number, number, number];
+  dirIntensity: number;
+  dirColorHSL: [number, number, number];
+  dirPosition: [number, number, number];
+}): TimeLightingKeyframe => ({
+  hour: 17,
+  ambientIntensity: input.ambientIntensity,
+  hemiIntensity: input.hemiIntensity,
+  hemiColorHSL: input.hemiColorHSL,
+  hemiGroundColorHSL: input.hemiGroundColorHSL,
+  dirIntensity: input.dirIntensity,
+  dirColorHSL: input.dirColorHSL,
+  dirPosition: input.dirPosition,
+  skyBottom: DAY_SKY_BOTTOM.getHex(),
+  fogNear: DAY_FOG_NEAR,
+  fogFar: DAY_FOG_FAR,
+  skySphereGeometryX: 215,
+  cloudWarmth: 1,
+  sparkleColor: "#fff3e0",
+  sparkleOpacityScale: 1,
+});
+
 // 19:00 is a real, visible step dimmer than goldenHourKeyframe - about 70%
 // of its light intensities, with lightness pulled down a good deal further
 // too (hue/saturation stay identical to golden hour; see the note below on

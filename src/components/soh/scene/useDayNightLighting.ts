@@ -2,9 +2,6 @@ import * as THREE from "three";
 import {
   AFTERNOON_KEYFRAME,
   DAWN_KEYFRAME,
-  DAY_FOG_FAR,
-  DAY_FOG_NEAR,
-  DAY_SKY_BOTTOM,
   DIMMED_KEYFRAME,
   DUSK_KEYFRAME,
   MORNING_KEYFRAME,
@@ -20,6 +17,7 @@ import {
   NIGHT_MOON_POSITION,
   NOON_KEYFRAME,
   TimeLightingKeyframe,
+  buildGoldenHourKeyframe,
   interpolateDayLighting,
 } from "./lightingKeyframes";
 import useCurrentHour from "./useCurrentHour";
@@ -105,11 +103,9 @@ const useDayNightLighting = (inputs: DayNightLightingInputs) => {
     (dimmedOverrideActive || effectiveHour < 7 || effectiveHour > 19);
 
   // The 17:00 (5pm) keyframe is built from the Ambient/Hemi/Direct Light gui
-  // slider state directly - the same warm/golden values this scene has
-  // always defaulted to - so those sliders stay live for tuning that one
-  // anchor instead of going dead once time-of-day drives the render.
-  const goldenHourKeyframe: TimeLightingKeyframe = {
-    hour: 17,
+  // slider state directly - see buildGoldenHourKeyframe in
+  // lightingKeyframes.ts for why.
+  const goldenHourKeyframe = buildGoldenHourKeyframe({
     ambientIntensity: ambientLightIntensity,
     hemiIntensity: hemiLightIntensity,
     hemiColorHSL: [hemiLightColorX, hemiLightColorY, hemiLightColorZ],
@@ -117,14 +113,7 @@ const useDayNightLighting = (inputs: DayNightLightingInputs) => {
     dirIntensity: dirLightIntensity,
     dirColorHSL: [dirLightColorX, dirLightColorY, dirLightColorZ],
     dirPosition: [dirPositionX, dirPositionY, dirPositionZ],
-    skyBottom: DAY_SKY_BOTTOM.getHex(),
-    fogNear: DAY_FOG_NEAR,
-    fogFar: DAY_FOG_FAR,
-    skySphereGeometryX: 215,
-    cloudWarmth: 1,
-    sparkleColor: "#fff3e0",
-    sparkleOpacityScale: 1,
-  };
+  });
   const dayKeyframes: TimeLightingKeyframe[] = [
     DAWN_KEYFRAME,
     MORNING_KEYFRAME,

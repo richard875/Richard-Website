@@ -1,5 +1,6 @@
 import React from "react";
 import GUI from "lil-gui";
+import type { Controller } from "lil-gui";
 import { IS_DEV } from "../../../../constants/environment";
 import type {
   DockLightingConfig,
@@ -60,11 +61,11 @@ const useOperaHouseGuiPanel = ({
   // imperatively re-disable/re-value/show/hide them whenever
   // overrideScene/isNight/systemIsDarkMode/dimmed change, without needing
   // the panel itself to ever be rebuilt.
-  const nightModeControllerRef = React.useRef<any>(null);
-  const timeOfDayControllerRef = React.useRef<any>(null);
-  const dimmedControllerRef = React.useRef<any>(null);
-  const daySceneOptionsFolderRef = React.useRef<any>(null);
-  const nightSceneOptionsFolderRef = React.useRef<any>(null);
+  const nightModeControllerRef = React.useRef<Controller | null>(null);
+  const timeOfDayControllerRef = React.useRef<Controller | null>(null);
+  const dimmedControllerRef = React.useRef<Controller | null>(null);
+  const daySceneOptionsFolderRef = React.useRef<GUI | null>(null);
+  const nightSceneOptionsFolderRef = React.useRef<GUI | null>(null);
 
   React.useEffect(() => {
     if (!(IS_DEV || window.location.hash === "#debug")) return;
@@ -107,12 +108,12 @@ const useOperaHouseGuiPanel = ({
     panel.close();
 
     // Position the lil-gui panel at the top-left so it doesn't block the view
-    (panel as any).domElement.style.position = "absolute";
-    (panel as any).domElement.style.top = "0px";
-    (panel as any).domElement.style.left = "30px";
-    (panel as any).domElement.style.right = "auto";
-    (panel as any).domElement.style.zIndex = "1000";
-    (panel as any).domElement.style.border = "1px solid #ccc";
+    panel.domElement.style.position = "absolute";
+    panel.domElement.style.top = "0px";
+    panel.domElement.style.left = "30px";
+    panel.domElement.style.right = "auto";
+    panel.domElement.style.zIndex = "1000";
+    panel.domElement.style.border = "1px solid #ccc";
 
     const settings: GuiSettings = {
       ambientLightIntensity: values.ambientLightIntensity,

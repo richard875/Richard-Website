@@ -1,10 +1,10 @@
 import React from "react";
-import * as THREE from "three";
 import {
   DOCK_LIGHT_COLOR,
   DOCK_LIGHT_DISTANCE,
   DOCK_LIGHT_PENUMBRA,
 } from "./waterline/dockWaterline";
+import useSpotlightTarget from "./useSpotlightTarget";
 
 const DockLight = ({
   position,
@@ -17,19 +17,7 @@ const DockLight = ({
   intensity: number;
   angle: number;
 }) => {
-  const lightRef = React.useRef<THREE.SpotLight>(null!);
-  const targetRef = React.useRef<THREE.Object3D>(null);
-
-  // Dev-only wireframe cone showing exactly where each of the dock fixtures
-  // sits and what it's aimed at. IS_DEV-gated, so this is a no-op (and zero
-  // runtime cost) in production.
-  // useHelper(IS_DEV && lightRef, THREE.SpotLightHelper);
-
-  React.useEffect(() => {
-    if (lightRef.current && targetRef.current) {
-      lightRef.current.target = targetRef.current;
-    }
-  }, []);
+  const { lightRef, targetRef } = useSpotlightTarget();
 
   return (
     <>

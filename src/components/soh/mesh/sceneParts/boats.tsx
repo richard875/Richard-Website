@@ -2,6 +2,45 @@ import React from "react";
 import * as THREE from "three";
 import AnimatedBoat from "../../animatedBoat";
 
+// Inclusive of both ends, matching the original per-boat
+// `Math.floor(Math.random() * (max - min + 1)) + min` expressions this
+// replaces.
+const randomInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+// One entry per yacht - a random spot within its own patch of water (kept
+// separate per boat so they don't cluster or overlap) and a random heading,
+// picked once on mount via useState's lazy initializer rather than
+// useMemo(() => ..., []) - useMemo is only a cache React is allowed to drop
+// and recompute (e.g. under StrictMode's double-invoke), which would jump
+// these boats to a new random spot; useState's initializer is guaranteed to
+// run exactly once.
+const BOAT_SPAWN_RANGES: {
+  x: [number, number];
+  y: number;
+  z: [number, number];
+  pitch: number;
+  roll: number;
+}[] = [
+  { x: [-4200, -1200], y: -50, z: [1600, 3000], pitch: 0.1, roll: -0.07 },
+  { x: [-4200, 1200], y: -40, z: [-6300, -4700], pitch: 0.26, roll: -0.15 },
+  { x: [-800, 2000], y: -50, z: [2000, 3000], pitch: 3.02, roll: -3.01 },
+];
+
+const useBoatSpawn = (range: (typeof BOAT_SPAWN_RANGES)[number]) => {
+  const [position] = React.useState<[number, number, number]>(() => [
+    randomInt(...range.x),
+    range.y,
+    randomInt(...range.z),
+  ]);
+  const [rotation] = React.useState<[number, number, number]>(() => [
+    range.pitch,
+    Math.random() * Math.PI * 2,
+    range.roll,
+  ]);
+  return { position, rotation };
+};
+
 const Boats = ({
   nodes,
   heroMaterial,
@@ -11,52 +50,9 @@ const Boats = ({
   heroMaterial: (key: string) => THREE.Material;
   glassMaterial: THREE.Material;
 }) => {
-  const boat1Position = React.useMemo(
-    () =>
-      [
-        Math.floor(Math.random() * (-1200 - -4200 + 1)) + -4200,
-        -50,
-        Math.floor(Math.random() * (3000 - 1600 + 1)) + 1600,
-      ] as [number, number, number],
-    [],
-  );
-
-  const boat2Position = React.useMemo(
-    () =>
-      [
-        Math.floor(Math.random() * (1200 - -4200 + 1)) + -4200,
-        -40,
-        Math.floor(Math.random() * (-4700 - -6300 + 1)) + -6300,
-      ] as [number, number, number],
-    [],
-  );
-
-  const boat3Position = React.useMemo(
-    () =>
-      [
-        Math.floor(Math.random() * (2000 - -800 + 1)) + -800,
-        -50,
-        Math.floor(Math.random() * (3000 - 2000 + 1)) + 2000,
-      ] as [number, number, number],
-    [],
-  );
-
-  const boat1Rotation = React.useMemo(
-    () => [0.1, Math.random() * Math.PI * 2, -0.07] as [number, number, number],
-    [],
-  );
-
-  const boat2Rotation = React.useMemo(
-    () =>
-      [0.26, Math.random() * Math.PI * 2, -0.15] as [number, number, number],
-    [],
-  );
-
-  const boat3Rotation = React.useMemo(
-    () =>
-      [3.02, Math.random() * Math.PI * 2, -3.01] as [number, number, number],
-    [],
-  );
+  const boat1 = useBoatSpawn(BOAT_SPAWN_RANGES[0]);
+  const boat2 = useBoatSpawn(BOAT_SPAWN_RANGES[1]);
+  const boat3 = useBoatSpawn(BOAT_SPAWN_RANGES[2]);
 
   return (
     <group
@@ -64,8 +60,8 @@ const Boats = ({
       rotation={[0, -Math.PI / 2, 0]}
     >
       <AnimatedBoat
-        position={boat1Position}
-        rotation={boat1Rotation}
+        position={boat1.position}
+        rotation={boat1.rotation}
         speed={1.1}
         amplitude={180}
         drift={120}
@@ -91,8 +87,8 @@ const Boats = ({
         />
       </AnimatedBoat>
       <AnimatedBoat
-        position={boat2Position}
-        rotation={boat2Rotation}
+        position={boat2.position}
+        rotation={boat2.rotation}
         speed={1.3}
         amplitude={160}
         drift={110}
@@ -113,8 +109,8 @@ const Boats = ({
         />
       </AnimatedBoat>
       <AnimatedBoat
-        position={boat3Position}
-        rotation={boat3Rotation}
+        position={boat3.position}
+        rotation={boat3.rotation}
         speed={0.95}
         amplitude={200}
         drift={130}

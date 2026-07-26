@@ -1,11 +1,11 @@
 import React from "react";
-import * as THREE from "three";
 import {
   OPERA_HOUSE_LOCAL_XZ,
   STREETLAMP_SPOT_COLOR,
   STREETLAMP_SPOT_DISTANCE,
   STREETLAMP_SPOT_PENUMBRA,
 } from "./streetlamps";
+import useSpotlightTarget from "./useSpotlightTarget";
 
 // The actual downward-facing cone of light for a streetlamp, paired with
 // the NightGlow bulb dot above it. A THREE.SpotLight aims from its position
@@ -30,14 +30,7 @@ const StreetlampSpot = ({
   targetDrop: number;
   targetForwardOffset: number;
 }) => {
-  const lightRef = React.useRef<THREE.SpotLight>(null);
-  const targetRef = React.useRef<THREE.Object3D>(null);
-
-  React.useEffect(() => {
-    if (lightRef.current && targetRef.current) {
-      lightRef.current.target = targetRef.current;
-    }
-  }, []);
+  const { lightRef, targetRef } = useSpotlightTarget();
 
   const targetPosition = React.useMemo<[number, number, number]>(() => {
     const dx = OPERA_HOUSE_LOCAL_XZ[0] - position[0];

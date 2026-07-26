@@ -1,4 +1,5 @@
 import type GUI from "lil-gui";
+import type { Controller } from "lil-gui";
 import type {
   DockLightingConfig,
   SailFloodlightConfig,
@@ -129,9 +130,9 @@ export type GuiCallbacks = {
 };
 
 export type TimeOptionControllers = {
-  nightModeController: any;
-  timeOfDayController: any;
-  dimmedController: any;
+  nightModeController: Controller;
+  timeOfDayController: Controller;
+  dimmedController: Controller;
 };
 
 // Time Option: Override Scene, then Night Mode, then Daytime, in that
