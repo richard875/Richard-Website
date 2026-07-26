@@ -155,6 +155,7 @@ const useOperaHouseGuiPanel = ({
       dofFocusRange: values.dofFocusRange,
       dofBokehScale: values.dofBokehScale,
       groundCloudGap: values.groundCloudGap,
+      autoRotate: values.autoRotate,
       isNight: values.isNight,
       overrideScene: values.overrideScene,
       timeOfDayHour: values.timeOfDayHour,

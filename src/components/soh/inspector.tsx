@@ -25,7 +25,13 @@ import { a, useSpring } from "@react-spring/three";
 // spin rate is now the same regardless of how fast the scene renders.
 const AUTO_ROTATION_SPEED = 0.2;
 
-const Inspector = ({ children }: { children: React.JSX.Element }) => {
+const Inspector = ({
+  children,
+  autoRotate = true,
+}: {
+  children: React.JSX.Element;
+  autoRotate?: boolean;
+}) => {
   const meshRef = React.useRef<THREE.Mesh>(null!);
   // Single source of truth for the mesh's current Y rotation - both auto-spin
   // and dragging write straight into this same ref, so there's only ever one
@@ -60,7 +66,7 @@ const Inspector = ({ children }: { children: React.JSX.Element }) => {
   );
 
   useFrame((_, delta) => {
-    if (!isDraggingRef.current)
+    if (autoRotate && !isDraggingRef.current)
       rotationRef.current -= AUTO_ROTATION_SPEED * delta;
     meshRef.current.rotation.y = rotationRef.current;
   });

@@ -50,6 +50,7 @@ export type GuiSettings = {
   dofFocusRange: number;
   dofBokehScale: number;
   groundCloudGap: number;
+  autoRotate: boolean;
   isNight: boolean;
   overrideScene: boolean;
   timeOfDayHour: number;
@@ -100,6 +101,7 @@ export type GuiCallbacks = {
   setFloatIntensity: (v: number) => void;
   setParallaxStrength: (v: number) => void;
   setGroundCloudGap: (v: number) => void;
+  setAutoRotate: (v: boolean) => void;
   setBloomIntensity: (v: number) => void;
   setLuminanceThreshold: (v: number) => void;
   setLuminanceSmoothing: (v: number) => void;
@@ -318,6 +320,10 @@ export const addAtmosphereControls = (
     .add(settings, "groundCloudGap", 0, 10)
     .name("Ground/Cloud Gap")
     .onChange(callbacks.setGroundCloudGap);
+  folder
+    .add(settings, "autoRotate")
+    .name("Auto Rotate")
+    .onChange(callbacks.setAutoRotate);
 };
 
 export const addEffectsControls = (

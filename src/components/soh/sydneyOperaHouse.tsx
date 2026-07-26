@@ -120,6 +120,7 @@ const Model = React.memo(() => {
   const [dofFocusRange, setDofFocusRange] = React.useState(8.5);
   const [dofBokehScale, setDofBokehScale] = React.useState(5);
   const [groundCloudGap, setGroundCloudGap] = React.useState(2.5);
+  const [autoRotate, setAutoRotate] = React.useState(true);
   const [isNight, setIsNight] = React.useState(true);
   // Off by default: day/night instead tracks the visitor's OS-level
   // light/dark theme preference (see systemIsDarkMode below). Flipping this
@@ -351,6 +352,7 @@ const Model = React.memo(() => {
       dofFocusRange,
       dofBokehScale,
       groundCloudGap,
+      autoRotate,
       isNight,
       overrideScene,
       timeOfDayHour,
@@ -391,6 +393,7 @@ const Model = React.memo(() => {
       setFloatIntensity,
       setParallaxStrength,
       setGroundCloudGap,
+      setAutoRotate,
       setBloomIntensity,
       setLuminanceThreshold,
       setLuminanceSmoothing,
@@ -455,7 +458,7 @@ const Model = React.memo(() => {
             resolveCloudOpacity={resolveCloudOpacity}
           />
         </group>
-        <Inspector>
+        <Inspector autoRotate={autoRotate}>
           <Mesh
             sunDirection={effectiveDirPosition}
             isNight={effectiveIsNight}
