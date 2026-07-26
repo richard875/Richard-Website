@@ -63,11 +63,11 @@ const Experience = ({ location }: { location: WindowLocation }) => {
       <Left>
         <div
           id={`${INTRO_TO_INDEX}_0`}
-          className="hidden sm:flex w-full items-center justify-between sm:mb-[4vw] lg:mb-[2vw]"
+          className="flex w-full items-center justify-between mb-[4vw] lg:mb-[2vw]"
         >
           <Cta
             id={`${INTRO_TO_INDEX}_1`}
-            className="font-secondary-normal !text-base"
+            className="font-secondary-normal text-base! mt-0!"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
@@ -269,7 +269,6 @@ const Cta = styled(motion.div)`
   justify-content: flex-end;
 
   @media ${layout.down.sm} {
-    margin-top: 8vw;
-    justify-content: flex-start;
+    margin-top: 4vw;
   }
 `;
