@@ -49,18 +49,24 @@ const IntroBody = ({
     () => (
       <SplitText as="span" className="split-fast" delay={delay} amount={0.1}>
         G'day, I'm {FIRST_NAME}. I'm a Software Engineer and Creative Designer
-        from<Sydney>&nbsp;Sydney</Sydney>,
-        <Australia
-          id={`${INTRO_AUSTRALIA}_0`}
-          $isDarkMode={isDarkMode}
-          onClick={(e) => {
-            e.preventDefault();
-            window.open(AUSTRALIA, "_blank");
-          }}
-        >
-          &nbsp;Australia
-        </Australia>
-        . On this corner of the internet, you'll find information about me. You
+        from&nbsp;
+        <span className="whitespace-nowrap">
+          <Sydney>&nbsp;Sydney</Sydney>,
+        </span>{" "}
+        <span className="whitespace-nowrap">
+          <Australia
+            id={`${INTRO_AUSTRALIA}_0`}
+            $isDarkMode={isDarkMode}
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(AUSTRALIA, "_blank");
+            }}
+          >
+            &nbsp;Australia
+          </Australia>
+          .
+        </span>{" "}
+        On this corner of the internet, you'll find information about me. You
         can connect with me on&nbsp;
         <span className="whitespace-nowrap">
           <LinkedIn id={`${INTRO_LINKEDIN}_0`}>
