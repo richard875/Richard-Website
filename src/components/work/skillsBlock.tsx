@@ -8,12 +8,15 @@ import iconPicker from "../../helper/iconPicker";
 import getTransitionColor from "../../helper/getTransitionColor";
 import skillsData from "../../../static/data/skills.json";
 import Skills, { Skill as SkillType } from "../../types/skills";
+import RotatingAiSkillsImage, {
+  skillsImageStyles,
+} from "./rotatingAiSkillsImage";
+import SparkleLogo from "./sparkleLogo";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
-  IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
 
 const SecondarySkills = ({
@@ -40,20 +43,17 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
     >
-      <Logo
+      <SparkleLogo
         className="hidden xxxl:block"
-        $height={50}
-        src={iconPicker(Icon.React, isDarkMode)}
-        alt={"My Skills"}
+        height={45}
+        isDarkMode={isDarkMode}
       />
       <TitleWrapper>
         <Title>Proficient Skills</Title>
-        <Logo
-          className="xxxl:hidden"
-          $height={30}
-          style={{ paddingBottom: "5px" }}
-          src={iconPicker(Icon.React, isDarkMode)}
-          alt={"My Skills"}
+        <SparkleLogo
+          className="xxxl:hidden pb-1.25"
+          height={30}
+          isDarkMode={isDarkMode}
         />
       </TitleWrapper>
       {(skillsData as Skills).primary.map((skill: SkillType, index: number) => (
@@ -70,10 +70,17 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
                 <span>{skill.displayName}</span>
               )}
             </SkillsText>
-            <SkillsImage
-              src={iconPicker(skill.name, isDarkMode)}
-              alt={skill.displayName}
-            ></SkillsImage>
+            {skill.name === Icon.Sparkle ? (
+              <RotatingAiSkillsImage
+                isDarkMode={isDarkMode}
+                alt={skill.displayName}
+              />
+            ) : (
+              <SkillsImage
+                src={iconPicker(skill.name, isDarkMode)}
+                alt={skill.displayName}
+              ></SkillsImage>
+            )}
           </SkillsTextWrapper>
           <SkillsBar
             $isDarkMode={isDarkMode}
@@ -146,20 +153,6 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const Logo = styled.img<{ $height: number }>`
-  width: auto;
-  height: ${({ $height }) => $height + "px"};
-  margin-left: 8px;
-  user-select: none;
-
-  @media ${layout.up.xxxl} {
-    margin-top: ${({ $height }) =>
-      10 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-    margin-bottom: ${({ $height }) =>
-      15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-  }
-`;
-
 const Title = styled.h2`
   font-size: 23px;
 
@@ -195,19 +188,7 @@ const SkillsText = styled.h3<{ $isTitle: boolean }>`
 `;
 
 const SkillsImage = styled.img`
-  width: auto;
-  height: 20px;
-  margin-left: 10px;
-  margin-bottom: 4px;
-  user-select: none;
-
-  @media ${layout.up.sm} {
-    margin-bottom: 3px;
-  }
-
-  @media ${layout.up.xxxl} {
-    height: 23px;
-  }
+  ${skillsImageStyles}
 `;
 
 const SkillsBar = styled(motion.div)<{ $isDarkMode: boolean }>`

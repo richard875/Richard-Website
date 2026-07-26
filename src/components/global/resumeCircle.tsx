@@ -5,15 +5,15 @@ import { StaticImage } from "gatsby-plugin-image";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import getResume from "../../helper/getResume";
-import Magnetic from "../motion/Magnetic";
+import Magnetic from "../motion/magnetic";
 import {
   mainCircleButtonEffect,
   motionTapEffect,
 } from "../../helper/motionConfig";
 import { INDEX_RESUME, CONTACT_RESUME } from "../../constants/googleTags";
 
-const ARROW = "../../../static/images/indexCircle/arrow.svg";
-const CIRCLE = "../../../static/images/indexCircle/circle.png";
+const ARROW = "../../../static/images/index-circle/arrow.svg";
+const CIRCLE = "../../../static/images/index-circle/circle.png";
 
 const ResumeCircle = ({
   isHome,

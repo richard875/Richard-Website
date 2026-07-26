@@ -3,7 +3,7 @@ import gsap from "gsap";
 import styled from "styled-components";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import SplitText from "../motion/SplitText";
+import SplitText from "../motion/splitText";
 
 const getTimeInSydney = () =>
   new Date().toLocaleTimeString("en-AU", {

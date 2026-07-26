@@ -5,7 +5,7 @@ import { CSSTransition } from "react-transition-group";
 import Color from "../../enums/color";
 import ProjectLink from "./projectLink";
 import layout from "../../styles/layout";
-import SplitText from "../motion/SplitText";
+import SplitText from "../motion/splitText";
 import TextSection from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
@@ -104,12 +104,14 @@ const Block = ({
           },
         )}
         {!!project.linkUrl && (
-          <ProjectLink
-            url={project.linkUrl!}
-            name={project.image}
-            setHover={setHover}
-            isDarkMode={isDarkMode}
-          />
+          <div className="mt-3.75 md:mt-5">
+            <ProjectLink
+              url={project.linkUrl!}
+              name={project.image}
+              setHover={setHover}
+              isDarkMode={isDarkMode}
+            />
+          </div>
         )}
         {!!project.media && (
           <CSSTransition

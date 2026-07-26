@@ -19,7 +19,7 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import NavCluster from "../components/global/navCluster";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import getTransitionColor from "../helper/getTransitionColor";
 import {
   EDUCATION_TO_CONTACT,
@@ -27,8 +27,8 @@ import {
 } from "../constants/googleTags";
 import { EDUCATION_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
-import ToContactCircle from "../../static/images/NavCircle/toContactCircle.png";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
+import ToContactCircle from "../../static/images/nav-circle/to-contact-circle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 

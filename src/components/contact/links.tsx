@@ -5,8 +5,8 @@ import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Color from "../../enums/color";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import SplitText from "../motion/SplitText";
-import HoverRoll from "../motion/HoverRoll";
+import SplitText from "../motion/splitText";
+import HoverRoll from "../motion/hoverRoll";
 import { motionTapEffect } from "../../helper/motionConfig";
 import getTransitionColor from "../../helper/getTransitionColor";
 import useDarkModeManager from "../../hooks/useDarkModeManager";
@@ -107,7 +107,7 @@ const Links = ({
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onClick={(e) => {
-            setTransitionColor(Color.BACKGROUND_BLACK);
+            setTransitionColor(getTransitionColor(isDarkMode));
             routeTo(e, Route.Intro);
           }}
         >

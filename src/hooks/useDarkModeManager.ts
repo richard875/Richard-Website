@@ -8,7 +8,11 @@ const useDarkModeManager = (
 ) => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 
-  React.useEffect(() => {
+  // Layout effect, not a passive one: this sets the page's actual resting
+  // background colour, so it must land before the browser paints — a
+  // regular useEffect fires a frame late and reads as a flash of the wrong
+  // colour on every page transition (see initialTransition.tsx).
+  React.useLayoutEffect(() => {
     if (singleColor) document.body.style.backgroundColor = defaultColor;
     const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
 

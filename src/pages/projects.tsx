@@ -20,7 +20,7 @@ import Cursor from "../components/cursor/cursor";
 import Block from "../components/projects/block";
 import MetaTags from "../components/seo/metaTags";
 import NavCluster from "../components/global/navCluster";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import getTransitionColor from "../helper/getTransitionColor";
 import {
   BLOCK_PADDING,
@@ -34,8 +34,8 @@ import {
 } from "../constants/googleTags";
 import { PROJECTS_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import projectsData from "../../static/data/projects.json";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
-import ToEducationCircle from "../../static/images/NavCircle/toEducationCircle.png";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
+import ToEducationCircle from "../../static/images/nav-circle/to-education-circle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -5,18 +5,18 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
-import Magnetic from "../motion/Magnetic";
+import Magnetic from "../motion/magnetic";
 import {
   mainCircleButtonEffect,
   motionTapEffect,
 } from "../../helper/motionConfig";
-import ArrowSrc from "../../../static/images/indexCircle/arrow.svg";
+import ArrowSrc from "../../../static/images/index-circle/arrow.svg";
 
 // Same rotating-circle construction as ResumeCircle (src/components/global/
 // resumeCircle.tsx) — green disc, black outline, a spinning text-ring, and a
 // static arrow overlay — reused here for page-to-page navigation instead of
 // the resume download. The text ring is destination-specific (`image`, from
-// static/images/NavCircle) so it's passed as a prop and rendered with a
+// static/images/nav-circle) so it's passed as a prop and rendered with a
 // plain <img>, not gatsby's <StaticImage>: StaticImage requires a literal
 // path at the JSX call site, which a shared component can't offer when the
 // image varies per page — see iconPicker.ts for the same constraint/pattern

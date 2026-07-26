@@ -4,7 +4,7 @@ import { HTTPS } from "../constants/meta";
 
 const axioConfigIndexNow = (
   url: string,
-  data: IndexNow
+  data: IndexNow,
 ): AxiosRequestConfig => {
   return {
     url: `${HTTPS}${url}/indexnow`,

@@ -10,13 +10,13 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import Links from "../components/contact/links";
 import Cursor from "../components/cursor/cursor";
-import SplitText from "../components/motion/SplitText";
-import HoverRoll from "../components/motion/HoverRoll";
+import SplitText from "../components/motion/splitText";
+import HoverRoll from "../components/motion/hoverRoll";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import ResumeCircle from "../components/global/resumeCircle";
 import RoundedCallToAction from "../components/global/roundedCallToAction";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
@@ -30,7 +30,7 @@ import {
   EMAIL,
   COPYRIGHT_LONG,
 } from "../constants/meta";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 
 const CURRENT_PAGE_TITLE = `${CONTACT_TITLE}${PAGE_TITLE}`;
 
@@ -50,7 +50,12 @@ const Contact = ({ location }: { location: WindowLocation }) => {
     Color.BACKGROUND_WHITE,
   );
 
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the page briefly shows
+  // whatever colour InitialTransition's exit-mask state defaulted to
+  // (white) instead of this page's actual black background.
+  React.useLayoutEffect(() => {
+    document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
+
     const heightMatcher = "(min-height: 100vh)";
     const ofl = window.matchMedia(heightMatcher).matches ? "hidden" : "auto";
     document.body.style.overflow = ofl;

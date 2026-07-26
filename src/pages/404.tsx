@@ -12,9 +12,9 @@ import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
 import PillCallToAction from "../components/global/pillCallToAction";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import {
@@ -31,7 +31,10 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
   const isLandscape = useLandscapeDetection(isPwa);
   const [hover, setHover] = React.useState(false);
 
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the page briefly shows
+  // whatever colour InitialTransition's exit-mask state defaulted to
+  // instead of this page's actual black background.
+  React.useLayoutEffect(() => {
     document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
     document.body.style.overflow = "hidden";
 

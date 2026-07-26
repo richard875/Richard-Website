@@ -1,12 +1,11 @@
 import React from "react";
-import styled from "styled-components";
-import { motion, useAnimationControls } from "framer-motion";
+import { useAnimationControls } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Color from "../../enums/color";
-import layout from "../../styles/layout";
-import SplitText from "../motion/SplitText";
-import HoverRoll from "../motion/HoverRoll";
+import SplitText from "../motion/splitText";
+import HoverRoll from "../motion/hoverRoll";
+import { Badge, BadgeText } from "../global/pillBadge";
 import {
   badgeHoverEffect,
   badgeWiggleEffect,
@@ -14,12 +13,15 @@ import {
 } from "../../helper/motionConfig";
 import { PROJECTS_LINK } from "../../constants/googleTags";
 
-// Same badge treatment as PillCallToAction (src/components/global/
-// pillCallToAction.tsx) — see that file's comment for the Badge/BadgeText split,
-// the outline-to-fill invert, and why the label carries its own
-// SplitText + HoverRoll. Colour keeps this component's own green accent
-// (bright on dark backgrounds, dimmer on light) rather than IntroBadge's
-// fixed white/black.
+// Same badge treatment as PillCallToAction's "forward" variant (src/
+// components/global/pillCallToAction.tsx) — Badge/BadgeText are shared from
+// ../global/pillBadge.tsx since both render the exact same outline-to-fill
+// pill, and the accentColor formula matches too: BRIGHT_GREEN on dark
+// backgrounds, DIM_GREEN on light ones (BRIGHT_GREEN reads too faint against
+// a light page), inverting to BLACK on hover. Kept as its own component
+// (rather than reusing PillCallToAction directly) because this one opens an
+// external project URL in a new tab instead of doing an internal Gatsby
+// route transition.
 const ProjectLink = ({
   url,
   name,
@@ -38,6 +40,13 @@ const ProjectLink = ({
     <Badge
       id={`${PROJECTS_LINK}_${name}_0`}
       $accentColor={accentColor}
+      // whileHover also animates `color`, so Framer Motion caches whatever
+      // colour was current the first time it's hovered as the value to
+      // revert to afterwards — it only re-reads a *live* value from the
+      // `style` prop, never from a styled-components class, so without this
+      // explicit style prop the badge gets stuck on that first-hover colour
+      // and stops following isDarkMode after that.
+      className={`!text-[${accentColor}]`}
       animate={wiggleControls}
       whileHover={badgeHoverEffect(Color.BRIGHT_GREEN, Color.BLACK)}
       whileTap={motionTapEffect}
@@ -54,7 +63,7 @@ const ProjectLink = ({
         rel="noopener noreferrer"
         className="cursor-none"
       >
-        <BadgeText className="font-secondary-normal font-medium select-none">
+        <BadgeText className="font-secondary-normal select-none">
           <SplitText as="h3" className="split-fast">
             <HoverRoll>View Project</HoverRoll>
           </SplitText>
@@ -71,27 +80,3 @@ const ProjectLink = ({
 };
 
 export default ProjectLink;
-
-const Badge = styled(motion.div)<{ $accentColor: Color }>`
-  width: fit-content;
-  margin-top: 15px;
-  padding: 7px 15px;
-  border-radius: 999px;
-  background-color: transparent;
-  border: 2.5px solid currentColor;
-  color: ${({ $accentColor }) => $accentColor};
-
-  @media ${layout.up.md} {
-    margin-top: 20px;
-  }
-`;
-
-const BadgeText = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-
-  @media ${layout.up.xxxl} {
-    font-size: 18px;
-  }
-`;

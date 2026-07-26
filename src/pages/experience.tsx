@@ -15,7 +15,7 @@ import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import SkillsBlock from "../components/work/skillsBlock";
 import NavCluster from "../components/global/navCluster";
-import InitialTransition from "../components/transition/InitialTransition";
+import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
 import WorkExperience from "../types/workExperience";
 import useWindowSize from "../hooks/useWindowSize";
@@ -35,8 +35,8 @@ import {
 } from "../constants/googleTags";
 import { EXPERIENCE_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import workData from "../../static/data/work.json";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
-import ToProjectsCircle from "../../static/images/NavCircle/toProjectsCircle.png";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
+import ToProjectsCircle from "../../static/images/nav-circle/to-projects-circle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -115,6 +115,7 @@ const Work = ({ location }: { location: WindowLocation }) => {
         delay={0.6}
         backRoute={Route.Intro}
         backTagId={EXPERIENCE_TO_INTRO}
+        onBackClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
         forwardRoute={Route.Projects}
         forwardTagId={EXPERIENCE_TO_PROJECTS}
         forwardImage={ToProjectsCircle}

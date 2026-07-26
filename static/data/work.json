@@ -195,7 +195,7 @@
   {
     "company": "slik",
     "media": "smh",
-    "imageHeight": 50,
+    "imageHeight": 45,
     "jobTitle": "Software Engineer",
     "companyTitle": "SLIK Creative Agency",
     "start": "2022",
@@ -299,7 +299,7 @@
   },
   {
     "company": "nzgovt",
-    "imageHeight": 55,
+    "imageHeight": 60,
     "jobTitle": "Software Engineer",
     "companyTitle": "Government of New Zealand, Health NZ",
     "start": "2021",

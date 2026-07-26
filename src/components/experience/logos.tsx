@@ -1,30 +1,37 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import Icon from "../../enums/icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import usyd from "../../../static/images/logos/usyd.svg";
-import qantas from "../../../static/images/logos/qantas.svg";
-import coates from "../../../static/images/logos/coates.svg";
-import nzgovt from "../../../static/images/logos/nzgovt.png";
+import iconPicker from "../../helper/iconPicker";
 
-const Logos = ({ delay = 0.2 }: { delay?: number }) => (
+const borderColor = (isDarkMode: boolean) =>
+  isDarkMode ? Color.BORDER_WHITE : Color.BORDER_BLACK;
+
+const Logos = ({
+  delay = 0.2,
+  isDarkMode = false,
+}: {
+  delay?: number;
+  isDarkMode?: boolean;
+}) => (
   <Container
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ stiffness: 0, duration: 0.3, delay }}
   >
-    <QantasLogo>
-      <img src={qantas} alt="Qantas" />
+    <FdjLogo $isDarkMode={isDarkMode}>
+      <img src={iconPicker(Icon.FdjUnited, isDarkMode)} alt="FDJ United" />
+    </FdjLogo>
+    <QantasLogo $isDarkMode={isDarkMode}>
+      <img src={iconPicker(Icon.Qantas, isDarkMode)} alt="Qantas" />
     </QantasLogo>
-    <CoatesLogo>
-      <img src={coates} alt="Coates Group" />
+    <CoatesLogo $isDarkMode={isDarkMode}>
+      <img src={iconPicker(Icon.Coates, isDarkMode)} alt="Coates Group" />
     </CoatesLogo>
-    <NzGovtLogo>
-      <img src={nzgovt} alt="New Zealand Government" />
-    </NzGovtLogo>
-    <UsydLogo>
-      <img src={usyd} alt="University of Sydney" />
+    <UsydLogo $isDarkMode={isDarkMode}>
+      <img src={iconPicker(Icon.USYD, isDarkMode)} alt="University of Sydney" />
     </UsydLogo>
   </Container>
 );
@@ -53,7 +60,7 @@ const Container = styled(motion.div)`
   }
 `;
 
-const Logo = styled.div`
+const Logo = styled.div<{ $isDarkMode: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,12 +78,33 @@ const Logo = styled.div`
   }
 `;
 
-const QantasLogo = styled(Logo)`
-  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
+const FdjLogo = styled(Logo)`
+  border-bottom: 0.5px solid ${({ $isDarkMode }) => borderColor($isDarkMode)};
 
   @media ${layout.up.sm} {
     border-bottom: 0;
-    border-right: 0.5px solid ${Color.BORDER_WHITE};
+    border-right: 0.5px solid ${({ $isDarkMode }) => borderColor($isDarkMode)};
+  }
+
+  img {
+    height: 6vw;
+
+    @media ${layout.up.sm} {
+      height: 2.3vw;
+    }
+
+    @media ${layout.up.lg} {
+      height: 1.3vw;
+    }
+  }
+`;
+
+const QantasLogo = styled(Logo)`
+  border-bottom: 0.5px solid ${({ $isDarkMode }) => borderColor($isDarkMode)};
+
+  @media ${layout.up.sm} {
+    border-bottom: 0;
+    border-right: 0.5px solid ${({ $isDarkMode }) => borderColor($isDarkMode)};
   }
 
   img {
@@ -93,11 +121,11 @@ const QantasLogo = styled(Logo)`
 `;
 
 const CoatesLogo = styled(Logo)`
-  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
+  border-bottom: 0.5px solid ${({ $isDarkMode }) => borderColor($isDarkMode)};
 
   @media ${layout.up.sm} {
     border-bottom: 0;
-    border-right: 0.5px solid ${Color.BORDER_WHITE};
+    border-right: 0.5px solid ${({ $isDarkMode }) => borderColor($isDarkMode)};
   }
 
   img {
@@ -109,27 +137,6 @@ const CoatesLogo = styled(Logo)`
 
     @media ${layout.up.lg} {
       height: 1.8vw;
-    }
-  }
-`;
-
-const NzGovtLogo = styled(Logo)`
-  border-bottom: 0.5px solid ${Color.BORDER_WHITE};
-
-  @media ${layout.up.sm} {
-    border-bottom: 0;
-    border-right: 0.5px solid ${Color.BORDER_WHITE};
-  }
-
-  img {
-    height: 10vw;
-
-    @media ${layout.up.sm} {
-      height: 4.5vw;
-    }
-
-    @media ${layout.up.lg} {
-      height: 2.5vw;
     }
   }
 `;
