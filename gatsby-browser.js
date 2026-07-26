@@ -5,6 +5,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import "splitting/dist/splitting.css";
 import "./src/styles/global.scss";
 import "./src/styles/tailwind.css";
+import Route from "./src/routes/route";
 import { MODE, STANDALONE } from "./src/constants/meta";
 
 // Icon CSS is imported above instead of being injected at runtime;
@@ -28,14 +29,14 @@ export const wrapPageElement = ({ element }) => (
 // useLayoutEffect), so restoration is disabled here only when leaving one
 // of them, leaving default behaviour intact everywhere else.
 const NO_SCROLL_RESTORE_PATHS = [
-  "/intro",
-  "/intro/",
-  "/experience",
-  "/experience/",
-  "/projects",
-  "/projects/",
-  "/education",
-  "/education/",
+  Route.Intro,
+  `${Route.Intro}/`,
+  Route.Experience,
+  `${Route.Experience}/`,
+  Route.Projects,
+  `${Route.Projects}/`,
+  Route.Education,
+  `${Route.Education}/`,
 ];
 
 export const shouldUpdateScroll = ({ prevRouterProps }) => {
