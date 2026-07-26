@@ -59,6 +59,16 @@ export type TimeLightingKeyframe = {
   skyBottom: number; // hex
   fogNear: number;
   fogFar: number;
+  // Radius of the sky sphere (see skySphereGeometryX in sydneyOperaHouse.tsx
+  // and GLOBAL_FRAGMENT_SHADER in shader.ts). The gradient's fixed `offset`
+  // biases the shader's height reference by a constant amount regardless of
+  // sphere size, so shrinking the radius alone (without touching `offset`)
+  // makes that same constant a much larger fraction of the sphere's scale,
+  // pushing far more of the dome into the topColor end of the gradient.
+  // MORNING/NOON use this to read as a dominant blue sky without changing
+  // `offset`/`exponent` globally and disturbing every other hour (and night)
+  // that already looks right.
+  skySphereGeometryX: number;
   // 0 = fully desaturated toward NEUTRAL_CLOUD_COLOR (crisp midday cloud),
   // 1 = the cloud's own hard-coded pink/peach hex prop, unchanged (see
   // applyCloudWarmth/cloudColor in useDayNightLighting).
@@ -95,6 +105,7 @@ export const DAWN_KEYFRAME: TimeLightingKeyframe = {
   skyBottom: 0xe0a6d2,
   fogNear: 0.7,
   fogFar: 19,
+  skySphereGeometryX: 215,
   cloudWarmth: 0.4,
   sparkleColor: "#b6ffe2",
   sparkleOpacityScale: 0.9,
@@ -111,6 +122,7 @@ export const MORNING_KEYFRAME: TimeLightingKeyframe = {
   skyBottom: 0xffd6a3,
   fogNear: 0.5,
   fogFar: 17,
+  skySphereGeometryX: 25,
   cloudWarmth: 0.55,
   sparkleColor: "#fff2d9",
   sparkleOpacityScale: 0.9,
@@ -137,6 +149,7 @@ export const NOON_KEYFRAME: TimeLightingKeyframe = {
   skyBottom: 0xffd9a3,
   fogNear: 0.45,
   fogFar: 18,
+  skySphereGeometryX: 25,
   cloudWarmth: 0.45,
   sparkleColor: "#fff8e6",
   sparkleOpacityScale: 1,
@@ -153,6 +166,7 @@ export const AFTERNOON_KEYFRAME: TimeLightingKeyframe = {
   skyBottom: 0xffcf9e,
   fogNear: 0.48,
   fogFar: 18,
+  skySphereGeometryX: 25,
   cloudWarmth: 0.75,
   sparkleColor: "#ffe6c2",
   sparkleOpacityScale: 0.97,
@@ -185,6 +199,7 @@ export const DUSK_KEYFRAME: TimeLightingKeyframe = {
   skyBottom: 0xe8985a,
   fogNear: 0.6,
   fogFar: 16,
+  skySphereGeometryX: 215,
   cloudWarmth: 1,
   sparkleColor: "#ffcf8a",
   sparkleOpacityScale: 0.8,
@@ -222,6 +237,7 @@ export const DIMMED_KEYFRAME: TimeLightingKeyframe = {
   skyBottom: 0xd18951,
   fogNear: DUSK_KEYFRAME.fogNear,
   fogFar: DUSK_KEYFRAME.fogFar,
+  skySphereGeometryX: DUSK_KEYFRAME.skySphereGeometryX,
   cloudWarmth: 1,
   sparkleColor: DUSK_KEYFRAME.sparkleColor,
   sparkleOpacityScale: DUSK_KEYFRAME.sparkleOpacityScale * 0.9,
@@ -312,6 +328,11 @@ export const interpolateDayLighting = (
       .getHex(),
     fogNear: THREE.MathUtils.lerp(lower.fogNear, upper.fogNear, t),
     fogFar: THREE.MathUtils.lerp(lower.fogFar, upper.fogFar, t),
+    skySphereGeometryX: THREE.MathUtils.lerp(
+      lower.skySphereGeometryX,
+      upper.skySphereGeometryX,
+      t,
+    ),
     cloudWarmth: THREE.MathUtils.lerp(lower.cloudWarmth, upper.cloudWarmth, t),
     sparkleColor: new THREE.Color(lower.sparkleColor)
       .lerp(new THREE.Color(upper.sparkleColor), t)

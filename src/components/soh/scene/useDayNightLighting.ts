@@ -120,6 +120,7 @@ const useDayNightLighting = (inputs: DayNightLightingInputs) => {
     skyBottom: DAY_SKY_BOTTOM.getHex(),
     fogNear: DAY_FOG_NEAR,
     fogFar: DAY_FOG_FAR,
+    skySphereGeometryX: 215,
     cloudWarmth: 1,
     sparkleColor: "#fff3e0",
     sparkleOpacityScale: 1,

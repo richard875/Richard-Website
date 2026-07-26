@@ -431,7 +431,9 @@ const Model = React.memo(() => {
       {/* Sky */}
       <SceneSky
         uniforms={uniforms}
-        skySphereGeometryX={skySphereGeometryX}
+        skySphereGeometryX={
+          effectiveIsNight ? skySphereGeometryX : dayLighting.skySphereGeometryX
+        }
         skySphereGeometryY={skySphereGeometryY}
         skySphereGeometryZ={skySphereGeometryZ}
         effectiveIsNight={effectiveIsNight}
