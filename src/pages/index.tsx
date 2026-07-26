@@ -110,7 +110,7 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
                 className="font-secondary-normal mt-2 ml-1 select-none"
                 onClick={(e) => routeTo(e, Route.Acknowledgement)}
               >
-                <SplitText as="span" delay={ENTRANCE_DELAY + 0.9}>
+                <SplitText as="span" delay={ENTRANCE_DELAY + 0.7}>
                   Acknowledgement of Country
                 </SplitText>
               </h2>

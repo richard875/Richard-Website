@@ -147,7 +147,7 @@ const Bottom = ({
               className="cursor-none"
               onClick={(e) => routeTo(e, Route.Acknowledgement)}
             >
-              <SplitText as="span" delay={ENTRANCE_DELAY + 0.9}>
+              <SplitText as="span" delay={ENTRANCE_DELAY + 0.7}>
                 Acknowledgement of Country
               </SplitText>
             </a>
