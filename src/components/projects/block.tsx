@@ -104,12 +104,14 @@ const Block = ({
           },
         )}
         {!!project.linkUrl && (
-          <ProjectLink
-            url={project.linkUrl!}
-            name={project.image}
-            setHover={setHover}
-            isDarkMode={isDarkMode}
-          />
+          <div className="mt-3.75 md:mt-5">
+            <ProjectLink
+              url={project.linkUrl!}
+              name={project.image}
+              setHover={setHover}
+              isDarkMode={isDarkMode}
+            />
+          </div>
         )}
         {!!project.media && (
           <CSSTransition

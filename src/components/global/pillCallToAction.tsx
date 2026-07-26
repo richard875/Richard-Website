@@ -1,17 +1,16 @@
 import React from "react";
-import styled from "styled-components";
-import { motion, useAnimationControls } from "framer-motion";
+import { useAnimationControls } from "framer-motion";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Color from "../../enums/color";
-import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/splitText";
 import HoverRoll from "../motion/hoverRoll";
+import { Badge, BadgeText } from "./pillBadge";
 import {
   badgeHoverEffect,
   badgeWiggleEffect,
@@ -20,18 +19,19 @@ import {
 
 // Shape/sizing follow IntroBadge (src/components/index/bottom.tsx's "From
 // Australia with Love" tag) — the pill border/radius live on the outer
-// Badge, the type sizing on the inner BadgeText. Colour departs from that
-// reference on purpose: IntroBadge is always white/black, but this one uses
-// its own fixed accent — green when `forward` (this CTA moves the visitor
-// further into the site), white when it doesn't (a "Home"/"Back" link) —
-// so it reads as forward-vs-back rather than matching IntroBadge's look.
+// Badge, the type sizing on the inner BadgeText (both shared with
+// ProjectLink via ./pillBadge.tsx, since they render the exact same
+// treatment). Colour departs from that reference on purpose: IntroBadge is
+// always white/black, but this one uses its own accent — green when
+// `forward` (this CTA moves the visitor further into the site), white/black
+// when it doesn't (a "Home"/"Back" link) — so it reads as forward-vs-back
+// rather than matching IntroBadge's look.
 //
-// `isDarkMode` mostly just passes through to `routeTo` below, which needs it
-// to pick the right page-transition overlay colour — accentColor is decided
-// by `forward` alone for the green "forward" variant. The one exception is
-// the white "back"/"Home" variant: it only exists today against dark
-// backgrounds (404/intro), so when `isDarkMode` is false it swaps to black to
-// stay visible against a light page background.
+// `isDarkMode` picks the right shade for both variants so the pill stays
+// legible against either background: BRIGHT_GREEN/WHITE on dark backgrounds,
+// DIM_GREEN/BLACK on light ones (BRIGHT_GREEN's contrast against a light
+// page is too low to read). It's also passed through to `routeTo` below,
+// which needs it to pick the right page-transition overlay colour.
 //
 // Animation: whileHover (badgeHoverEffect) covers a slight grow that holds
 // for the whole hover and the outline -> solid-fill colour invert (border/
@@ -70,11 +70,9 @@ const PillCallToAction = ({
   manualCursor?: boolean;
   invertOnly?: boolean;
 }) => {
-  const accentColor = forward
-    ? Color.BRIGHT_GREEN
-    : isDarkMode
-      ? Color.WHITE
-      : Color.BLACK;
+  const forwardAccentColor = isDarkMode ? Color.BRIGHT_GREEN : Color.DIM_GREEN;
+  const backAccentColor = isDarkMode ? Color.WHITE : Color.BLACK;
+  const accentColor = forward ? forwardAccentColor : backAccentColor;
   const hoverTextColor =
     accentColor === Color.BLACK ? Color.WHITE : Color.BLACK;
   const wiggleControls = useAnimationControls();
@@ -139,26 +137,3 @@ const PillCallToAction = ({
 };
 
 export default PillCallToAction;
-
-const Badge = styled(motion.div)<{ $accentColor: Color }>`
-  width: fit-content;
-  padding: 7px 15px;
-  border-radius: 999px;
-  background-color: transparent;
-  border: 2.5px solid currentColor;
-  color: ${({ $accentColor }) => $accentColor};
-`;
-
-const BadgeText = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-
-  @media ${layout.up.sm} {
-    font-size: 18px;
-  }
-
-  @media ${layout.up.xxl} {
-    font-size: 20px;
-  }
-`;
