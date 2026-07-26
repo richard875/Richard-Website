@@ -31,6 +31,6 @@ export default InitialTransition;
 const Transition = styled(motion.div)`
   width: 100vw;
   z-index: 99999;
-  position: absolute;
+  position: fixed;
   background-color: ${(props: any) => props.color};
 `;
