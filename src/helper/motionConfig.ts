@@ -34,6 +34,17 @@ export const backCircleButtonEffect: HoverAndTapType = {
   },
 };
 
+// Subtle hover for the LinkedIn/GitHub social icons (index Bottom + contact
+// Links) — barely-there grow.
+export const socialIconHoverEffect: HoverAndTapType = {
+  scale: 1.2,
+  transition: {
+    type: "spring",
+    stiffness: 400,
+    damping: 17,
+  },
+};
+
 // Shared press/tap feedback for NavCircle and BackCircle — kept identical
 // between the two so the pair reads as one connected control surface.
 export const motionTapEffect: HoverAndTapType = {

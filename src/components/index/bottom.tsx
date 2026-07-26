@@ -11,7 +11,10 @@ import SplitText from "../motion/splitText";
 import BottomBackdrop from "./bottomBackdrop";
 import ResumeCircle from "../global/resumeCircle";
 import RoundedCallToAction from "../global/roundedCallToAction";
-import { motionTapEffect } from "../../helper/motionConfig";
+import {
+  motionTapEffect,
+  socialIconHoverEffect,
+} from "../../helper/motionConfig";
 import getTransitionColor from "../../helper/getTransitionColor";
 import {
   INDEX_TO_INTRO,
@@ -104,6 +107,7 @@ const Bottom = ({
           >
             <motion.span
               className="inline-block"
+              whileHover={socialIconHoverEffect}
               whileTap={motionTapEffect}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
@@ -122,6 +126,7 @@ const Bottom = ({
           >
             <motion.span
               className="inline-block"
+              whileHover={socialIconHoverEffect}
               whileTap={motionTapEffect}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
@@ -274,7 +279,6 @@ const Social = styled(motion.div)`
   display: flex;
   gap: 20px;
   margin-top: 50px;
-  overflow: hidden;
   color: ${Color.WHITE};
 `;
 

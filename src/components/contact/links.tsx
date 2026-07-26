@@ -7,7 +7,10 @@ import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
 import SplitText from "../motion/splitText";
 import HoverRoll from "../motion/hoverRoll";
-import { motionTapEffect } from "../../helper/motionConfig";
+import {
+  motionTapEffect,
+  socialIconHoverEffect,
+} from "../../helper/motionConfig";
 import getTransitionColor from "../../helper/getTransitionColor";
 import useDarkModeManager from "../../hooks/useDarkModeManager";
 import { NAME, URL, LINKEDIN_URL, GITHUB_URL } from "../../constants/meta";
@@ -57,6 +60,7 @@ const Links = ({
         >
           <motion.span
             className="inline-block"
+            whileHover={socialIconHoverEffect}
             whileTap={motionTapEffect}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
@@ -75,6 +79,7 @@ const Links = ({
         >
           <motion.span
             className="inline-block"
+            whileHover={socialIconHoverEffect}
             whileTap={motionTapEffect}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
