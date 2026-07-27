@@ -13,6 +13,15 @@ type WorkExperience = {
   description: SentenceDescription[][];
   techStack: string[];
   media?: Media;
+  descriptionFontSizeAdjust?: FontSizeAdjust;
+};
+
+export type FontSizeAdjust = {
+  md?: number;
+  lg?: number;
+  xl?: number;
+  xxl?: number;
+  xxxl?: number;
 };
 
 export default WorkExperience;

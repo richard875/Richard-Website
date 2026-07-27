@@ -6,7 +6,7 @@ import Color from "../../enums/color";
 import ProjectLink from "./projectLink";
 import layout from "../../styles/layout";
 import SplitText from "../motion/splitText";
-import TextSection from "../global/textSection";
+import TextSection, { DescriptionText } from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
 import getTransitionColor from "../../helper/getTransitionColor";
@@ -19,6 +19,10 @@ import {
   BLOCK_WIDTH_DESKTOP,
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
+
+// How much margin-top the first description paragraph gets at the `xxxl`
+// breakpoint on this page — see DescriptionText in global/textSection.tsx.
+const FIRST_DESCRIPTION_MARGIN_TOP_XXXL = 35;
 
 // How much later each successive block's title starts revealing relative to
 // the previous one (on top of its own internal char-by-char stagger).
@@ -71,7 +75,10 @@ const Block = ({
             {project.name}
           </SplitText>
         </ProjectName>
-        <DescriptionText $isFirst={false}>
+        <DescriptionText
+          $isFirst={false}
+          $firstMarginTopXxxl={FIRST_DESCRIPTION_MARGIN_TOP_XXXL}
+        >
           <span style={{ color: isDarkMode ? Color.BLUE : Color.RED }}>
             Utilised:
           </span>
@@ -83,7 +90,11 @@ const Block = ({
         {project.description.map(
           (description: SentenceDescription[], index: number) => {
             return (
-              <DescriptionText key={index} $isFirst={index == 0}>
+              <DescriptionText
+                key={index}
+                $isFirst={index == 0}
+                $firstMarginTopXxxl={FIRST_DESCRIPTION_MARGIN_TOP_XXXL}
+              >
                 {description.map(
                   (sentence: SentenceDescription, index: number) => (
                     <TextSection
@@ -247,22 +258,5 @@ const ProjectName = styled.h2<{ $isDarkMode: boolean }>`
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
-  }
-`;
-
-const DescriptionText = styled.p<{ $isFirst: boolean }>`
-  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
-  font-size: 18px;
-  line-height: 25px;
-
-  @media ${layout.up.md} {
-    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
-  }
-
-  @media ${layout.up.xxxl} {
-    margin-top: ${({ $isFirst }) => ($isFirst ? "35px" : "20px")};
-    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
-    font-size: 20px;
-    line-height: 30px;
   }
 `;

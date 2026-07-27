@@ -8,6 +8,9 @@
     "end": "Current",
     "city": "Sydney",
     "country": "Australia",
+    "descriptionFontSizeAdjust": {
+      "xxxl": -2
+    },
     "description": [
       [
         {
