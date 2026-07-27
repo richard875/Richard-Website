@@ -83,8 +83,8 @@ const Ring = styled.div<{
   position: fixed;
   top: 0;
   left: 0;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border: 2px solid ${({ $black }) => ($black ? Color.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
