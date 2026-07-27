@@ -50,11 +50,9 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
       />
       <TitleWrapper>
         <Title>Proficient Skills</Title>
-        <SparkleLogo
-          className="xxxl:hidden pb-1.25"
-          height={30}
-          isDarkMode={isDarkMode}
-        />
+        <SparkleLogoWrapper className="xxxl:hidden! pb-1.25">
+          <SparkleLogo height={30} isDarkMode={isDarkMode} />
+        </SparkleLogoWrapper>
       </TitleWrapper>
       {(skillsData as Skills).primary.map((skill: SkillType, index: number) => (
         <Skill key={index}>
@@ -151,6 +149,14 @@ const TitleWrapper = styled.div`
   @media ${layout.up.md} {
     margin-bottom: -10px;
   }
+`;
+
+// Padding-bottom lives here rather than on SparkleLogo's own <img> so the
+// rotating element's box stays centered on the graphic — padding only on one
+// side of the img itself would offset the rotation's pivot point.
+const SparkleLogoWrapper = styled.span`
+  display: inline-flex;
+  align-items: flex-start;
 `;
 
 const Title = styled.h2`
