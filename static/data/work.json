@@ -1,20 +1,118 @@
 [
   {
-    "company": "coates",
-    "imageHeight": 45,
-    "jobTitle": "Lead Software Engineer",
-    "companyTitle": "Coates Group",
-    "start": "2024",
+    "company": "fdjunited",
+    "imageHeight": 40,
+    "jobTitle": "Senior Performance Engineer",
+    "companyTitle": "FDJ United - La Française des Jeux",
+    "start": "2025",
     "end": "Current",
     "city": "Sydney",
     "country": "Australia",
     "description": [
       [
         {
-          "content": "Leading a team of"
+          "content": "Optimised",
+          "textHighlight": true
         },
         {
-          "content": "5 engineers",
+          "content": "the"
+        },
+        {
+          "content": "Sportsbook Betting Engine",
+          "textHighlight": true
+        },
+        {
+          "content": "as part of a"
+        },
+        {
+          "content": "five-engineer Performance Task Force",
+          "textHighlight": true
+        },
+        {
+          "content": ","
+        },
+        {
+          "content": "increasing throughput over 6x",
+          "textHighlight": true
+        },
+        {
+          "content": "while"
+        },
+        {
+          "content": "reducing P95 latency by 85%",
+          "textHighlight": true
+        },
+        {
+          "content": "through CPU profiling, cooperative yielding, DB round-trip optimisation, and Kubernetes tuning."
+        }
+      ],
+      [
+        {
+          "content": "Designed and implemented",
+          "textHighlight": true
+        },
+        {
+          "content": "a Kafka benchmarking platform to evaluate VM and Kubernetes deployments, executing producer and consumer load tests at"
+        },
+        {
+          "content": "150,000+ messages per second",
+          "textHighlight": true
+        },
+        {
+          "content": "and delivering performance insights that"
+        },
+        {
+          "content": "guided infrastructure decisions",
+          "textHighlight": true
+        },
+        {
+          "content": "."
+        }
+      ],
+      [
+        {
+          "content": "Co-initiated",
+          "textHighlight": true
+        },
+        {
+          "content": "the Sportsbook iOS Appium automation framework alongside two engineers,"
+        },
+        {
+          "content": "defining automation strategy with Product, QA and engineering teams",
+          "textHighlight": true
+        },
+        {
+          "content": "while leveraging AI agent workflows with Claude Code and MCP integrations to accelerate end-to-end test development."
+        }
+      ]
+    ],
+    "techStack": [
+      "Claude Code",
+      "MCP",
+      "Kafka",
+      "K8s / Lens",
+      "Node.js Profiler",
+      "React",
+      "Express.js",
+      "PostgreSQL",
+      "Couchbase",
+      "Grafana",
+      "Appium"
+    ]
+  },
+  {
+    "company": "coates",
+    "imageHeight": 45,
+    "jobTitle": "Lead Software Engineer",
+    "companyTitle": "Coates Group",
+    "start": "2024",
+    "end": "2025",
+    "city": "Sydney",
+    "country": "Australia",
+    "description": [
+      [
+        {
+          "content": "Leading a team of 5 engineers",
           "textHighlight": true
         },
         {
@@ -25,12 +123,23 @@
           "textHighlight": true
         },
         {
-          "content": ", overseeing daily tasks, mentoring junior engineers, and guiding strategic decisions, with a primary focus on high-level architectural planning."
+          "content": ", overseeing daily tasks, mentoring junior engineers, and guiding strategic decisions, with a primary focus on"
+        },
+        {
+          "content": "high-level architectural planning",
+          "textHighlight": true
+        },
+        {
+          "content": "."
         }
       ],
       [
         {
-          "content": "Orchestrated architectural decisions for"
+          "content": "Orchestrated architectural decisions",
+          "textHighlight": true
+        },
+        {
+          "content": "for"
         },
         {
           "content": "McDonald's Digital Menu Board CMS software",
@@ -86,28 +195,25 @@
     "description": [
       [
         {
-          "content": "Spearheaded the implementation of a Customer Service Centre Application harnessing"
-        },
-        {
-          "content": "Next.js",
+          "content": "Spearheaded",
           "textHighlight": true
         },
         {
-          "content": ","
+          "content": "the implementation of a Customer Service Centre Application harnessing Next.js, Akamai, and Jest. The project"
         },
         {
-          "content": "Akamai",
+          "content": "streamlined operations",
           "textHighlight": true
         },
         {
           "content": ", and"
         },
         {
-          "content": "Jest",
+          "content": "enhanced user experience",
           "textHighlight": true
         },
         {
-          "content": ". The project streamlined operations, and enhanced user experience for a user base of"
+          "content": "for a user base of"
         },
         {
           "content": "2000+ daily active users",
@@ -119,14 +225,18 @@
       ],
       [
         {
-          "content": "In a team of"
-        },
-        {
-          "content": "Five",
+          "content": "In a team of Five",
           "textHighlight": true
         },
         {
-          "content": ", I led the successful delivery of the largest internal marketing application serving over"
+          "content": ", I led the successful delivery of the"
+        },
+        {
+          "content": "largest internal marketing application",
+          "textHighlight": true
+        },
+        {
+          "content": "serving over"
         },
         {
           "content": "150",
@@ -166,7 +276,11 @@
       ],
       [
         {
-          "content": "Reduced organisational AWS expenditure by over"
+          "content": "Reduced organisational AWS expenditure",
+          "textHighlight": true
+        },
+        {
+          "content": "by over"
         },
         {
           "content": "$55,000 annually",
@@ -205,10 +319,7 @@
     "description": [
       [
         {
-          "content": "Pioneered Australia's"
-        },
-        {
-          "content": "First",
+          "content": "Pioneered Australia's First",
           "textHighlight": true
         },
         {
@@ -231,7 +342,11 @@
       ],
       [
         {
-          "content": "Engineered static web applications leveraging"
+          "content": "Engineered",
+          "textHighlight": true
+        },
+        {
+          "content": "static web applications leveraging"
         },
         {
           "content": "Gatsby",
@@ -257,7 +372,11 @@
       ],
       [
         {
-          "content": "Undertook the migration of a"
+          "content": "Undertook",
+          "textHighlight": true
+        },
+        {
+          "content": "the migration of a"
         },
         {
           "content": "legacy",
