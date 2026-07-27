@@ -9,6 +9,9 @@
     "city": "Sydney",
     "country": "Australia",
     "descriptionFontSizeAdjust": {
+      "lg": -3,
+      "xl": -2.5,
+      "xxl": -1.9,
       "xxxl": -2
     },
     "description": [
