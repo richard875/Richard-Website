@@ -117,7 +117,11 @@
     "description": [
       [
         {
-          "content": "Conceptualised, designed and developed a modern"
+          "content": "Conceptualised, designed and developed",
+          "textHighlight": true
+        },
+        {
+          "content": "a modern"
         },
         {
           "content": "coding practice web application",
@@ -136,7 +140,11 @@
       ],
       [
         {
-          "content": "Incorporated robust"
+          "content": "Incorporated",
+          "textHighlight": true
+        },
+        {
+          "content": "robust"
         },
         {
           "content": "persistent data storage",
@@ -148,10 +156,7 @@
       ],
       [
         {
-          "content": "Adopted and implemented"
-        },
-        {
-          "content": "IBM's Carbon Design System",
+          "content": "Adopted and implemented IBM's Carbon Design System",
           "textHighlight": true
         },
         {
