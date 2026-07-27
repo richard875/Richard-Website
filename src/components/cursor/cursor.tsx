@@ -12,13 +12,11 @@ const Cursor = ({
   delay,
   position,
   isBlack,
-  isIndexPage = false,
 }: {
   hover: boolean;
   delay: number;
   position: MousePosition;
   isBlack: boolean;
-  isIndexPage?: boolean;
 }) => {
   const isDesktop = useIsDesktop();
   const { x, y } = useMousePosition(position);
@@ -69,12 +67,7 @@ const Cursor = ({
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: delay }}
       >
-        <Ring
-          ref={ringRef}
-          $hover={hover}
-          $black={isBlack}
-          $isIndexPage={isIndexPage}
-        ></Ring>
+        <Ring ref={ringRef} $hover={hover} $black={isBlack}></Ring>
         <Dot ref={dotRef} $hover={hover} $black={isBlack}></Dot>
       </motion.span>
     )
@@ -85,29 +78,24 @@ export default Cursor;
 
 const Ring = styled.div<{
   $black: boolean;
-  $isIndexPage: boolean;
   $hover: boolean;
 }>`
   position: fixed;
   top: 0;
   left: 0;
-  width: ${({ $black, $isIndexPage }) =>
-    $black && $isIndexPage ? "30px" : "25px"};
-  height: ${({ $black, $isIndexPage }) =>
-    $black && $isIndexPage ? "30px" : "25px"};
+  width: 25px;
+  height: 25px;
   border: 2px solid ${({ $black }) => ($black ? Color.BLACK : "lightgray")};
   border-radius: 100%;
   transform: translate(-50%, -50%);
   transition:
-    width 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    height 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    transform 0.32s cubic-bezier(0.75, -1.27, 0.3, 2.33),
+    width 0.32s cubic-bezier(0.75, -1.27, 0.3, 2.33),
+    height 0.32s cubic-bezier(0.75, -1.27, 0.3, 2.33),
     opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
     border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.15s;
   -webkit-transition:
-    width 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    height 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    transform 0.32s cubic-bezier(0.75, -1.27, 0.3, 2.33),
+    width 0.32s cubic-bezier(0.75, -1.27, 0.3, 2.33),
+    height 0.32s cubic-bezier(0.75, -1.27, 0.3, 2.33),
     opacity 0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33),
     border 0.1s cubic-bezier(0.75, -0.27, 0.3, 1.33) 0.15s;
   user-select: none;
@@ -118,8 +106,9 @@ const Ring = styled.div<{
     $hover &&
     css`
       opacity: 0.7;
-      transform: translate(-50%, -50%) scale(2.5);
-      border: 1px solid lightgray;
+      width: 65px;
+      height: 65px;
+      border: 2px solid lightgray;
     `};
 `;
 

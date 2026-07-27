@@ -128,7 +128,6 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
           hover={hover}
           delay={0.8}
           isBlack={true}
-          isIndexPage={true}
           position={location.state! as MousePosition}
         />
       </Container>
