@@ -2,7 +2,7 @@
   {
     "company": "fdjunited",
     "imageHeight": 40,
-    "jobTitle": "Senior Performance Engineer",
+    "jobTitle": "Senior Software Engineer",
     "companyTitle": "FDJ United - La Française des Jeux",
     "start": "2025",
     "end": "Current",
@@ -17,35 +17,31 @@
     "description": [
       [
         {
-          "content": "Optimised",
+          "content": "Optimised the Sportsbook Betting Engine within a 5-engineer Performance Task Force,"
+        },
+        {
+          "content": "increasing",
           "textHighlight": true
         },
         {
-          "content": "the"
+          "content": "throughput by more than"
         },
         {
-          "content": "Sportsbook Betting Engine",
+          "content": "6x",
           "textHighlight": true
         },
         {
-          "content": "as part of a"
+          "content": "and"
         },
         {
-          "content": "five-engineer Performance Task Force",
+          "content": "reducing",
           "textHighlight": true
         },
         {
-          "content": ","
+          "content": "P95 latency by"
         },
         {
-          "content": "increasing throughput over 6x",
-          "textHighlight": true
-        },
-        {
-          "content": "while"
-        },
-        {
-          "content": "reducing P95 latency by 85%",
+          "content": "85%",
           "textHighlight": true
         },
         {
@@ -54,41 +50,33 @@
       ],
       [
         {
-          "content": "Designed and implemented",
+          "content": "Designed and delivered a Kafka benchmarking platform that sustained producer and consumer load tests exceeding"
+        },
+        {
+          "content": "150,000 messages per second",
           "textHighlight": true
         },
         {
-          "content": "a Kafka benchmarking platform to evaluate VM and Kubernetes deployments, executing producer and consumer load tests at"
-        },
-        {
-          "content": "150,000+ messages per second",
-          "textHighlight": true
-        },
-        {
-          "content": "and delivering performance insights that"
-        },
-        {
-          "content": "guided infrastructure decisions",
-          "textHighlight": true
-        },
-        {
-          "content": "."
+          "content": ", providing the performance evidence used to evaluate VM and Kubernetes deployment strategies."
         }
       ],
       [
         {
-          "content": "Co-initiated",
+          "content": "Co-established the Sportsbook iOS Appium automation framework with 2 engineers, aligning Product, QA, and engineering teams on automation strategy, delivering"
+        },
+        {
+          "content": "45 end-to-end test scenarios",
           "textHighlight": true
         },
         {
-          "content": "the Sportsbook iOS Appium automation framework alongside two engineers,"
+          "content": "integrated into CI, and using Claude Code and MCP integrations to reduce test development time by"
         },
         {
-          "content": "defining automation strategy with Product, QA and engineering teams",
+          "content": "40%",
           "textHighlight": true
         },
         {
-          "content": "while leveraging AI agent workflows with Claude Code and MCP integrations to accelerate end-to-end test development."
+          "content": "."
         }
       ]
     ],
@@ -96,7 +84,7 @@
       "Claude Code",
       "MCP",
       "Kafka",
-      "K8s / Lens",
+      "Kubernetes",
       "Node.js Profiler",
       "React",
       "Express.js",
@@ -109,7 +97,7 @@
   {
     "company": "coates",
     "imageHeight": 45,
-    "jobTitle": "Lead Software Engineer",
+    "jobTitle": "Senior Software Engineer",
     "companyTitle": "Coates Group",
     "start": "2024",
     "end": "2025",
@@ -118,66 +106,45 @@
     "description": [
       [
         {
-          "content": "Leading a team of 5 engineers",
+          "content": "Led"
+        },
+        {
+          "content": "5 engineers",
           "textHighlight": true
         },
         {
-          "content": "within a feature team of"
+          "content": "within the"
         },
         {
-          "content": "12",
+          "content": "12-person",
           "textHighlight": true
         },
         {
-          "content": ", overseeing daily tasks, mentoring junior engineers, and guiding strategic decisions, with a primary focus on"
-        },
-        {
-          "content": "high-level architectural planning",
-          "textHighlight": true
-        },
-        {
-          "content": "."
+          "content": "Market Adoption Squad while remaining hands-on in the delivery of McDonald’s Digital Menu Board CMS, mentoring junior engineers and guiding technical design and architectural decisions."
         }
       ],
       [
         {
-          "content": "Orchestrated architectural decisions",
-          "textHighlight": true
+          "content": "Architected the CMS platform’s full-stack solution in collaboration with senior leadership, implementing frontend improvements that increased its Google Lighthouse score by"
         },
         {
-          "content": "for"
-        },
-        {
-          "content": "McDonald's Digital Menu Board CMS software",
-          "textHighlight": true
-        },
-        {
-          "content": ", collaborating with senior leadership to design a full-stack solution that improved frontend efficiency by"
-        },
-        {
-          "content": "40%",
+          "content": "40 points",
           "textHighlight": true
         },
         {
           "content": ". The platform is now deployed across"
         },
         {
-          "content": "15,000",
+          "content": "15,000 locations",
           "textHighlight": true
         },
         {
-          "content": "McDonald's locations in the"
-        },
-        {
-          "content": "United States and Europe",
-          "textHighlight": true
-        },
-        {
-          "content": "."
+          "content": "in the United States and Europe."
         }
       ]
     ],
     "techStack": [
+      "Node.js",
       "React",
       "Express.js",
       "MySQL",
@@ -185,8 +152,7 @@
       "AWS DynamoDB",
       "Jest",
       "Micro-frontend architecture",
-      "GitLab",
-      "Custom ORM"
+      "GitLab"
     ]
   },
   {
@@ -201,115 +167,77 @@
     "description": [
       [
         {
-          "content": "Spearheaded",
+          "content": "Spearheaded development of a Next.js Customer Service Centre application used by"
+        },
+        {
+          "content": "2,000+ employees daily",
           "textHighlight": true
         },
         {
-          "content": "the implementation of a Customer Service Centre Application harnessing Next.js, Akamai, and Jest. The project"
+          "content": ", consolidating"
         },
         {
-          "content": "streamlined operations",
+          "content": "14 department-specific applications",
           "textHighlight": true
         },
         {
-          "content": ", and"
-        },
-        {
-          "content": "enhanced user experience",
-          "textHighlight": true
-        },
-        {
-          "content": "for a user base of"
-        },
-        {
-          "content": "2000+ daily active users",
-          "textHighlight": true
-        },
-        {
-          "content": "."
+          "content": "into a single platform and eliminating the need for agents to navigate across multiple browser tabs."
         }
       ],
       [
         {
-          "content": "In a team of Five",
-          "textHighlight": true
-        },
-        {
-          "content": ", I led the successful delivery of the"
-        },
-        {
-          "content": "largest internal marketing application",
-          "textHighlight": true
-        },
-        {
-          "content": "serving over"
-        },
-        {
-          "content": "150",
-          "textHighlight": true
-        },
-        {
-          "content": "employees across"
-        },
-        {
-          "content": "12",
-          "textHighlight": true
-        },
-        {
-          "content": "Qantas Loyalty Marketing Channels leveraging"
+          "content": "Delivered a full-stack internal marketing platform within a 5-engineer team, using"
         },
         {
           "content": "Preact",
           "textHighlight": true
         },
         {
-          "content": ","
+          "content": "and"
         },
         {
-          "content": "AWS Lambda",
+          "content": "Express.js",
           "textHighlight": true
         },
         {
-          "content": ", and"
+          "content": "to centralise the creation, management, and delivery of customer campaigns across"
         },
         {
-          "content": "Amazon RDS",
+          "content": "12",
           "textHighlight": true
         },
         {
-          "content": "."
-        }
-      ],
-      [
+          "content": "digital and communications channels, with"
+        },
         {
-          "content": "Reduced organisational AWS expenditure",
+          "content": "Jest-based",
           "textHighlight": true
         },
         {
-          "content": "by over"
+          "content": "automated testing and"
         },
         {
-          "content": "$55,000 annually",
+          "content": "Akamai-powered",
           "textHighlight": true
         },
         {
-          "content": "through strategic decommissioning of a redundant prior project."
+          "content": "content delivery."
         }
       ]
     ],
     "techStack": [
       "Next.js",
+      "Preact",
       "Express.js",
-      "Jest",
-      "Mocha Test",
       "AWS Lambda",
       "AWS RDS",
       "AWS Redshift",
-      "Terraform",
-      "Ansible",
       "Jenkins",
+      "Terraform",
       "Splunk",
-      "Preact"
+      "Jest",
+      "Mocha Test",
+      "Ansible"
     ]
   },
   {
@@ -325,11 +253,14 @@
     "description": [
       [
         {
-          "content": "Pioneered Australia's First",
+          "content": "Pioneered Australia’s"
+        },
+        {
+          "content": "first",
           "textHighlight": true
         },
         {
-          "content": "Metaverse Virtual Playground utilising"
+          "content": "metaverse virtual playground utilising"
         },
         {
           "content": "Three.js",
@@ -348,11 +279,7 @@
       ],
       [
         {
-          "content": "Engineered",
-          "textHighlight": true
-        },
-        {
-          "content": "static web applications leveraging"
+          "content": "Engineered static web applications using"
         },
         {
           "content": "Gatsby",
@@ -369,7 +296,7 @@
           "content": ", including"
         },
         {
-          "content": "Sydney Morning Herald's Annual Impact Report",
+          "content": "The Sydney Morning Herald’s Annual Impact Report",
           "url": "https://impact-report.smh.com.au/"
         },
         {
@@ -378,32 +305,14 @@
       ],
       [
         {
-          "content": "Undertook",
+          "content": "Migrated a legacy email builder app from"
+        },
+        {
+          "content": "Angular to React",
           "textHighlight": true
         },
         {
-          "content": "the migration of a"
-        },
-        {
-          "content": "legacy",
-          "textHighlight": true
-        },
-        {
-          "content": "email builder app from"
-        },
-        {
-          "content": "Angular",
-          "textHighlight": true
-        },
-        {
-          "content": "to"
-        },
-        {
-          "content": "React",
-          "textHighlight": true
-        },
-        {
-          "content": ", optimising maintenance and enhancing user interface."
+          "content": ", simplifying its frontend architecture and improving maintainability and UX."
         }
       ]
     ],
@@ -426,7 +335,7 @@
     "company": "nzgovt",
     "imageHeight": 60,
     "jobTitle": "Software Engineer",
-    "companyTitle": "Government of New Zealand, Health NZ",
+    "companyTitle": "New Zealand Government, Health NZ",
     "start": "2021",
     "end": "2022",
     "city": "Auckland",
@@ -434,7 +343,7 @@
     "description": [
       [
         {
-          "content": "Developed and designed a web application utilising"
+          "content": "Replaced manual status checks with an"
         },
         {
           "content": "Angular",
@@ -448,15 +357,24 @@
           "textHighlight": true
         },
         {
-          "content": "to monitor hospitals' legacy system status."
-        }
-      ],
-      [
-        {
-          "content": "Conceptualised and implemented a bespoke management web app empowering administrators to manage data stored in"
+          "content": "monitoring application covering"
         },
         {
-          "content": "Redis",
+          "content": "3 hospitals",
+          "textHighlight": true
+        },
+        {
+          "content": ", reducing incident identification time by"
+        },
+        {
+          "content": "90%",
+          "textHighlight": true
+        },
+        {
+          "content": ", from"
+        },
+        {
+          "content": "5 minutes to 30 seconds",
           "textHighlight": true
         },
         {
@@ -465,33 +383,29 @@
       ],
       [
         {
-          "content": "Elevated an application's"
+          "content": "Designed and built a bespoke"
         },
         {
-          "content": "Google Chrome Lighthouse Score",
+          "content": "Redis management application",
           "textHighlight": true
         },
         {
-          "content": "by over"
-        },
-        {
-          "content": "60%",
-          "textHighlight": true
-        },
-        {
-          "content": "through a complete redesign of the frontend layout structure."
+          "content": ", giving admins a controlled interface for maintaining operational data."
         }
       ]
     ],
     "techStack": [
       "TypeScript",
-      "Angular / NgRx",
+      "Node.js",
+      "React",
+      "Angular",
+      "C#",
+      ".NET",
+      "NgRx",
       "Redis",
       "Oracle SQL Database",
-      "Jira",
-      "Azure DevOps",
-      "C#",
-      ".NET"
+      "Material UI",
+      "Azure DevOps"
     ]
   },
   {
