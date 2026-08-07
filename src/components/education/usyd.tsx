@@ -74,7 +74,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
         <Highlight $isDarkMode={isDarkMode}>
           &nbsp;Academic Teaching Assistant&nbsp;
         </Highlight>
-        for SOFT2412 -
+        for SOFT2412:
         <Highlight $isDarkMode={isDarkMode}>
           &nbsp;Agile Software Development Practices (Java)
         </Highlight>
