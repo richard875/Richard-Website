@@ -4,7 +4,6 @@ node_modules/
 public
 src/gatsby-types.d.ts
 package-lock.json
-yarn.lock
 
 # macOS
 .DS_Store
@@ -13,3 +12,6 @@ yarn.lock
 .env
 .env.development
 .env.production
+
+# Claude Code (machine-local settings)
+.claude/settings.local.json

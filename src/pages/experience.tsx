@@ -14,14 +14,15 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import SkillsBlock from "../components/work/skillsBlock";
-import CallToAction from "../components/global/callToAction";
-import InitialTransition from "../components/transition/InitialTransition";
+import NavCluster from "../components/global/navCluster";
+import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
 import WorkExperience from "../types/workExperience";
 import useWindowSize from "../hooks/useWindowSize";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
+import getTransitionColor from "../helper/getTransitionColor";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -34,7 +35,8 @@ import {
 } from "../constants/googleTags";
 import { EXPERIENCE_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import workData from "../../static/data/work.json";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
+import ToProjectsCircle from "../../static/images/nav-circle/to-projects-circle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,8 +53,16 @@ const Work = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_BLACK
+    Color.BACKGROUND_BLACK,
   );
+
+  // On mobile this is just a normal vertical-scroll page (the pin/scrub
+  // setup below is skipped below 769px), so nothing else resets scroll
+  // between page mounts — without this, arriving here keeps whatever
+  // scrollY the previous page left behind instead of starting at the top.
+  React.useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   React.useEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -84,16 +94,18 @@ const Work = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={transitionColor} />
       <Horizontal ref={slider} $entryLength={workData.length + 1}>
         <SkillsBlock isDarkMode={isDarkMode} />
-        {workData.map((experience: WorkExperience, index: number) => (
-          <Block
-            key={index}
-            index={index}
-            setHover={setHover}
-            experience={experience}
-            isDarkMode={isDarkMode}
-            dataLength={workData.length}
-          />
-        ))}
+        {(workData as WorkExperience[]).map(
+          (experience: WorkExperience, index: number) => (
+            <Block
+              key={index}
+              index={index}
+              setHover={setHover}
+              experience={experience}
+              isDarkMode={isDarkMode}
+              dataLength={workData.length}
+            />
+          ),
+        )}
         <Bottom
           className="font-secondary-normal"
           $isDarkMode={isDarkMode}
@@ -104,41 +116,22 @@ const Work = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EXPERIENCE_TITLE}</Title>
-        <div className="flex items-center">
-          <div id={`${EXPERIENCE_TO_INTRO}_0`} className="hidden sm:block">
-            <CallToAction
-              name="Back"
-              tagId={EXPERIENCE_TO_INTRO}
-              tagIdStartNum={1}
-              forward={false}
-              setHover={setHover}
-              route={Route.Intro}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-          <span className="hidden select-none sm:block">&nbsp;&nbsp;</span>
-          <div
-            id={`${EXPERIENCE_TO_PROJECTS}_0`}
-            onClick={() =>
-              setTransitionColor(
-                isDarkMode
-                  ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY
-              )
-            }
-          >
-            <CallToAction
-              name="Projects"
-              tagId={EXPERIENCE_TO_PROJECTS}
-              tagIdStartNum={1}
-              forward={true}
-              setHover={setHover}
-              route={Route.Projects}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-        </div>
       </Top>
+      <NavCluster
+        isDarkMode={isDarkMode}
+        setHover={setHover}
+        delay={0.6}
+        backRoute={Route.Intro}
+        backTagId={EXPERIENCE_TO_INTRO}
+        onBackClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
+        forwardRoute={Route.Projects}
+        forwardTagId={EXPERIENCE_TO_PROJECTS}
+        forwardImage={ToProjectsCircle}
+        forwardAlt="To Projects Page"
+        onForwardClick={() =>
+          setTransitionColor(getTransitionColor(isDarkMode))
+        }
+      />
       <Cursor
         delay={0.5}
         hover={hover}
@@ -164,7 +157,7 @@ export const Head: HeadFC = () => (
       content={Color.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
-    <Preload />
+    <Preload videos="experience" />
     <MetaTags
       path={Route.Experience}
       MetaImage={MetaImage}
@@ -176,7 +169,7 @@ export const Head: HeadFC = () => (
 const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
   cursor: none;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 
   @media ${layout.up.md} {
@@ -195,11 +188,9 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   padding-top: 5px;
   padding-bottom: 3px;
   border-bottom: ${({ $isDarkMode }) =>
-    $isDarkMode
-      ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-      : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+    `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
 
   @media ${layout.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};

@@ -5,14 +5,18 @@ import Icon from "../../enums/icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import iconPicker from "../../helper/iconPicker";
+import getTransitionColor from "../../helper/getTransitionColor";
 import skillsData from "../../../static/data/skills.json";
 import Skills, { Skill as SkillType } from "../../types/skills";
+import RotatingAiSkillsImage, {
+  skillsImageStyles,
+} from "./rotatingAiSkillsImage";
+import SparkleLogo from "./sparkleLogo";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
   BLOCK_WIDTH,
   BLOCK_WIDTH_DESKTOP,
-  IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
 
 const SecondarySkills = ({
@@ -35,25 +39,20 @@ const SecondarySkills = ({
 const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
   <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ stiffness: 0, duration: 0.4, delay: 0.1 }}
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
     >
-      <Logo
+      <SparkleLogo
         className="hidden xxxl:block"
-        $height={50}
-        src={iconPicker(Icon.React, isDarkMode)}
-        alt={"My Skills"}
+        height={45}
+        isDarkMode={isDarkMode}
       />
       <TitleWrapper>
-        <Title>Proficient Skills</Title>
-        <Logo
-          className="xxxl:hidden"
-          $height={30}
-          style={{ paddingBottom: "5px" }}
-          src={iconPicker(Icon.React, isDarkMode)}
-          alt={"My Skills"}
-        />
+        <Title>Core Skills</Title>
+        <SparkleLogoWrapper className="xxxl:hidden! pb-1.25">
+          <SparkleLogo height={30} isDarkMode={isDarkMode} />
+        </SparkleLogoWrapper>
       </TitleWrapper>
       {(skillsData as Skills).primary.map((skill: SkillType, index: number) => (
         <Skill key={index}>
@@ -69,10 +68,17 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
                 <span>{skill.displayName}</span>
               )}
             </SkillsText>
-            <SkillsImage
-              src={iconPicker(skill.name, isDarkMode)}
-              alt={skill.displayName}
-            ></SkillsImage>
+            {skill.name === Icon.Sparkle ? (
+              <RotatingAiSkillsImage
+                isDarkMode={isDarkMode}
+                alt={skill.displayName}
+              />
+            ) : (
+              <SkillsImage
+                src={iconPicker(skill.name, isDarkMode)}
+                alt={skill.displayName}
+              ></SkillsImage>
+            )}
           </SkillsTextWrapper>
           <SkillsBar
             $isDarkMode={isDarkMode}
@@ -90,7 +96,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
       ))}
       <Skill>
         <SkillsText $isTitle={true} className="pt-1">
-          Familiar Skills
+          Additional Skills
         </SkillsText>
       </Skill>
       <SecondarySkillsWrapper>
@@ -128,9 +134,7 @@ const Container = styled.div<{ $isDarkMode: boolean }>`
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isDarkMode }) =>
-      $isDarkMode
-        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+      `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   }
 
   @media ${layout.up.xxxl} {
@@ -147,18 +151,12 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const Logo = styled.img<{ $height: number }>`
-  width: auto;
-  height: ${({ $height }) => $height + "px"};
-  margin-left: 8px;
-  user-select: none;
-
-  @media ${layout.up.xxxl} {
-    margin-top: ${({ $height }) =>
-      10 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-    margin-bottom: ${({ $height }) =>
-      15 - ($height - IMAGE_DEFAULT_HEIGHT) / 2 + "px"};
-  }
+// Padding-bottom lives here rather than on SparkleLogo's own <img> so the
+// rotating element's box stays centered on the graphic — padding only on one
+// side of the img itself would offset the rotation's pivot point.
+const SparkleLogoWrapper = styled.span`
+  display: inline-flex;
+  align-items: flex-start;
 `;
 
 const Title = styled.h2`
@@ -196,19 +194,7 @@ const SkillsText = styled.h3<{ $isTitle: boolean }>`
 `;
 
 const SkillsImage = styled.img`
-  width: auto;
-  height: 20px;
-  margin-left: 10px;
-  margin-bottom: 4px;
-  user-select: none;
-
-  @media ${layout.up.sm} {
-    margin-bottom: 3px;
-  }
-
-  @media ${layout.up.xxxl} {
-    height: 23px;
-  }
+  ${skillsImageStyles}
 `;
 
 const SkillsBar = styled(motion.div)<{ $isDarkMode: boolean }>`

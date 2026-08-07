@@ -1,60 +1,78 @@
 [
   {
-    "company": "coates",
-    "imageHeight": 45,
-    "jobTitle": "Lead Software Engineer",
-    "companyTitle": "Coates Group",
-    "start": "2024",
+    "company": "fdjunited",
+    "imageHeight": 40,
+    "jobTitle": "Senior Software Engineer",
+    "companyTitle": "FDJ United - La Française des Jeux",
+    "start": "2025",
     "end": "Current",
     "city": "Sydney",
     "country": "Australia",
+    "descriptionFontSizeAdjust": {
+      "lg": -3,
+      "xl": -2.5,
+      "xxl": -1.9,
+      "xxxl": -2
+    },
     "description": [
       [
         {
-          "content": "Leading a team of"
+          "content": "Optimised the Sportsbook Betting Engine within a 5-engineer Performance Task Force,"
         },
         {
-          "content": "5 engineers",
+          "content": "increasing",
           "textHighlight": true
         },
         {
-          "content": "within a feature team of"
+          "content": "throughput by more than"
         },
         {
-          "content": "12",
+          "content": "6x",
           "textHighlight": true
         },
         {
-          "content": ", overseeing daily tasks, mentoring junior engineers, and guiding strategic decisions, with a primary focus on high-level architectural planning."
+          "content": "and"
+        },
+        {
+          "content": "reducing",
+          "textHighlight": true
+        },
+        {
+          "content": "P95 latency by"
+        },
+        {
+          "content": "85%",
+          "textHighlight": true
+        },
+        {
+          "content": "through CPU profiling, cooperative yielding, DB round-trip optimisation, and Kubernetes tuning."
         }
       ],
       [
         {
-          "content": "Orchestrated architectural decisions for"
+          "content": "Designed and delivered a Kafka benchmarking platform that sustained producer and consumer load tests exceeding"
         },
         {
-          "content": "McDonald's Digital Menu Board CMS software",
+          "content": "150,000 messages per second",
           "textHighlight": true
         },
         {
-          "content": ", collaborating with senior leadership to design a full-stack solution that improved frontend efficiency by"
+          "content": ", providing the performance evidence used to evaluate VM and Kubernetes deployment strategies."
+        }
+      ],
+      [
+        {
+          "content": "Co-established the Sportsbook iOS Appium automation framework with 2 engineers, aligning Product, QA, and engineering teams on automation strategy, delivering"
+        },
+        {
+          "content": "45 end-to-end test scenarios",
+          "textHighlight": true
+        },
+        {
+          "content": "integrated into CI, and using Claude Code and MCP integrations to reduce test development time by"
         },
         {
           "content": "40%",
-          "textHighlight": true
-        },
-        {
-          "content": ". The platform is now deployed across"
-        },
-        {
-          "content": "15,000",
-          "textHighlight": true
-        },
-        {
-          "content": "McDonald's locations in the"
-        },
-        {
-          "content": "United States and Europe",
           "textHighlight": true
         },
         {
@@ -63,6 +81,70 @@
       ]
     ],
     "techStack": [
+      "Claude Code",
+      "MCP",
+      "Kafka",
+      "Kubernetes",
+      "Node.js Profiler",
+      "React",
+      "Express.js",
+      "PostgreSQL",
+      "Couchbase",
+      "Grafana",
+      "Appium"
+    ]
+  },
+  {
+    "company": "coates",
+    "imageHeight": 45,
+    "jobTitle": "Senior Software Engineer",
+    "companyTitle": "Coates Group",
+    "start": "2024",
+    "end": "2025",
+    "city": "Sydney",
+    "country": "Australia",
+    "description": [
+      [
+        {
+          "content": "Led"
+        },
+        {
+          "content": "5 engineers",
+          "textHighlight": true
+        },
+        {
+          "content": "within the"
+        },
+        {
+          "content": "12-person",
+          "textHighlight": true
+        },
+        {
+          "content": "Market Adoption Squad while remaining hands-on in the delivery of McDonald’s Digital Menu Board CMS, mentoring junior engineers and guiding technical design and architectural decisions."
+        }
+      ],
+      [
+        {
+          "content": "Architected the CMS platform’s full-stack solution in collaboration with senior leadership, implementing frontend improvements that increased its Google Lighthouse score by"
+        },
+        {
+          "content": "40 points",
+          "textHighlight": true
+        },
+        {
+          "content": ". The platform is now deployed across"
+        },
+        {
+          "content": "15,000 locations",
+          "textHighlight": true
+        },
+        {
+          "content": "in the United States and Europe."
+        }
+      ]
+    ],
+    "techStack": [
+      "Node.js",
       "React",
       "Express.js",
       "MySQL",
@@ -70,8 +152,7 @@
       "AWS DynamoDB",
       "Jest",
       "Micro-frontend architecture",
-      "GitLab",
-      "Custom ORM"
+      "GitLab"
     ]
   },
   {
@@ -86,116 +167,83 @@
     "description": [
       [
         {
-          "content": "Spearheaded the implementation of a Customer Service Centre Application harnessing"
+          "content": "Spearheaded development of a Next.js Customer Service Centre application used by"
         },
         {
-          "content": "Next.js",
+          "content": "2,000+ employees daily",
           "textHighlight": true
         },
         {
-          "content": ","
+          "content": ", consolidating"
         },
         {
-          "content": "Akamai",
+          "content": "14 department-specific applications",
           "textHighlight": true
         },
         {
-          "content": ", and"
-        },
-        {
-          "content": "Jest",
-          "textHighlight": true
-        },
-        {
-          "content": ". The project streamlined operations, and enhanced user experience for a user base of"
-        },
-        {
-          "content": "2000+ daily active users",
-          "textHighlight": true
-        },
-        {
-          "content": "."
+          "content": "into a single platform and eliminating the need for agents to navigate across multiple browser tabs."
         }
       ],
       [
         {
-          "content": "In a team of"
-        },
-        {
-          "content": "Five",
-          "textHighlight": true
-        },
-        {
-          "content": ", I led the successful delivery of the largest internal marketing application serving over"
-        },
-        {
-          "content": "150",
-          "textHighlight": true
-        },
-        {
-          "content": "employees across"
-        },
-        {
-          "content": "12",
-          "textHighlight": true
-        },
-        {
-          "content": "Qantas Loyalty Marketing Channels leveraging"
+          "content": "Delivered a full-stack internal marketing platform within a 5-engineer team, using"
         },
         {
           "content": "Preact",
           "textHighlight": true
         },
         {
-          "content": ","
+          "content": "and"
         },
         {
-          "content": "AWS Lambda",
+          "content": "Express.js",
           "textHighlight": true
         },
         {
-          "content": ", and"
+          "content": "to centralise the creation, management, and delivery of customer campaigns across"
         },
         {
-          "content": "Amazon RDS",
+          "content": "12",
           "textHighlight": true
         },
         {
-          "content": "."
-        }
-      ],
-      [
-        {
-          "content": "Reduced organisational AWS expenditure by over"
+          "content": "digital and communications channels, with"
         },
         {
-          "content": "$55,000 annually",
+          "content": "Jest-based",
           "textHighlight": true
         },
         {
-          "content": "through strategic decommissioning of a redundant prior project."
+          "content": "automated testing and"
+        },
+        {
+          "content": "Akamai-powered",
+          "textHighlight": true
+        },
+        {
+          "content": "content delivery."
         }
       ]
     ],
     "techStack": [
       "Next.js",
+      "Preact",
       "Express.js",
-      "Jest",
-      "Mocha Test",
       "AWS Lambda",
       "AWS RDS",
       "AWS Redshift",
-      "Terraform",
-      "Ansible",
       "Jenkins",
+      "Terraform",
       "Splunk",
-      "Preact"
+      "Jest",
+      "Mocha Test",
+      "Ansible"
     ]
   },
   {
     "company": "slik",
     "media": "smh",
-    "imageHeight": 50,
+    "imageHeight": 45,
     "jobTitle": "Software Engineer",
     "companyTitle": "SLIK Creative Agency",
     "start": "2022",
@@ -205,14 +253,14 @@
     "description": [
       [
         {
-          "content": "Pioneered Australia's"
+          "content": "Pioneered Australia’s"
         },
         {
-          "content": "First",
+          "content": "first",
           "textHighlight": true
         },
         {
-          "content": "Metaverse Virtual Playground utilising"
+          "content": "metaverse virtual playground utilising"
         },
         {
           "content": "Three.js",
@@ -231,7 +279,7 @@
       ],
       [
         {
-          "content": "Engineered static web applications leveraging"
+          "content": "Engineered static web applications using"
         },
         {
           "content": "Gatsby",
@@ -248,7 +296,7 @@
           "content": ", including"
         },
         {
-          "content": "Sydney Morning Herald's Annual Impact Report",
+          "content": "The Sydney Morning Herald’s Annual Impact Report",
           "url": "https://impact-report.smh.com.au/"
         },
         {
@@ -257,28 +305,14 @@
       ],
       [
         {
-          "content": "Undertook the migration of a"
+          "content": "Migrated a legacy email builder app from"
         },
         {
-          "content": "legacy",
+          "content": "Angular to React",
           "textHighlight": true
         },
         {
-          "content": "email builder app from"
-        },
-        {
-          "content": "Angular",
-          "textHighlight": true
-        },
-        {
-          "content": "to"
-        },
-        {
-          "content": "React",
-          "textHighlight": true
-        },
-        {
-          "content": ", optimising maintenance and enhancing user interface."
+          "content": ", simplifying its frontend architecture and improving maintainability and UX."
         }
       ]
     ],
@@ -299,9 +333,9 @@
   },
   {
     "company": "nzgovt",
-    "imageHeight": 55,
+    "imageHeight": 60,
     "jobTitle": "Software Engineer",
-    "companyTitle": "Government of New Zealand, Health NZ",
+    "companyTitle": "New Zealand Government, Health NZ",
     "start": "2021",
     "end": "2022",
     "city": "Auckland",
@@ -309,7 +343,7 @@
     "description": [
       [
         {
-          "content": "Developed and designed a web application utilising"
+          "content": "Replaced manual status checks with an"
         },
         {
           "content": "Angular",
@@ -323,15 +357,24 @@
           "textHighlight": true
         },
         {
-          "content": "to monitor hospitals' legacy system status."
-        }
-      ],
-      [
-        {
-          "content": "Conceptualised and implemented a bespoke management web app empowering administrators to manage data stored in"
+          "content": "monitoring application covering"
         },
         {
-          "content": "Redis",
+          "content": "3 hospitals",
+          "textHighlight": true
+        },
+        {
+          "content": ", reducing incident identification time by"
+        },
+        {
+          "content": "90%",
+          "textHighlight": true
+        },
+        {
+          "content": ", from"
+        },
+        {
+          "content": "5 minutes to 30 seconds",
           "textHighlight": true
         },
         {
@@ -340,33 +383,29 @@
       ],
       [
         {
-          "content": "Elevated an application's"
+          "content": "Designed and built a bespoke"
         },
         {
-          "content": "Google Chrome Lighthouse Score",
+          "content": "Redis management application",
           "textHighlight": true
         },
         {
-          "content": "by over"
-        },
-        {
-          "content": "60%",
-          "textHighlight": true
-        },
-        {
-          "content": "through a complete redesign of the frontend layout structure."
+          "content": ", giving admins a controlled interface for maintaining operational data."
         }
       ]
     ],
     "techStack": [
       "TypeScript",
-      "Angular / NgRx",
+      "Node.js",
+      "React",
+      "Angular",
+      "C#",
+      ".NET",
+      "NgRx",
       "Redis",
       "Oracle SQL Database",
-      "Jira",
-      "Azure DevOps",
-      "C#",
-      ".NET"
+      "Material UI",
+      "Azure DevOps"
     ]
   },
   {

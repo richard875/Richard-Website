@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 import Icon from "../../enums/icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
+import SplitText from "../motion/splitText";
 import iconPicker from "../../helper/iconPicker";
+import getTransitionColor from "../../helper/getTransitionColor";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -14,9 +16,9 @@ import {
 const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
   <Container className="font-primary-normal" $isDarkMode={isDarkMode}>
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * 2 }}
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.1 * 2, ease: [0.22, 1, 0.36, 1] }}
     >
       <Logo
         $height={50}
@@ -24,11 +26,17 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
         alt="University of Sydney"
       />
       <UniversityText $isDarkMode={isDarkMode}>
-        The University of Sydney
+        <SplitText as="span" delay={0.25}>
+          The University of Sydney
+        </SplitText>
       </UniversityText>
-      <h3 className="mt-1 md:mb-9 text-lg xxxl:text-xl">
+      <SplitText
+        as="h3"
+        className="split-medium mt-1 md:mb-9 text-lg xxxl:text-xl"
+        delay={0.45}
+      >
         Bachelor of Science (Honours) | Computer Science
-      </h3>
+      </SplitText>
       <SummaryText>
         • I conducted extensive research and authored an
         <Highlight $isDarkMode={isDarkMode}>
@@ -103,9 +111,7 @@ const Container = styled.div<{ $isDarkMode: boolean }>`
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isDarkMode }) =>
-      $isDarkMode
-        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+      `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   }
 `;
 

@@ -11,10 +11,10 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
-import CallToAction from "../components/global/callToAction";
-import InitialTransition from "../components/transition/InitialTransition";
+import PillCallToAction from "../components/global/pillCallToAction";
+import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import {
@@ -31,7 +31,10 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
   const isLandscape = useLandscapeDetection(isPwa);
   const [hover, setHover] = React.useState(false);
 
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the page briefly shows
+  // whatever colour InitialTransition's exit-mask state defaulted to
+  // instead of this page's actual black background.
+  React.useLayoutEffect(() => {
     document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
     document.body.style.overflow = "hidden";
 
@@ -65,14 +68,13 @@ const NotFound = ({ location }: { location: WindowLocation }) => {
           animate={{ opacity: 1 }}
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
-          <CallToAction
+          <PillCallToAction
             name="Home"
             tagId={NOT_FOUND_TO_INDEX}
             tagIdStartNum={1}
             forward={true}
             setHover={setHover}
             route={Route.Home}
-            fromIntro={true}
           />
         </Cta>
       </Wrapper>

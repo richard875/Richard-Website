@@ -85,8 +85,10 @@ const config: GatsbyConfig = {
     "gatsby-plugin-netlify",
     "gatsby-plugin-postcss",
     "gatsby-transformer-sharp",
-    "babel-plugin-styled-components",
-    "gatsby-plugin-styled-components",
+    {
+      resolve: "gatsby-plugin-styled-components",
+      options: { displayName: true },
+    },
     {
       resolve: "gatsby-plugin-sitemap",
       options: { resolveSiteUrl: () => SITE_URL },
@@ -98,13 +100,6 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "static/images/favicon.png",
-        icon_options: { purpose: "any maskable" },
-      },
-    },
-    {
-      resolve: "gatsby-plugin-manifest",
-      options: {
         name: NAME,
         short_name: NAME,
         lang: "en",
@@ -112,8 +107,7 @@ const config: GatsbyConfig = {
         background_color: "#BAE6C3",
         theme_color: Color.BACKGROUND_WHITE,
         display: STANDALONE,
-        icon: "static/images/pwas/pwa-1024.png",
-        include_favicon: false,
+        icon: "static/images/favicon.png",
         theme_color_in_head: false,
         cache_busting_mode: "none",
         icon_options: { purpose: "any maskable" },
@@ -149,12 +143,12 @@ const config: GatsbyConfig = {
         mergeDefaultDirectives: false,
         directives: {
           "script-src":
-            "'self' 'unsafe-inline' 'unsafe-eval' www.googletagmanager.com www.clarity.ms",
+            "'self' 'unsafe-inline' 'unsafe-eval' www.googletagmanager.com www.clarity.ms static.cloudflareinsights.com",
           "style-src": "'self' 'unsafe-inline'",
           "img-src":
             "'self' data: c.clarity.ms c.bing.com www.google.com.au/ads/ga-audiences",
           "connect-src":
-            "'self' analytics.google.com e.clarity.ms stats.g.doubleclick.net",
+            "'self' analytics.google.com e.clarity.ms stats.g.doubleclick.net cloudflareinsights.com",
           "font-src": "'self'",
           "object-src": "'none'",
           "media-src": "'self'",

@@ -8,7 +8,6 @@ import { WindowLocation } from "@reach/router";
 import Color from "../enums/color";
 import layout from "../styles/layout";
 import Route from "../routes/route";
-import routeTo from "../routes/routeTo";
 import MyProjects from "../types/myProjects";
 import MousePosition from "../types/mousePosition";
 import useWindowSize from "../hooks/useWindowSize";
@@ -20,8 +19,9 @@ import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import Block from "../components/projects/block";
 import MetaTags from "../components/seo/metaTags";
-import CallToAction from "../components/global/callToAction";
-import InitialTransition from "../components/transition/InitialTransition";
+import NavCluster from "../components/global/navCluster";
+import InitialTransition from "../components/transition/initialTransition";
+import getTransitionColor from "../helper/getTransitionColor";
 import {
   BLOCK_PADDING,
   BLOCK_PADDING_DESKTOP,
@@ -29,13 +29,13 @@ import {
   BLOCK_WIDTH_DESKTOP,
 } from "../constants/margin";
 import {
-  PROJECTS_TO_CONTACT,
   PROJECTS_TO_EDUCATION,
   PROJECTS_TO_EXPERIENCE,
 } from "../constants/googleTags";
 import { PROJECTS_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import projectsData from "../../static/data/projects.json";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
+import ToEducationCircle from "../../static/images/nav-circle/to-education-circle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,8 +52,16 @@ const Projects = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_BLACK
+    Color.BACKGROUND_BLACK,
   );
+
+  // On mobile this is just a normal vertical-scroll page (the pin/scrub
+  // setup below is skipped below 769px), so nothing else resets scroll
+  // between page mounts — without this, arriving here keeps whatever
+  // scrollY the previous page left behind instead of starting at the top.
+  React.useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   React.useEffect(() => {
     if (!!windowWidth && windowWidth > 768) {
@@ -84,16 +92,18 @@ const Projects = ({ location }: { location: WindowLocation }) => {
     >
       <InitialTransition color={transitionColor} />
       <Horizontal ref={slider} $entryLength={projectsData.length}>
-        {projectsData.map((project: MyProjects, index: number) => (
-          <Block
-            key={index}
-            index={index}
-            project={project}
-            setHover={setHover}
-            isDarkMode={isDarkMode}
-            dataLength={projectsData.length}
-          />
-        ))}
+        {(projectsData as MyProjects[]).map(
+          (project: MyProjects, index: number) => (
+            <Block
+              key={index}
+              index={index}
+              project={project}
+              setHover={setHover}
+              isDarkMode={isDarkMode}
+              dataLength={projectsData.length}
+            />
+          ),
+        )}
         <Bottom
           className="font-secondary-normal"
           $isDarkMode={isDarkMode}
@@ -104,65 +114,22 @@ const Projects = ({ location }: { location: WindowLocation }) => {
       </Horizontal>
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{PROJECTS_TITLE}</Title>
-        <div className="flex items-center">
-          <div
-            id={`${PROJECTS_TO_EXPERIENCE}_0`}
-            className="hidden sm:block"
-            onClick={() =>
-              setTransitionColor(
-                isDarkMode
-                  ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY
-              )
-            }
-          >
-            <CallToAction
-              name="Back"
-              tagId={PROJECTS_TO_EXPERIENCE}
-              tagIdStartNum={1}
-              forward={false}
-              setHover={setHover}
-              route={Route.Experience}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-          <span className="hidden select-none sm:block">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-          <Cta
-            id={`${PROJECTS_TO_EDUCATION}_0`}
-            className="font-secondary-normal underline underline-offset-2"
-            $isDarkMode={isDarkMode}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            onClick={(e) => {
-              setTransitionColor(
-                isDarkMode
-                  ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY
-              );
-              routeTo(e, Route.Education, isDarkMode);
-            }}
-          >
-            Education
-          </Cta>
-          <span className="select-none">&nbsp;&nbsp;</span>
-          <div
-            id={`${PROJECTS_TO_CONTACT}_0`}
-            onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
-          >
-            <CallToAction
-              name="Contact"
-              tagId={PROJECTS_TO_CONTACT}
-              tagIdStartNum={1}
-              forward={true}
-              setHover={setHover}
-              route={Route.Contact}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-        </div>
       </Top>
+      <NavCluster
+        isDarkMode={isDarkMode}
+        setHover={setHover}
+        delay={0.6}
+        backRoute={Route.Experience}
+        backTagId={PROJECTS_TO_EXPERIENCE}
+        onBackClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
+        forwardRoute={Route.Education}
+        forwardTagId={PROJECTS_TO_EDUCATION}
+        forwardImage={ToEducationCircle}
+        forwardAlt="To Education Page"
+        onForwardClick={() =>
+          setTransitionColor(getTransitionColor(isDarkMode))
+        }
+      />
       <Cursor
         delay={0.5}
         hover={hover}
@@ -188,7 +155,7 @@ export const Head: HeadFC = () => (
       content={Color.BACKGROUND_WHITE_SECONDARY}
       media="(prefers-color-scheme: light)"
     />
-    <Preload />
+    <Preload videos="projects" />
     <MetaTags
       path={Route.Projects}
       MetaImage={MetaImage}
@@ -200,7 +167,7 @@ export const Head: HeadFC = () => (
 const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
   cursor: none;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 
   @media ${layout.up.md} {
@@ -219,11 +186,9 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   justify-content: space-between;
   width: calc(100% - ${BLOCK_PADDING * 2 + "px"});
   border-bottom: ${({ $isDarkMode }) =>
-    $isDarkMode
-      ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-      : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+    `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
 
   @media ${layout.up.md} {
     margin-left: ${BLOCK_PADDING_DESKTOP + "px"};
@@ -276,11 +241,4 @@ const Bottom = styled.div<{
   @media ${layout.up.md} {
     display: none;
   }
-`;
-
-const Cta = styled.h2<{ $isDarkMode: boolean }>`
-  display: flex;
-  user-select: none;
-  color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BRIGHT_GREEN : Color.DIM_GREEN};
 `;

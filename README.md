@@ -35,11 +35,11 @@ To set up and run the project locally:
    ```
 3. **Install dependencies:**
    ```sh
-   npm install
+   yarn
    ```
 4. **Start the development server:**
    ```sh
-   npm start
+   yarn dev
    ```
 5. **Open your browser and visit:** [http://localhost:8000](http://localhost:8000)
 

@@ -5,7 +5,9 @@ import Color from "../../enums/color";
 import layout from "../../styles/layout";
 
 const Landscape = ({ isPwa }: { isPwa: boolean }) => {
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the orientation warning
+  // briefly shows the previous page's background before turning black.
+  React.useLayoutEffect(() => {
     document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
 
     const themeTag = document.querySelector('meta[name="theme-color"]');

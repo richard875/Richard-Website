@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import { CSSTransition } from "react-transition-group";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
-import TextSection from "../global/textSection";
+import SplitText from "../motion/splitText";
+import TextSection, { DescriptionText } from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
+import getTransitionColor from "../../helper/getTransitionColor";
 import WorkExperience from "../../types/workExperience";
 import SentenceDescription from "../../types/sentenceDescription";
 import {
@@ -16,6 +18,14 @@ import {
   BLOCK_WIDTH_DESKTOP,
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
+
+// How much margin-top the first description paragraph gets at the `xxxl`
+// breakpoint on this page — see DescriptionText in global/textSection.tsx.
+const FIRST_DESCRIPTION_MARGIN_TOP_XXXL = 40;
+
+// How much later each successive block's title starts revealing relative to
+// the previous one (on top of its own internal char-by-char stagger).
+const TITLE_STAGGER = 0.15;
 
 const Block = ({
   index,
@@ -41,17 +51,29 @@ const Block = ({
       $isDarkMode={isDarkMode}
     >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * (index + 2) }}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.5,
+          delay: 0.1 * (index + 2),
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
         <Logo
           $height={experience.imageHeight}
           src={iconPicker(experience.company, isDarkMode)}
           alt={experience.companyTitle}
         />
-        <JobTitle $isDarkMode={isDarkMode}>{experience.jobTitle}</JobTitle>
-        <Company>{experience.companyTitle}</Company>
+        <JobTitle $isDarkMode={isDarkMode}>
+          <SplitText as="span" delay={0.12 + TITLE_STAGGER * index}>
+            {experience.jobTitle}
+          </SplitText>
+        </JobTitle>
+        <Company>
+          <SplitText as="span" delay={0.2 + TITLE_STAGGER * index}>
+            {experience.companyTitle}
+          </SplitText>
+        </Company>
         <Secondary className="mt-6 xxxl:mt-9">
           {experience.start === experience.end
             ? experience.start
@@ -60,18 +82,26 @@ const Block = ({
         <Secondary>
           {experience.city}, {experience.country}
         </Secondary>
-        <DescriptionText $isFirst={false}>
+        <DescriptionText
+          $isFirst={false}
+          $firstMarginTopXxxl={FIRST_DESCRIPTION_MARGIN_TOP_XXXL}
+        >
           <span style={{ color: isDarkMode ? Color.BLUE : Color.RED }}>
             Tech stack:
           </span>
           {experience.techStack.map(
             (tech: string, index: number) =>
-              `${index == 0 ? " " : " • "}${tech}`
+              `${index == 0 ? " " : " • "}${tech}`,
           )}
         </DescriptionText>
         {experience.description.map(
           (description: SentenceDescription[], index: number) => (
-            <DescriptionText key={index} $isFirst={index == 0}>
+            <DescriptionText
+              key={index}
+              $isFirst={index == 0}
+              $firstMarginTopXxxl={FIRST_DESCRIPTION_MARGIN_TOP_XXXL}
+              $fontSizeAdjust={experience.descriptionFontSizeAdjust}
+            >
               {description.map(
                 (sentence: SentenceDescription, index: number) => (
                   <TextSection
@@ -85,10 +115,10 @@ const Block = ({
                     isDarkMode={isDarkMode}
                     {...sentence} // content and url
                   />
-                )
+                ),
               )}
             </DescriptionText>
-          )
+          ),
         )}
         {!!experience.media && (
           <CSSTransition
@@ -138,10 +168,7 @@ const Container = styled.div<{
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isLast, $isDarkMode }) =>
-      !$isLast &&
-      ($isDarkMode
-        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${Color.BACKGROUND_BLACK}`)};
+      !$isLast && `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   }
 
   @media ${layout.up.xxxl} {
@@ -191,23 +218,6 @@ const Secondary = styled.h3`
   }
 `;
 
-const DescriptionText = styled.p<{ $isFirst: boolean }>`
-  font-size: 18px;
-  line-height: 25px;
-  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
-
-  @media ${layout.up.md} {
-    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
-  }
-
-  @media ${layout.up.xxxl} {
-    font-size: 20px;
-    line-height: 30px;
-    margin-top: ${({ $isFirst }) => ($isFirst ? "40px" : "20px")};
-    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
-  }
-`;
-
 const Media = styled.div<{ $top: number }>`
   display: none;
   position: absolute;
@@ -228,11 +238,13 @@ const Video = styled.video<{ $isDarkMode: boolean }>`
   border-radius: 10px;
   z-index: 99999 !important;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_WHITE_SECONDARY : Color.BACKGROUND_BLACK};
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+    `${getTransitionColor(!$isDarkMode)}`};
+  --tw-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored:
+    0 10px 15px -3px var(--tw-shadow-color),
     0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
 `;

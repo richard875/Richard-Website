@@ -3,6 +3,18 @@ import styled from "styled-components";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import { EXPERIENCE_MEDIA, PROJECTS_MEDIA } from "../../constants/googleTags";
+import {
+  BLOCK_WIDTH,
+  BLOCK_WIDTH_DESKTOP,
+  BLOCK_PADDING_DESKTOP,
+} from "../../constants/margin";
+import fontSizeAdjustStyles, {
+  DESCRIPTION_FONT_SIZE,
+  DESCRIPTION_LINE_HEIGHT,
+  DESCRIPTION_FONT_SIZE_XXXL,
+  DESCRIPTION_LINE_HEIGHT_XXXL,
+} from "../../helper/fontSizeAdjustStyles";
+import { FontSizeAdjust } from "../../types/workExperience";
 
 const TextSection = ({
   isFirst,
@@ -22,7 +34,7 @@ const TextSection = ({
   content: string;
   textHighlight?: boolean;
   url?: string;
-  clickableRef: React.RefObject<HTMLAnchorElement>;
+  clickableRef: React.RefObject<HTMLAnchorElement | null>;
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplayMedia: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
@@ -66,6 +78,34 @@ const TextSection = ({
 };
 
 export default TextSection;
+
+// Shared by work/block.tsx and projects/block.tsx to wrap each paragraph of
+// TextSection sentences (as well as the tech-stack summary line). The two
+// pages only differ in how much margin-top the first paragraph gets at the
+// `xxxl` breakpoint, hence $firstMarginTopXxxl.
+export const DescriptionText = styled.p<{
+  $isFirst: boolean;
+  $firstMarginTopXxxl: number;
+  $fontSizeAdjust?: FontSizeAdjust;
+}>`
+  font-size: ${DESCRIPTION_FONT_SIZE}px;
+  line-height: ${DESCRIPTION_LINE_HEIGHT}px;
+  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
+
+  @media ${layout.up.md} {
+    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
+  }
+
+  @media ${layout.up.xxxl} {
+    font-size: ${DESCRIPTION_FONT_SIZE_XXXL}px;
+    line-height: ${DESCRIPTION_LINE_HEIGHT_XXXL}px;
+    margin-top: ${({ $isFirst, $firstMarginTopXxxl }) =>
+      $isFirst ? `${$firstMarginTopXxxl}px` : "20px"};
+    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
+  }
+
+  ${({ $fontSizeAdjust }) => fontSizeAdjustStyles($fontSizeAdjust)}
+`;
 
 const Link = styled.a<{ $isDarkMode: boolean }>`
   cursor: none;

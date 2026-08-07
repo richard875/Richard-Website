@@ -5,9 +5,11 @@ import { CSSTransition } from "react-transition-group";
 import Color from "../../enums/color";
 import ProjectLink from "./projectLink";
 import layout from "../../styles/layout";
-import TextSection from "../global/textSection";
+import SplitText from "../motion/splitText";
+import TextSection, { DescriptionText } from "../global/textSection";
 import iconPicker from "../../helper/iconPicker";
 import mediaPicker from "../../helper/mediaPicker";
+import getTransitionColor from "../../helper/getTransitionColor";
 import MyProjects from "../../types/myProjects";
 import SentenceDescription from "../../types/sentenceDescription";
 import {
@@ -17,6 +19,14 @@ import {
   BLOCK_WIDTH_DESKTOP,
   IMAGE_DEFAULT_HEIGHT,
 } from "../../constants/margin";
+
+// How much margin-top the first description paragraph gets at the `xxxl`
+// breakpoint on this page — see DescriptionText in global/textSection.tsx.
+const FIRST_DESCRIPTION_MARGIN_TOP_XXXL = 35;
+
+// How much later each successive block's title starts revealing relative to
+// the previous one (on top of its own internal char-by-char stagger).
+const TITLE_STAGGER = 0.15;
 
 const Block = ({
   project,
@@ -43,29 +53,48 @@ const Block = ({
       $isDarkMode={isDarkMode}
     >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ stiffness: 0, duration: 0.4, delay: 0.1 * (index + 3) }}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.5,
+          delay: 0.1 * (index + 3),
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
         <Logo
           $height={project.imageHeight}
           src={iconPicker(project.image, isDarkMode)}
           alt={project.imageAlt}
         />
-        <ProjectName $isDarkMode={isDarkMode}>{project.name}</ProjectName>
-        <DescriptionText $isFirst={false}>
+        <ProjectName $isDarkMode={isDarkMode}>
+          <SplitText
+            as="span"
+            className="split-medium"
+            delay={0.2 + TITLE_STAGGER * index}
+          >
+            {project.name}
+          </SplitText>
+        </ProjectName>
+        <DescriptionText
+          $isFirst={false}
+          $firstMarginTopXxxl={FIRST_DESCRIPTION_MARGIN_TOP_XXXL}
+        >
           <span style={{ color: isDarkMode ? Color.BLUE : Color.RED }}>
             Utilised:
           </span>
           {project.techStack.map(
             (tech: string, index: number) =>
-              `${index == 0 ? " " : " • "}${tech}`
+              `${index == 0 ? " " : " • "}${tech}`,
           )}
         </DescriptionText>
         {project.description.map(
           (description: SentenceDescription[], index: number) => {
             return (
-              <DescriptionText key={index} $isFirst={index == 0}>
+              <DescriptionText
+                key={index}
+                $isFirst={index == 0}
+                $firstMarginTopXxxl={FIRST_DESCRIPTION_MARGIN_TOP_XXXL}
+              >
                 {description.map(
                   (sentence: SentenceDescription, index: number) => (
                     <TextSection
@@ -79,19 +108,21 @@ const Block = ({
                       isDarkMode={isDarkMode}
                       {...sentence} // content and url
                     />
-                  )
+                  ),
                 )}
               </DescriptionText>
             );
-          }
+          },
         )}
         {!!project.linkUrl && (
-          <ProjectLink
-            url={project.linkUrl!}
-            name={project.image}
-            setHover={setHover}
-            isDarkMode={isDarkMode}
-          />
+          <div className="mt-3.75 md:mt-5">
+            <ProjectLink
+              url={project.linkUrl!}
+              name={project.image}
+              setHover={setHover}
+              isDarkMode={isDarkMode}
+            />
+          </div>
         )}
         {!!project.media && (
           <CSSTransition
@@ -149,10 +180,7 @@ const Container = styled.div<{
     padding-left: ${BLOCK_PADDING_DESKTOP + "px"};
     padding-right: ${BLOCK_PADDING_DESKTOP + "px"};
     border-right: ${({ $isLast, $isDarkMode }) =>
-      !$isLast &&
-      ($isDarkMode
-        ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-        : `0.5px solid ${Color.BACKGROUND_BLACK}`)};
+      !$isLast && `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   }
 
   @media ${layout.up.xxxl} {
@@ -212,13 +240,15 @@ const Video = styled.video<{
     $portraitOperation ? "20px" : "10px"};
   z-index: 99999 !important;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_WHITE_SECONDARY : Color.BACKGROUND_BLACK};
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+    `${getTransitionColor(!$isDarkMode)}`};
+  --tw-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored:
+    0 10px 15px -3px var(--tw-shadow-color),
     0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
 `;
 
 const ProjectName = styled.h2<{ $isDarkMode: boolean }>`
@@ -228,22 +258,5 @@ const ProjectName = styled.h2<{ $isDarkMode: boolean }>`
 
   @media ${layout.up.xxxl} {
     font-size: 24px;
-  }
-`;
-
-const DescriptionText = styled.p<{ $isFirst: boolean }>`
-  margin-top: ${({ $isFirst }) => ($isFirst ? "25px" : "20px")};
-  font-size: 18px;
-  line-height: 25px;
-
-  @media ${layout.up.md} {
-    width: ${BLOCK_WIDTH - 2 * BLOCK_PADDING_DESKTOP + "px"};
-  }
-
-  @media ${layout.up.xxxl} {
-    margin-top: ${({ $isFirst }) => ($isFirst ? "35px" : "20px")};
-    width: ${BLOCK_WIDTH_DESKTOP - 2 * BLOCK_PADDING_DESKTOP + "px"};
-    font-size: 20px;
-    line-height: 30px;
   }
 `;

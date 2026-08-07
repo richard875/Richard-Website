@@ -5,11 +5,15 @@ import { StaticImage } from "gatsby-plugin-image";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import getResume from "../../helper/getResume";
-import { resumeCircleButtonEffect } from "../../helper/framerConfig";
+import Magnetic from "../motion/magnetic";
+import {
+  mainCircleButtonEffect,
+  motionTapEffect,
+} from "../../helper/motionConfig";
 import { INDEX_RESUME, CONTACT_RESUME } from "../../constants/googleTags";
 
-const ARROW = "../../../static/images/indexCircle/arrow.svg";
-const CIRCLE = "../../../static/images/indexCircle/circle.png";
+const ARROW = "../../../static/images/index-circle/arrow.svg";
+const CIRCLE = "../../../static/images/index-circle/circle.png";
 
 const ResumeCircle = ({
   isHome,
@@ -19,45 +23,52 @@ const ResumeCircle = ({
   setHover: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const googleTag = isHome ? INDEX_RESUME : CONTACT_RESUME;
-  const motionInitial = isHome ? { opacity: 0, scale: 0.5 } : { opacity: 0 };
-  const motionAnimate = isHome ? { opacity: 1, scale: 1 } : { opacity: 1 };
+  const motionInitial = { opacity: 0, scale: 0.5 };
+  const motionAnimate = { opacity: 1, scale: 1 };
+  const ease: [number, number, number, number] = [0, 0.71, 0.2, 1.01];
   const motionTransition = isHome
-    ? { duration: 2, delay: 1.5, ease: [0, 0.71, 0.2, 1.01] }
-    : { duration: 0.4, delay: 0.3, ease: [0, 0.71, 0.2, 1.01] };
+    ? { duration: 2, delay: 1.5, ease }
+    : { duration: 0.4, delay: 0.5, ease };
   const arrowClass = isHome
     ? "!relative !w-[45px] sm:!w-[50px] lg:!w-[60px] !left-[42px] !bottom-[75px] sm:!left-[50px] sm:!bottom-[86px] lg:!left-[55px] lg:!bottom-[98px]"
     : "!relative !w-[60px] sm:!w-[72px] lg:!w-[80px] !left-[55px] !bottom-[98px] sm:!left-[64px] sm:!bottom-[115px] lg:!left-[85px] lg:!bottom-[142px]";
 
   return (
-    <motion.div whileHover={resumeCircleButtonEffect} className="w-fit">
-      <CircleContainer
-        id={`${googleTag}_0`}
-        $isHome={isHome}
-        initial={motionInitial}
-        animate={motionAnimate}
-        transition={motionTransition}
-        onClick={(e) => getResume(e)}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+    <Magnetic strength={0.4}>
+      <motion.div
+        whileHover={mainCircleButtonEffect}
+        whileTap={motionTapEffect}
+        className="w-fit"
       >
-        <Circle id={`${googleTag}_1`}>
+        <CircleContainer
+          id={`${googleTag}_0`}
+          $isHome={isHome}
+          initial={motionInitial}
+          animate={motionAnimate}
+          transition={motionTransition}
+          onClick={(e) => getResume(e)}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          <Circle id={`${googleTag}_1`}>
+            <StaticImage
+              id={`${googleTag}_2`}
+              alt="Resume Circle"
+              src={CIRCLE}
+              className="relative h-5/6 w-5/6"
+              placeholder="none"
+            />
+          </Circle>
           <StaticImage
-            id={`${googleTag}_2`}
+            id={`${googleTag}_3`}
             alt="Resume Circle"
-            src={CIRCLE}
-            className="relative h-5/6 w-5/6"
+            src={ARROW}
+            className={arrowClass}
             placeholder="none"
           />
-        </Circle>
-        <StaticImage
-          id={`${googleTag}_3`}
-          alt="Resume Circle"
-          src={ARROW}
-          className={arrowClass}
-          placeholder="none"
-        />
-      </CircleContainer>
-    </motion.div>
+        </CircleContainer>
+      </motion.div>
+    </Magnetic>
   );
 };
 

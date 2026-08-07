@@ -10,15 +10,18 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import Links from "../components/contact/links";
 import Cursor from "../components/cursor/cursor";
+import SplitText from "../components/motion/splitText";
+import HoverRoll from "../components/motion/hoverRoll";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
-import CallToAction from "../components/global/callToAction";
 import ResumeCircle from "../components/global/resumeCircle";
-import InitialTransition from "../components/transition/InitialTransition";
+import RoundedCallToAction from "../components/global/roundedCallToAction";
+import InitialTransition from "../components/transition/initialTransition";
 import MousePosition from "../types/mousePosition";
 import usePwaDetection from "../hooks/usePwaDetection";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
+import useUnderlineFlicker from "../hooks/useUnderlineFlicker";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
 import { CONTACT_EMAIL, CONTACT_TO_INDEX_TOP } from "../constants/googleTags";
 import {
@@ -27,20 +30,32 @@ import {
   EMAIL,
   COPYRIGHT_LONG,
 } from "../constants/meta";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 
 const CURRENT_PAGE_TITLE = `${CONTACT_TITLE}${PAGE_TITLE}`;
+
+// The email's dotted underline fades in after the rest of the page's
+// entrance choreography has settled (Left's fade, the SplitText char
+// reveals, the Links/copyright fades all finish by ~1s) — kept as its own
+// later beat rather than tied to the char reveal, see the email span below.
+const UNDERLINE_DELAY = 1.2;
 
 const Contact = ({ location }: { location: WindowLocation }) => {
   const isPwa = usePwaDetection(location);
   const isIphoneX = useIphoneXDetection();
+  const emailUnderline = useUnderlineFlicker();
   const isLandscape = useLandscapeDetection(isPwa);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_WHITE
+    Color.BACKGROUND_WHITE,
   );
 
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the page briefly shows
+  // whatever colour InitialTransition's exit-mask state defaulted to
+  // (white) instead of this page's actual black background.
+  React.useLayoutEffect(() => {
+    document.body.style.backgroundColor = Color.BACKGROUND_BLACK;
+
     const heightMatcher = "(min-height: 100vh)";
     const ofl = window.matchMedia(heightMatcher).matches ? "hidden" : "auto";
     document.body.style.overflow = ofl;
@@ -62,14 +77,6 @@ const Contact = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={transitionColor} />
       <Top>
         <Title className="font-secondary-normal">{CONTACT_TITLE}</Title>
-        <CallToAction
-          name="Home"
-          tagId={CONTACT_TO_INDEX_TOP}
-          tagIdStartNum={0}
-          forward={true}
-          setHover={setHover}
-          route={Route.Home}
-        />
       </Top>
       <Box>
         <Left
@@ -78,30 +85,87 @@ const Contact = ({ location }: { location: WindowLocation }) => {
           transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
         >
           <div>
-            <ContactText>Get in touch with me!</ContactText>
-            <ContactEmail className="pt-3 md:pt-12">
-              Email me at:
-              <span className="hidden md:inline">&nbsp;</span>
-              <br className="md:hidden" />
-              <span
-                id={`${CONTACT_EMAIL}_0`}
-                className="underline decoration-dotted hover:text-gray-400 transition-all"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-              >
-                <a
-                  id={`${CONTACT_EMAIL}_1`}
-                  href={`mailto:${EMAIL}`}
-                  target="_blank"
-                  className="cursor-none"
-                  rel="noopener noreferrer"
+            <ContactText>
+              <SplitText as="span" delay={0.3}>
+                Get in touch with me!
+              </SplitText>
+            </ContactText>
+            <ContactEmail className="pt-3 md:pt-10">
+              <SplitText as="span" delay={0.45}>
+                Email me at:
+                <span className="hidden md:inline">&nbsp;</span>
+                <br className="md:hidden" />
+                <span
+                  id={`${CONTACT_EMAIL}_0`}
+                  className="relative hover:text-gray-400 transition-all"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
                 >
-                  {EMAIL}
-                </a>
-              </span>
+                  <a
+                    id={`${CONTACT_EMAIL}_1`}
+                    href={`mailto:${EMAIL}`}
+                    target="_blank"
+                    className="cursor-none"
+                    rel="noopener noreferrer"
+                  >
+                    <HoverRoll
+                      stagger={0.008}
+                      onRollStart={emailUnderline.onRollStart}
+                      onRollComplete={emailUnderline.onRollComplete}
+                    >
+                      {EMAIL}
+                    </HoverRoll>
+                  </a>
+                  {/* A radial-gradient dot pattern, not border-dotted: a native dotted
+                      border ties dot size to border-width, so it can't be both 2px
+                      thick and sparsely dotted — the gradient decouples thickness
+                      (height) from dot size/spacing (background-size). */}
+                  <motion.span
+                    ref={emailUnderline.ref}
+                    className="absolute inset-x-0 -bottom-px h-2"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(circle, currentColor 1.5px, transparent 1.5px)",
+                      backgroundSize: "6px 8px",
+                      backgroundRepeat: "repeat-x",
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.22, 1, 0.36, 1],
+                      delay: UNDERLINE_DELAY,
+                    }}
+                  />
+                </span>
+              </SplitText>
             </ContactEmail>
+            <motion.div
+              className="pt-6 md:pt-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ stiffness: 0, duration: 0.4, delay: 0.8 }}
+            >
+              <RoundedCallToAction
+                name="Home"
+                tagId={CONTACT_TO_INDEX_TOP}
+                tagIdStartNum={0}
+                forward={true}
+                setHover={setHover}
+                route={Route.Home}
+              />
+            </motion.div>
           </div>
-          <p className="hidden md:block">{COPYRIGHT_LONG}</p>
+          <motion.div
+            className="hidden md:block"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
+          >
+            <SplitText as="p" delay={0.8}>
+              {COPYRIGHT_LONG}
+            </SplitText>
+          </motion.div>
           <div className="mt-8 md:hidden">
             <ResumeCircle isHome={false} setHover={setHover} />
           </div>
@@ -115,7 +179,7 @@ const Contact = ({ location }: { location: WindowLocation }) => {
             className="md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
+            transition={{ stiffness: 0, duration: 0.4, delay: 0.5 }}
           >
             <p className="mt-5 md:mt-0">{COPYRIGHT_LONG}</p>
           </motion.div>

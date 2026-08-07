@@ -12,6 +12,7 @@ import MousePosition from "../types/mousePosition";
 import { SITE_TITLE } from "../constants/meta";
 import { INDEX_TO_ACKNOWLEDGEMENT_IPHONEXPWA } from "../constants/googleTags";
 import usePwaDetection from "../hooks/usePwaDetection";
+import useDarkModeManager from "../hooks/useDarkModeManager";
 import useIphoneXDetection from "../hooks/useIphoneXDetection";
 import useLandscapeDetection from "../hooks/useLandscapeDetection";
 import gsapAnimationIndex from "../helper/gsapAnimationIndex";
@@ -23,20 +24,30 @@ import Cursor from "../components/cursor/cursor";
 import Loading from "../components/index/loading";
 import MetaTags from "../components/seo/metaTags";
 import Landscape from "../components/global/landscape";
+import SplitText from "../components/motion/splitText";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
-import InitialTransition from "../components/transition/InitialTransition";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import InitialTransition from "../components/transition/initialTransition";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
+
+const ENTRANCE_DELAY = 0.9;
 
 const IndexPage = ({ location }: { location: WindowLocation }) => {
   // Hooks and Refs
   const isPwa = usePwaDetection(location);
   const isIphoneX = useIphoneXDetection();
+  const isDarkMode = useDarkModeManager(false);
   const isLandscape = useLandscapeDetection(isPwa);
   const acknowledgementRef = React.useRef(null);
   const [hover, setHover] = React.useState(false);
+  const [transitionColor, setTransitionColor] = React.useState(
+    Color.BACKGROUND_BLACK,
+  );
 
-  React.useEffect(() => {
+  // Layout effect: must land before paint, or the page briefly shows
+  // whatever colour InitialTransition's exit-mask state defaulted to
+  // (black) instead of this page's actual white background.
+  React.useLayoutEffect(() => {
     if (!isLandscape) {
       document.body.style.backgroundColor = Color.BACKGROUND_WHITE;
 
@@ -54,7 +65,10 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
   // GSAP Animation
   React.useEffect(() => {
     gsap.defaults({ ease: "power4.out" });
-    gsap.from(acknowledgementRef.current, 1, gsapAnimationIndex(150, 1, 20));
+    gsap.from(acknowledgementRef.current, {
+      duration: 1,
+      ...gsapAnimationIndex(150, 1, 20),
+    });
   }, []);
 
   return (
@@ -73,16 +87,22 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
           transform: { type: "spring", stiffness: 65, delay: 0.2 },
         }}
       >
-        <InitialTransition color={Color.BACKGROUND_BLACK} />
+        <InitialTransition color={transitionColor} />
         <Box $isIphoneXPwa={isIphoneX && isPwa}>
           <Wrapper>
             <Top setHover={setHover} />
-            <Bottom setHover={setHover} isIphoneXPwa={isIphoneX && isPwa} />
+            <Bottom
+              setHover={setHover}
+              isDarkMode={isDarkMode}
+              isIphoneXPwa={isIphoneX && isPwa}
+              setTransitionColor={setTransitionColor}
+            />
           </Wrapper>
           <div
             ref={acknowledgementRef}
             id={`${INDEX_TO_ACKNOWLEDGEMENT_IPHONEXPWA}_0`}
             className="sm:hidden"
+            onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
           >
             {isIphoneX && isPwa && (
               <h2
@@ -90,12 +110,17 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
                 className="font-secondary-normal mt-2 ml-1 select-none"
                 onClick={(e) => routeTo(e, Route.Acknowledgement)}
               >
-                Acknowledgement of Country
+                <SplitText as="span" delay={ENTRANCE_DELAY + 0.7}>
+                  Acknowledgement of Country
+                </SplitText>
               </h2>
             )}
           </div>
           <Footer>
-            <FooterLeft setHover={setHover} />
+            <FooterLeft
+              setHover={setHover}
+              setTransitionColor={setTransitionColor}
+            />
             <FooterRight />
           </Footer>
         </Box>
@@ -103,7 +128,6 @@ const IndexPage = ({ location }: { location: WindowLocation }) => {
           hover={hover}
           delay={0.8}
           isBlack={true}
-          isIndexPage={true}
           position={location.state! as MousePosition}
         />
       </Container>

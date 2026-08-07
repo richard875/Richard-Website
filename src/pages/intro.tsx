@@ -10,42 +10,59 @@ import Splash from "../components/seo/splash";
 import Preload from "../components/seo/preload";
 import MetaTags from "../components/seo/metaTags";
 import Logos from "../components/experience/logos";
-import CallToAction from "../components/global/callToAction";
-import SydneyOperaHouse from "../components/experience/sydneyOperaHouse";
-import InitialTransition from "../components/transition/InitialTransition";
+import IntroBody from "../components/experience/introBody";
+import PillCallToAction from "../components/global/pillCallToAction";
+import RoundedCallToAction from "../components/global/roundedCallToAction";
+import SydneyOperaHouse from "../components/soh/sydneyOperaHouse";
+import InitialTransition from "../components/transition/initialTransition";
 import setOverflow from "../helper/setOverflow";
+import getTransitionColor from "../helper/getTransitionColor";
 import useDarkModeManager from "../hooks/useDarkModeManager";
 import {
   INTRO_SOH,
-  INTRO_EMAIL,
-  INTRO_GITHUB,
-  INTRO_LINKEDIN,
-  INTRO_AUSTRALIA,
   INTRO_TO_INDEX,
   INTRO_TO_EXPERIENCE,
 } from "../constants/googleTags";
-import {
-  HTTPS,
-  EMAIL,
-  FIRST_NAME,
-  PAGE_TITLE,
-  INTRO_TITLE,
-  GITHUB_URL,
-  LINKEDIN_URL,
-} from "../constants/meta";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import { PAGE_TITLE, INTRO_TITLE } from "../constants/meta";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
 
 const CURRENT_PAGE_TITLE = `${INTRO_TITLE}${PAGE_TITLE}`;
-const AUSTRALIA = `${HTTPS}www.youtube.com/watch?v=rMdbVHPmCW0`;
+
+// Entrance choreography: text reveals first, then the logos, then the
+// back/forward nav buttons, then the Sydney Opera House scene — each stage
+// starts as the previous one finishes. TEXT_DELAY + the SplitText's own
+// reveal (~0.55s for the intro bio at its "split-fast" timing) lands just
+// under LOGOS_DELAY; each later stage is spaced by STAGE_DURATION, the
+// fade length the following stage animates over.
+const TEXT_DELAY = 0.2;
+const STAGE_DURATION = 0.3;
+const LOGOS_DELAY = 0.75;
+const NAV_DELAY = 1.05;
+const SOH_DELAY = 1.35;
+
+// The LinkedIn/GitHub/email underlines wait until every other entrance stage
+// above has settled, then sweep in left-to-right — kept separate from the
+// SplitText char reveal on purpose, since a per-character reveal and a fading
+// underline fight each other visually if they run at once.
+const UNDERLINE_DELAY = SOH_DELAY + STAGE_DURATION - 0.25;
 
 const Experience = ({ location }: { location: WindowLocation }) => {
-  const isDarkMode = useDarkModeManager(true, Color.BACKGROUND_BLACK);
+  const isDarkMode = useDarkModeManager(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_WHITE
+    Color.BACKGROUND_WHITE,
   );
+
+  // Below the `lg` breakpoint this stacks into a normal vertical-scroll
+  // page, so nothing else resets scroll between page mounts — without this,
+  // arriving here keeps whatever scrollY the previous page left behind
+  // instead of starting at the top.
+  React.useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container
+      $isDarkMode={isDarkMode}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ stiffness: 0, duration: 0.5 }}
@@ -54,16 +71,20 @@ const Experience = ({ location }: { location: WindowLocation }) => {
       <Left>
         <div
           id={`${INTRO_TO_INDEX}_0`}
-          className="hidden sm:flex w-full items-center justify-between sm:mb-[4vw] lg:mb-[2vw]"
+          className="flex w-full items-center justify-between mb-[4vw] lg:mb-[2vw]"
         >
           <Cta
             id={`${INTRO_TO_INDEX}_1`}
-            className="font-secondary-normal !text-base"
+            className="font-secondary-normal text-base! mt-0!"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
+            transition={{
+              stiffness: 0,
+              duration: STAGE_DURATION,
+              delay: NAV_DELAY,
+            }}
           >
-            <CallToAction
+            <PillCallToAction
               name="Home"
               tagId={INTRO_TO_INDEX}
               tagIdStartNum={2}
@@ -71,81 +92,33 @@ const Experience = ({ location }: { location: WindowLocation }) => {
               setHover={() => {}}
               route={Route.Home}
               isDarkMode={isDarkMode}
-              fromIntro={true}
+              manualCursor={true}
             />
           </Cta>
         </div>
-        <LeftText
-          className="font-secondary-normal"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-        >
-          G'day, I'm {FIRST_NAME}. I'm a Software Engineer and Creative Designer
-          from<Sydney>&nbsp;Sydney</Sydney>,
-          <Australia
-            id={`${INTRO_AUSTRALIA}_0`}
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(AUSTRALIA, "_blank");
-            }}
-          >
-            &nbsp;Australia
-          </Australia>
-          . On this corner of the internet, you'll find information about me.
-          You can connect with me on&nbsp;
-          <LinkedIn id={`${INTRO_LINKEDIN}_0`}>
-            <a
-              id={`${INTRO_LINKEDIN}_1`}
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-          </LinkedIn>
-          , check out my repositories on&nbsp;
-          <Github id={`${INTRO_GITHUB}_0`}>
-            <a
-              id={`${INTRO_GITHUB}_1`}
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          </Github>
-          , or reach out to me via&nbsp;
-          <Email id={`${INTRO_EMAIL}_0`}>
-            <a
-              id={`${INTRO_EMAIL}_1`}
-              href={`mailto:${EMAIL}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              email
-            </a>
-          </Email>
-          . I hope you find my page enjoyable and have a great day!
+        <LeftText className="font-secondary-normal" $isDarkMode={isDarkMode}>
+          <IntroBody
+            delay={TEXT_DELAY}
+            isDarkMode={isDarkMode}
+            underlineDelay={UNDERLINE_DELAY}
+          />
         </LeftText>
         <div className="hidden sm:block">
-          <Logos />
+          <Logos delay={LOGOS_DELAY} isDarkMode={isDarkMode} />
         </div>
         <Cta
           id={`${INTRO_TO_EXPERIENCE}_0`}
           className="font-secondary-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: 0.4, delay: 0.2 }}
-          onClick={() =>
-            setTransitionColor(
-              isDarkMode
-                ? Color.BACKGROUND_BLACK
-                : Color.BACKGROUND_WHITE_SECONDARY
-            )
-          }
+          transition={{
+            stiffness: 0,
+            duration: STAGE_DURATION,
+            delay: NAV_DELAY,
+          }}
+          onClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
         >
-          <CallToAction
+          <RoundedCallToAction
             name="Work Experience & Projects"
             tagId={INTRO_TO_EXPERIENCE}
             tagIdStartNum={1}
@@ -153,11 +126,11 @@ const Experience = ({ location }: { location: WindowLocation }) => {
             setHover={() => {}}
             route={Route.Experience}
             isDarkMode={isDarkMode}
-            fromIntro={true}
+            manualCursor={true}
           />
         </Cta>
         <div className="sm:hidden">
-          <Logos />
+          <Logos delay={LOGOS_DELAY} isDarkMode={isDarkMode} />
         </div>
       </Left>
       <Right
@@ -170,14 +143,23 @@ const Experience = ({ location }: { location: WindowLocation }) => {
           className="w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
+          transition={{
+            stiffness: 0,
+            duration: STAGE_DURATION,
+            delay: SOH_DELAY,
+          }}
         >
           <SydneyOperaHouse />
         </motion.div>
         <SydneyOperaHouseInfoText
+          $isDarkMode={isDarkMode}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ stiffness: 0, duration: 0.4, delay: 0.4 }}
+          transition={{
+            stiffness: 0,
+            duration: STAGE_DURATION,
+            delay: SOH_DELAY,
+          }}
         >
           <span className="font-secondary-normal">Sydney Opera House</span>
         </SydneyOperaHouseInfoText>
@@ -191,7 +173,16 @@ export default Experience;
 export const Head: HeadFC = () => (
   <Splash>
     <title>{CURRENT_PAGE_TITLE}</title>
-    <meta name="theme-color" content={Color.BACKGROUND_BLACK} />
+    <meta
+      name="theme-color"
+      content={Color.BACKGROUND_BLACK}
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content={Color.BACKGROUND_WHITE_SECONDARY}
+      media="(prefers-color-scheme: light)"
+    />
     <Preload />
     <MetaTags
       path={Route.Intro}
@@ -201,7 +192,9 @@ export const Head: HeadFC = () => (
   </Splash>
 );
 
-const Container = styled(motion.div)`
+const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
+  background-color: ${({ $isDarkMode }) => getTransitionColor($isDarkMode)};
+
   @media ${layout.up.lg} {
     display: flex;
     align-items: center;
@@ -211,7 +204,6 @@ const Container = styled(motion.div)`
 
 const Left = styled.div`
   padding: 30px;
-  background-color: ${Color.BACKGROUND_BLACK};
 
   @media ${layout.down.sm} {
     padding-bottom: 10px;
@@ -231,10 +223,10 @@ const Left = styled.div`
   }
 `;
 
-const LeftText = styled(motion.p)`
+const LeftText = styled(motion.p)<{ $isDarkMode: boolean }>`
   font-size: 6vw;
   line-height: 1.65;
-  color: ${Color.WHITE};
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 
   @media ${layout.up.sm} {
     font-size: 3vw;
@@ -247,42 +239,10 @@ const LeftText = styled(motion.p)`
   }
 `;
 
-const HoverableText = styled.span`
-  cursor: pointer;
-`;
-
-const HoverableTextUnderline = styled(HoverableText)`
-  padding-bottom: 8px;
-  text-underline-offset: 4px;
-  text-decoration-line: underline;
-`;
-
-const Sydney = styled.span`
-  color: ${Color.SYDNEY_ORANGE};
-`;
-
-const Australia = styled(HoverableText)`
-  cursor: pointer;
-  color: ${Color.AUSTRALIA_GOLD};
-`;
-
-const LinkedIn = styled(HoverableTextUnderline)`
-  color: ${Color.LINKEDIN_BLUE};
-`;
-
-const Github = styled(HoverableTextUnderline)`
-  color: ${Color.BACKGROUND_WHITE};
-`;
-
-const Email = styled(HoverableTextUnderline)`
-  color: ${Color.BLUE};
-`;
-
 const Right = styled.div`
   height: 500px;
   cursor: grab;
   user-select: none;
-  background-color: ${Color.BACKGROUND_WHITE_SECONDARY};
 
   &:active {
     cursor: grabbing;
@@ -298,7 +258,7 @@ const Right = styled.div`
   }
 `;
 
-const SydneyOperaHouseInfoText = styled(motion.div)`
+const SydneyOperaHouseInfoText = styled(motion.div)<{ $isDarkMode: boolean }>`
   left: 0;
   right: 0;
   bottom: 10%;
@@ -307,6 +267,7 @@ const SydneyOperaHouseInfoText = styled(motion.div)`
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 `;
 
 const Cta = styled(motion.div)`
@@ -316,7 +277,6 @@ const Cta = styled(motion.div)`
   justify-content: flex-end;
 
   @media ${layout.down.sm} {
-    margin-top: 8vw;
-    justify-content: flex-start;
+    margin-top: 4vw;
   }
 `;

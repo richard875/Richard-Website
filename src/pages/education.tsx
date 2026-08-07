@@ -18,15 +18,17 @@ import Usyd from "../components/education/usyd";
 import Preload from "../components/seo/preload";
 import Cursor from "../components/cursor/cursor";
 import MetaTags from "../components/seo/metaTags";
-import CallToAction from "../components/global/callToAction";
-import InitialTransition from "../components/transition/InitialTransition";
+import NavCluster from "../components/global/navCluster";
+import InitialTransition from "../components/transition/initialTransition";
+import getTransitionColor from "../helper/getTransitionColor";
 import {
   EDUCATION_TO_CONTACT,
   EDUCATION_TO_PROJECTS,
 } from "../constants/googleTags";
 import { EDUCATION_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
-import MetaImage from "../../static/images/meta/metaImage.jpg";
+import MetaImage from "../../static/images/meta/meta-image.jpg";
+import ToContactCircle from "../../static/images/nav-circle/to-contact-circle.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,8 +40,15 @@ const Education = ({ location }: { location: WindowLocation }) => {
   const isDarkMode = useDarkModeManager(false);
   const [hover, setHover] = React.useState(false);
   const [transitionColor, setTransitionColor] = React.useState(
-    Color.BACKGROUND_BLACK
+    Color.BACKGROUND_BLACK,
   );
+
+  // This is always a normal vertical-scroll page, so nothing else resets
+  // scroll between page mounts — without this, arriving here keeps whatever
+  // scrollY the previous page left behind instead of starting at the top.
+  React.useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container
@@ -51,39 +60,6 @@ const Education = ({ location }: { location: WindowLocation }) => {
       <InitialTransition color={transitionColor} />
       <Top $isDarkMode={isDarkMode}>
         <Title className="font-secondary-normal">{EDUCATION_TITLE}</Title>
-        <div className="flex items-center">
-          <div
-            id={`${EDUCATION_TO_PROJECTS}_0`}
-            className="hidden sm:block"
-            onClick={() =>
-              setTransitionColor(
-                isDarkMode
-                  ? Color.BACKGROUND_BLACK
-                  : Color.BACKGROUND_WHITE_SECONDARY
-              )
-            }
-          >
-            <CallToAction
-              name="Back"
-              tagId={EDUCATION_TO_PROJECTS}
-              tagIdStartNum={1}
-              forward={false}
-              setHover={setHover}
-              route={Route.Projects}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-          <span className="hidden select-none sm:block">&nbsp;&nbsp;</span>
-          <CallToAction
-            name="Contact"
-            tagId={EDUCATION_TO_CONTACT}
-            tagIdStartNum={0}
-            forward={true}
-            setHover={setHover}
-            route={Route.Contact}
-            isDarkMode={isDarkMode}
-          />
-        </div>
       </Top>
       <Horizontal>
         <Usyd isDarkMode={isDarkMode} />
@@ -96,6 +72,18 @@ const Education = ({ location }: { location: WindowLocation }) => {
           <p className="my-2">{COPYRIGHT}</p>
         </Bottom>
       </Horizontal>
+      <NavCluster
+        isDarkMode={isDarkMode}
+        setHover={setHover}
+        delay={0.6}
+        backRoute={Route.Projects}
+        backTagId={EDUCATION_TO_PROJECTS}
+        onBackClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
+        forwardRoute={Route.Contact}
+        forwardTagId={EDUCATION_TO_CONTACT}
+        forwardImage={ToContactCircle}
+        forwardAlt="To Contact Page"
+      />
       <Cursor
         delay={0.5}
         hover={hover}
@@ -134,7 +122,7 @@ const Container = styled(motion.div)<{ $isDarkMode: boolean }>`
   cursor: none;
   height: 100vh;
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
   color: ${({ $isDarkMode }) => ($isDarkMode ? Color.WHITE : Color.BLACK)};
 `;
 
@@ -147,11 +135,9 @@ const Top = styled.div<{ $isDarkMode: boolean }>`
   margin-left: ${BLOCK_PADDING + "px"};
   margin-right: ${BLOCK_PADDING + "px"};
   border-bottom: ${({ $isDarkMode }) =>
-    $isDarkMode
-      ? `0.5px solid ${Color.BACKGROUND_WHITE_SECONDARY}`
-      : `0.5px solid ${Color.BACKGROUND_BLACK}`};
+    `0.5px solid ${getTransitionColor(!$isDarkMode)}`};
   background-color: ${({ $isDarkMode }) =>
-    $isDarkMode ? Color.BACKGROUND_BLACK : Color.BACKGROUND_WHITE_SECONDARY};
+    `${getTransitionColor($isDarkMode)}`};
 
   @media ${layout.down.md} {
     width: calc(100% - 2 * ${BLOCK_PADDING + "px"});

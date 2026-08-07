@@ -1,115 +1,138 @@
 import React from "react";
-import gsap from "gsap";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Color from "../../enums/color";
 import layout from "../../styles/layout";
 import Route from "../../routes/route";
 import routeTo from "../../routes/routeTo";
+import SplitText from "../motion/splitText";
+import BottomBackdrop from "./bottomBackdrop";
 import ResumeCircle from "../global/resumeCircle";
+import RoundedCallToAction from "../global/roundedCallToAction";
+import {
+  motionTapEffect,
+  socialIconHoverEffect,
+} from "../../helper/motionConfig";
+import getTransitionColor from "../../helper/getTransitionColor";
 import {
   INDEX_TO_INTRO,
   CONTACT_GITHUB,
   CONTACT_LINKEDIN,
   INDEX_TO_ACKNOWLEDGEMENT_MOBILE,
 } from "../../constants/googleTags";
-import { myExpButtonEffect } from "../../helper/framerConfig";
-import gsapAnimationIndex from "../../helper/gsapAnimationIndex";
 import { NAME, GITHUB_URL, LINKEDIN_URL } from "../../constants/meta";
+
+const ENTRANCE_DELAY = 0.9;
 
 const Bottom = ({
   setHover,
+  isDarkMode,
   isIphoneXPwa,
+  setTransitionColor,
 }: {
   setHover: (value: React.SetStateAction<boolean>) => void;
+  isDarkMode: boolean;
   isIphoneXPwa: boolean;
+  setTransitionColor: React.Dispatch<React.SetStateAction<Color>>;
 }) => {
-  const topGreetingRef = React.useRef(null);
-  const nameRef = React.useRef(null);
-  const sub1Ref = React.useRef(null);
-  const sub2Ref = React.useRef(null);
-  const contactRef = React.useRef(null);
-  const countryRef = React.useRef(null);
-  const linkedinRef = React.useRef(null);
-  const githubRef = React.useRef(null);
-
-  React.useEffect(() => {
-    gsap.defaults({ ease: "power4.out", duration: 1 });
-    gsap.from(topGreetingRef.current, gsapAnimationIndex(450, 1, 0));
-    gsap.from(nameRef.current, gsapAnimationIndex(350, 1.2, 0));
-    gsap.from(sub1Ref.current, gsapAnimationIndex(350, 1.3, 0));
-    gsap.from(sub2Ref.current, gsapAnimationIndex(350, 1.4, 0));
-    gsap.from(contactRef.current, gsapAnimationIndex(350, 1.5, 0));
-    gsap.from(countryRef.current, gsapAnimationIndex(350, 1.6, 0));
-    gsap.from(linkedinRef.current, gsapAnimationIndex(350, 1.7, 0));
-    gsap.from(githubRef.current, gsapAnimationIndex(350, 1.7, 0));
-  }, []);
+  // Non-text elements (button, social) fade up on the shared entrance
+  // beat; the text lines get the per-character split reveal.
+  const fade = (delay: number) => ({
+    initial: { opacity: 0, y: 8 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
+  });
 
   return (
     <Container>
+      <BottomBackdrop />
       <div>
-        <SmallText>
-          <h3 ref={topGreetingRef} className="font-primary-normal mt-4 mb-6">
-            From Australia with Love
-          </h3>
-        </SmallText>
+        <IntroBadge {...fade(ENTRANCE_DELAY + 0.55)}>
+          <BadgeText>
+            <SplitText
+              as="h3"
+              className="font-secondary-normal"
+              delay={ENTRANCE_DELAY + 0.15}
+            >
+              From Australia with Love
+            </SplitText>
+          </BadgeText>
+        </IntroBadge>
         <Name className="font-primary-bold">
-          <h1 ref={nameRef}>{NAME.toUpperCase()}</h1>
+          <SplitText
+            as="h1"
+            className="split-hero"
+            delay={ENTRANCE_DELAY + 0.12}
+          >
+            {NAME.toUpperCase()}
+          </SplitText>
         </Name>
         <SmallText className="font-primary-normal mt-5 sm:mt-8">
-          <h2 ref={sub1Ref}>Software Engineer &amp; Creative Designer</h2>
+          <SplitText as="h2" delay={ENTRANCE_DELAY + 0.35}>
+            Software Engineer &amp; Creative Designer
+          </SplitText>
         </SmallText>
         <SmallText className="font-primary-normal mt-1/2 sm:mt-1">
-          <h2 ref={sub2Ref}>Sydney, Australia</h2>
+          <SplitText as="h2" delay={ENTRANCE_DELAY + 0.5}>
+            Sydney, Australia
+          </SplitText>
         </SmallText>
-        <Button id={`${INDEX_TO_INTRO}_0`} whileHover={myExpButtonEffect}>
-          <ButtonContainer
-            ref={contactRef}
-            id={`${INDEX_TO_INTRO}_1`}
-            className="font-secondary-normal"
-            onClick={(e) => routeTo(e, Route.Intro)}
+        <Button
+          id={`${INDEX_TO_INTRO}_0`}
+          {...fade(ENTRANCE_DELAY + 0.75)}
+          onClick={() => setTransitionColor(getTransitionColor(isDarkMode))}
+        >
+          <RoundedCallToAction
+            name="My Experience"
+            tagId={INDEX_TO_INTRO}
+            tagIdStartNum={1}
+            forward={true}
+            route={Route.Intro}
+            setHover={setHover}
+            isDarkMode={isDarkMode}
+          />
+        </Button>
+        <Social {...fade(ENTRANCE_DELAY + 0.95)}>
+          <a
+            id={`${CONTACT_LINKEDIN}_0`}
+            href={LINKEDIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Richard Everley on LinkedIn"
+            className="cursor-none"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
-            <h2 id={`${INDEX_TO_INTRO}_2`} className="text-black">
-              My Experience
-            </h2>
-            <FontAwesomeIcon
-              id={`${INDEX_TO_INTRO}_3`}
-              icon={faChevronRight}
-              className="text-black ml-2"
-              size="sm"
-            />
-          </ButtonContainer>
-        </Button>
-        <Social>
-          <FontAwesomeIcon
-            ref={linkedinRef}
-            id={`${CONTACT_LINKEDIN}_0`}
-            size={"2x"}
-            icon={faLinkedin}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(LINKEDIN_URL, "_blank");
-            }}
-          />
-          <FontAwesomeIcon
-            ref={githubRef}
+            <motion.span
+              className="inline-block"
+              whileHover={socialIconHoverEffect}
+              whileTap={motionTapEffect}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <FontAwesomeIcon size={"2x"} icon={faLinkedin} />
+            </motion.span>
+          </a>
+          <a
             id={`${CONTACT_GITHUB}_0`}
-            size={"2x"}
-            icon={faGithub}
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Richard Everley on GitHub"
+            className="cursor-none"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(GITHUB_URL, "_blank");
-            }}
-          />
+          >
+            <motion.span
+              className="inline-block"
+              whileHover={socialIconHoverEffect}
+              whileTap={motionTapEffect}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <FontAwesomeIcon size={"2x"} icon={faGithub} />
+            </motion.span>
+          </a>
         </Social>
       </div>
       <div className="absolute right-7 bottom-16 sm:right-10 sm:bottom-20 lg:right-14 lg:bottom-14">
@@ -117,14 +140,23 @@ const Bottom = ({
       </div>
       <Country id={`${INDEX_TO_ACKNOWLEDGEMENT_MOBILE}_0`}>
         <h2
-          ref={countryRef}
           id={`${INDEX_TO_ACKNOWLEDGEMENT_MOBILE}_1`}
           className="font-primary-normal select-none"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
-          onClick={(e) => routeTo(e, Route.Acknowledgement)}
+          onClick={() => setTransitionColor(Color.BACKGROUND_BLACK)}
         >
-          {!isIphoneXPwa && "Acknowledgement of Country"}
+          {!isIphoneXPwa && (
+            <a
+              href={Route.Acknowledgement}
+              className="cursor-none"
+              onClick={(e) => routeTo(e, Route.Acknowledgement)}
+            >
+              <SplitText as="span" delay={ENTRANCE_DELAY + 0.7}>
+                Acknowledgement of Country
+              </SplitText>
+            </a>
+          )}
         </h2>
       </Country>
     </Container>
@@ -140,6 +172,9 @@ const Container = styled.div`
   justify-content: space-between;
   overflow: hidden;
   position: relative;
+  /* Contain the backdrop's negative z-index so it can never slip
+     behind this element's own background. */
+  isolation: isolate;
   padding: 15px 12px 5px 12px;
   background: linear-gradient(
     -45deg,
@@ -153,8 +188,6 @@ const Container = styled.div`
     #f4b942,
     #f9c41a
   );
-  background-size: 180% 180%;
-  animation: gradient-animation 15s ease-in-out infinite;
 
   @media ${layout.up.sm} {
     padding: 3vh 5vw;
@@ -162,18 +195,6 @@ const Container = styled.div`
 
   @media ${layout.up.lg} {
     padding: 3vh 3vw 3vw 3vw;
-  }
-
-  @keyframes gradient-animation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
   }
 `;
 
@@ -191,12 +212,42 @@ const SmallText = styled.div`
   }
 `;
 
+const IntroBadge = styled(motion.div)`
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background: ${Color.WHITE};
+  border: 2.5px solid ${Color.BLACK};
+  margin-top: 12px;
+  margin-bottom: 20px;
+
+  @media ${layout.up.sm} {
+    margin-bottom: 28px;
+  }
+`;
+
+const BadgeText = styled.div`
+  font-size: 16px;
+  overflow: hidden;
+  color: ${Color.BLACK};
+
+  @media ${layout.up.sm} {
+    font-size: 18px;
+  }
+
+  @media ${layout.up.xxl} {
+    font-size: 20px;
+  }
+`;
+
 const Name = styled.div`
   font-size: 73px;
   line-height: 70px;
   overflow: hidden;
   color: ${Color.WHITE};
-  -webkit-text-stroke: 0.12rem ${Color.BLACK};
+  -webkit-text-stroke: 0.125rem ${Color.BLACK};
 
   @media ${layout.up.sm} {
     font-size: 80px;
@@ -216,38 +267,18 @@ const Name = styled.div`
 `;
 
 const Button = styled(motion.div)`
-  font-size: 16px;
   margin-top: 20px;
-  overflow: hidden;
-  user-select: none;
-  color: ${Color.WHITE};
   width: fit-content;
 
   @media ${layout.up.sm} {
-    font-size: 18px;
     margin-top: 50px;
   }
-
-  @media ${layout.up.xxl} {
-    font-size: 20px;
-  }
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  padding: 7px 15px;
-  border-radius: 7px;
-  background-color: ${Color.WHITE};
-  border: 2.5px solid ${Color.BLACK};
-`;
-
-const Social = styled.div`
+const Social = styled(motion.div)`
   display: flex;
   gap: 20px;
   margin-top: 50px;
-  overflow: hidden;
   color: ${Color.WHITE};
 `;
 
