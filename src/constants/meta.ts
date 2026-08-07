@@ -13,7 +13,7 @@ export const LINKEDIN_URL = `${HTTPS}www.linkedin.com/in/richard875`;
 // Site Config
 export const MODE = "mode";
 export const STANDALONE = "standalone";
-export const RESUME_FILE = "richard-everley-resume.pdf";
+export const RESUME_FILE = "Richard%20Everley%20Resume%20NN.pdf";
 export const STANDALONE_URL = `?${MODE}=${STANDALONE}`;
 export const ORGANIZATION = process.env.GATSBY_ORGANIZATION;
 export const COPYRIGHT = `© ${new Date().getFullYear()} ${NAME}`;
