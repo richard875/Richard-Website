@@ -27,7 +27,7 @@ import {
 } from "../constants/googleTags";
 import { EDUCATION_TITLE, COPYRIGHT, PAGE_TITLE } from "../constants/meta";
 import { BLOCK_PADDING, BLOCK_PADDING_DESKTOP } from "../constants/margin";
-import MetaImage from "../../static/images/meta/meta-image.jpg";
+import MetaImage from "../../static/images/meta/meta-image.png";
 import ToContactCircle from "../../static/images/nav-circle/to-contact-circle.png";
 
 gsap.registerPlugin(ScrollTrigger);

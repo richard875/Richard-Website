@@ -28,7 +28,7 @@ import SplitText from "../components/motion/splitText";
 import FooterLeft from "../components/index/footerLeft";
 import FooterRight from "../components/index/footerRight";
 import InitialTransition from "../components/transition/initialTransition";
-import MetaImage from "../../static/images/meta/meta-image.jpg";
+import MetaImage from "../../static/images/meta/meta-image.png";
 
 const ENTRANCE_DELAY = 0.9;
 

@@ -30,7 +30,7 @@ import {
   EMAIL,
   COPYRIGHT_LONG,
 } from "../constants/meta";
-import MetaImage from "../../static/images/meta/meta-image.jpg";
+import MetaImage from "../../static/images/meta/meta-image.png";
 
 const CURRENT_PAGE_TITLE = `${CONTACT_TITLE}${PAGE_TITLE}`;
 
