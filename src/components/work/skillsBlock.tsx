@@ -49,7 +49,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
         isDarkMode={isDarkMode}
       />
       <TitleWrapper>
-        <Title>Proficient Skills</Title>
+        <Title>Core Skills</Title>
         <SparkleLogoWrapper className="xxxl:hidden! pb-1.25">
           <SparkleLogo height={30} isDarkMode={isDarkMode} />
         </SparkleLogoWrapper>
@@ -96,7 +96,7 @@ const SkillsBlock = ({ isDarkMode }: { isDarkMode: boolean }) => (
       ))}
       <Skill>
         <SkillsText $isTitle={true} className="pt-1">
-          Familiar Skills
+          Additional Skills
         </SkillsText>
       </Skill>
       <SecondarySkillsWrapper>
