@@ -27,7 +27,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
       />
       <UniversityText $isDarkMode={isDarkMode}>
         <SplitText as="span" delay={0.25}>
-          The University of Sydney
+          University of Sydney
         </SplitText>
       </UniversityText>
       <SplitText
