@@ -38,7 +38,7 @@ const Usyd = ({ isDarkMode }: { isDarkMode: boolean }) => (
         Bachelor of Science (Honours) | Computer Science
       </SplitText>
       <SummaryText>
-        • I conducted extensive research and authored an
+        • Conducted extensive research and authored an
         <Highlight $isDarkMode={isDarkMode}>
           &nbsp;Honours Thesis&nbsp;
         </Highlight>

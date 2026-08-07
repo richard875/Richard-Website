@@ -57,7 +57,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
         .
       </SummaryText>
       <SummaryText>
-        • I served as the appointed
+        • Served as the appointed
         <Highlight $isDarkMode={isDarkMode}>
           &nbsp;class representative&nbsp;
         </Highlight>
@@ -101,7 +101,7 @@ const Uoa = ({ isDarkMode }: { isDarkMode: boolean }) => (
         University of Auckland Centre for Innovation and Entrepreneurship
       </SecondaryTitle>
       <p className="text-base xxxl:text-lg">
-        - Directed and Hosted fortnightly innovation seminars as the
+        - Directed and hosted fortnightly innovation seminars as the
         <Highlight $isDarkMode={isDarkMode}>
           &nbsp;Master of Ceremonies
         </Highlight>
