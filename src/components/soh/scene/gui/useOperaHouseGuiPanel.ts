@@ -38,10 +38,10 @@ export type GuiPanelValues = Omit<
   effectiveIsNight: boolean;
 };
 
-// Builds the lil-gui panel once on mount (dev, or `#debug` in prod) and
-// keeps the Time Option folder's enabled/disabled state and the Day/Night
-// Scene Options folders' visibility in sync with React state afterwards.
-// See guiSections.ts for what each folder actually contains.
+// Builds the lil-gui panel once on mount (dev, or `#debug` on a non-prod
+// host) and keeps the Time Option folder's enabled/disabled state and the
+// Day/Night Scene Options folders' visibility in sync with React state
+// afterwards. See guiSections.ts for what each folder actually contains.
 const useOperaHouseGuiPanel = ({
   values,
   callbacks,
@@ -68,7 +68,9 @@ const useOperaHouseGuiPanel = ({
   const nightSceneOptionsFolderRef = React.useRef<GUI | null>(null);
 
   React.useEffect(() => {
-    if (!(IS_DEV || window.location.hash === "#debug")) return;
+    const isDebugHash = window.location.hash === "#debug";
+    const isProdHost = window.location.hostname === process.env.GATSBY_SITE_URL;
+    if (!(IS_DEV || (isDebugHash && !isProdHost))) return;
 
     const panel = new GUI({ width: 310 });
     const timeOptionFolder = panel.addFolder("Time Option");
