@@ -5,6 +5,7 @@ import {
   URL,
   GITHUB_URL,
   LINKEDIN_URL,
+  OCCUPATION,
   ORGANIZATION,
   SITE_KEYWORDS,
   DESCRIPTION_INTRO,
@@ -108,7 +109,7 @@ const MetaTags = ({
                 ],
                 "datePublished": "${dateString}",
                 "dateModified": "${dateString}",
-                "jobTitle": "Software Engineer",
+                "jobTitle": "${OCCUPATION}",
                 "worksFor": {
                     "@type": "Organization",
                     "name": "${ORGANIZATION}"
