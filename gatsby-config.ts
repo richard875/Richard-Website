@@ -15,7 +15,7 @@ const SITE_DOMAIN = process.env.GATSBY_SITE_URL;
 const SITE_URL = `${HTTPS}${SITE_DOMAIN}`;
 
 const config: GatsbyConfig = {
-  trailingSlash: "never",
+  trailingSlash: "always",
   siteMetadata: {
     title: SITE_TITLE,
     description: DESCRIPTION_INDEX,
