@@ -7,7 +7,6 @@ import {
   HTTPS,
   SITE_TITLE,
   STANDALONE,
-  RESUME_FILE,
   DESCRIPTION_INDEX,
 } from "./src/constants/meta";
 
@@ -30,59 +29,16 @@ const config: GatsbyConfig = {
   flags: {
     DEV_SSR: true,
   },
-  headers: [
-    {
-      source: `/${RESUME_FILE}`,
-      headers: [
-        {
-          key: "Link",
-          value: `<${SITE_URL}/${RESUME_FILE}>; rel="canonical"`,
-        },
-      ],
-    },
-    {
-      source: "*",
-      headers: [
-        {
-          key: "Strict-Transport-Security",
-          value: "max-age=31536000; includeSubdomains",
-        },
-        {
-          key: "X-Frame-Options",
-          value: "DENY",
-        },
-        {
-          key: "X-Content-Type-Options",
-          value: "nosniff",
-        },
-        {
-          key: "X-XSS-Protection",
-          value: "1; mode=block",
-        },
-        {
-          key: "Referrer-Policy",
-          value: "same-origin",
-        },
-        {
-          key: "Permissions-Policy",
-          value: "camera=(), microphone=(), geolocation=()",
-        },
-        {
-          key: "Access-Control-Allow-Origin",
-          value: SITE_URL,
-        },
-        {
-          key: "Vary",
-          value: "Origin",
-        },
-      ],
-    },
-  ],
+  // HTTP headers and the trailing-slash rewrites are served from Cloudflare
+  // Pages' own _headers/_redirects mechanism (see static/_headers and
+  // static/_redirects) rather than from this config — Cloudflare Pages
+  // doesn't read Gatsby's `headers` field, and the gatsby-plugin-netlify
+  // adapter that used to bridge this (from when the site was on Netlify)
+  // was silently dropping half these headers anyway.
   plugins: [
     "gatsby-plugin-sass",
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
-    "gatsby-plugin-netlify",
     "gatsby-plugin-postcss",
     "gatsby-transformer-sharp",
     {

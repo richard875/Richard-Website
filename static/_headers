@@ -1,0 +1,15 @@
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubdomains
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: same-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Access-Control-Allow-Origin: https://richardeverley.com
+  Vary: Origin
+
+/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/Richard%20Everley%20Resume%20NN.pdf
+  Link: <https://richardeverley.com/Richard%20Everley%20Resume%20NN.pdf>; rel="canonical"
