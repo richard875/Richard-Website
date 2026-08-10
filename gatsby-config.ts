@@ -29,9 +29,8 @@ const config: GatsbyConfig = {
   flags: {
     DEV_SSR: true,
   },
-  // HTTP headers and the trailing-slash rewrites are served from Cloudflare
-  // Pages' own _headers/_redirects mechanism (see static/_headers and
-  // static/_redirects) rather than from this config — Cloudflare Pages
+  // HTTP headers are served from Cloudflare Pages' own _headers mechanism
+  // (see static/_headers) rather than from this config — Cloudflare Pages
   // doesn't read Gatsby's `headers` field, and the gatsby-plugin-netlify
   // adapter that used to bridge this (from when the site was on Netlify)
   // was silently dropping half these headers anyway.
