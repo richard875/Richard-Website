@@ -84,7 +84,11 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
-        host: SITE_URL,
+        // host: null, not omitted -- omitting it falls back to
+        // siteMetadata.siteUrl. Google explicitly ignores the Host directive
+        // in robots.txt (confirmed via Search Console: "Rule ignored by
+        // Googlebot") and Yandex is the only crawler that ever honoured it.
+        host: null,
         sitemap: `${SITE_URL}/sitemap-index.xml`,
         policy: [{ userAgent: "*", allow: "/" }],
       },
