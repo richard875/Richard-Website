@@ -11,5 +11,5 @@
 /static/*
   Cache-Control: public, max-age=31536000, immutable
 
-/Richard Everley Resume NN.pdf
+/*.pdf
   Link: <https://richardeverley.com/Richard%20Everley%20Resume%20NN.pdf>; rel="canonical"
