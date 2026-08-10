@@ -28,9 +28,7 @@ const MetaTags = ({
   path: Route;
   MetaImage: any;
 }) => {
-  const today = new Date();
-  const fiveDaysAgo = new Date(today.setDate(today.getDate() - 5));
-  const dateString = fiveDaysAgo.toISOString().slice(0, 10);
+  const dateString = "2026-08-10";
   const linkPath = path === Route.Home ? "" : path;
 
   const description = () => {
@@ -66,14 +64,7 @@ const MetaTags = ({
       <meta name="description" content={description()} />
       <meta name="keywords" content={SITE_KEYWORDS} />
       <meta name="author" content={NAME} />
-      <meta property="image" content={`${HTTPS}${URL}${MetaImage}`} />
       <meta property="article:published_time" content={dateString} />
-
-      {/* Google / Search Engine Tags */}
-      <meta itemProp="name" content={name} />
-      <meta itemProp="description" content={description()} />
-      <meta itemProp="keywords" content={SITE_KEYWORDS} />
-      <meta itemProp="image" content={`${HTTPS}${URL}${MetaImage}`} />
 
       {/* Open Graph / Facebook, LinkedIn, Slack, Discord, WhatsApp, Telegram, iMessage, Pinterest, Teams */}
       <meta property="og:type" content="website" />
@@ -82,7 +73,6 @@ const MetaTags = ({
       <meta property="og:locale" content="en_AU" />
       <meta property="og:title" content={name} />
       <meta property="og:description" content={description()} />
-      <meta property="og:keywords" content={SITE_KEYWORDS} />
       <meta property="og:image" content={`${HTTPS}${URL}${MetaImage}`} />
       <meta property="og:image:secure_url" content={`${HTTPS}${URL}${MetaImage}`} />
       {/* Dimensions/type describe static/images/meta/meta-image.png — update these if that file is ever replaced */}
@@ -98,7 +88,6 @@ const MetaTags = ({
       <meta property="twitter:url" content={`${HTTPS}${URL}${linkPath}`} />
       <meta property="twitter:title" content={name} />
       <meta property="twitter:description" content={description()} />
-      <meta property="twitter:keywords" content={SITE_KEYWORDS} />
       <meta property="twitter:image" content={`${HTTPS}${URL}${MetaImage}`} />
       <meta property="twitter:image:alt" content={NAME} />
 
@@ -110,22 +99,44 @@ const MetaTags = ({
         {`
             {
                 "@context": "${HTTPS}schema.org/",
-                "@type": "Person",
-                "name": "${NAME}",
-                "url": "${HTTPS}${URL}${linkPath}",
-                "image": "${HTTPS}${URL}${MetaImage}",
-                "sameAs": [
-                    "${HTTPS}${URL}${linkPath}",
-                    "${LINKEDIN_URL}",
-                    "${GITHUB_URL}"
-                ],
-                "datePublished": "${dateString}",
-                "dateModified": "${dateString}",
-                "jobTitle": "${OCCUPATION}",
-                "worksFor": {
-                    "@type": "Organization",
-                    "name": "${ORGANIZATION}"
-                }
+                "@graph": [
+                    {
+                        "@type": "WebSite",
+                        "@id": "${HTTPS}${URL}/#website",
+                        "url": "${HTTPS}${URL}",
+                        "name": "${NAME}",
+                        "publisher": { "@id": "${HTTPS}${URL}/#person" }
+                    },
+                    {
+                        "@type": "Person",
+                        "@id": "${HTTPS}${URL}/#person",
+                        "name": "${NAME}",
+                        "url": "${HTTPS}${URL}${linkPath}",
+                        "image": "${HTTPS}${URL}${MetaImage}",
+                        "sameAs": [
+                            "${HTTPS}${URL}${linkPath}",
+                            "${LINKEDIN_URL}",
+                            "${GITHUB_URL}"
+                        ],
+                        "datePublished": "${dateString}",
+                        "dateModified": "${dateString}",
+                        "jobTitle": "${OCCUPATION}",
+                        "worksFor": {
+                            "@type": "Organization",
+                            "name": "${ORGANIZATION}"
+                        },
+                        "alumniOf": [
+                            {
+                                "@type": "CollegeOrUniversity",
+                                "name": "University of Sydney"
+                            },
+                            {
+                                "@type": "CollegeOrUniversity",
+                                "name": "University of Auckland"
+                            }
+                        ]
+                    }
+                ]
             }
         `}
       </script>
