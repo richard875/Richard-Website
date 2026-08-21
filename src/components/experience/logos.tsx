@@ -22,7 +22,7 @@ const Logos = ({
     transition={{ stiffness: 0, duration: 0.3, delay }}
   >
     <FdjLogo $isDarkMode={isDarkMode}>
-      <img src={iconPicker(Icon.FdjUnited, isDarkMode)} alt="FDJ United" />
+      <img src={iconPicker(Icon.FdjUnited, isDarkMode)} alt="FDJ UNITED" />
     </FdjLogo>
     <QantasLogo $isDarkMode={isDarkMode}>
       <img src={iconPicker(Icon.Qantas, isDarkMode)} alt="Qantas" />
